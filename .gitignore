@@ -2,4 +2,7 @@
 *.[oad]
 *.so
 *~
+
 nm
+
+tags
