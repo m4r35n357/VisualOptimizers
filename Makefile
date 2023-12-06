@@ -9,7 +9,7 @@ all:
 
 .PHONY: test clean ctags
 
-test: compile
+test: all
 	time -p ./$(BIN) -2.10 -3.04 4.50 
 
 ctags:
