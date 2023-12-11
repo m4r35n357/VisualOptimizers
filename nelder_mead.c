@@ -161,9 +161,9 @@ void nelder_mead(int n, const point_t *start, point_t *solution,
       // print current minimum
       printf("[ ");
       for (int i = 0; i < n; i++) {
-        printf("%.2f ", simplex.p[0].x[i]);
+        printf("%.3e ", simplex.p[0].x[i]);
       }
-      printf("]    %.2f \n", simplex.p[0].fx);
+      printf("]    %.3e \n", simplex.p[0].fx);
     }
   }
 

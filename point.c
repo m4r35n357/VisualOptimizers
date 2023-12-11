@@ -20,7 +20,7 @@ void copy_point(int n, const point_t *src, point_t *dst) {
 void print_point(int n, const point_t *point) {
   printf("x = [ ");
   for (int i = 0; i < n; i++) {
-    printf("%.8f ", point->x[i]);
+    printf("%.6e ", point->x[i]);
   }
-  printf("], fx = %.8f \n", point->fx);
+  printf("], fx = %.6e \n", point->fx);
 }
