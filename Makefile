@@ -2,7 +2,8 @@
 FLAGS = -std=c99 -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wconversion -Wredundant-decls -Wmissing-declarations
 CC_OPT = -O3 -ffast-math -fno-common
 BIN = nm
-SRC = main.c nelder_mead.c point.c ackley.c
+SRC = main.c nelder_mead.c point.c ian.c
+#SRC = main.c nelder_mead.c point.c ackley.c
 
 all:
 	gcc $(FLAGS) $(CC_OPT) -o $(BIN) $(SRC) -lm

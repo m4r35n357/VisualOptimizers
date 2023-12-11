@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "ackley.h"
+#include "ian.h"
 #include "nelder_mead.h"
 
 #define PI 3.1415926535897932384626433832795
@@ -33,18 +33,18 @@ int main(int argc, const char *argv[]) {
   optimset.verbose = 1;
 
   // cost function parameters
-  ackley_param_t ackley_params;
-  ackley_params.a = 20.0;
-  ackley_params.b = 0.2;
-  ackley_params.c = 2.0 * PI;
+  ian_param_t ian_params;
+  ian_params.a = 20.0;
+  ian_params.b = 0.2;
+  ian_params.c = 2.0 * PI;
 
   // call optimization method
   point_t solution;
-  nelder_mead(n, &start, &solution, &ackley_fun, &ackley_params, &optimset);
+  nelder_mead(n, &start, &solution, &ian_fun, &ian_params, &optimset);
 
   // evaluate and print starting point
   printf("Initial point\n");
-  ackley_fun(n, &start, &ackley_params);
+  ian_fun(n, &start, &ian_params);
   print_point(n, &start);
   // print solution
   printf("Solution\n");
