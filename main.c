@@ -26,8 +26,8 @@ int main(int argc, const char *argv[]) {
 
   // optimisation settings
   optimset_t optimset;
-  optimset.tolx = 0.001;
-  optimset.tolf = 0.001;
+  optimset.tolx = 0.000001;
+  optimset.tolf = 0.000001;
   optimset.max_iter = 1000;
   optimset.max_eval = 1000;
   optimset.verbose = 1;
