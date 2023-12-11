@@ -26,10 +26,10 @@ int main(int argc, const char *argv[]) {
 
   // optimisation settings
   optimset_t optimset;
-  optimset.tolx = 0.000001;
-  optimset.tolf = 0.000001;
-  optimset.max_iter = 1000;
-  optimset.max_eval = 1000;
+  optimset.tolx = 1.0e-9;
+  optimset.tolf = 1.0e-9;
+  optimset.max_iter = 5000;
+  optimset.max_eval = 5000;
   optimset.verbose = 1;
 
   // cost function parameters
