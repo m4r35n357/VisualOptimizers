@@ -39,10 +39,10 @@ void nelder_mead(int n, const point_t *start, point_t *solution,
   point_t centroid;
 
   // allocate memory for internal points
-  point_r.x = malloc(n * sizeof(double));
-  point_e.x = malloc(n * sizeof(double));
-  point_c.x = malloc(n * sizeof(double));
-  centroid.x = malloc(n * sizeof(double));
+  point_r.x = malloc((size_t)n * sizeof(double));
+  point_e.x = malloc((size_t)n * sizeof(double));
+  point_c.x = malloc((size_t)n * sizeof(double));
+  centroid.x = malloc((size_t)n * sizeof(double));
 
   int iter_count = 0;
   int eval_count = 0;
@@ -50,9 +50,9 @@ void nelder_mead(int n, const point_t *start, point_t *solution,
   // initial simplex has size n + 1 where n is the dimensionality pf the data
   simplex_t simplex;
   simplex.n = n;
-  simplex.p = malloc((n + 1) * sizeof(point_t));
+  simplex.p = malloc((size_t)(n + 1) * sizeof(point_t));
   for (int i = 0; i < n + 1; i++) {
-    simplex.p[i].x = malloc(n * sizeof(double));
+    simplex.p[i].x = malloc((size_t)n * sizeof(double));
     for (int j = 0; j < n; j++) {
       simplex.p[i].x[j] =
           (i - 1 == j) ? (start->x[j] != 0.0 ? 1.05 * start->x[j] : 0.00025)
@@ -168,7 +168,7 @@ void nelder_mead(int n, const point_t *start, point_t *solution,
   }
 
   // save solution in output argument
-  solution->x = malloc(n * sizeof(double));
+  solution->x = malloc((size_t)n * sizeof(double));
   copy_point(n, simplex.p + 0, solution);
 
   // free memory
@@ -193,7 +193,7 @@ int compare(const void *arg1, const void *arg2) {
 }
 
 void simplex_sort(simplex_t *simplex) {
-  qsort((void *)(simplex->p), simplex->n + 1, sizeof(point_t), compare);
+  qsort((void *)(simplex->p), (size_t)simplex->n + 1, sizeof(point_t), compare);
 }
 
 //-----------------------------------------------------------------------------

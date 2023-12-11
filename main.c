@@ -19,7 +19,7 @@ int main(int argc, const char *argv[]) {
   // reading initial point from command line
   const int n = argc - 1;
   point_t start;
-  start.x = malloc(n * sizeof(double));
+  start.x = malloc((size_t)n * sizeof(double));
   for (int i = 0; i < n; i++) {
     start.x[i] = atof(argv[i + 1]);
   }

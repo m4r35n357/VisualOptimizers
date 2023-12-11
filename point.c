@@ -13,7 +13,7 @@ void swap_points(point_t *p1, point_t *p2) {
 }
 
 void copy_point(int n, const point_t *src, point_t *dst) {
-  memcpy(dst->x, src->x, sizeof(double) * n);
+  memcpy(dst->x, src->x, sizeof(double) * (size_t)n);
   dst->fx = src->fx;
 }
 
