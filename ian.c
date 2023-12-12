@@ -8,10 +8,10 @@
 struct Parameters { double a, b, c; };
 
 model *get_parameters () {
-	model *_ = malloc(sizeof (model));
-	_->a = 20.0;
-	_->b = 0.2;
-	_->c = 2.0 * PI;
+    model *_ = malloc(sizeof (model));
+    _->a = 20.0;
+    _->b = 0.2;
+    _->c = 2.0 * PI;
     return _;
 }
 

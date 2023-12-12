@@ -1,6 +1,8 @@
 #ifndef COST_H
 #define COST_H
 
+#pragma once
+
 #include "point.h"
 
 //-----------------------------------------------------------------------------

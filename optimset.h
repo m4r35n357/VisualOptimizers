@@ -1,6 +1,8 @@
 #ifndef OPTIMSET_H
 #define OPTIMSET_H
 
+#pragma once
+
 // define optimization settings
 typedef struct {
   double tolx;    // tolerance on the simplex solutions coordinates

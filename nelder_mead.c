@@ -218,10 +218,10 @@ int continue_minimization(const simplex_t *simplex, int eval_count,
                           int iter_count, const optimset_t *optimset) {
     // stop if #evals or #iters are greater than the max allowed
   if (eval_count > optimset->max_eval) {
-	printf("Too many evaluations!\n");
+    printf("Too many evaluations!\n");
     return 0;
   } else  if (iter_count > optimset->max_iter) {
-	printf("Too many iterations!\n");
+    printf("Too many iterations!\n");
     return 0;
   }
   // check fx tolerance condition on fx - input simplex is assumed to be sorted
