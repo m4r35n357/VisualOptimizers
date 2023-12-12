@@ -38,7 +38,7 @@ int main(int argc, const char *argv[]) {
 
   // evaluate and print starting point
   printf("Initial point\n");
-  function(n, &start, &p);
+  function(n, &start, p);
   print_point(n, &start);
   // print solution
   printf("Solution\n");
