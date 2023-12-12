@@ -6,7 +6,7 @@ WARNINGS=-Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-p
 %.o: %.c
 	$(CC) $(CFLAGS) -MT $@ -MMD -MP -c -o $@ $< $(WARNINGS)
 
-all: nm-ackley nm-sphere nm-rosenbrock
+all: nm-ackley nm-sphere nm-rosenbrock nm-himmelblau
 
 nm-%: %.o nelder_mead.o point.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ -lm
