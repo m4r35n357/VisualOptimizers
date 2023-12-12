@@ -21,7 +21,6 @@ model *get_parameters () {
 // - arg contains the parameters of the function
 // More details on the function at http://www.sfu.ca/%7Essurjano/ackley.html
 //-----------------------------------------------------------------------------
-
 void cost (int n, point *p, const model *m) {
   // cost function computation for arguments of exp
   double sum_sqr = 0;
@@ -30,7 +29,6 @@ void cost (int n, point *p, const model *m) {
     sum_sqr += SQR(p->x[i]);
     sum_cos += cos(m->c * p->x[i]);
   }
-
   // final result
   p->fx = -m->a * exp(-m->b * sqrt(sum_sqr / n)) - exp(sum_cos / n) + m->a + exp(1.0);
 }
