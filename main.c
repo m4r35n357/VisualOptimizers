@@ -34,7 +34,7 @@ int main(int argc, const char *argv[]) {
 
   // call optimization method
   point solution;
-  nelder_mead(n, &start, &solution, function, m, &optimset);
+  nelder_mead(n, &start, &solution, m, &optimset);
 
   // evaluate and print starting point
   printf("Initial point\n");

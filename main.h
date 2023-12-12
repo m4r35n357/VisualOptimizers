@@ -11,4 +11,8 @@ typedef struct Parameters model;
 
 model *get_parameters(void);
 
+//-----------------------------------------------------------------------------
+// Cost function interface
+//-----------------------------------------------------------------------------
+
 void function (int, point *, const model *);

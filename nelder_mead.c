@@ -2,22 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
 #include "nelder_mead.h"
-
-//-----------------------------------------------------------------------------
-// Utility functions
-//-----------------------------------------------------------------------------
-
-int compare(const void *, const void *);
-
-void simplex_sort(simplex_t *);
-
-void get_centroid(const simplex_t *, point *);
-
-int continue_minimization(const simplex_t *, int, int, const optimset_t *);
-
-void update_point(const simplex_t *, const point *, double, point *);
 
 //-----------------------------------------------------------------------------
 // Main function
@@ -30,8 +15,7 @@ void update_point(const simplex_t *, const point *, double, point *);
 //-----------------------------------------------------------------------------
 
 void nelder_mead(int n, const point *start, point *solution,
-                 fun_t cost_function, const model *args,
-                 const optimset_t *optimset) {
+                 const model *args, const optimset_t *optimset) {
   // internal points
   point point_r;
   point point_e;
@@ -58,7 +42,7 @@ void nelder_mead(int n, const point *start, point *solution,
           (i - 1 == j) ? (start->x[j] != 0.0 ? 1.05 * start->x[j] : 0.00025)
                        : start->x[j];
     }
-    cost_function(n, simplex.p + i, args);
+    function(n, simplex.p + i, args);
     eval_count++;
   }
   // sort points in the simplex so that simplex.p[0] is the point having
@@ -76,11 +60,11 @@ void nelder_mead(int n, const point *start, point *solution,
       printf("Iteration %04d     ", iter_count);
     }
     update_point(&simplex, &centroid, RHO, &point_r);
-    cost_function(n, &point_r, args);
+    function(n, &point_r, args);
     eval_count++;
     if (point_r.fx < simplex.p[0].fx) {
       update_point(&simplex, &centroid, RHO * CHI, &point_e);
-      cost_function(n, &point_e, args);
+      function(n, &point_e, args);
       eval_count++;
       if (point_e.fx < point_r.fx) {
         // expand
@@ -105,7 +89,7 @@ void nelder_mead(int n, const point *start, point *solution,
       } else {
         if (point_r.fx < simplex.p[n].fx) {
           update_point(&simplex, &centroid, RHO * GAMMA, &point_c);
-          cost_function(n, &point_c, args);
+          function(n, &point_c, args);
           eval_count++;
           if (point_c.fx <= point_r.fx) {
             // contract outside
@@ -122,7 +106,7 @@ void nelder_mead(int n, const point *start, point *solution,
           }
         } else {
           update_point(&simplex, &centroid, -GAMMA, &point_c);
-          cost_function(n, &point_c, args);
+          function(n, &point_c, args);
           eval_count++;
           if (point_c.fx <= simplex.p[n].fx) {
             // contract inside
@@ -146,7 +130,7 @@ void nelder_mead(int n, const point *start, point *solution,
           simplex.p[i].x[j] = simplex.p[0].x[j] +
                               SIGMA * (simplex.p[i].x[j] - simplex.p[0].x[j]);
         }
-        cost_function(n, simplex.p + i, args);
+        function(n, simplex.p + i, args);
         eval_count++;
       }
       simplex_sort(&simplex);

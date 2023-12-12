@@ -4,7 +4,6 @@
 #include "main.h"
 #include "optimset.h"
 #include "point.h"
-#include "cost.h"
 
 //-----------------------------------------------------------------------------
 // Definitions
@@ -26,4 +25,19 @@ typedef struct {
 // Nelder-Mead algorithm
 //-----------------------------------------------------------------------------
 
-void nelder_mead(int, const point *, point *, fun_t, const model *, const optimset_t *);
+void nelder_mead(int, const point *, point *, const model *, const optimset_t *);
+
+//-----------------------------------------------------------------------------
+// Utility functions
+//-----------------------------------------------------------------------------
+
+int compare(const void *, const void *);
+
+void simplex_sort(simplex_t *);
+
+void get_centroid(const simplex_t *, point *);
+
+int continue_minimization(const simplex_t *, int, int, const optimset_t *);
+
+void update_point(const simplex_t *, const point *, double, point *);
+
