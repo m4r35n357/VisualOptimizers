@@ -1,6 +1,8 @@
 #ifndef IAN_H
 #define IAN_H
 
+#pragma once
+
 #include "point.h"
 
 typedef struct {

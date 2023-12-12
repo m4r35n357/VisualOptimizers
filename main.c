@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "ian.h"
+#include "main.h"
 #include "nelder_mead.h"
-
-#define PI 3.1415926535897932384626433832795
 
 //-----------------------------------------------------------------------------
 // main
@@ -33,18 +30,15 @@ int main(int argc, const char *argv[]) {
   optimset.verbose = 1;
 
   // cost function parameters
-  ian_param_t ian_params;
-  ian_params.a = 20.0;
-  ian_params.b = 0.2;
-  ian_params.c = 2.0 * PI;
+  model *p = get_parameters();
 
   // call optimization method
   point_t solution;
-  nelder_mead(n, &start, &solution, &ian_fun, &ian_params, &optimset);
+  nelder_mead(n, &start, &solution, function, p, &optimset);
 
   // evaluate and print starting point
   printf("Initial point\n");
-  ian_fun(n, &start, &ian_params);
+  function(n, &start, &p);
   print_point(n, &start);
   // print solution
   printf("Solution\n");

@@ -1,12 +1,19 @@
+#
+#  (c) 2018-2023 m4r35n357@gmail.com (Ian Smith), for licencing see the LICENCE file
+#
 
-FLAGS = -std=c99 -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wconversion -Wredundant-decls -Wmissing-declarations
-CC_OPT = -O3 -ffast-math -fno-common
-BIN = nm
-SRC = main.c nelder_mead.c point.c ian.c
-#SRC = main.c nelder_mead.c point.c ackley.c
+CFLAGS=-std=c99 -O3 -fno-math-errno -flto -s
+WARNINGS=-Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wconversion -Wredundant-decls -Wmissing-declarations
+LIB_STD=-lm
+CC=/usr/bin/gcc
 
-all:
-	gcc $(FLAGS) $(CC_OPT) -o $(BIN) $(SRC) -lm
+%.o: %.c
+	$(CC) $(CFLAGS) -MT $@ -MMD -MP -c -o $@ $< $(WARNINGS)
+
+all: nm-ackley-bin nm-ian-bin
+
+nm-%-bin: %.o nelder_mead.o point.o main.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 .PHONY: test clean ctags
 
@@ -17,4 +24,9 @@ ctags:
 	@/usr/bin/ctags *.h *.c
 
 clean:
-	@rm -rf $(BIN) *.so *.o *.gcda *.gcno coverage* gmon.out
+	@rm -rf nm-*-bin *.so *.o *.gcda *.gcno coverage* gmon.out
+
+depclean: clean
+	@rm -f *.d
+
+-include *.d

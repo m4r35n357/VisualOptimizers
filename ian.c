@@ -1,21 +1,21 @@
+#include <stdlib.h>
 #include <math.h>
-
-#include "ian.h"
+#include "main.h"
+#include "point.h"
 
 #define SQUARE(x) ((x) * (x))
 
-//-----------------------------------------------------------------------------
-// Ackley function
-// - n is the dimension of the data
-// - point is the location where the function will be evaluated
-// - arg contains the parameters of the function
-// More details on the function at http://www.sfu.ca/%7Essurjano/ackley.html
-//-----------------------------------------------------------------------------
+struct Parameters { double a, b, c; };
 
-void ian_fun(int n, point_t *point, const void *arg) {
-  // cast the void pointer to what we expect to find
-  const ian_param_t *params = (const ian_param_t *)arg;
+model *get_parameters () {
+	model *_ = malloc(sizeof (model));
+	_->a = 20.0;
+	_->b = 0.2;
+	_->c = 2.0 * PI;
+    return _;
+}
 
+void function (int n, point_t *point, const void *arg) { (void)arg;
   // cost function computation for arguments of exp
   double sum_squares = 0;
   for (int i = 0; i < n; i++) {

@@ -1,6 +1,8 @@
 #ifndef ACKLEY_H
 #define ACKLEY_H
 
+#pragma once
+
 #include "point.h"
 
 //-----------------------------------------------------------------------------

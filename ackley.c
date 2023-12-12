@@ -1,8 +1,19 @@
+#include <stdlib.h>
 #include <math.h>
-
-#include "ackley.h"
+#include "main.h"
+#include "point.h"
 
 #define SQUARE(x) ((x) * (x))
+
+struct Parameters { double a, b, c; };
+
+model *get_parameters () {
+	model *_ = malloc(sizeof (model));
+	_->a = 20.0;
+	_->b = 0.2;
+	_->c = 2.0 * PI;
+    return _;
+}
 
 //-----------------------------------------------------------------------------
 // Ackley function
@@ -12,9 +23,9 @@
 // More details on the function at http://www.sfu.ca/%7Essurjano/ackley.html
 //-----------------------------------------------------------------------------
 
-void ackley_fun(int n, point_t *point, const void *arg) {
+void function (int n, point_t *point, const void *arg) {
   // cast the void pointer to what we expect to find
-  const ackley_param_t *params = (const ackley_param_t *)arg;
+  const model *params = (const model *)arg;
 
   // cost function computation for arguments of exp
   double sum_squares = 0;

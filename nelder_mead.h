@@ -1,6 +1,8 @@
 #ifndef NELDER_MEAD_H
 #define NELDER_MEAD_H
 
+#pragma once
+
 #include "optimset.h"
 #include "point.h"
 #include "cost.h"
