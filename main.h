@@ -1,5 +1,3 @@
-#ifndef IAN_H
-#define IAN_H
 
 #pragma once
 
@@ -14,5 +12,3 @@ typedef struct Parameters model;
 model *get_parameters(void);
 
 void function (int, point *, const model *);
-
-#endif

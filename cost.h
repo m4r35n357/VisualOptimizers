@@ -1,5 +1,3 @@
-#ifndef COST_H
-#define COST_H
 
 #pragma once
 
@@ -10,5 +8,3 @@
 //-----------------------------------------------------------------------------
 
 typedef void (*fun_t)(int, point *, const model *);
-
-#endif // COST_H

@@ -1,5 +1,3 @@
-#ifndef NELDER_MEAD_H
-#define NELDER_MEAD_H
 
 #pragma once
 
@@ -29,5 +27,3 @@ typedef struct {
 //-----------------------------------------------------------------------------
 
 void nelder_mead(int, const point *, point *, fun_t, const model *, const optimset_t *);
-
-#endif // NELDER_MEAD_H

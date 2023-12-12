@@ -1,5 +1,3 @@
-#ifndef POINT_H
-#define POINT_H
 
 #pragma once
 
@@ -14,5 +12,3 @@ void swap_points(point *, point *);
 void copy_point(int, const point *, point *);
 
 void print_point(int, const point *);
-
-#endif // POINT_H

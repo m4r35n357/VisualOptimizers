@@ -1,5 +1,3 @@
-#ifndef OPTIMSET_H
-#define OPTIMSET_H
 
 #pragma once
 
@@ -11,5 +9,3 @@ typedef struct {
   int max_eval;   // maximum number of allowed function evaluations
   int verbose;    // toggle verbose output during minimization
 } optimset_t;
-
-#endif // OPTIMSET_H
