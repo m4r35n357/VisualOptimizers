@@ -3,16 +3,10 @@
 #include "main.h"
 #include "point.h"
 
-#define SQUARE(x) ((x) * (x))
-
 struct Parameters { double a, b, c; };
 
 model *get_parameters () {
-    model *_ = malloc(sizeof (model));
-    _->a = 20.0;
-    _->b = 0.2;
-    _->c = 2.0 * PI;
-    return _;
+    return NULL;
 }
 
 void function (int n, point_t *point, const void *arg) { (void)arg;

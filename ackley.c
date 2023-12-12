@@ -3,8 +3,6 @@
 #include "main.h"
 #include "point.h"
 
-#define SQUARE(x) ((x) * (x))
-
 struct Parameters { double a, b, c; };
 
 model *get_parameters () {

@@ -10,7 +10,7 @@ CC=/usr/bin/gcc
 %.o: %.c
 	$(CC) $(CFLAGS) -MT $@ -MMD -MP -c -o $@ $< $(WARNINGS)
 
-all: nm-ackley-bin nm-sphere-bin
+all: nm-ackley-bin nm-sphere-bin nm-rosenbrock-bin
 
 nm-%-bin: %.o nelder_mead.o point.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
