@@ -45,23 +45,23 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
   }
   // sort points in the simplex so that simplex.p[0] is the point having
   // minimum fx and simplex.p[n] is the one having the maximum fx
-  simplex_sort(&s);
+  sort(&s);
   // compute the simplex centroid
   get_centroid(&s, &centroid);
   iter_count++;
 
   // continue minimization until stop conditions are met
-  while (continue_minimization(&s, eval_count, iter_count, opt)) {
+  while (processing(&s, eval_count, iter_count, opt)) {
     int shrink = 0;
 
     if (opt->verbose) {
       printf("Iteration %04d     ", iter_count);
     }
-    update_point(&s, &centroid, RHO, &point_r);
+    project(&s, &centroid, RHO, &point_r);
     cost(n, &point_r, args);
     eval_count++;
     if (point_r.fx < s.p[0].fx) {
-      update_point(&s, &centroid, RHO * CHI, &point_e);
+      project(&s, &centroid, RHO * CHI, &point_e);
       cost(n, &point_e, args);
       eval_count++;
       if (point_e.fx < point_r.fx) {
@@ -86,7 +86,7 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
         copy_point(n, &point_r, s.p + n);
       } else {
         if (point_r.fx < s.p[n].fx) {
-          update_point(&s, &centroid, RHO * GAMMA, &point_c);
+          project(&s, &centroid, RHO * GAMMA, &point_c);
           cost(n, &point_c, args);
           eval_count++;
           if (point_c.fx <= point_r.fx) {
@@ -103,7 +103,7 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
             shrink = 1;
           }
         } else {
-          update_point(&s, &centroid, -GAMMA, &point_c);
+          project(&s, &centroid, -GAMMA, &point_c);
           cost(n, &point_c, args);
           eval_count++;
           if (point_c.fx <= s.p[n].fx) {
@@ -125,13 +125,12 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
     if (shrink) {
       for (int i = 1; i < n + 1; i++) {
         for (int j = 0; j < n; j++) {
-          s.p[i].x[j] = s.p[0].x[j] +
-                              SIGMA * (s.p[i].x[j] - s.p[0].x[j]);
+          s.p[i].x[j] = s.p[0].x[j] + SIGMA * (s.p[i].x[j] - s.p[0].x[j]);
         }
         cost(n, s.p + i, args);
         eval_count++;
       }
-      simplex_sort(&s);
+      sort(&s);
     } else {
       for (int i = n - 1; i >= 0 && s.p[i + 1].fx < s.p[i].fx; i--) {
         swap_points(s.p + (i + 1), s.p + i);
@@ -174,7 +173,7 @@ int compare(const void *arg1, const void *arg2) {
   return (fx1 > fx2) - (fx1 < fx2);
 }
 
-void simplex_sort(simplex *s) {
+void sort(simplex *s) {
   qsort((void *)(s->p), (size_t)s->n + 1, sizeof(point), compare);
 }
 
@@ -196,7 +195,7 @@ void get_centroid(const simplex *s, point *centroid) {
 // Asses if simplex satisfies the minimization requirements
 //-----------------------------------------------------------------------------
 
-int continue_minimization(const simplex *s, int eval_count, int iter_count, const optimset *opt) {
+int processing(const simplex *s, int eval_count, int iter_count, const optimset *opt) {
     // stop if #evals or #iters are greater than the max allowed
   if (eval_count > opt->max_eval) {
     printf("Too many evaluations!\n");
@@ -226,8 +225,7 @@ int continue_minimization(const simplex *s, int eval_count, int iter_count, cons
 // Update current point
 //-----------------------------------------------------------------------------
 
-void update_point(const simplex *s, const point *centroid,
-                  double lambda, point *p) {
+void project(const simplex *s, const point *centroid, double lambda, point *p) {
   const int n = s->n;
   for (int j = 0; j < n; j++) {
     p->x[j] = (1.0 + lambda) * centroid->x[j] - lambda * s->p[n].x[j];
