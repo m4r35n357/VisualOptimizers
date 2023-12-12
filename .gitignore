@@ -3,6 +3,6 @@
 *.so
 *~
 
-nm
+nm-*-bin
 
 tags
