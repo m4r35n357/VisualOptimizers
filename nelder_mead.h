@@ -2,7 +2,6 @@
 #pragma once
 
 #include "main.h"
-#include "optimset.h"
 #include "point.h"
 
 //-----------------------------------------------------------------------------

@@ -7,9 +7,9 @@
 //-----------------------------------------------------------------------------
 
 void swap_points(point *p1, point *p2) {
-  point _ = *p1;
+  point p = *p1;
   *p1 = *p2;
-  *p2 = _;
+  *p2 = p;
 }
 
 void copy_point(int n, const point *src, point *dst) {
