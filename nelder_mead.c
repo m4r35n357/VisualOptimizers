@@ -55,7 +55,7 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
     int shrink = 0;
 
     if (opt->verbose) {
-      printf("Iteration %04d     ", iter_count);
+      printf(" %04d     ", iter_count);
     }
     project(&s, &centroid, RHO, &point_r);
     cost(n, &point_r, args);
