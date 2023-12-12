@@ -14,7 +14,11 @@ nm-%: %.o nelder_mead.o point.o main.o
 .PHONY: test ctags clean depclean
 
 test: all
-	time -p ./nm-ackley -2.10 -3.04 4.50 
+	time -p ./nm-ackley 0 -2.10 -3.04 4.50 
+	time -p ./nm-himmelblau 0  3.0  3.0
+	time -p ./nm-himmelblau 0  3.0 -3.0
+	time -p ./nm-himmelblau 0 -3.0  3.0
+	time -p ./nm-himmelblau 0 -3.0 -3.0
 
 ctags:
 	@/usr/bin/ctags *.h *.c

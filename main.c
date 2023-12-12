@@ -16,11 +16,11 @@ int main(int argc, const char *argv[]) {
   }
 
   // reading initial point from command line
-  const int n = argc - 1;
+  const int n = argc - 2;
   point start;
   start.x = malloc((size_t)n * sizeof(double));
   for (int i = 0; i < n; i++) {
-    start.x[i] = strtod(argv[i + 1], NULL);
+    start.x[i] = strtod(argv[i + 2], NULL);
   }
 
   // optimisation settings
@@ -29,7 +29,7 @@ int main(int argc, const char *argv[]) {
   opt.tolf = 1.0e-9;
   opt.max_iter = 5000;
   opt.max_eval = 5000;
-  opt.verbose = 0;
+  opt.verbose = (int)strtol(argv[1], NULL, BASE);
 
   // cost function parameters
   model *m = get_parameters();
