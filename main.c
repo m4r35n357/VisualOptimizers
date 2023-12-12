@@ -9,6 +9,7 @@
 //-----------------------------------------------------------------------------
 
 int main(int argc, const char *argv[]) {
+  PRINT_ARGS(argc, argv);
   if (argc == 1) {
     printf("%s: error: not enough inputs \n", argv[0]);
     return 0;
@@ -19,7 +20,7 @@ int main(int argc, const char *argv[]) {
   point start;
   start.x = malloc((size_t)n * sizeof(double));
   for (int i = 0; i < n; i++) {
-    start.x[i] = atof(argv[i + 1]);
+    start.x[i] = strtod(argv[i + 1], NULL);
   }
 
   // optimisation settings
@@ -28,7 +29,7 @@ int main(int argc, const char *argv[]) {
   opt.tolf = 1.0e-9;
   opt.max_iter = 5000;
   opt.max_eval = 5000;
-  opt.verbose = 1;
+  opt.verbose = 0;
 
   // cost function parameters
   model *m = get_parameters();

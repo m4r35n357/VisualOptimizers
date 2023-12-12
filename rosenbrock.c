@@ -1,6 +1,5 @@
 
 #include <stdlib.h>
-#include <math.h>
 #include "main.h"
 #include "point.h"
 
