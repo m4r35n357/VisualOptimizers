@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "main.h"
 #include "optimset.h"
 #include "point.h"
 #include "cost.h"
@@ -19,7 +20,7 @@
 // define a simplex struct containing an array of n+1 points (p)
 // each having dimension (n)
 typedef struct {
-  point_t *p;
+  point *p;
   int n;
 } simplex_t;
 
@@ -27,6 +28,6 @@ typedef struct {
 // Nelder-Mead algorithm
 //-----------------------------------------------------------------------------
 
-void nelder_mead(int, const point_t *, point_t *, fun_t, const void *, const optimset_t *);
+void nelder_mead(int, const point *, point *, fun_t, const model *, const optimset_t *);
 
 #endif // NELDER_MEAD_H

@@ -9,6 +9,6 @@
 // Cost function interface
 //-----------------------------------------------------------------------------
 
-typedef void (*fun_t)(int, point_t *, const void *);
+typedef void (*fun_t)(int, point *, const model *);
 
 #endif // COST_H

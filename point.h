@@ -7,12 +7,12 @@
 typedef struct {
   double *x;
   double fx;
-} point_t;
+} point;
 
-void swap_points(point_t *, point_t *);
+void swap_points(point *, point *);
 
-void copy_point(int, const point_t *, point_t *);
+void copy_point(int, const point *, point *);
 
-void print_point(int, const point_t *);
+void print_point(int, const point *);
 
 #endif // POINT_H

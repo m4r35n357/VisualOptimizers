@@ -7,12 +7,12 @@
 
 #define PI 3.1415926535897932384626433832795
 
-#define SQUARE(x) ((x) * (x))
+#define SQR(x) ((x) * (x))
 
 typedef struct Parameters model;
 
 model *get_parameters(void);
 
-void function (int, point_t *, const void *);
+void function (int, point *, const model *);
 
 #endif

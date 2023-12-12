@@ -9,13 +9,10 @@ model *get_parameters () {
     return NULL;
 }
 
-void function (int n, point_t *point, const void *arg) { (void)arg;
-  // cost function computation for arguments of exp
-  double sum_squares = 0;
+void function (int n, point *p, const model *m) { (void)m;
+  double sum_sqr = 0;
   for (int i = 0; i < n; i++) {
-    sum_squares += SQUARE(point->x[i]);
+    sum_sqr += SQR(p->x[i]);
   }
-
-  // final result
-  point->fx = sqrt(sum_squares / n);
+  p->fx = sqrt(sum_sqr / n);
 }

@@ -15,7 +15,7 @@ int main(int argc, const char *argv[]) {
 
   // reading initial point from command line
   const int n = argc - 1;
-  point_t start;
+  point start;
   start.x = malloc((size_t)n * sizeof(double));
   for (int i = 0; i < n; i++) {
     start.x[i] = atof(argv[i + 1]);
@@ -30,15 +30,15 @@ int main(int argc, const char *argv[]) {
   optimset.verbose = 1;
 
   // cost function parameters
-  model *p = get_parameters();
+  model *m = get_parameters();
 
   // call optimization method
-  point_t solution;
-  nelder_mead(n, &start, &solution, function, p, &optimset);
+  point solution;
+  nelder_mead(n, &start, &solution, function, m, &optimset);
 
   // evaluate and print starting point
   printf("Initial point\n");
-  function(n, &start, p);
+  function(n, &start, m);
   print_point(n, &start);
   // print solution
   printf("Solution\n");

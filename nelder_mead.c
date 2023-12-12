@@ -13,11 +13,11 @@ int compare(const void *, const void *);
 
 void simplex_sort(simplex_t *);
 
-void get_centroid(const simplex_t *, point_t *);
+void get_centroid(const simplex_t *, point *);
 
 int continue_minimization(const simplex_t *, int, int, const optimset_t *);
 
-void update_point(const simplex_t *, const point_t *, double, point_t *);
+void update_point(const simplex_t *, const point *, double, point *);
 
 //-----------------------------------------------------------------------------
 // Main function
@@ -29,14 +29,14 @@ void update_point(const simplex_t *, const point_t *, double, point_t *);
 // - optimset are the optimisation settings
 //-----------------------------------------------------------------------------
 
-void nelder_mead(int n, const point_t *start, point_t *solution,
-                 fun_t cost_function, const void *args,
+void nelder_mead(int n, const point *start, point *solution,
+                 fun_t cost_function, const model *args,
                  const optimset_t *optimset) {
   // internal points
-  point_t point_r;
-  point_t point_e;
-  point_t point_c;
-  point_t centroid;
+  point point_r;
+  point point_e;
+  point point_c;
+  point centroid;
 
   // allocate memory for internal points
   point_r.x = malloc((size_t)n * sizeof(double));
@@ -50,7 +50,7 @@ void nelder_mead(int n, const point_t *start, point_t *solution,
   // initial simplex has size n + 1 where n is the dimensionality pf the data
   simplex_t simplex;
   simplex.n = n;
-  simplex.p = malloc((size_t)(n + 1) * sizeof(point_t));
+  simplex.p = malloc((size_t)(n + 1) * sizeof(point));
   for (int i = 0; i < n + 1; i++) {
     simplex.p[i].x = malloc((size_t)n * sizeof(double));
     for (int j = 0; j < n; j++) {
@@ -187,20 +187,20 @@ void nelder_mead(int n, const point_t *start, point_t *solution,
 //-----------------------------------------------------------------------------
 
 int compare(const void *arg1, const void *arg2) {
-  const double fx1 = ((const point_t *)arg1)->fx;
-  const double fx2 = ((const point_t *)arg2)->fx;
+  const double fx1 = ((const point *)arg1)->fx;
+  const double fx2 = ((const point *)arg2)->fx;
   return (fx1 > fx2) - (fx1 < fx2);
 }
 
 void simplex_sort(simplex_t *simplex) {
-  qsort((void *)(simplex->p), (size_t)simplex->n + 1, sizeof(point_t), compare);
+  qsort((void *)(simplex->p), (size_t)simplex->n + 1, sizeof(point), compare);
 }
 
 //-----------------------------------------------------------------------------
 // Get centroid (average position) of simplex
 //-----------------------------------------------------------------------------
 
-void get_centroid(const simplex_t *simplex, point_t *centroid) {
+void get_centroid(const simplex_t *simplex, point *centroid) {
   for (int j = 0; j < simplex->n; j++) {
     centroid->x[j] = 0;
     for (int i = 0; i < simplex->n; i++) {
@@ -245,10 +245,10 @@ int continue_minimization(const simplex_t *simplex, int eval_count,
 // Update current point
 //-----------------------------------------------------------------------------
 
-void update_point(const simplex_t *simplex, const point_t *centroid,
-                  double lambda, point_t *point) {
+void update_point(const simplex_t *simplex, const point *centroid,
+                  double lambda, point *p) {
   const int n = simplex->n;
   for (int j = 0; j < n; j++) {
-    point->x[j] = (1.0 + lambda) * centroid->x[j] - lambda * simplex->p[n].x[j];
+    p->x[j] = (1.0 + lambda) * centroid->x[j] - lambda * simplex->p[n].x[j];
   }
 }
