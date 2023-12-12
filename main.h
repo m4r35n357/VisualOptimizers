@@ -8,15 +8,15 @@
 #define SQR(x) ((x) * (x))
 
 // define optimization settings
-typedef struct {
+typedef struct Optimset {
   double tolx;    // tolerance on the simplex solutions coordinates
   double tolf;    // tolerance on the function value
   int max_iter;   // maximum number of allowed iterations
   int max_eval;   // maximum number of allowed function evaluations
   int verbose;    // toggle verbose output during minimization
-} optimset_t;
+} optimset;
 
-typedef struct Parameters model;
+typedef struct Model model;
 
 model *get_parameters(void);
 
@@ -24,4 +24,4 @@ model *get_parameters(void);
 // Cost function interface
 //-----------------------------------------------------------------------------
 
-void function (int, point *, const model *);
+void cost (int, point *, const model *);

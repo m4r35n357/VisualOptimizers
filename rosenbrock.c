@@ -1,9 +1,10 @@
+
 #include <stdlib.h>
 #include <math.h>
 #include "main.h"
 #include "point.h"
 
-struct Parameters { double a, b; };
+struct Model { double a, b; };
 
 model *get_parameters () {
     model *m = malloc(sizeof (model));
@@ -12,6 +13,6 @@ model *get_parameters () {
     return m;
 }
 
-void function (int n, point *p, const model *m) { (void)n;
+void cost (int n, point *p, const model *m) { (void)n;
   p->fx = SQR(m->a - p->x[0]) + m->b * SQR(p->x[1] - SQR(p->x[0]));
 }

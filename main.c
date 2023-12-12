@@ -22,23 +22,23 @@ int main(int argc, const char *argv[]) {
   }
 
   // optimisation settings
-  optimset_t optimset;
-  optimset.tolx = 1.0e-9;
-  optimset.tolf = 1.0e-9;
-  optimset.max_iter = 5000;
-  optimset.max_eval = 5000;
-  optimset.verbose = 1;
+  optimset opt;
+  opt.tolx = 1.0e-9;
+  opt.tolf = 1.0e-9;
+  opt.max_iter = 5000;
+  opt.max_eval = 5000;
+  opt.verbose = 1;
 
   // cost function parameters
   model *m = get_parameters();
 
   // call optimization method
   point solution;
-  nelder_mead(n, &start, &solution, m, &optimset);
+  nelder_mead(n, &start, &solution, m, &opt);
 
   // evaluate and print starting point
   printf("Initial point\n");
-  function(n, &start, m);
+  cost(n, &start, m);
   print_point(n, &start);
   // print solution
   printf("Solution\n");

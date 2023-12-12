@@ -2,7 +2,7 @@
 #pragma once
 
 // define a generic point containing a position (x) and a value (fx)
-typedef struct {
+typedef struct Point {
   double *x;
   double fx;
 } point;
