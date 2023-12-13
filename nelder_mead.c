@@ -90,7 +90,7 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
           if (contracted.fx <= reflected.fx) {
             // contract outside
             if (opt->verbose) {
-              printf("contract out  ");
+              printf("contract_out  ");
             }
             copy_point(n, &contracted, s.p + n);
           } else {
@@ -107,7 +107,7 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
           if (contracted.fx <= s.p[n].fx) {
             // contract inside
             if (opt->verbose) {
-              printf("contract in   ");
+              printf("contract_in   ");
             }
             copy_point(n, &contracted, s.p + n);
           } else {
