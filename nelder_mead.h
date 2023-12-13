@@ -42,7 +42,9 @@
     } \
 } while (0)
 
-// define optimizer settings
+/*
+ * Optimizer settings
+ */
 typedef struct Optimset {
   double tolx;    // tolerance on the simplex solutions coordinates
   double tolf;    // tolerance on the function value
@@ -51,23 +53,22 @@ typedef struct Optimset {
   int verbose;    // toggle verbose output during minimization
 } optimset;
 
-// define a simplex struct containing an array of n+1 points (p)
-// each having dimension (n)
+/*
+ * The "simplex" containing an array of n + 1 points each of dimension n
+ */
 typedef struct Simplex {
   point *p;
   int n;
 } simplex;
 
-//-----------------------------------------------------------------------------
-// Nelder-Mead algorithm
-//-----------------------------------------------------------------------------
-
+/*
+ * "Simplex" or "Amoeba" optimizer
+ */
 void nelder_mead(int, const point *, point *, const model *, const optimset *);
 
-//-----------------------------------------------------------------------------
-// Utility functions
-//-----------------------------------------------------------------------------
-
+/*
+ * Utility functions
+ */
 int compare(const void *, const void *);
 
 void sort(simplex *);

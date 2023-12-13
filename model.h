@@ -6,8 +6,14 @@
  */
 #define SQR(x) ((x) * (x))
 
+/*
+ * Model parameters
+ */
 typedef struct Model model;
 
+/*
+ * Point is an array of dimension n together with a cost function value
+ */
 typedef struct Point {
   double *x;
   double fx;
