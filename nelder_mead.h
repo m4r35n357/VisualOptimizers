@@ -3,9 +3,9 @@
 
 #define BASE 10
 
-#define RHO 1.0
-#define CHI 2.0
-#define GAMMA 0.5
+#define ALPHA 1.0
+#define GAMMA 2.0
+#define RHO 0.5
 #define SIGMA 0.5
 
 /*
@@ -75,7 +75,7 @@ void get_centroid(const simplex *, point *);
 
 int processing(const simplex *, int, int, const optimset *);
 
-void project(const simplex *, const point *, double, point *);
+void project(const point *, int, const point *, double, const point *, point *);
 
 void swap_points(point *, point *);
 

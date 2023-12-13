@@ -36,11 +36,11 @@ int main(int argc, const char *argv[]) {
   nelder_mead(n, &start, &solution, m, &opt);
 
   // evaluate and print starting point
-  printf("%sInitial point ", GRY);
+  printf("%s     Initial ", GRY);
   cost(n, &start, m);
   print_point(n, &start);
   // print solution
-  printf("     %sSolution ", GRY);
+  printf("    %sSolution ", GRY);
   print_point(n, &solution);
 
   // free memory

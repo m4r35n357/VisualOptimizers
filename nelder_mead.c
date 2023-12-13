@@ -48,85 +48,60 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
   get_centroid(&s, &centroid);
   iter_count++;
 
-  // continue minimization until stop conditions are met
-  while (processing(&s, eval_count, iter_count, opt)) {
-    int shrink = 0;
+    // continue minimization until stop conditions are met
+    while (processing(&s, eval_count, iter_count, opt)) {
+        int shrink = 0;
 
-    if (opt->verbose) {
-      printf(" %04d %04d  ", iter_count, eval_count);
-    }
-    project(&s, &centroid, RHO, &reflected);
-    cost(n, &reflected, args);
-    eval_count++;
-    if (reflected.fx < s.p[0].fx) {
-      project(&s, &centroid, CHI, &expanded);
-      cost(n, &expanded, args);
-      eval_count++;
-      if (expanded.fx < reflected.fx) {
-        // expand
-        if (opt->verbose) {
-          printf("expand        ");
-        }
-        copy_point(n, &expanded, s.p + n);
-      } else {
-        // reflect
-        if (opt->verbose) {
-          printf("reflect       ");
-        }
-        copy_point(n, &reflected, s.p + n);
-      }
-    } else {
-      if (reflected.fx < s.p[n - 1].fx) {
-        // reflect
-        if (opt->verbose) {
-          printf("reflect       ");
-        }
-        copy_point(n, &reflected, s.p + n);
-      } else {
-        if (reflected.fx < s.p[n].fx) {
-          project(&s, &centroid, GAMMA, &contracted);
-          cost(n, &contracted, args);
-          eval_count++;
-          if (contracted.fx <= reflected.fx) {
-            // contract outside
-            if (opt->verbose) {
-              printf("contract_out  ");
-            }
-            copy_point(n, &contracted, s.p + n);
-          } else {
-            // shrink
-            if (opt->verbose) {
-              printf("shrink        ");
-            }
-            shrink = 1;
-          }
+        if (opt->verbose) printf(" %04d %04d  ", iter_count, eval_count);
+        project(&reflected, n,&centroid, ALPHA, &centroid, s.p + n);
+        cost(n, &reflected, args);
+        eval_count++;
+        if (s.p[0].fx <= reflected.fx && reflected.fx < s.p[n - 1].fx) {  // better than best
+            if (opt->verbose) printf("reflect       ");
+            copy_point(n, &reflected, s.p + n);
         } else {
-          project(&s, &centroid, -GAMMA, &contracted);
-          cost(n, &contracted, args);
-          eval_count++;
-          if (contracted.fx <= s.p[n].fx) {
-            // contract inside
-            if (opt->verbose) {
-              printf("contract_in   ");
+            if (reflected.fx < s.p[0].fx) { // expand
+                project(&expanded, n,&centroid, GAMMA, &reflected, &centroid);
+                cost(n, &expanded, args);
+                eval_count++;
+                if (expanded.fx < reflected.fx) {
+                    if (opt->verbose) printf("expand        ");
+                    copy_point(n, &expanded, s.p + n);
+                } else {
+                    if (opt->verbose) printf("reflect       ");
+                    copy_point(n, &reflected, s.p + n);
+                }
+        } else {
+            if (reflected.fx < s.p[n].fx) {
+                project( &contracted, n,&centroid, RHO, &reflected, &centroid);
+                cost(n, &contracted, args);
+                eval_count++;
+                if (contracted.fx < reflected.fx) { // contract outside
+                    if (opt->verbose) printf("contract_out  ");
+                    copy_point(n, &contracted, s.p + n);
+                } else { // shrink
+                    if (opt->verbose) printf("shrink        ");
+                    shrink = 1;
+                }
+            } else {
+                project(&contracted, n, &centroid, RHO, s.p + n, &centroid);
+                cost(n, &contracted, args);
+                eval_count++;
+                if (contracted.fx <= s.p[n].fx) { // contract inside
+                    if (opt->verbose) printf("contract_in   ");
+                    copy_point(n, &contracted, s.p + n);
+                } else { // shrink
+                    if (opt->verbose) printf("shrink        ");
+                    shrink = 1;
+                }
             }
-            copy_point(n, &contracted, s.p + n);
-          } else {
-            // shrink
-            if (opt->verbose) {
-              printf("shrink        ");
-            }
-            shrink = 1;
-          }
         }
-      }
     }
     if (shrink) {
       for (int i = 1; i < n + 1; i++) {
-        for (int j = 0; j < n; j++) {
-          s.p[i].x[j] = s.p[0].x[j] + SIGMA * (s.p[i].x[j] - s.p[0].x[j]);
-        }
-        cost(n, s.p + i, args);
-        eval_count++;
+    	  project(s.p + i, n, s.p, SIGMA, s.p + i, s.p);
+          cost(n, s.p + i, args);
+          eval_count++;
       }
       sort(&s);
     } else {
@@ -144,7 +119,7 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
       }
       printf("]  % .6e\n", s.p[0].fx);
     }
-  }
+   }
 
   // save solution in output argument
   solution->x = malloc((size_t)n * sizeof(double));
@@ -216,12 +191,11 @@ int processing(const simplex *s, int eval_count, int iter_count, const optimset 
 }
 
 //-----------------------------------------------------------------------------
-// Update current point
+// Project a point point
 //-----------------------------------------------------------------------------
-void project(const simplex *s, const point *centroid, double lambda, point *p) {
-  const int n = s->n;
+void project(const point *new, int n, const point *x0, double factor, const point *p1, point *p2) {
   for (int j = 0; j < n; j++) {
-    p->x[j] = (1.0 + lambda) * centroid->x[j] - lambda * s->p[n].x[j];
+    new->x[j] = x0->x[j] + factor * (p1->x[j] - p2->x[j]);
   }
 }
 
@@ -241,6 +215,5 @@ void print_point(int n, const point *p) {
   for (int i = 0; i < n; i++) {
     printf("% .9e ", p->x[i]);
   }
-  printf("%s]  f%s % .6e\n", GRY, NRM, p->fx);
+  printf("%s]%s % .6e\n", GRY, NRM, p->fx);
 }
-
