@@ -13,18 +13,17 @@
 // - args are the optional arguments of cost_function
 // - opt are the optimisation settings
 //-----------------------------------------------------------------------------
-
 void nelder_mead(int n, const point *start, point *solution, const model *args, const optimset *opt) {
   // internal points
-  point point_r;
-  point point_e;
-  point point_c;
+  point reflected;
+  point expanded;
+  point contracted;
   point centroid;
 
   // allocate memory for internal points
-  point_r.x = malloc((size_t)n * sizeof(double));
-  point_e.x = malloc((size_t)n * sizeof(double));
-  point_c.x = malloc((size_t)n * sizeof(double));
+  reflected.x = malloc((size_t)n * sizeof(double));
+  expanded.x = malloc((size_t)n * sizeof(double));
+  contracted.x = malloc((size_t)n * sizeof(double));
   centroid.x = malloc((size_t)n * sizeof(double));
 
   int iter_count = 0;
@@ -37,9 +36,7 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
   for (int i = 0; i < n + 1; i++) {
     s.p[i].x = malloc((size_t)n * sizeof(double));
     for (int j = 0; j < n; j++) {
-      s.p[i].x[j] =
-          (i - 1 == j) ? (start->x[j] != 0.0 ? 1.05 * start->x[j] : 0.00025)
-                       : start->x[j];
+      s.p[i].x[j] = (i - 1 == j) ? (start->x[j] != 0.0 ? 1.05 * start->x[j] : 0.00025) : start->x[j];
     }
     cost(n, s.p + i, args);
     eval_count++;
@@ -58,44 +55,44 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
     if (opt->verbose) {
       printf(" %04d %04d  ", iter_count, eval_count);
     }
-    project(&s, &centroid, RHO, &point_r);
-    cost(n, &point_r, args);
+    project(&s, &centroid, RHO, &reflected);
+    cost(n, &reflected, args);
     eval_count++;
-    if (point_r.fx < s.p[0].fx) {
-      project(&s, &centroid, RHO * CHI, &point_e);
-      cost(n, &point_e, args);
+    if (reflected.fx < s.p[0].fx) {
+      project(&s, &centroid, RHO * CHI, &expanded);
+      cost(n, &expanded, args);
       eval_count++;
-      if (point_e.fx < point_r.fx) {
+      if (expanded.fx < reflected.fx) {
         // expand
         if (opt->verbose) {
           printf("expand        ");
         }
-        copy_point(n, &point_e, s.p + n);
+        copy_point(n, &expanded, s.p + n);
       } else {
         // reflect
         if (opt->verbose) {
           printf("reflect       ");
         }
-        copy_point(n, &point_r, s.p + n);
+        copy_point(n, &reflected, s.p + n);
       }
     } else {
-      if (point_r.fx < s.p[n - 1].fx) {
+      if (reflected.fx < s.p[n - 1].fx) {
         // reflect
         if (opt->verbose) {
           printf("reflect       ");
         }
-        copy_point(n, &point_r, s.p + n);
+        copy_point(n, &reflected, s.p + n);
       } else {
-        if (point_r.fx < s.p[n].fx) {
-          project(&s, &centroid, RHO * GAMMA, &point_c);
-          cost(n, &point_c, args);
+        if (reflected.fx < s.p[n].fx) {
+          project(&s, &centroid, RHO * GAMMA, &contracted);
+          cost(n, &contracted, args);
           eval_count++;
-          if (point_c.fx <= point_r.fx) {
+          if (contracted.fx <= reflected.fx) {
             // contract outside
             if (opt->verbose) {
               printf("contract out  ");
             }
-            copy_point(n, &point_c, s.p + n);
+            copy_point(n, &contracted, s.p + n);
           } else {
             // shrink
             if (opt->verbose) {
@@ -104,15 +101,15 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
             shrink = 1;
           }
         } else {
-          project(&s, &centroid, -GAMMA, &point_c);
-          cost(n, &point_c, args);
+          project(&s, &centroid, -GAMMA, &contracted);
+          cost(n, &contracted, args);
           eval_count++;
-          if (point_c.fx <= s.p[n].fx) {
+          if (contracted.fx <= s.p[n].fx) {
             // contract inside
             if (opt->verbose) {
               printf("contract in   ");
             }
-            copy_point(n, &point_c, s.p + n);
+            copy_point(n, &contracted, s.p + n);
           } else {
             // shrink
             if (opt->verbose) {
@@ -155,9 +152,9 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
 
   // free memory
   free(centroid.x);
-  free(point_r.x);
-  free(point_e.x);
-  free(point_c.x);
+  free(reflected.x);
+  free(expanded.x);
+  free(contracted.x);
   for (int i = 0; i < n + 1; i++) {
     free(s.p[i].x);
   }
@@ -167,7 +164,6 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
 //-----------------------------------------------------------------------------
 // Simplex sorting
 //-----------------------------------------------------------------------------
-
 int compare(const void *arg1, const void *arg2) {
   const double fx1 = ((const point *)arg1)->fx;
   const double fx2 = ((const point *)arg2)->fx;
@@ -181,7 +177,6 @@ void sort(simplex *s) {
 //-----------------------------------------------------------------------------
 // Get centroid (average position) of simplex
 //-----------------------------------------------------------------------------
-
 void get_centroid(const simplex *s, point *centroid) {
   for (int j = 0; j < s->n; j++) {
     centroid->x[j] = 0;
@@ -191,11 +186,9 @@ void get_centroid(const simplex *s, point *centroid) {
     centroid->x[j] /= s->n;
   }
 }
-
-//-----------------------------------------------------------------------------
-// Asses if simplex satisfies the minimization requirements
-//-----------------------------------------------------------------------------
-
+/*
+ * Terminate or continue?
+ */
 int processing(const simplex *s, int eval_count, int iter_count, const optimset *opt) {
     // stop if #evals or #iters are greater than the max allowed
   if (eval_count > opt->max_eval) {
@@ -225,7 +218,6 @@ int processing(const simplex *s, int eval_count, int iter_count, const optimset 
 //-----------------------------------------------------------------------------
 // Update current point
 //-----------------------------------------------------------------------------
-
 void project(const simplex *s, const point *centroid, double lambda, point *p) {
   const int n = s->n;
   for (int j = 0; j < n; j++) {
