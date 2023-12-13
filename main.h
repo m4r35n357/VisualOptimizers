@@ -55,12 +55,6 @@ typedef struct Point {
   double fx;
 } point;
 
-void swap_points(point *, point *);
-
-void copy_point(int, const point *, point *);
-
-void print_point(int, const point *);
-
 model *get_parameters(void);
 
 //-----------------------------------------------------------------------------

@@ -41,3 +41,8 @@ int processing(const simplex *, int, int, const optimset *);
 
 void project(const simplex *, const point *, double, point *);
 
+void swap_points(point *, point *);
+
+void copy_point(int, const point *, point *);
+
+void print_point(int, const point *);

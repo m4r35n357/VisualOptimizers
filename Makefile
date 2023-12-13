@@ -8,7 +8,7 @@ WARNINGS=-Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-p
 
 all: nm-ackley nm-sphere nm-rosenbrock nm-himmelblau
 
-nm-%: %.o nelder_mead.o point.o main.o
+nm-%: %.o nelder_mead.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ -lm
 
 .PHONY: test ctags clean depclean
