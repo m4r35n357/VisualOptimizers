@@ -10,7 +10,7 @@ model *get_parameters () {
     model *m = malloc(sizeof (model));
     m->a = 20.0;
     m->b = 0.2;
-    m->c = 2.0 * PI;
+    m->c = 2.0 * acos(-1.0);
     return m;
 }
 

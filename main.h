@@ -16,8 +16,6 @@
 #define WHT "\x1B[1;37m"
 #define NRM "\x1B[0m"
 
-#define PI 3.1415926535897932384626433832795
-
 /*
  * "Low-noise" squaring for arguments with no side-effects
  */
