@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include "main.h"
-#include "point.h"
 
 struct Model { double a, b, c; };
 

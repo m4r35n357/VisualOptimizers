@@ -1,8 +1,6 @@
 
 #pragma once
 
-#include "point.h"
-
 /*
  * Colours
  */
@@ -51,6 +49,18 @@ typedef struct Optimset {
 
 typedef struct Model model;
 
+// define a generic point containing a position (x) and a value (fx)
+typedef struct Point {
+  double *x;
+  double fx;
+} point;
+
+void swap_points(point *, point *);
+
+void copy_point(int, const point *, point *);
+
+void print_point(int, const point *);
+
 model *get_parameters(void);
 
 //-----------------------------------------------------------------------------
@@ -58,3 +68,4 @@ model *get_parameters(void);
 //-----------------------------------------------------------------------------
 
 void cost (int, point *, const model *);
+

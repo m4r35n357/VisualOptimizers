@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "main.h"
-#include "point.h"
 
 //-----------------------------------------------------------------------------
 // Utilities for point_t

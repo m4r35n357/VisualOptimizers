@@ -2,7 +2,6 @@
 #pragma once
 
 #include "main.h"
-#include "point.h"
 
 //-----------------------------------------------------------------------------
 // Definitions
