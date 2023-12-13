@@ -1,7 +1,7 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include "main.h"
+#include "model.h"
 
 struct Model { double a, b, c; };
 
