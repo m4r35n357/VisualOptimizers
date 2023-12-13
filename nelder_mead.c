@@ -55,7 +55,7 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
     int shrink = 0;
 
     if (opt->verbose) {
-      printf(" %04d     ", iter_count);
+      printf(" %04d %04d  ", iter_count, eval_count);
     }
     project(&s, &centroid, RHO, &point_r);
     cost(n, &point_r, args);
@@ -67,13 +67,13 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
       if (point_e.fx < point_r.fx) {
         // expand
         if (opt->verbose) {
-          printf("expand          ");
+          printf("expand        ");
         }
         copy_point(n, &point_e, s.p + n);
       } else {
         // reflect
         if (opt->verbose) {
-          printf("reflect         ");
+          printf("reflect       ");
         }
         copy_point(n, &point_r, s.p + n);
       }
@@ -81,7 +81,7 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
       if (point_r.fx < s.p[n - 1].fx) {
         // reflect
         if (opt->verbose) {
-          printf("reflect         ");
+          printf("reflect       ");
         }
         copy_point(n, &point_r, s.p + n);
       } else {
@@ -92,13 +92,13 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
           if (point_c.fx <= point_r.fx) {
             // contract outside
             if (opt->verbose) {
-              printf("contract out    ");
+              printf("contract out  ");
             }
             copy_point(n, &point_c, s.p + n);
           } else {
             // shrink
             if (opt->verbose) {
-              printf("shrink         ");
+              printf("shrink       ");
             }
             shrink = 1;
           }
@@ -109,13 +109,13 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
           if (point_c.fx <= s.p[n].fx) {
             // contract inside
             if (opt->verbose) {
-              printf("contract in     ");
+              printf("contract in   ");
             }
             copy_point(n, &point_c, s.p + n);
           } else {
             // shrink
             if (opt->verbose) {
-              printf("shrink          ");
+              printf("shrink        ");
             }
             shrink = 1;
           }
@@ -142,9 +142,9 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
       // print current minimum
       printf("[ ");
       for (int i = 0; i < n; i++) {
-        printf("%.3e ", s.p[0].x[i]);
+        printf("% .9e ", s.p[0].x[i]);
       }
-      printf("]    %.3e \n", s.p[0].fx);
+      printf("]  % .6e\n", s.p[0].fx);
     }
   }
 

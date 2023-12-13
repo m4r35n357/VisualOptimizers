@@ -22,7 +22,7 @@ void copy_point(int n, const point *src, point *dst) {
 void print_point(int n, const point *p) {
   printf("[ %s", NRM);
   for (int i = 0; i < n; i++) {
-    printf("%+.6e ", p->x[i]);
+    printf("% .9e ", p->x[i]);
   }
-  printf("%s]  f%s %+.6e \n", GRY, NRM, p->fx);
+  printf("%s]  f%s % .6e\n", GRY, NRM, p->fx);
 }
