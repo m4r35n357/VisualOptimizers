@@ -1,6 +1,4 @@
 
-#pragma once
-
 /*
  * "Low-noise" squaring for arguments with no side-effects
  */
