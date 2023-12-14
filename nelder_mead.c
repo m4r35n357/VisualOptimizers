@@ -96,7 +96,7 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
           } else {
             // shrink
             if (opt->verbose) {
-              printf("shrink       ");
+              printf("shrink        ");
             }
             shrink = 1;
           }

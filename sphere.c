@@ -3,7 +3,7 @@
 #include <math.h>
 #include "model.h"
 
-struct Model { double a, b, c; };
+struct Model {};
 
 model *get_parameters () {
     return NULL;
