@@ -6,7 +6,7 @@ WARNINGS=-Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-p
 %.o: %.c
 	$(CC) $(CFLAGS) -MT $@ -MMD -MP -c -o $@ $< $(WARNINGS)
 
-all: nm-ackley nm-hartmann3 nm-hartmann6 nm-rosenbrock nm-himmelblau nm-beale
+all: nm-ackley nm-hartmann3 nm-hartmann6 nm-rosenbrock nm-himmelblau nm-beale nm-sphere
 
 nm-%: %.o nelder_mead.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ -lm
@@ -15,7 +15,9 @@ nm-%: %.o nelder_mead.o main.o
 
 test: all
 	@./nm-ackley 0 -2.10 -3.04 4.50 
+	@#./nm-sphere 0 -2.10 -3.04 4.50 -7.2 1.3 -6.2 7.3 9.8 -4 8.5
 	@./nm-hartmann3 0 0.5 0.5 0.5
+	@#./nm-hartmann6 0 0.5 0.5 0.5 0.5 0.5 0.5
 	@./nm-rosenbrock 0  1.0 0.0
 	@./nm-rosenbrock 0 -1.0 0.0
 	@./nm-rosenbrock 0 -1.0 1.0

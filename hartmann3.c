@@ -3,7 +3,7 @@
 #include <math.h>
 #include "model.h"
 
-struct Model { double a; };
+struct Model { double _; };
 
 double alpha[4] = {1.0, 1.2, 3.0, 3.2};
 
