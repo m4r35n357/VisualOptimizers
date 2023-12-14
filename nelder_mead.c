@@ -29,7 +29,7 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
   int iter_count = 0;
   int eval_count = 0;
 
-  // initial simplex has size n + 1 where n is the dimensionality pf the data
+  // initial simplex has size n + 1 where n is the dimensionality of the data
   simplex s;
   s.n = n;
   s.p = malloc((size_t)(n + 1) * sizeof(point));

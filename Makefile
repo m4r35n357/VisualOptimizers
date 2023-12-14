@@ -6,7 +6,7 @@ WARNINGS=-Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-p
 %.o: %.c
 	$(CC) $(CFLAGS) -MT $@ -MMD -MP -c -o $@ $< $(WARNINGS)
 
-all: nm-ackley nm-sphere nm-rosenbrock nm-himmelblau
+all: nm-ackley nm-sphere nm-rosenbrock nm-himmelblau nm-beale
 
 nm-%: %.o nelder_mead.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ -lm
@@ -22,6 +22,7 @@ test: all
 	@./nm-himmelblau 0  3.0 -3.0
 	@./nm-himmelblau 0 -3.0  3.0
 	@./nm-himmelblau 0 -3.0 -3.0
+	@./nm-beale 0 0.0 0.0
 
 ctags:
 	@/usr/bin/ctags *.h *.c
