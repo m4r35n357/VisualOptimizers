@@ -20,7 +20,7 @@ typedef struct Point {
 /*
  * Initialize model
  */
-model *get_parameters(void);
+model *get_parameters (void);
 
 /*
  * Function to minimize

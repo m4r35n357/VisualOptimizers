@@ -23,9 +23,9 @@ int main(int argc, const char *argv[]) {
   optimset opt = {
     .tolx = 1.0e-9,
     .tolf = 1.0e-9,
-	.max_iter = 5000,
-	.max_eval = 5000,
-	.verbose = (int)strtol(argv[1], NULL, BASE)
+    .max_iter = 5000,
+    .max_eval = 5000,
+    .verbose = (int)strtol(argv[1], NULL, BASE)
   }; CHECK(opt.verbose == 0 || opt.verbose == 1);
 
   // cost function parameters

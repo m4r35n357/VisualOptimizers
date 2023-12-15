@@ -62,23 +62,21 @@ typedef struct Simplex {
 /*
  * "Simplex" or "Amoeba" optimizer
  */
-void nelder_mead(int, const point *, point *, const model *, const optimset *);
+void nelder_mead (int, const point *, point *, const model *, const optimset *);
 
 /*
  * Utility functions
  */
-int compare(const void *, const void *);
+int compare (const void *, const void *);
 
-void sort(simplex *);
+void sort (simplex *);
 
-void get_centroid(const simplex *, point *);
+void get_centroid (const simplex *, point *);
 
-int processing(const simplex *, int, int, const optimset *);
+int processing (const simplex *, int, int, const optimset *);
 
-void project(const point *, int, const point *, double, const point *, point *);
+void project (const point *, int, const point *, double, const point *, point *);
 
-void swap_points(point *, point *);
+void copy_point (int, const point *, point *);
 
-void copy_point(int, const point *, point *);
-
-void print_point(int, const point *);
+void print_point (int, const point *);
