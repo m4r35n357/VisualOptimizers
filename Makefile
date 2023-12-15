@@ -15,7 +15,7 @@ nm-%: %.o nelder_mead.o main.o
 
 test: all
 	@./nm-ackley 0 -2.10 -3.04 4.50 
-	@#./nm-sphere 0 -2.10 -3.04 4.50 -7.2 1.3 -6.2 7.3 9.8 -4 8.5
+	@./nm-sphere 0 -2.10 -3.04 4.50
 	@./nm-hartmann3 0 0.5 0.5 0.5
 	@#./nm-hartmann6 0 0.5 0.5 0.5 0.5 0.5 0.5
 	@./nm-rosenbrock 0  1.0 0.0
