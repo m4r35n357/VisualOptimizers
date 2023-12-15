@@ -59,7 +59,7 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
     cost(n, &reflected, args);
     eval_count++;
     if (reflected.fx < s.p[0].fx) {
-      project(&s, &centroid, RHO * CHI, &expanded);
+      project(&s, &centroid, CHI, &expanded);
       cost(n, &expanded, args);
       eval_count++;
       if (expanded.fx < reflected.fx) {
@@ -84,7 +84,7 @@ void nelder_mead(int n, const point *start, point *solution, const model *args, 
         copy_point(n, &reflected, s.p + n);
       } else {
         if (reflected.fx < s.p[n].fx) {
-          project(&s, &centroid, RHO * GAMMA, &contracted);
+          project(&s, &centroid, GAMMA, &contracted);
           cost(n, &contracted, args);
           eval_count++;
           if (contracted.fx <= reflected.fx) {
