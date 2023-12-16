@@ -12,5 +12,5 @@ model *get_parameters () {
 }
 
 void cost (int n, point *p, const model *m) { (void)n;
-  p->fx = SQR(SQR(p->x[0]) + p->x[1] - m->a) + SQR(p->x[0] + SQR(p->x[1]) - m->b);
+    p->fx = SQR(SQR(p->x[0]) + p->x[1] - m->a) + SQR(p->x[0] + SQR(p->x[1]) - m->b);
 }

@@ -22,13 +22,13 @@ model *get_parameters () {
 }
 
 void cost (int n, point *p, const model *m) { (void)n; (void)m;
-  double outer = 0.0;
-  for (int i = 0; i < 4; i++) {
-	  double inner = 0.0;
-	  for (int j = 0; j < 3 ; j++) {
-		  inner -= A[i][j] * SQR(p->x[j] - P[i][j]);
-	  }
-	  outer -= alpha[i] * exp(inner);
-  }
-  p->fx = outer;
+    double outer = 0.0;
+    for (int i = 0; i < 4; i++) {
+        double inner = 0.0;
+        for (int j = 0; j < 3 ; j++) {
+            inner -= A[i][j] * SQR(p->x[j] - P[i][j]);
+        }
+        outer -= alpha[i] * exp(inner);
+    }
+    p->fx = outer;
 }
