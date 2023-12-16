@@ -161,14 +161,8 @@ void get_centroid (const simplex *s, point *centroid) {
  * Terminate or continue?
  */
 int processing (const simplex *s, int eval_count, int iter_count, const optimset *opt) {
-    // stop if #evals or #iters are greater than the max allowed
-    if (eval_count > opt->max_eval) {
-        printf("Too many evaluations!\n");
-        return 0;
-    } else  if (iter_count > opt->max_iter) {
-        printf("Too many iterations!\n");
-        return 0;
-    }
+    CHECK(eval_count <= opt->max_eval);
+    CHECK(iter_count <= opt->max_iter);
     // check tolerance condition on fx - input simplex is assumed to be sorted
     const int n = s->n;
     const double condf = s->p[n].fx - s->p[0].fx;
