@@ -27,7 +27,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     centroid.x = malloc((size_t)n * sizeof(double));
 
     int iter_count = 0;
-    int eval_count = 0;
+    int eval_count = 1;  // already done one in main.c!
 
     // initial simplex has size n + 1 where n is the dimensionality of the data
     simplex s;
@@ -46,11 +46,11 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     sort(&s);
     // compute the simplex centroid
     get_centroid(&s, &centroid);
-    iter_count++;
 
     while (processing(&s, eval_count, iter_count, opt)) {
         int shrink = 0;
 
+        iter_count++;
         if (opt->verbose) printf(" %04d %04d  ", iter_count, eval_count);
         project(&reflected, n, &centroid, ALPHA, &centroid, s.p + n);
         cost(n, &reflected, args);
@@ -106,7 +106,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         sort(&s);
         get_centroid(&s, &centroid);
         cost(n, &centroid, args);
-        iter_count++;
+        eval_count++;
         if (opt->verbose) { // print current minimum
             printf("[ ");
             for (int i = 0; i < n; i++) {
@@ -118,7 +118,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
 
     // save solution in output argument
     solution->x = malloc((size_t)n * sizeof(double));
-    copy_point(n, s.p + 0, solution);
+    copy_point(n, s.p, solution);
 
     // free memory
     free(centroid.x);
