@@ -5,14 +5,14 @@
 #include <math.h>
 #include "nelder_mead.h"
 
-//-----------------------------------------------------------------------------
-// Main function
-// - n is the dimension of the data
-// - start is the initial point (unchanged in output)
-// - solution is the minimizer
-// - args are the optional arguments of cost_function
-// - opt are the optimisation settings
-//-----------------------------------------------------------------------------
+/*
+ * Main function
+ * - start is the initial point (unchanged in output)
+ * - n is the dimension of the data
+ * - solution is the minimizer
+ * - args are the optional arguments of cost_function
+ * - opt are the optimisation settings
+ */
 void nelder_mead (int n, const point *start, point *solution, const model *args, const optimset *opt) {
     // internal points
     point reflected;
@@ -131,9 +131,9 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     free(s.p);
 }
 
-//-----------------------------------------------------------------------------
-// Simplex sorting
-//-----------------------------------------------------------------------------
+/*
+ * Simplex sorting
+ */
 int compare (const void *arg1, const void *arg2) {
     const double fx1 = ((const point *)arg1)->fx;
     const double fx2 = ((const point *)arg2)->fx;
@@ -144,9 +144,9 @@ void sort (simplex *s) {
     qsort((void *)(s->p), (size_t)s->n + 1, sizeof(point), compare);
 }
 
-//-----------------------------------------------------------------------------
-// Get centroid (average position) of simplex
-//-----------------------------------------------------------------------------
+/*
+ * Get centroid (average position) of simplex
+ */
 void get_centroid (const simplex *s, point *centroid) {
     for (int j = 0; j < s->n; j++) {
         centroid->x[j] = 0;
@@ -156,6 +156,7 @@ void get_centroid (const simplex *s, point *centroid) {
         centroid->x[j] /= s->n;
     }
 }
+
 /*
  * Terminate or continue?
  */
@@ -185,9 +186,9 @@ int processing (const simplex *s, int eval_count, int iter_count, const optimset
     return condx > opt->tolx || condf > opt->tolf;
 }
 
-//-----------------------------------------------------------------------------
-// Project a point
-//-----------------------------------------------------------------------------
+/*
+ * Project a point
+ */
 void project (const point *new, int n, const point *p, double factor, const point *pa, point *pb) {
     for (int j = 0; j < n; j++) {
         new->x[j] = p->x[j] + factor * (pa->x[j] - pb->x[j]);
