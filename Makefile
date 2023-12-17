@@ -1,7 +1,13 @@
 
-CC=/usr/bin/gcc
-CFLAGS=-std=c99 -O3 -fno-math-errno -flto -s
+CFLAGS=-std=c99 -O3 -fno-math-errno -flto
 WARNINGS=-Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wconversion -Wredundant-decls -Wmissing-declarations
+
+ifeq ($(CCC),clang)
+  CC=/usr/bin/clang
+else  # default
+  CC=/usr/bin/gcc
+  CFLAGS += -s
+endif
 
 %.o: %.c
 	$(CC) $(CFLAGS) -MT $@ -MMD -MP -c -o $@ $< $(WARNINGS)
