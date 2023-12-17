@@ -15,16 +15,13 @@
  */
 void nelder_mead (int n, const point *start, point *solution, const model *args, const optimset *opt) {
     // internal points
-    point reflected;
-    point expanded;
-    point contracted;
-    point centroid;
+    point reflected, expanded, contracted, centre, *best, *worst;
 
     // allocate memory for internal points
     reflected.x = malloc((size_t)n * sizeof(double));
     expanded.x = malloc((size_t)n * sizeof(double));
     contracted.x = malloc((size_t)n * sizeof(double));
-    centroid.x = malloc((size_t)n * sizeof(double));
+    centre.x = malloc((size_t)n * sizeof(double));
 
     int iter_count = 0;
     int eval_count = 1;  // already done one in main.c!
@@ -41,54 +38,56 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         cost(n, s.p + i, args);
         eval_count++;
     }
+    best = s.p;
+    worst = s.p + n;
     // sort points in the simplex so that simplex.p[0] is the point having
     // minimum fx and simplex.p[n] is the one having the maximum fx
     sort(&s);
     // compute the simplex centroid
-    get_centroid(&s, &centroid);
+    get_centroid(&s, &centre);
 
     while (processing(&s, eval_count, iter_count, opt)) {
         int shrink = 0;
 
         iter_count++;
         if (opt->verbose) printf(" %04d %04d  ", iter_count, eval_count);
-        project(&reflected, n, &centroid, ALPHA, &centroid, s.p + n);
+        project(&reflected, n, &centre, ALPHA, &centre, worst);
         cost(n, &reflected, args);
         eval_count++;
-        if (s.p[0].fx <= reflected.fx && reflected.fx < s.p[n - 1].fx) {  // worse than best, but better than second worst
+        if (best->fx <= reflected.fx && reflected.fx < (worst - 1)->fx) {
             if (opt->verbose) printf("reflect       ");
-            copy_point(n, &reflected, s.p + n);
+            copy_point(n, &reflected, worst);
         } else {
-            if (reflected.fx < s.p[0].fx) { // expand
-                project(&expanded, n, &centroid, GAMMA, &reflected, &centroid);
+            if (reflected.fx < best->fx) {
+                project(&expanded, n, &centre, GAMMA, &reflected, &centre);
                 cost(n, &expanded, args);
                 eval_count++;
                 if (expanded.fx < reflected.fx) {
                     if (opt->verbose) printf("expand        ");
-                    copy_point(n, &expanded, s.p + n);
+                    copy_point(n, &expanded, worst);
                 } else {
                     if (opt->verbose) printf("reflect       ");
-                    copy_point(n, &reflected, s.p + n);
+                    copy_point(n, &reflected, worst);
                 }
             } else {
-                if (reflected.fx < s.p[n].fx) {
-                    project( &contracted, n, &centroid, RHO, &reflected, &centroid);
+                if (reflected.fx < worst->fx) {
+                    project(&contracted, n, &centre, RHO, &reflected, &centre);
                     cost(n, &contracted, args);
                     eval_count++;
-                    if (contracted.fx < reflected.fx) { // contract outside
+                    if (contracted.fx < reflected.fx) {
                         if (opt->verbose) printf("contract_out  ");
-                        copy_point(n, &contracted, s.p + n);
+                        copy_point(n, &contracted, worst);
                     } else { // shrink
                         if (opt->verbose) printf("shrink        ");
                         shrink = 1;
                     }
                 } else {
-                    project(&contracted, n, &centroid, RHO, s.p + n, &centroid);
+                    project(&contracted, n, &centre, RHO, worst, &centre);
                     cost(n, &contracted, args);
                     eval_count++;
-                    if (contracted.fx <= s.p[n].fx) { // contract inside
+                    if (contracted.fx <= worst->fx) {
                         if (opt->verbose) printf("contract_in   ");
-                        copy_point(n, &contracted, s.p + n);
+                        copy_point(n, &contracted, worst);
                     } else { // shrink
                         if (opt->verbose) printf("shrink        ");
                         shrink = 1;
@@ -98,30 +97,30 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         }
         if (shrink) {
             for (int i = 1; i < n + 1; i++) {
-                project(s.p + i, n, s.p, SIGMA, s.p + i, s.p);
+                project(s.p + i, n, best, SIGMA, s.p + i, best);
                 cost(n, s.p + i, args);
                 eval_count++;
             }
         }
         sort(&s);
-        get_centroid(&s, &centroid);
-        cost(n, &centroid, args);
+        get_centroid(&s, &centre);
+        cost(n, &centre, args);
         eval_count++;
         if (opt->verbose) { // print current minimum
             printf("[ ");
             for (int i = 0; i < n; i++) {
-                printf("% .9e ", s.p[0].x[i]);
+                printf("% .9e ", best->x[i]);
             }
-            printf("]  % .6e\n", s.p[0].fx);
+            printf("]  % .6e\n", best->fx);
         }
     }
 
     // save solution in output argument
     solution->x = malloc((size_t)n * sizeof(double));
-    copy_point(n, s.p, solution);
+    copy_point(n, best, solution);
 
     // free memory
-    free(centroid.x);
+    free(centre.x);
     free(reflected.x);
     free(expanded.x);
     free(contracted.x);
@@ -135,9 +134,9 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
  * Simplex sorting
  */
 int compare (const void *arg1, const void *arg2) {
-    const double fx1 = ((const point *)arg1)->fx;
-    const double fx2 = ((const point *)arg2)->fx;
-    return (fx1 > fx2) - (fx1 < fx2);
+    const double f1 = ((const point *)arg1)->fx;
+    const double f2 = ((const point *)arg2)->fx;
+    return (f1 > f2) - (f1 < f2);
 }
 
 void sort (simplex *s) {
@@ -147,13 +146,13 @@ void sort (simplex *s) {
 /*
  * Get centroid (average position) of simplex
  */
-void get_centroid (const simplex *s, point *centroid) {
+void get_centroid (const simplex *s, point *c) {
     for (int j = 0; j < s->n; j++) {
-        centroid->x[j] = 0;
+        c->x[j] = 0;
         for (int i = 0; i < s->n; i++) {
-            centroid->x[j] += s->p[i].x[j];
+            c->x[j] += s->p[i].x[j];
         }
-        centroid->x[j] /= s->n;
+        c->x[j] /= s->n;
     }
 }
 
