@@ -104,8 +104,6 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         }
         sort(&s);
         get_centroid(&s, &centre);
-        cost(n, &centre, args);
-        eval_count++;
         if (opt->verbose) { // print current minimum
             printf("[ ");
             for (int i = 0; i < n; i++) {
