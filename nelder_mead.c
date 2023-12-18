@@ -54,21 +54,21 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         project(&reflected, n, &centre, ALPHA, &centre, worst);
         cost(n, &reflected, args);
         eval_count++;
-        if (best->f <= reflected.f && reflected.f < (worst - 1)->f) {
-            if (opt->verbose) printf("reflect       ");
-            copy_point(n, &reflected, worst);
+        if (reflected.f < best->f) {
+            project(&expanded, n, &centre, GAMMA, &reflected, &centre);
+            cost(n, &expanded, args);
+            eval_count++;
+            if (expanded.f < reflected.f) {
+                if (opt->verbose) printf("expand        ");
+                copy_point(n, &expanded, worst);
+            } else {
+                if (opt->verbose) printf("reflect       ");
+                copy_point(n, &reflected, worst);
+            }
         } else {
-            if (reflected.f < best->f) {
-                project(&expanded, n, &centre, GAMMA, &reflected, &centre);
-                cost(n, &expanded, args);
-                eval_count++;
-                if (expanded.f < reflected.f) {
-                    if (opt->verbose) printf("expand        ");
-                    copy_point(n, &expanded, worst);
-                } else {
-                    if (opt->verbose) printf("reflect       ");
-                    copy_point(n, &reflected, worst);
-                }
+            if (reflected.f < (worst - 1)->f) {
+                if (opt->verbose) printf("reflect       ");
+                copy_point(n, &reflected, worst);
             } else {
                 if (reflected.f < worst->f) {
                     project(&contracted, n, &centre, RHO, &reflected, &centre);
