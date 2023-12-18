@@ -14,7 +14,7 @@ typedef struct Model model;
  */
 typedef struct Point {
   double *x;
-  double fx;
+  double f;
 } point;
 
 /*

@@ -54,15 +54,15 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         project(&reflected, n, &centre, ALPHA, &centre, worst);
         cost(n, &reflected, args);
         eval_count++;
-        if (best->fx <= reflected.fx && reflected.fx < (worst - 1)->fx) {
+        if (best->f <= reflected.f && reflected.f < (worst - 1)->f) {
             if (opt->verbose) printf("reflect       ");
             copy_point(n, &reflected, worst);
         } else {
-            if (reflected.fx < best->fx) {
+            if (reflected.f < best->f) {
                 project(&expanded, n, &centre, GAMMA, &reflected, &centre);
                 cost(n, &expanded, args);
                 eval_count++;
-                if (expanded.fx < reflected.fx) {
+                if (expanded.f < reflected.f) {
                     if (opt->verbose) printf("expand        ");
                     copy_point(n, &expanded, worst);
                 } else {
@@ -70,11 +70,11 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
                     copy_point(n, &reflected, worst);
                 }
             } else {
-                if (reflected.fx < worst->fx) {
+                if (reflected.f < worst->f) {
                     project(&contracted, n, &centre, RHO, &reflected, &centre);
                     cost(n, &contracted, args);
                     eval_count++;
-                    if (contracted.fx < reflected.fx) {
+                    if (contracted.f < reflected.f) {
                         if (opt->verbose) printf("contract_out  ");
                         copy_point(n, &contracted, worst);
                     } else { // shrink
@@ -85,7 +85,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
                     project(&contracted, n, &centre, RHO, worst, &centre);
                     cost(n, &contracted, args);
                     eval_count++;
-                    if (contracted.fx <= worst->fx) {
+                    if (contracted.f <= worst->f) {
                         if (opt->verbose) printf("contract_in   ");
                         copy_point(n, &contracted, worst);
                     } else { // shrink
@@ -111,7 +111,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
             for (int i = 0; i < n; i++) {
                 printf("% .9e ", best->x[i]);
             }
-            printf("]  % .6e\n", best->fx);
+            printf("]  % .6e\n", best->f);
         }
     }
 
@@ -134,8 +134,8 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
  * Simplex sorting
  */
 int compare (const void *arg1, const void *arg2) {
-    const double f1 = ((const point *)arg1)->fx;
-    const double f2 = ((const point *)arg2)->fx;
+    const double f1 = ((const point *)arg1)->f;
+    const double f2 = ((const point *)arg2)->f;
     return (f1 > f2) - (f1 < f2);
 }
 
@@ -164,7 +164,7 @@ int processing (const simplex *s, int eval_count, int iter_count, const optimset
     CHECK(iter_count <= opt->max_iter);
     // check tolerance condition on fx - input simplex is assumed to be sorted
     const int n = s->n;
-    const double condf = s->p[n].fx - s->p[0].fx;
+    const double condf = s->p[n].f - s->p[0].f;
     // check tolerance condition on x
     double condx = -1.0;
     for (int i = 1; i < n + 1; i++) {
@@ -180,7 +180,7 @@ int processing (const simplex *s, int eval_count, int iter_count, const optimset
 }
 
 /*
- * Project a point
+ * Extend a point from p in the direction of (pa - pb), scaled by factor
  */
 void project (const point *new, int n, const point *p, double factor, const point *pa, point *pb) {
     for (int j = 0; j < n; j++) {
@@ -190,7 +190,7 @@ void project (const point *new, int n, const point *p, double factor, const poin
 
 void copy_point (int n, const point *src, point *dst) {
     memcpy(dst->x, src->x, sizeof(double) * (size_t)n);
-    dst->fx = src->fx;
+    dst->f = src->f;
 }
 
 void print_point (int n, const point *p) {
@@ -198,5 +198,5 @@ void print_point (int n, const point *p) {
     for (int i = 0; i < n; i++) {
         printf("% .9e ", p->x[i]);
     }
-    printf("%s]%s % .6e\n", GRY, NRM, p->fx);
+    printf("%s]%s % .6e\n", GRY, NRM, p->f);
 }

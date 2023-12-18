@@ -14,5 +14,5 @@ void cost (int n, point *p, const model *m) { (void)m;
     for (int i = 0; i < n; i++) {
         sum += SQR(p->x[i]);
     }
-    p->fx = sqrt(sum / n);
+    p->f = sqrt(sum / n);
 }

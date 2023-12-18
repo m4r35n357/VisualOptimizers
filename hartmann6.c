@@ -30,5 +30,5 @@ void cost (int n, point *p, const model *m) { (void)n; (void)m;
         }
         outer -= alpha[i] * exp(inner);
     }
-    p->fx = outer;
+    p->f = outer;
 }

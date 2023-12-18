@@ -29,5 +29,5 @@ void cost (int n, point *p, const model *m) {
         sum_cos += cos(m->c * p->x[i]);
     }
     // final result
-    p->fx = -m->a * exp(-m->b * sqrt(sum_sqr / n)) - exp(sum_cos / n) + m->a + exp(1.0);
+    p->f = -m->a * exp(-m->b * sqrt(sum_sqr / n)) - exp(sum_cos / n) + m->a + exp(1.0);
 }
