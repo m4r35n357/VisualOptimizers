@@ -18,10 +18,10 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     point reflected, expanded, contracted, centre, *best, *worst;
 
     // allocate memory for internal points
-    reflected.x = malloc((size_t)n * sizeof(double));
-    expanded.x = malloc((size_t)n * sizeof(double));
-    contracted.x = malloc((size_t)n * sizeof(double));
-    centre.x = malloc((size_t)n * sizeof(double));
+    reflected.x = malloc((size_t)n * sizeof(double));  CHECK(reflected.x);
+    expanded.x = malloc((size_t)n * sizeof(double));   CHECK(expanded.x);
+    contracted.x = malloc((size_t)n * sizeof(double)); CHECK(contracted.x);
+    centre.x = malloc((size_t)n * sizeof(double));     CHECK(centre.x);
 
     int iter_count = 0;
     int eval_count = 1;  // already done one in main.c!

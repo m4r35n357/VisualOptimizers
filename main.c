@@ -11,15 +11,7 @@ int main(int argc, const char *argv[]) {
     PRINT_ARGS(argc, argv);
     CHECK(argc > 2);
 
-    // reading initial point from command line
-    const int n = argc - 2;
-    point start;
-    start.x = malloc((size_t)n * sizeof(double));  CHECK(start.x);
-    for (int i = 0; i < n; i++) {
-        start.x[i] = strtod(argv[i + 2], NULL);
-    }
-
-    // optimisation settings
+    // optimizer settings
     optimset opt = {
         .tolx = 1.0e-9,
         .tolf = 1.0e-9,
@@ -28,12 +20,20 @@ int main(int argc, const char *argv[]) {
         .verbose = (int)strtol(argv[1], NULL, BASE)
     }; CHECK(opt.verbose == 0 || opt.verbose == 1);
 
+    point start, solution;
+    const int n = argc - 2;
+    start.x = malloc((size_t)n * sizeof(double));    CHECK(start.x);
+    solution.x = malloc((size_t)n * sizeof(double)); CHECK(solution.x);
+
+    // read initial point from command arguments
+    for (int i = 0; i < n; i++) {
+        start.x[i] = strtod(argv[i + 2], NULL);
+    }
+
     // cost function parameters
     model *m = get_parameters();
 
-    // call optimization method
-    point solution;
-    solution.x = malloc((size_t)n * sizeof(double));
+    // begin optimization
     nelder_mead(n, &start, &solution, m, &opt);
 
     // evaluate and print starting point
