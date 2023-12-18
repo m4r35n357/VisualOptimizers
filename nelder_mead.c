@@ -47,10 +47,10 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     get_centroid(&s, &centre);
 
     while (processing(&s, eval_count, iter_count, opt)) {
-        int shrink = 0;
-
         iter_count++;
         if (opt->verbose) printf(" %04d %04d  ", iter_count, eval_count);
+        int shrink = 0;
+
         project(&reflected, n, &centre, ALPHA, &centre, worst);
         cost(n, &reflected, args);
         eval_count++;
