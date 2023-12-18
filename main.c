@@ -33,6 +33,7 @@ int main(int argc, const char *argv[]) {
 
     // call optimization method
     point solution;
+    solution.x = malloc((size_t)n * sizeof(double));
     nelder_mead(n, &start, &solution, m, &opt);
 
     // evaluate and print starting point

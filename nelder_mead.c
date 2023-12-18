@@ -116,7 +116,6 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     }
 
     // save solution in output argument
-    solution->x = malloc((size_t)n * sizeof(double));
     copy_point(n, best, solution);
 
     // free memory
