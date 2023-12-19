@@ -75,7 +75,6 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
                         if (opt->verbose) printf("contract_out  ");
                         copy_point(n, &contracted, worst);
                     } else {
-                        if (opt->verbose) printf("shrink        ");
                         shrink = 1;
                     }
                 } else {
@@ -86,13 +85,13 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
                         if (opt->verbose) printf("contract_in   ");
                         copy_point(n, &contracted, worst);
                     } else {
-                        if (opt->verbose) printf("shrink        ");
                         shrink = 1;
                     }
                 }
             }
         }
         if (shrink) {
+            if (opt->verbose) printf("shrink        ");
             for (int i = 1; i < n + 1; i++) {
                 project(s.p + i, n, best, SIGMA, s.p + i, best);
                 cost(n, s.p + i, args);
