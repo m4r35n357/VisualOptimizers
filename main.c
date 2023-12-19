@@ -13,8 +13,8 @@ int main(int argc, const char *argv[]) {
 
     // optimizer settings
     optimset opt = {
-        .tolx = 1.0e-9,
-        .tolf = 1.0e-9,
+        .tolx = 1.0e-3L,
+        .tolf = 1.0e-3L,
         .max_iter = 5000,
         .max_eval = 5000,
         .verbose = (int)strtol(argv[1], NULL, BASE)
@@ -22,8 +22,8 @@ int main(int argc, const char *argv[]) {
 
     point start, solution;
     const int n = argc - 2;
-    start.x = malloc((size_t)n * sizeof(double));    CHECK(start.x);
-    solution.x = malloc((size_t)n * sizeof(double)); CHECK(solution.x);
+    start.x = malloc((size_t)n * sizeof(real));    CHECK(start.x);
+    solution.x = malloc((size_t)n * sizeof(real)); CHECK(solution.x);
 
     // read initial point from command arguments
     for (int i = 0; i < n; i++) {

@@ -18,10 +18,10 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     point reflected, expanded, contracted, centre, *best, *worst;
 
     // allocate memory for internal points
-    reflected.x = malloc((size_t)n * sizeof(double));  CHECK(reflected.x);
-    expanded.x = malloc((size_t)n * sizeof(double));   CHECK(expanded.x);
-    contracted.x = malloc((size_t)n * sizeof(double)); CHECK(contracted.x);
-    centre.x = malloc((size_t)n * sizeof(double));     CHECK(centre.x);
+    reflected.x = malloc((size_t)n * sizeof(real));  CHECK(reflected.x);
+    expanded.x = malloc((size_t)n * sizeof(real));   CHECK(expanded.x);
+    contracted.x = malloc((size_t)n * sizeof(real)); CHECK(contracted.x);
+    centre.x = malloc((size_t)n * sizeof(real));     CHECK(centre.x);
 
     int iter_count = 0;
     int eval_count = 1;  // already done one in main.c!
@@ -31,9 +31,9 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     s.n = n;
     s.p = malloc((size_t)(n + 1) * sizeof(point));
     for (int i = 0; i < n + 1; i++) {
-        s.p[i].x = malloc((size_t)n * sizeof(double));
+        s.p[i].x = malloc((size_t)n * sizeof(real));
         for (int j = 0; j < n; j++) {
-            s.p[i].x[j] = (i - 1 == j) ? (start->x[j] != 0.0 ? 1.05 * start->x[j] : 0.00025) : start->x[j];
+            s.p[i].x[j] = (i - 1 == j) ? (start->x[j] != 0.0L ? 1.05L * start->x[j] : 0.00025L) : start->x[j];
         }
         cost(n, s.p + i, args);
         eval_count++;
@@ -103,9 +103,9 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         if (opt->verbose) { // print current minimum
             printf("[ ");
             for (int i = 0; i < n; i++) {
-                printf("% .9e ", best->x[i]);
+                printf("% .18Lf ", best->x[i]);
             }
-            printf("]  % .6e\n", best->f);
+            printf("]  % .18Lf\n", best->f);
         }
     }
 
@@ -127,8 +127,8 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
  * Simplex sorting
  */
 int compare (const void *arg1, const void *arg2) {
-    const double f1 = ((const point *)arg1)->f;
-    const double f2 = ((const point *)arg2)->f;
+    const real f1 = ((const point *)arg1)->f;
+    const real f2 = ((const point *)arg2)->f;
     return (f1 > f2) - (f1 < f2);
 }
 
@@ -157,12 +157,12 @@ int processing (const simplex *s, int eval_count, int iter_count, const optimset
     CHECK(iter_count <= opt->max_iter);
     // check tolerance condition on fx - input simplex is assumed to be sorted
     const int n = s->n;
-    const double condf = s->p[n].f - s->p[0].f;
+    const real condf = s->p[n].f - s->p[0].f;
     // check tolerance condition on x
-    double condx = -1.0;
+    real condx = -1.0L;
     for (int i = 1; i < n + 1; i++) {
         for (int j = 0; j < n; j++) {
-            const double temp = fabs(s->p[0].x[j] - s->p[i].x[j]);
+            const real temp = fabsl(s->p[0].x[j] - s->p[i].x[j]);
             if (condx < temp) {
                 condx = temp;
             }
@@ -175,21 +175,21 @@ int processing (const simplex *s, int eval_count, int iter_count, const optimset
 /*
  * Extend a point from p in the direction of (pa - pb), scaled by factor
  */
-void project (const point *new, int n, const point *p, double factor, const point *pa, point *pb) {
+void project (const point *new, int n, const point *p, real factor, const point *pa, point *pb) {
     for (int j = 0; j < n; j++) {
         new->x[j] = p->x[j] + factor * (pa->x[j] - pb->x[j]);
     }
 }
 
 void copy_point (int n, const point *src, point *dst) {
-    memcpy(dst->x, src->x, sizeof(double) * (size_t)n);
+    memcpy(dst->x, src->x, sizeof(real) * (size_t)n);
     dst->f = src->f;
 }
 
 void print_point (int n, const point *p) {
     printf("[ %s", NRM);
     for (int i = 0; i < n; i++) {
-        printf("% .9e ", p->x[i]);
+        printf("% .18Lf ", p->x[i]);
     }
-    printf("%s]%s % .6e\n", GRY, NRM, p->f);
+    printf("%s]%s % .18Lf\n", GRY, NRM, p->f);
 }

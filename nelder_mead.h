@@ -3,10 +3,10 @@
 
 #define BASE 10
 
-#define ALPHA 1.0
-#define GAMMA 2.0
-#define RHO 0.5
-#define SIGMA 0.5
+#define ALPHA 1.0L
+#define GAMMA 2.0L
+#define RHO 0.5L
+#define SIGMA 0.5L
 
 /*
  * Colours
@@ -44,8 +44,8 @@
  * Optimizer settings
  */
 typedef struct Optimset {
-  double tolx;    // tolerance on the simplex solutions coordinates
-  double tolf;    // tolerance on the function value
+  real tolx;    // tolerance on the simplex solutions coordinates
+  real tolf;    // tolerance on the function value
   int max_iter;   // maximum number of allowed iterations
   int max_eval;   // maximum number of allowed function evaluations
   int verbose;    // toggle verbose output during minimization
@@ -75,7 +75,7 @@ void get_centroid (const simplex *, point *);
 
 int processing (const simplex *, int, int, const optimset *);
 
-void project (const point *, int, const point *, double, const point *, point *);
+void project (const point *, int, const point *, real, const point *, point *);
 
 void copy_point (int, const point *, point *);
 

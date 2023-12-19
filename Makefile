@@ -7,6 +7,7 @@ ifeq ($(CCC),clang)
 else  # default
   CC=/usr/bin/gcc
   CFLAGS += -s
+  WARNINGS += -Wunsuffixed-float-constants
 endif
 
 %.o: %.c

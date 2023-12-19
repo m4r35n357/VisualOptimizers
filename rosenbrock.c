@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include "model.h"
 
-struct Model { double a, b; };
+struct Model { real a, b; };
 
 model *get_parameters () {
     model *m = malloc(sizeof (model));
-    m->a = 1.0;
-    m->b = 100.0;
+    m->a = 1.0L;
+    m->b = 100.0L;
     return m;
 }
 

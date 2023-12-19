@@ -1,4 +1,4 @@
-
+typedef long double real;
 /*
  * "Low-noise" squaring for arguments with no side-effects
  */
@@ -13,8 +13,8 @@ typedef struct Model model;
  * Point is an array of dimension n together with a cost function value
  */
 typedef struct Point {
-  double *x;
-  double f;
+  real *x;
+  real f;
 } point;
 
 /*
