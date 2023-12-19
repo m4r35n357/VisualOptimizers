@@ -14,7 +14,7 @@
  * - opt are the optimisation settings
  */
 void nelder_mead (int n, const point *start, point *solution, const model *args, const optimset *opt) {
-    // internal points
+    // internal points and labels
     point reflected, expanded, contracted, centre, *best, *worst;
 
     // allocate memory for internal points
@@ -38,18 +38,15 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         cost(n, s.p + i, args);
         eval_count++;
     }
+    sort(&s);
     best = s.p;
     worst = s.p + n;
-    // sort points in the simplex so that simplex.p[0] is the point having
-    // minimum fx and simplex.p[n] is the one having the maximum fx
-    sort(&s);
-    // compute the simplex centroid
-    get_centroid(&s, &centre);
 
     while (processing(&s, eval_count, iter_count, opt)) {
         iter_count++;
         if (opt->verbose) printf(" %04d %04d  ", iter_count, eval_count);
         int shrink = 0;
+        get_centroid(&s, &centre);
 
         project(&reflected, n, &centre, ALPHA, &centre, worst);
         cost(n, &reflected, args);
@@ -77,7 +74,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
                     if (contracted.f < reflected.f) {
                         if (opt->verbose) printf("contract_out  ");
                         copy_point(n, &contracted, worst);
-                    } else { // shrink
+                    } else {
                         if (opt->verbose) printf("shrink        ");
                         shrink = 1;
                     }
@@ -88,7 +85,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
                     if (contracted.f <= worst->f) {
                         if (opt->verbose) printf("contract_in   ");
                         copy_point(n, &contracted, worst);
-                    } else { // shrink
+                    } else {
                         if (opt->verbose) printf("shrink        ");
                         shrink = 1;
                     }
@@ -103,7 +100,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
             }
         }
         sort(&s);
-        get_centroid(&s, &centre);
+
         if (opt->verbose) { // print current minimum
             printf("[ ");
             for (int i = 0; i < n; i++) {
