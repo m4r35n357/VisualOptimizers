@@ -33,7 +33,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     for (int i = 0; i < n + 1; i++) {  // simplex vertices
         s.p[i].x = malloc((size_t)n * sizeof(real));
         for (int j = 0; j < n; j++) {  // coordinates
-            s.p[i].x[j] = (i - 1 == j) ? (start->x[j] != 0.0L ? 1.05L * start->x[j] : 0.00025L) : start->x[j];
+            s.p[i].x[j] = (i - 1 == j) ? start->x[j] + (start->x[j] != 0.0L ? 0.05L : 0.00025L) : start->x[j];
         }
         cost(n, s.p + i, args);
         eval_count++;
