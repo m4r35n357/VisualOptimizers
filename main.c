@@ -13,8 +13,8 @@ int main(int argc, const char *argv[]) {
 
     // optimizer settings
     optimset opt = {
-        .tolx = 1.0e-3L,
-        .tolf = 1.0e-3L,
+        .tolx = 1.0e-9L,
+        .tolf = 1.0e-9L,
         .max_iter = 5000,
         .max_eval = 5000,
         .verbose = (int)strtol(argv[1], NULL, BASE)

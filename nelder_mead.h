@@ -4,9 +4,9 @@
 #define BASE 10
 
 #define ALPHA 1.0L
-#define GAMMA 2.0L
-#define RHO 0.5L
-#define SIGMA 0.5L
+#define GAMMA(n) (1.0L + 2.0L / (n))
+#define RHO(n) (0.75L - 0.5L / (n))
+#define SIGMA(n) (1.0L - 1.0L / (n))
 
 /*
  * Colours

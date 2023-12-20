@@ -30,9 +30,9 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     simplex s;
     s.n = n;
     s.p = malloc((size_t)(n + 1) * sizeof(point));
-    for (int i = 0; i < n + 1; i++) {
+    for (int i = 0; i < n + 1; i++) {  // simplex vertices
         s.p[i].x = malloc((size_t)n * sizeof(real));
-        for (int j = 0; j < n; j++) {
+        for (int j = 0; j < n; j++) {  // coordinates
             s.p[i].x[j] = (i - 1 == j) ? (start->x[j] != 0.0L ? 1.05L * start->x[j] : 0.00025L) : start->x[j];
         }
         cost(n, s.p + i, args);
@@ -52,7 +52,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         cost(n, &reflected, args);
         eval_count++;
         if (reflected.f < best->f) {
-            project(&expanded, n, &centre, GAMMA, &reflected, &centre);
+            project(&expanded, n, &centre, GAMMA(n), &reflected, &centre);
             cost(n, &expanded, args);
             eval_count++;
             if (expanded.f < reflected.f) {
@@ -68,7 +68,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
                 copy_point(n, &reflected, worst);
             } else {
                 if (reflected.f < worst->f) {
-                    project(&contracted, n, &centre, RHO, &reflected, &centre);
+                    project(&contracted, n, &centre, RHO(n), &reflected, &centre);
                     cost(n, &contracted, args);
                     eval_count++;
                     if (contracted.f < reflected.f) {
@@ -78,7 +78,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
                         shrink = 1;
                     }
                 } else {
-                    project(&contracted, n, &centre, RHO, worst, &centre);
+                    project(&contracted, n, &centre, RHO(n), worst, &centre);
                     cost(n, &contracted, args);
                     eval_count++;
                     if (contracted.f <= worst->f) {
@@ -93,7 +93,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         if (shrink) {
             if (opt->verbose) printf("shrink        ");
             for (int i = 1; i < n + 1; i++) {
-                project(s.p + i, n, best, SIGMA, s.p + i, best);
+                project(s.p + i, n, best, SIGMA(n), s.p + i, best);
                 cost(n, s.p + i, args);
                 eval_count++;
             }
