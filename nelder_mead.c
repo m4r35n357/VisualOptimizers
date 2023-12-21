@@ -5,6 +5,34 @@
 #include <math.h>
 #include "nelder_mead.h"
 
+simplex *regular (int n, real size, const point *centre) {
+    simplex *s = malloc(sizeof (simplex));
+    s->n = n;
+    s->p = malloc((size_t)(n + 1) * sizeof (point));
+    for (int i = 0; i < n + 1; i++) {  // simplex vertices
+        s->p[i].x = malloc((size_t)n * sizeof (real));
+        for (int j = 0; j < n; j++) {  // coordinates
+            s->p[i].x[j] = 0.0L;
+        }
+    }
+    real b = 0.0L;
+    for (int i = 0; i < n; i++) {
+        real c = sqrtl(1.0L - b);
+        s->p[i].x[i] = c;
+        real r = - (1.0L / n + b) / c;
+        for (int j = i + 1; j < n + 1; j++) {
+            s->p[j].x[i] = r;
+        }
+        b += SQR(r);
+    }
+    for (int i = 0; i < n + 1; i++) {  // simplex vertices
+        for (int j = 0; j < n; j++) {  // coordinates
+            s->p[i].x[j] = size * s->p[i].x[j] + centre->x[j];
+        }
+    }
+    return s;
+}
+
 /*
  * Main function
  * - start is the initial point (unchanged in output)
@@ -32,29 +60,20 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     int eval_count = 1;  // already done one in main.c!
 
     // initial simplex has size n + 1 where n is the dimensionality of the data
-    simplex s;
-    s.n = n;
-    s.p = malloc((size_t)(n + 1) * sizeof(point));
+    simplex *s = regular(n, 1.0L, start);
     for (int i = 0; i < n + 1; i++) {  // simplex vertices
-        s.p[i].x = malloc((size_t)n * sizeof(real));
-        for (int j = 0; j < n; j++) {  // coordinates
-            s.p[i].x[j] = start->x[j];
-            if (i - 1 == j) {
-                s.p[i].x[j] += (start->x[j] != 0.0L ? 0.05L : 0.00025L) * opt->simplex_scaling;
-            }
-        }
-        cost(n, s.p + i, args);
+        cost(n, s->p + i, args);
         eval_count++;
     }
-    sort(&s);
-    best = s.p;
-    worst = s.p + n;
+    sort(s);
+    best = s->p;
+    worst = s->p + n;
 
-    while (processing(&s, eval_count, iter_count, opt)) {
+    while (processing(s, eval_count, iter_count, opt)) {
         iter_count++;
         if (opt->verbose) printf(" %04d %04d  ", iter_count, eval_count);
         int shrink = 0;
-        get_centroid(&s, &centre);
+        get_centroid(s, &centre);
 
         project(&reflected, n, &centre, ALPHA, &centre, worst);
         cost(n, &reflected, args);
@@ -101,12 +120,12 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         if (shrink) {
             if (opt->verbose) printf("shrink        ");
             for (int i = 1; i < n + 1; i++) {
-                project(s.p + i, n, best, SIGMA, s.p + i, best);
-                cost(n, s.p + i, args);
+                project(s->p + i, n, best, SIGMA, s->p + i, best);
+                cost(n, s->p + i, args);
                 eval_count++;
             }
         }
-        sort(&s);
+        sort(s);
 
         if (opt->verbose) { // print current minimum
             printf("[ ");
@@ -126,9 +145,10 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     free(expanded.x);
     free(contracted.x);
     for (int i = 0; i < n + 1; i++) {
-        free(s.p[i].x);
+        free(s->p[i].x);
     }
-    free(s.p);
+    free(s->p);
+    free(s);
 }
 
 /*
