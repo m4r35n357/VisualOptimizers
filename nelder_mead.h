@@ -39,22 +39,22 @@
  * Optimizer settings
  */
 typedef struct Optimset {
-  real tolx;    // tolerance on the simplex solutions coordinates
-  real tolf;    // tolerance on the function value
-  int max_iter;   // maximum number of allowed iterations
-  int max_eval;   // maximum number of allowed function evaluations
-  int verbose;    // toggle verbose output during minimization
-  int adaptive_scaling;  // simplex updates reduced for dimension > 2
-  real simplex_scaling;  // size of initial simplex
-  int diplay_precision;  // significant figures in floats/exponentials
+    real tolx;    // tolerance on the simplex solutions coordinates
+    real tolf;    // tolerance on the function value
+    int max_iter;   // maximum number of allowed iterations
+    int max_eval;   // maximum number of allowed function evaluations
+    int verbose;    // toggle verbose output during minimization
+    int adaptive_scaling;  // simplex updates reduced for dimension > 2
+    real simplex_scaling;  // size of initial simplex
+    int diplay_precision;  // significant figures in floats/exponentials
 } optimset;
 
 /*
  * The "simplex" containing an array of n + 1 points each of dimension n
  */
 typedef struct Simplex {
-  point *p;
-  int n;
+    point *p;
+    int n;
 } simplex;
 
 /*

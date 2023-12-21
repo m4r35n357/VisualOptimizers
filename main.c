@@ -17,10 +17,10 @@ int main(int argc, const char *argv[]) {
         .tolf = 1.0e-9L,
         .max_iter = 5000,
         .max_eval = 5000,
-		.diplay_precision = (int)strtol(argv[1], NULL, BASE),
+        .diplay_precision = (int)strtol(argv[1], NULL, BASE),
         .verbose = (int)strtol(argv[2], NULL, BASE),
-		.adaptive_scaling = (int)strtol(argv[3], NULL, BASE),
-		.simplex_scaling = strtold(argv[4], NULL)
+        .adaptive_scaling = (int)strtol(argv[3], NULL, BASE),
+        .simplex_scaling = strtold(argv[4], NULL)
     };
     CHECK(opt.diplay_precision >= 3 && opt.diplay_precision <= 36);
     CHECK(opt.verbose == 0 || opt.verbose == 1);
