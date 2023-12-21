@@ -3,11 +3,6 @@
 
 #define BASE 10
 
-#define ALPHA 1.0L
-#define GAMMA(n) (1.0L + 2.0L / (n))
-#define RHO(n) (0.75L - 0.5L / (n))
-#define SIGMA(n) (1.0L - 1.0L / (n))
-
 /*
  * Colours
  */
@@ -49,6 +44,9 @@ typedef struct Optimset {
   int max_iter;   // maximum number of allowed iterations
   int max_eval;   // maximum number of allowed function evaluations
   int verbose;    // toggle verbose output during minimization
+  int adaptive_scaling;  // simplex updates reduced for dimension > 2
+  real simplex_scaling;  // size of initial simplex
+  int diplay_precision;  // significant figures in floats/exponentials
 } optimset;
 
 /*
@@ -79,4 +77,4 @@ void project (const point *, int, const point *, real, const point *, point *);
 
 void copy_point (int, const point *, point *);
 
-void print_point (int, const point *);
+void print_point (int, const point *, int);

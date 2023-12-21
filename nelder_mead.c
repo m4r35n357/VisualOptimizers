@@ -14,6 +14,11 @@
  * - opt are the optimisation settings
  */
 void nelder_mead (int n, const point *start, point *solution, const model *args, const optimset *opt) {
+    real ALPHA = 1.0L;
+    real GAMMA = opt->adaptive_scaling ? 1.0L + 2.0L / n : 2.0L;
+    real RHO = opt->adaptive_scaling ? 0.75L - 0.5L / n : 0.5L;
+    real SIGMA = opt->adaptive_scaling ? 1.0L - 1.0L / n : 0.5L;
+
     // internal points and labels
     point reflected, expanded, contracted, centre, *best, *worst;
 
@@ -33,7 +38,10 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     for (int i = 0; i < n + 1; i++) {  // simplex vertices
         s.p[i].x = malloc((size_t)n * sizeof(real));
         for (int j = 0; j < n; j++) {  // coordinates
-            s.p[i].x[j] = (i - 1 == j) ? start->x[j] + (start->x[j] != 0.0L ? 0.05L : 0.00025L) : start->x[j];
+        	s.p[i].x[j] = start->x[j];
+            if (i - 1 == j) {
+            	s.p[i].x[j] += (start->x[j] != 0.0L ? 0.05L : 0.00025L) * opt->simplex_scaling;
+            }
         }
         cost(n, s.p + i, args);
         eval_count++;
@@ -52,7 +60,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         cost(n, &reflected, args);
         eval_count++;
         if (reflected.f < best->f) {
-            project(&expanded, n, &centre, GAMMA(n), &reflected, &centre);
+            project(&expanded, n, &centre, GAMMA, &reflected, &centre);
             cost(n, &expanded, args);
             eval_count++;
             if (expanded.f < reflected.f) {
@@ -68,7 +76,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
                 copy_point(n, &reflected, worst);
             } else {
                 if (reflected.f < worst->f) {
-                    project(&contracted, n, &centre, RHO(n), &reflected, &centre);
+                    project(&contracted, n, &centre, RHO, &reflected, &centre);
                     cost(n, &contracted, args);
                     eval_count++;
                     if (contracted.f < reflected.f) {
@@ -78,7 +86,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
                         shrink = 1;
                     }
                 } else {
-                    project(&contracted, n, &centre, RHO(n), worst, &centre);
+                    project(&contracted, n, &centre, RHO, worst, &centre);
                     cost(n, &contracted, args);
                     eval_count++;
                     if (contracted.f <= worst->f) {
@@ -93,7 +101,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         if (shrink) {
             if (opt->verbose) printf("shrink        ");
             for (int i = 1; i < n + 1; i++) {
-                project(s.p + i, n, best, SIGMA(n), s.p + i, best);
+                project(s.p + i, n, best, SIGMA, s.p + i, best);
                 cost(n, s.p + i, args);
                 eval_count++;
             }
@@ -103,9 +111,9 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         if (opt->verbose) { // print current minimum
             printf("[ ");
             for (int i = 0; i < n; i++) {
-                printf("% .18Lf ", best->x[i]);
+                printf("% .*Lf ", opt->diplay_precision, best->x[i]);
             }
-            printf("]  % .18Lf\n", best->f);
+            printf("]  % .*Lf\n", opt->diplay_precision, best->f);
         }
     }
 
@@ -186,10 +194,10 @@ void copy_point (int n, const point *src, point *dst) {
     dst->f = src->f;
 }
 
-void print_point (int n, const point *p) {
+void print_point (int n, const point *p, int dp) {
     printf("[ %s", NRM);
     for (int i = 0; i < n; i++) {
-        printf("% .18Lf ", p->x[i]);
+        printf("% .*Lf ", dp, p->x[i]);
     }
-    printf("%s]%s % .18Lf\n", GRY, NRM, p->f);
+    printf("%s]%s % .*Lf\n", GRY, NRM, dp, p->f);
 }

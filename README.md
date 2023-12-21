@@ -10,6 +10,15 @@ Currently the cost function is a [Ackely function](http://www.sfu.ca/%7Essurjano
 
 ## How to use
 The package can be compiled and tested from command line using the Makefile provided (run `make` to compile and `make test` to compile and execute an example run). The command line interface of the Nelder-Mead binary is currently very simple and accepts only a sequence of numbers
+
+Parameter | Meaning
+----------|-----------
+1 | Display precision (3..36)
+2 | Verbose (0/1)
+3 | Adaptive Scaling (0/1)
+4 | Simplex scale (1.0e-3..1.0e3)
+5+ | Initial point
+
 ```
 $ ./binary arg_1 arg_2 [...] arg_n
 ```
