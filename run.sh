@@ -70,8 +70,5 @@ fi
 # replace all commas with spaces
 IFS=','
 set -- $initial_point
-IFS=$tmp
 
-# since inital_point is now a string, it will be considered as a 
-# single argument; as a workaround we `eval` everything
-eval "./${bin} ${display_precision} ${verbose} ${adaptive_scaling} ${simplex_scaling} $@"
+./${bin} ${display_precision} ${verbose} ${adaptive_scaling} ${simplex_scaling} $@
