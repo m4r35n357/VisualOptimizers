@@ -60,7 +60,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     int eval_count = 1;  // already done one in main.c!
 
     // initial simplex has size n + 1 where n is the dimensionality of the data
-    simplex *s = regular(n, 1.0L, start);
+    simplex *s = regular(n, opt->simplex_scaling, start);
     for (int i = 0; i < n + 1; i++) {  // simplex vertices
         cost(n, s->p + i, args);
         eval_count++;
