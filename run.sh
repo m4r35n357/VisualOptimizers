@@ -32,13 +32,13 @@ bin=""
 initial_point=""
 
 display_precision=9
-fmt=0
+fmt=1
 verbose=0
-tol_x=1e-9
-tol_f=1e-9
+tol_x=1.0e-12
+tol_f=1.0e-12
 max_iter=5000
 max_eval=5000
-adaptive_scaling=0
+adaptive_scaling=1
 simplex_scaling=1.0
 
 
