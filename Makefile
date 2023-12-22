@@ -21,18 +21,18 @@ nm-%: %.o nelder_mead.o main.o
 .PHONY: test ctags clean depclean
 
 test: all
-	@./nm-ackley 6 0 0 1.0 -2.10 -3.04 4.50 
-	@./nm-sphere 6 0 0 1.0 -2.10 -3.04 4.50
-	@./nm-hartmann3 6 0 0 1.0 0.5 0.5 0.5
-	@#./nm-hartmann6 6 0 0 1.0 0.5 0.5 0.5 0.5 0.5 0.5
-	@./nm-rosenbrock 6 0 0 1.0 1.0 0.0
-	@./nm-rosenbrock 6 0 0 1.0 -1.0 0.0
-	@./nm-rosenbrock 6 0 0 1.0 -1.0 1.0
-	@./nm-himmelblau 6 0 0 1.0  3.0  3.0
-	@./nm-himmelblau 6 0 0 1.0  3.0 -3.0
-	@./nm-himmelblau 6 0 0 1.0 -3.0  3.0
-	@./nm-himmelblau 6 0 0 1.0 -3.0 -3.0
-	@./nm-beale 6 0 0 1.0 0.0 0.0
+	@./run.sh -b nm-ackley -p -2.10,-3.04,4.50 
+	@./run.sh -b nm-sphere -p -2.10,-3.04,4.50
+	@./run.sh -b nm-hartmann3 -p 0.5,0.5,0.5
+	@#./run.sh -b nm-hartmann6 -p 0.5,0.5,0.5,0.5,0.5,0.5
+	@./run.sh -b nm-rosenbrock -p 1.0,0.0
+	@./run.sh -b nm-rosenbrock -p -1.0,0.0
+	@./run.sh -b nm-rosenbrock -p -1.0,1.0
+	@./run.sh -b nm-himmelblau -p 3.0,3.0
+	@./run.sh -b nm-himmelblau -p 3.0,-3.0
+	@./run.sh -b nm-himmelblau -p -3.0,3.0
+	@./run.sh -b nm-himmelblau -p -3.0,-3.0
+	@./run.sh -b nm-beale -p 0.0,0.0
 
 ctags:
 	@/usr/bin/ctags *.h *.c

@@ -71,4 +71,4 @@ fi
 IFS=','
 set -- $initial_point
 
-./${bin} ${display_precision} ${verbose} ${adaptive_scaling} ${simplex_scaling} $@
+./${bin} ${display_precision} ${verbose} ${tol_x} ${tol_f} ${max_iter} ${max_eval} ${adaptive_scaling} ${simplex_scaling} $@
