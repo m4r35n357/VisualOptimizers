@@ -33,6 +33,14 @@ simplex *regular (int n, real size, const point *centre) {
     return s;
 }
 
+ real distance (int n, const point *a, const point *b) {
+	real sum = 0.0L;
+	for (int j = 0; j < n; j++) {
+		sum += SQR(a->x[j] - b->x[j]);
+	}
+	return sqrtl(sum);
+}
+
 /*
  * Main function
  * - start is the initial point (unchanged in output)
@@ -68,6 +76,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     sort(s);
     best = s->p;
     worst = s->p + n;
+    printf("      %sDiameter %s% .*Lf\n", GRY, NRM, opt->diplay_precision, distance(n, best, worst));
 
     while (processing(s, eval_count, iter_count, opt)) {
         iter_count++;
