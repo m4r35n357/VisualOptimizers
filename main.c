@@ -5,18 +5,19 @@
 
 int main(int argc, const char *argv[]) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc >= 11);
+    CHECK(argc >= 12);
 
     // optimizer settings
     optimset opt = {
         .diplay_precision = (int)strtol(argv[1], NULL, BASE),
-        .verbose = (int)strtol(argv[2], NULL, BASE),
-        .tolx = strtold(argv[3], NULL),
-        .tolf = strtold(argv[4], NULL),
-        .max_iter = (int)strtol(argv[5], NULL, BASE),
-        .max_eval = (int)strtol(argv[6], NULL, BASE),
-        .adaptive_scaling = (int)strtol(argv[7], NULL, BASE),
-        .simplex_scaling = strtold(argv[8], NULL)
+        .fmt = (int)strtol(argv[2], NULL, BASE),
+        .verbose = (int)strtol(argv[3], NULL, BASE),
+        .tolx = strtold(argv[4], NULL),
+        .tolf = strtold(argv[5], NULL),
+        .max_iter = (int)strtol(argv[6], NULL, BASE),
+        .max_eval = (int)strtol(argv[7], NULL, BASE),
+        .adaptive_scaling = (int)strtol(argv[8], NULL, BASE),
+        .simplex_scaling = strtold(argv[9], NULL)
     };
     CHECK(opt.diplay_precision >= 3 && opt.diplay_precision <= 36);
     CHECK(opt.verbose == 0 || opt.verbose == 1);
@@ -28,13 +29,13 @@ int main(int argc, const char *argv[]) {
     CHECK(opt.simplex_scaling >= 1.0e-3L && opt.simplex_scaling <= 1.0e3L);
 
     point start, solution;
-    const int n = argc - 9;
+    const int n = argc - 10;
     start.x = malloc((size_t)n * sizeof(real));    CHECK(start.x);
     solution.x = malloc((size_t)n * sizeof(real)); CHECK(solution.x);
 
     // read initial point from command arguments
     for (int i = 0; i < n; i++) {
-        start.x[i] = strtod(argv[i + 9], NULL);
+        start.x[i] = strtod(argv[i + 10], NULL);
     }
 
     // cost function parameters
@@ -46,10 +47,10 @@ int main(int argc, const char *argv[]) {
     // evaluate and print starting point
     printf("%s     Initial ", GRY);
     cost(n, &start, m);
-    print_point(n, &start, opt.diplay_precision);
+    print_point(n, &start, opt.diplay_precision, opt.fmt);
     // print solution
     printf("    %sSolution ", GRY);
-    print_point(n, &solution, opt.diplay_precision);
+    print_point(n, &solution, opt.diplay_precision, opt.fmt);
 
     // free memory
     free(start.x);

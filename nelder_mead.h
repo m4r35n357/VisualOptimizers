@@ -47,6 +47,7 @@ typedef struct Optimset {
     int adaptive_scaling;  // simplex updates reduced for dimension > 2
     real simplex_scaling;  // size of initial simplex
     int diplay_precision;  // significant figures in floats/exponentials
+    int fmt;  // fixed or exponential floating point format
 } optimset;
 
 /*
@@ -81,4 +82,4 @@ void project (const point *, int, const point *, real, const point *, point *);
 
 void copy_point (int, const point *, point *);
 
-void print_point (int, const point *, int);
+void print_point (int, const point *, int, int);

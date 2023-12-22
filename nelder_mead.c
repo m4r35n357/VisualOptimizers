@@ -34,11 +34,11 @@ simplex *regular (int n, real size, const point *centre) {
 }
 
  real distance (int n, const point *a, const point *b) {
-	real sum = 0.0L;
-	for (int j = 0; j < n; j++) {
-		sum += SQR(a->x[j] - b->x[j]);
-	}
-	return sqrtl(sum);
+    real sum = 0.0L;
+    for (int j = 0; j < n; j++) {
+        sum += SQR(a->x[j] - b->x[j]);
+    }
+    return sqrtl(sum);
 }
 
 /*
@@ -76,7 +76,8 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     sort(s);
     best = s->p;
     worst = s->p + n;
-    printf("      %sDiameter %s% .*Le\n", GRY, NRM, opt->diplay_precision, distance(n, best, worst));
+    printf(opt->fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter %s% .*Lf\n",
+            GRY, NRM, opt->diplay_precision, distance(n, best, worst));
 
     while (processing(s, eval_count, iter_count, opt)) {
         iter_count++;
@@ -139,9 +140,9 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         if (opt->verbose) { // print current minimum
             printf("[ ");
             for (int i = 0; i < n; i++) {
-                printf("% .*Le ", opt->diplay_precision, best->x[i]);
+                printf(opt->fmt ? "% .*Le " : "% .*Lf ", opt->diplay_precision, best->x[i]);
             }
-            printf("]  % .*Le\n", opt->diplay_precision, best->f);
+            printf(opt->fmt ? "]  % .*Le\n" : "]  % .*Lf\n", opt->diplay_precision, best->f);
         }
     }
 
@@ -223,10 +224,10 @@ void copy_point (int n, const point *src, point *dst) {
     dst->f = src->f;
 }
 
-void print_point (int n, const point *p, int dp) {
+void print_point (int n, const point *p, int dp, int fmt) {
     printf("[ %s", NRM);
     for (int i = 0; i < n; i++) {
-        printf("% .*Le ", dp, p->x[i]);
+        printf(fmt ? "% .*Le " : "% .*Lf ", dp, p->x[i]);
     }
-    printf("%s]%s % .*Le\n", GRY, NRM, dp, p->f);
+    printf(fmt ? "%s]%s % .*Le\n" : "%s]%s % .*Lf\n", GRY, NRM, dp, p->f);
 }

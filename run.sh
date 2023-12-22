@@ -31,28 +31,30 @@
 bin=""
 initial_point=""
 
+display_precision=9
+fmt=0
+verbose=0
 tol_x=1e-9
 tol_f=1e-9
 max_iter=5000
 max_eval=5000
-display_precision=9
-verbose=0
 adaptive_scaling=0
 simplex_scaling=1.0
 
 
-while getopts "b:p:x:f:i:e:d:v:a:s:" opt; do
+while getopts "b:p:n:x:f:i:e:d:v:a:s:" opt; do
     case $opt in
         b) bin=${OPTARG} ;;
-        p) initial_point=${OPTARG} ;;
+        d) display_precision=${OPTARG} ;;
+        n) fmt=${OPTARG} ;;
+        v) verbose=${OPTARG} ;;
         x) tol_x=${OPTARG} ;;
         f) tol_f=${OPTARG} ;;
         i) max_iter=${OPTARG} ;;
         e) max_eval=${OPTARG} ;;
-        d) display_precision=${OPTARG} ;;
-        v) verbose=${OPTARG} ;;
         a) adaptive_scaling=${OPTARG} ;;
         s) simplex_scaling=${OPTARG} ;;
+        p) initial_point=${OPTARG} ;;
     esac
 done
 
@@ -71,4 +73,4 @@ fi
 IFS=','
 set -- $initial_point
 
-./${bin} ${display_precision} ${verbose} ${tol_x} ${tol_f} ${max_iter} ${max_eval} ${adaptive_scaling} ${simplex_scaling} $@
+./${bin} ${display_precision} ${fmt} ${verbose} ${tol_x} ${tol_f} ${max_iter} ${max_eval} ${adaptive_scaling} ${simplex_scaling} $@
