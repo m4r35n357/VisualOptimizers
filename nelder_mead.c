@@ -76,7 +76,7 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     sort(s);
     best = s->p;
     worst = s->p + n;
-    printf("      %sDiameter %s% .*Lf\n", GRY, NRM, opt->diplay_precision, distance(n, best, worst));
+    printf("      %sDiameter %s% .*Le\n", GRY, NRM, opt->diplay_precision, distance(n, best, worst));
 
     while (processing(s, eval_count, iter_count, opt)) {
         iter_count++;
@@ -139,9 +139,9 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
         if (opt->verbose) { // print current minimum
             printf("[ ");
             for (int i = 0; i < n; i++) {
-                printf("% .*Lf ", opt->diplay_precision, best->x[i]);
+                printf("% .*Le ", opt->diplay_precision, best->x[i]);
             }
-            printf("]  % .*Lf\n", opt->diplay_precision, best->f);
+            printf("]  % .*Le\n", opt->diplay_precision, best->f);
         }
     }
 
@@ -226,7 +226,7 @@ void copy_point (int n, const point *src, point *dst) {
 void print_point (int n, const point *p, int dp) {
     printf("[ %s", NRM);
     for (int i = 0; i < n; i++) {
-        printf("% .*Lf ", dp, p->x[i]);
+        printf("% .*Le ", dp, p->x[i]);
     }
-    printf("%s]%s % .*Lf\n", GRY, NRM, dp, p->f);
+    printf("%s]%s % .*Le\n", GRY, NRM, dp, p->f);
 }

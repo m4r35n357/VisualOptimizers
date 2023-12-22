@@ -21,18 +21,18 @@ nm-%: %.o nelder_mead.o main.o
 .PHONY: test ctags clean depclean
 
 test: all
-	@./nm-ackley 15 0 0 1.0 -2.10 -3.04 4.50 
-	@./nm-sphere 15 0 0 1.0 -2.10 -3.04 4.50
-	@./nm-hartmann3 15 0 0 1.0 0.5 0.5 0.5
-	@#./nm-hartmann6 15 0 0 1.0 0.5 0.5 0.5 0.5 0.5 0.5
-	@./nm-rosenbrock 15 0 0 1.0 1.0 0.0
-	@./nm-rosenbrock 15 0 0 1.0 -1.0 0.0
-	@./nm-rosenbrock 15 0 0 1.0 -1.0 1.0
-	@./nm-himmelblau 15 0 0 1.0  3.0  3.0
-	@./nm-himmelblau 15 0 0 1.0  3.0 -3.0
-	@./nm-himmelblau 15 0 0 1.0 -3.0  3.0
-	@./nm-himmelblau 15 0 0 1.0 -3.0 -3.0
-	@./nm-beale 15 0 0 1.0 0.0 0.0
+	@./nm-ackley 6 0 0 1.0 -2.10 -3.04 4.50 
+	@./nm-sphere 6 0 0 1.0 -2.10 -3.04 4.50
+	@./nm-hartmann3 6 0 0 1.0 0.5 0.5 0.5
+	@#./nm-hartmann6 6 0 0 1.0 0.5 0.5 0.5 0.5 0.5 0.5
+	@./nm-rosenbrock 6 0 0 1.0 1.0 0.0
+	@./nm-rosenbrock 6 0 0 1.0 -1.0 0.0
+	@./nm-rosenbrock 6 0 0 1.0 -1.0 1.0
+	@./nm-himmelblau 6 0 0 1.0  3.0  3.0
+	@./nm-himmelblau 6 0 0 1.0  3.0 -3.0
+	@./nm-himmelblau 6 0 0 1.0 -3.0  3.0
+	@./nm-himmelblau 6 0 0 1.0 -3.0 -3.0
+	@./nm-beale 6 0 0 1.0 0.0 0.0
 
 ctags:
 	@/usr/bin/ctags *.h *.c
