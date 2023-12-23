@@ -5,6 +5,9 @@
 #include <math.h>
 #include "nelder_mead.h"
 
+/*
+ * Initial point at centroid, all vertices equally spaced
+ */
 simplex *regular (int n, real size, const point *centre) {
     simplex *s = malloc(sizeof (simplex));
     s->n = n;
@@ -33,7 +36,10 @@ simplex *regular (int n, real size, const point *centre) {
     return s;
 }
 
- real distance (int n, const point *a, const point *b) {
+/*
+ * Euclidean distance between two points
+ */
+real distance (int n, const point *a, const point *b) {
     real sum = 0.0L;
     for (int j = 0; j < n; j++) {
         sum += SQR(a->x[j] - b->x[j]);
@@ -59,10 +65,10 @@ void nelder_mead (int n, const point *start, point *solution, const model *args,
     point reflected, expanded, contracted, centre, *best, *worst;
 
     // allocate memory for internal points
-    reflected.x = malloc((size_t)n * sizeof(real));  CHECK(reflected.x);
-    expanded.x = malloc((size_t)n * sizeof(real));   CHECK(expanded.x);
-    contracted.x = malloc((size_t)n * sizeof(real)); CHECK(contracted.x);
-    centre.x = malloc((size_t)n * sizeof(real));     CHECK(centre.x);
+    reflected.x = malloc((size_t)n * sizeof (real));  CHECK(reflected.x);
+    expanded.x = malloc((size_t)n * sizeof (real));   CHECK(expanded.x);
+    contracted.x = malloc((size_t)n * sizeof (real)); CHECK(contracted.x);
+    centre.x = malloc((size_t)n * sizeof (real));     CHECK(centre.x);
 
     int iter_count = 0;
     int eval_count = 1;  // already done one in main.c!
@@ -179,7 +185,7 @@ void sort (simplex *s) {
  */
 void get_centroid (const simplex *s, point *c) {
     for (int j = 0; j < s->n; j++) {
-        c->x[j] = 0;
+        c->x[j] = 0.0L;
         for (int i = 0; i < s->n; i++) {
             c->x[j] += s->p[i].x[j];
         }
@@ -193,21 +199,8 @@ void get_centroid (const simplex *s, point *c) {
 int processing (const simplex *s, int eval_count, int iter_count, const optimset *opt) {
     CHECK(eval_count <= opt->max_eval);
     CHECK(iter_count <= opt->max_iter);
-    // check tolerance condition on fx - input simplex is assumed to be sorted
     const int n = s->n;
-    const real condf = s->p[n].f - s->p[0].f;
-    // check tolerance condition on x
-    real condx = -1.0L;
-    for (int i = 1; i < n + 1; i++) {
-        for (int j = 0; j < n; j++) {
-            const real temp = fabsl(s->p[0].x[j] - s->p[i].x[j]);
-            if (condx < temp) {
-                condx = temp;
-            }
-        }
-    }
-    // continue if both tolx or tolf condition is not met
-    return condx > opt->tolx || condf > opt->tolf;
+    return distance(n, s->p, s->p + n) > opt->tolx || (s->p[n].f - s->p[0].f) > opt->tolf;
 }
 
 /*

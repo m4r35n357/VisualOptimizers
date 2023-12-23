@@ -26,7 +26,7 @@ int main(int argc, const char *argv[]) {
     CHECK(opt.max_iter >= 1 && opt.max_iter <= 100000);
     CHECK(opt.max_eval >= 1 && opt.max_eval <= 100000);
     CHECK(opt.adaptive_scaling == 0 || opt.adaptive_scaling == 1);
-    CHECK(opt.simplex_scaling >= 1.0e-3L && opt.simplex_scaling <= 1.0e3L);
+    CHECK(opt.simplex_scaling >= 1.0e-12L && opt.simplex_scaling <= 1.0e3L);
 
     point start, solution;
     const int n = argc - 10;
