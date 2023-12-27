@@ -19,17 +19,17 @@ simplex *regular (int n, real size, const point *centre) {
         }
     }
     real b = 0.0L;
-    for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
         real c = sqrtl(1.0L - b);
-        s->p[i].x[i] = c;
+        s->p[j].x[j] = c;
         real r = - (1.0L / n + b) / c;
-        for (int j = i + 1; j < n + 1; j++) {
-            s->p[j].x[i] = r;
+        for (int i = j + 1; i < n + 1; i++) {
+            s->p[i].x[j] = r;
         }
         b += SQR(r);
     }
-    for (int i = 0; i < n + 1; i++) {  // simplex vertices
-        for (int j = 0; j < n; j++) {  // coordinates
+    for (int i = 0; i < n + 1; i++) {
+        for (int j = 0; j < n; j++) {
             s->p[i].x[j] = size * s->p[i].x[j] + centre->x[j];
         }
     }
