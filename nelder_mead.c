@@ -55,77 +55,79 @@ real distance (int n, const point *a, const point *b) {
  * - args are the optional arguments of cost_function
  * - opt are the optimisation settings
  */
-simplex *nelder_mead (int n, const point *start, point *solution, const model *args, const optimset *opt) {
+simplex *nelder_mead (int n, const point *start, point *solution, const model *m, const optimset *o) {
     real ALPHA = 1.0L;
-    real GAMMA = opt->adaptive_scaling ? 1.0L + 2.0L / n : 2.0L;
-    real RHO = opt->adaptive_scaling ? 0.75L - 0.5L / n : 0.5L;
-    real SIGMA = opt->adaptive_scaling ? 1.0L - 1.0L / n : 0.5L;
+    real GAMMA = o->adaptive_scaling ? 1.0L + 2.0L / n : 2.0L;
+    real RHO = o->adaptive_scaling ? 0.75L - 0.5L / n : 0.5L;
+    real SIGMA = o->adaptive_scaling ? 1.0L - 1.0L / n : 0.5L;
 
-    // internal points and labels
-    point reflected, expanded, contracted, centre, *best, *worst;
-
-    // allocate memory for internal points
-    reflected.x = malloc((size_t)n * sizeof (real));  CHECK(reflected.x);
-    expanded.x = malloc((size_t)n * sizeof (real));   CHECK(expanded.x);
-    contracted.x = malloc((size_t)n * sizeof (real)); CHECK(contracted.x);
-    centre.x = malloc((size_t)n * sizeof (real));     CHECK(centre.x);
+    // labels
+    point *best, *worst, *second_worst;
 
     // initial simplex has size n + 1 where n is the dimensionality of the data
-    simplex *s = regular(n, opt->simplex_scaling, start);
+    simplex *s = regular(n, o->simplex_scaling, start);
+    // allocate memory for internal points
+    s->reflected = malloc(sizeof (point));  CHECK(s->reflected);
+    s->expanded = malloc(sizeof (point));   CHECK(s->expanded);
+    s->contracted = malloc(sizeof (point)); CHECK(s->contracted);
+    s->centre = malloc(sizeof (point));     CHECK(s->centre);
+    s->reflected->x = malloc((size_t)n * sizeof (real));  CHECK(s->reflected->x);
+    s->expanded->x = malloc((size_t)n * sizeof (real));   CHECK(s->expanded->x);
+    s->contracted->x = malloc((size_t)n * sizeof (real)); CHECK(s->contracted->x);
+    s->centre->x = malloc((size_t)n * sizeof (real));     CHECK(s->centre->x);
     s->iterations = 0;
-    s->evaluations = 1;  // already done one in main.c!
+    s->evaluations = 0;
     for (int i = 0; i < n + 1; i++) {  // simplex vertices
-        cost(n, s->p + i, args);
+        cost(n, s->p + i, m);
         s->evaluations++;
     }
     sort(s);
     best = s->p;
     worst = s->p + n;
-    printf(opt->fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter %s% .*Lf\n",
-            GRY, NRM, opt->diplay_precision, distance(n, best, worst));
+    second_worst = worst - 1;
+    printf(o->fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter %s% .*Lf\n",
+            GRY, NRM, o->diplay_precision, distance(n, best, worst));
 
-    while (processing(s, opt)) {
-    	s->iterations++;
-        if (opt->verbose) printf(" %04d %04d  ", s->iterations, s->evaluations);
+    while (processing(s, o)) {
         int shrink = 0;
-        get_centroid(s, &centre);
+        get_centroid(s, s->centre);
 
-        project(&reflected, n, &centre, ALPHA, &centre, worst);
-        cost(n, &reflected, args);
+        project(s->reflected, n, s->centre, ALPHA, s->centre, worst);
+        cost(n, s->reflected, m);
         s->evaluations++;
-        if (reflected.f < best->f) {
-            project(&expanded, n, &centre, GAMMA, &reflected, &centre);
-            cost(n, &expanded, args);
+        if (s->reflected->f < best->f) {
+            project(s->expanded, n, s->centre, GAMMA, s->reflected, s->centre);
+            cost(n, s->expanded, m);
             s->evaluations++;
-            if (expanded.f < reflected.f) {
-                if (opt->verbose) printf("expand        ");
-                copy_point(n, &expanded, worst);
+            if (s->expanded->f < s->reflected->f) {
+                if (o->verbose) printf("expand        ");
+                copy_point(n, s->expanded, worst);
             } else {
-                if (opt->verbose) printf("reflect       ");
-                copy_point(n, &reflected, worst);
+                if (o->verbose) printf("reflect       ");
+                copy_point(n, s->reflected, worst);
             }
         } else {
-            if (reflected.f < (worst - 1)->f) {
-                if (opt->verbose) printf("reflect       ");
-                copy_point(n, &reflected, worst);
+            if (s->reflected->f < second_worst->f) {
+                if (o->verbose) printf("reflect       ");
+                copy_point(n, s->reflected, worst);
             } else {
-                if (reflected.f < worst->f) {
-                    project(&contracted, n, &centre, RHO, &reflected, &centre);
-                    cost(n, &contracted, args);
+                if (s->reflected->f < worst->f) {
+                    project(s->contracted, n, s->centre, RHO, s->reflected, s->centre);
+                    cost(n, s->contracted, m);
                     s->evaluations++;
-                    if (contracted.f < reflected.f) {
-                        if (opt->verbose) printf("contract_out  ");
-                        copy_point(n, &contracted, worst);
+                    if (s->contracted->f < s->reflected->f) {
+                        if (o->verbose) printf("contract_out  ");
+                        copy_point(n, s->contracted, worst);
                     } else {
                         shrink = 1;
                     }
                 } else {
-                    project(&contracted, n, &centre, RHO, worst, &centre);
-                    cost(n, &contracted, args);
+                    project(s->contracted, n, s->centre, RHO, worst, s->centre);
+                    cost(n, s->contracted, m);
                     s->evaluations++;
-                    if (contracted.f <= worst->f) {
-                        if (opt->verbose) printf("contract_in   ");
-                        copy_point(n, &contracted, worst);
+                    if (s->contracted->f <= worst->f) {
+                        if (o->verbose) printf("contract_in   ");
+                        copy_point(n, s->contracted, worst);
                     } else {
                         shrink = 1;
                     }
@@ -133,21 +135,22 @@ simplex *nelder_mead (int n, const point *start, point *solution, const model *a
             }
         }
         if (shrink) {
-            if (opt->verbose) printf("shrink        ");
+            if (o->verbose) printf("shrink        ");
             for (int i = 1; i < n + 1; i++) {
                 project(s->p + i, n, best, SIGMA, s->p + i, best);
-                cost(n, s->p + i, args);
+                cost(n, s->p + i, m);
                 s->evaluations++;
             }
         }
         sort(s);
+    	s->iterations++;
 
-        if (opt->verbose) { // print current minimum
-            printf("[ ");
+        if (o->verbose) { // print current minimum
+            printf(" %04d %04d  [ ", s->iterations, s->evaluations);
             for (int i = 0; i < n; i++) {
-                printf(opt->fmt ? "% .*Le " : "% .*Lf ", opt->diplay_precision, best->x[i]);
+                printf(o->fmt ? "% .*Le " : "% .*Lf ", o->diplay_precision, best->x[i]);
             }
-            printf(opt->fmt ? "]  % .*Le\n" : "]  % .*Lf\n", opt->diplay_precision, best->f);
+            printf(o->fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o->diplay_precision, best->f);
         }
     }
 

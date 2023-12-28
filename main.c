@@ -28,15 +28,14 @@ int main(int argc, const char *argv[]) {
     CHECK(opt.adaptive_scaling == 0 || opt.adaptive_scaling == 1);
     CHECK(opt.simplex_scaling >= 1.0e-12L && opt.simplex_scaling <= 1.0e3L);
 
-    point start, solution;
     const int n = argc - 10;
+    point start, solution;
     start.x = malloc((size_t)n * sizeof(real));    CHECK(start.x);
-    solution.x = malloc((size_t)n * sizeof(real)); CHECK(solution.x);
-
-    // read initial point from command arguments
+    // set initial point from command arguments
     for (int i = 0; i < n; i++) {
         start.x[i] = strtod(argv[i + 10], NULL);
     }
+    solution.x = malloc((size_t)n * sizeof(real)); CHECK(solution.x);
 
     // cost function parameters
     model *m = get_parameters();
@@ -44,14 +43,14 @@ int main(int argc, const char *argv[]) {
     // begin optimization
     simplex *s = nelder_mead(n, &start, &solution, m, &opt);
 
-    // evaluate and print starting point
+    // print starting point
     printf("%s     Initial ", GRY);
     cost(n, &start, m);
     print_point(n, &start, opt.diplay_precision, opt.fmt);
     // print solution
     printf("    %sSolution ", GRY);
     print_point(n, &solution, opt.diplay_precision, opt.fmt);
-
+    // print stats
     printf("%s  Iterations/Evaluations%s %d/%d\n", GRY, NRM, s->iterations, s->evaluations);
 
     return 0;
