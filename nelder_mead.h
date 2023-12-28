@@ -55,13 +55,13 @@ typedef struct Optimset {
  */
 typedef struct Simplex {
     point *p;
-    int n;
+    int n, iterations, evaluations;
 } simplex;
 
 /*
  * "Simplex" or "Amoeba" optimizer
  */
-void nelder_mead (int, const point *, point *, const model *, const optimset *);
+simplex *nelder_mead (int, const point *, point *, const model *, const optimset *);
 
 /*
  * Utility functions
@@ -76,7 +76,7 @@ void sort (simplex *);
 
 void get_centroid (const simplex *, point *);
 
-int processing (const simplex *, int, int, const optimset *);
+int processing (const simplex *, const optimset *);
 
 void project (const point *, int, const point *, real, const point *, point *);
 

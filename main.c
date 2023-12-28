@@ -42,7 +42,7 @@ int main(int argc, const char *argv[]) {
     model *m = get_parameters();
 
     // begin optimization
-    nelder_mead(n, &start, &solution, m, &opt);
+    simplex *s = nelder_mead(n, &start, &solution, m, &opt);
 
     // evaluate and print starting point
     printf("%s     Initial ", GRY);
@@ -52,9 +52,7 @@ int main(int argc, const char *argv[]) {
     printf("    %sSolution ", GRY);
     print_point(n, &solution, opt.diplay_precision, opt.fmt);
 
-    // free memory
-    free(start.x);
-    free(solution.x);
+    printf("%s  Iterations/Evaluations%s %d/%d\n", GRY, NRM, s->iterations, s->evaluations);
 
     return 0;
 }
