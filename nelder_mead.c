@@ -62,7 +62,7 @@ simplex *nelder_mead (int n, const point *start, point *solution, const model *m
     real SIGMA = o->adaptive_scaling ? 1.0L - 1.0L / n : 0.5L;
 
     // labels
-    point *best, *worst, *second_worst;
+    point *best, *worst, *second_worst, *non_best;
 
     // initial simplex has size n + 1 where n is the dimensionality of the data
     simplex *s = regular(n, o->simplex_scaling, start);
@@ -92,11 +92,11 @@ simplex *nelder_mead (int n, const point *start, point *solution, const model *m
         int shrink = 0;
         get_centroid(s, s->centre);
 
-        project(s->reflected, n, s->centre, ALPHA, s->centre, worst);
+        project(s->reflected, n, s->centre, ALPHA, worst, s->centre);
         cost(n, s->reflected, m);
         s->evaluations++;
         if (s->reflected->f < best->f) {
-            project(s->expanded, n, s->centre, GAMMA, s->reflected, s->centre);
+            project(s->expanded, n, s->centre, GAMMA, worst, s->centre);
             cost(n, s->expanded, m);
             s->evaluations++;
             if (s->expanded->f < s->reflected->f) {
@@ -112,7 +112,7 @@ simplex *nelder_mead (int n, const point *start, point *solution, const model *m
                 copy_point(n, s->reflected, worst);
             } else {
                 if (s->reflected->f < worst->f) {
-                    project(s->contracted, n, s->centre, RHO, s->reflected, s->centre);
+                    project(s->contracted, n, s->centre, RHO, worst, s->centre);
                     cost(n, s->contracted, m);
                     s->evaluations++;
                     if (s->contracted->f < s->reflected->f) {
@@ -122,7 +122,7 @@ simplex *nelder_mead (int n, const point *start, point *solution, const model *m
                         shrink = 1;
                     }
                 } else {
-                    project(s->contracted, n, s->centre, RHO, worst, s->centre);
+                    project(s->contracted, n, s->centre, RHO, s->centre, worst);
                     cost(n, s->contracted, m);
                     s->evaluations++;
                     if (s->contracted->f <= worst->f) {
@@ -137,7 +137,8 @@ simplex *nelder_mead (int n, const point *start, point *solution, const model *m
         if (shrink) {
             if (o->verbose) printf("shrink        ");
             for (int i = 1; i < n + 1; i++) {
-                project(s->p + i, n, best, SIGMA, s->p + i, best);
+            	non_best = s->p + i;
+                project(non_best, n, non_best, SIGMA, non_best, best);
                 cost(n, s->p + i, m);
                 s->evaluations++;
             }
@@ -197,11 +198,11 @@ int processing (const simplex *s, const optimset *opt) {
 }
 
 /*
- * Extend a point from p in the direction of (pa - pb), scaled by factor
+ * Project from a starting point along a line (pb - pa), scaled by factor
  */
-void project (const point *new, int n, const point *p, real factor, const point *pa, point *pb) {
+void project (const point *new, int n, const point *start, real factor, const point *pa, point *pb) {
     for (int j = 0; j < n; j++) {
-        new->x[j] = p->x[j] + factor * (pa->x[j] - pb->x[j]);
+        new->x[j] = start->x[j] + factor * (pb->x[j] - pa->x[j]);
     }
 }
 
