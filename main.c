@@ -40,8 +40,11 @@ int main(int argc, const char *argv[]) {
     // cost function parameters
     model *m = get_model();
 
+    // get a simplex
+    simplex *s = get_simplex(n, opt.simplex_scaling, &start, m);
+
     // begin optimization
-    simplex *s = nelder_mead(n, &start, &solution, m, &opt);
+    nelder_mead(s, &solution, m, &opt);
 
     // print starting point
     printf("%s     Initial ", GRY);
