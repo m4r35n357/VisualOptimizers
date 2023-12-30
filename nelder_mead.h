@@ -39,14 +39,14 @@
  * Optimizer settings
  */
 typedef struct Optimset {
-    real tolx;    // tolerance on the simplex solutions coordinates
-    real tolf;    // tolerance on the function value
-    int max_iter;   // maximum number of allowed iterations
-    int max_eval;   // maximum number of allowed function evaluations
-    int verbose;    // toggle verbose output during minimization
-    int adaptive_scaling;  // simplex updates reduced for dimension > 2
-    real simplex_scaling;  // size of initial simplex
-    int diplay_precision;  // significant figures in floats/exponentials
+    real x_tolerance;    // tolerance on the simplex solutions coordinates
+    real f_tolerance;    // tolerance on the function value
+    int max_iterations;   // maximum number of allowed iterations
+    int max_evaluations;   // maximum number of allowed function evaluations
+    int debug;    // toggle verbose output during minimization
+    int adaptive;  // simplex updates reduced for dimension > 2
+    real size;  // size of initial simplex
+    int precision;  // significant figures in float/exponential output
     int fmt;  // fixed or exponential floating point format
 } optimset;
 
@@ -54,7 +54,7 @@ typedef struct Optimset {
  * The "simplex" containing an array of n + 1 points each of dimension n
  */
 typedef struct Simplex {
-    point *p, *reflected, *expanded, *contracted, *centre;
+    point *p, *reflect, *expand, *contract, *centre;
     int n, iterations, evaluations;
 } simplex;
 
@@ -77,8 +77,6 @@ int compare (const void *, const void *);
 void sort (simplex *);
 
 void get_centroid (const simplex *, point *);
-
-int processing (const simplex *, const optimset *);
 
 void project (const point *, int, const point *, real, const point *, point *);
 

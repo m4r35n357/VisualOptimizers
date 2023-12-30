@@ -4,7 +4,7 @@
 
 struct Parameters { real a, b; };
 
-static void himmelblau (int n, point *p, const parameters *m) { (void)n;
+static void himmelblau (point *p, int n, const parameters *m) { (void)n;
     p->f = SQR(SQR(p->x[0]) + p->x[1] - m->a) + SQR(p->x[0] + SQR(p->x[1]) - m->b);
 }
 
@@ -13,6 +13,6 @@ model *get_model () {
     m->p = malloc(sizeof (parameters));
     m->p->a = 11.0L;
     m->p->b = 7.0L;
-    m->c = himmelblau;
+    m->cost = himmelblau;
     return m;
 }

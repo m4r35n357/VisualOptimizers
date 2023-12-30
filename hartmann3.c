@@ -17,7 +17,7 @@ real P[4][3] = {{0.3689L, 0.1170L, 0.2673L},
                   {0.1091L, 0.8732L, 0.5547L},
                   {0.0381L, 0.5743L, 0.8828L}};
 
-static void hartmann3 (int n, point *p, const parameters *m) { (void)n; (void)m;
+static void hartmann3 (point *p, int n, const parameters *m) { (void)n; (void)m;
     real outer = 0.0L;
     for (int i = 0; i < 4; i++) {
         real inner = 0.0L;
@@ -32,6 +32,6 @@ static void hartmann3 (int n, point *p, const parameters *m) { (void)n; (void)m;
 model *get_model () {
     model *m = malloc(sizeof (model));
     m->p = NULL;
-    m->c = hartmann3;
+    m->cost = hartmann3;
     return m;
 }

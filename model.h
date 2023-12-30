@@ -20,14 +20,14 @@ typedef struct Parameters parameters;
 /*
  * Function to minimize
  */
-typedef void (*cost_function)(int, point *, const parameters *);
+typedef void (*cost_function)(point *, int, const parameters *);
 
 /*
  * Cost function interface
  */
 typedef struct Model {
   parameters *p;
-  cost_function c;
+  cost_function cost;
 } model;
 
 /*
