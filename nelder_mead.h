@@ -68,6 +68,8 @@ simplex *nelder_mead (int, const point *, point *, const model *, const optimset
  */
 simplex *regular (int, real, const point *);
 
+simplex *get_simplex (int, real, const point *, const model *);
+
 real distance (int, const point *, const point *);
 
 int compare (const void *, const void *);

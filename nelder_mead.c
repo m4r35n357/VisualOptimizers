@@ -36,6 +36,28 @@ simplex *regular (int n, real size, const point *centre) {
     return s;
 }
 
+simplex *get_simplex (int n, real size, const point *start, const model *m) {
+    // initial simplex has size n + 1 where n is the dimensionality of the data
+    simplex *s = regular(n, size, start);
+    // allocate memory for trial points
+    s->reflected = malloc(sizeof (point));  CHECK(s->reflected);
+    s->expanded = malloc(sizeof (point));   CHECK(s->expanded);
+    s->contracted = malloc(sizeof (point)); CHECK(s->contracted);
+    s->centre = malloc(sizeof (point));     CHECK(s->centre);
+    s->reflected->x = malloc((size_t)n * sizeof (real));  CHECK(s->reflected->x);
+    s->expanded->x = malloc((size_t)n * sizeof (real));   CHECK(s->expanded->x);
+    s->contracted->x = malloc((size_t)n * sizeof (real)); CHECK(s->contracted->x);
+    s->centre->x = malloc((size_t)n * sizeof (real));     CHECK(s->centre->x);
+    s->iterations = 0;
+    s->evaluations = 0;
+    for (int i = 0; i < n + 1; i++) {  // simplex vertices
+        m->c(n, s->p + i, m->p);
+        s->evaluations++;
+    }
+    sort(s);
+    return s;
+}
+
 /*
  * Euclidean distance between two points
  */
@@ -61,30 +83,10 @@ simplex *nelder_mead (int n, const point *start, point *solution, const model *m
     real RHO = o->adaptive_scaling ? 0.75L - 0.5L / n : 0.5L;
     real SIGMA = o->adaptive_scaling ? 1.0L - 1.0L / n : 0.5L;
 
-    // labels
-    point *best, *worst, *second_worst, *non_best;
-
-    // initial simplex has size n + 1 where n is the dimensionality of the data
-    simplex *s = regular(n, o->simplex_scaling, start);
-    // allocate memory for internal points
-    s->reflected = malloc(sizeof (point));  CHECK(s->reflected);
-    s->expanded = malloc(sizeof (point));   CHECK(s->expanded);
-    s->contracted = malloc(sizeof (point)); CHECK(s->contracted);
-    s->centre = malloc(sizeof (point));     CHECK(s->centre);
-    s->reflected->x = malloc((size_t)n * sizeof (real));  CHECK(s->reflected->x);
-    s->expanded->x = malloc((size_t)n * sizeof (real));   CHECK(s->expanded->x);
-    s->contracted->x = malloc((size_t)n * sizeof (real)); CHECK(s->contracted->x);
-    s->centre->x = malloc((size_t)n * sizeof (real));     CHECK(s->centre->x);
-    s->iterations = 0;
-    s->evaluations = 0;
-    for (int i = 0; i < n + 1; i++) {  // simplex vertices
-        m->c(n, s->p + i, m->p);
-        s->evaluations++;
-    }
-    sort(s);
-    best = s->p;
-    worst = s->p + n;
-    second_worst = worst - 1;
+    simplex *s = get_simplex(n, o->simplex_scaling, start, m);
+    point *best = s->p;
+    point *worst = s->p + n;
+    point *second_worst = worst - 1;
     printf(o->fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter %s% .*Lf\n",
             GRY, NRM, o->diplay_precision, distance(n, best, worst));
 
@@ -137,7 +139,7 @@ simplex *nelder_mead (int n, const point *start, point *solution, const model *m
         if (shrink) {
             if (o->verbose) printf("shrink        ");
             for (int i = 1; i < n + 1; i++) {
-            	non_best = s->p + i;
+            	point *non_best = s->p + i;
                 project(non_best, n, non_best, SIGMA, non_best, best);
                 m->c(n, s->p + i, m->p);
                 s->evaluations++;
