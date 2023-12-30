@@ -3,7 +3,7 @@
 #include <math.h>
 #include "model.h"
 
-struct Model { real _; };
+struct Parameters { real _; };
 
 real alpha[4] = {1.0L, 1.2L, 3.0L, 3.2L};
 
@@ -17,11 +17,14 @@ real P[4][6] = {{0.1312L, 0.1696L, 0.5569L, 0.0124L, 0.8283L, 0.5886L},
                   {0.2348L, 0.1451L, 0.3522L, 0.2883L, 0.3047L, 0.6650L},
                   {0.4047L, 0.8828L, 0.8732L, 0.5743L, 0.1091L, 0.0381L}};
 
-model *get_parameters () {
-    return NULL;
+model *get_model () {
+	model *m = malloc(sizeof (model));
+    m->p = NULL;
+    m->c = cost;
+    return m;
 }
 
-void cost (int n, point *p, const model *m) { (void)n; (void)m;
+void cost (int n, point *p, const parameters *m) { (void)n; (void)m;
     real outer = 0.0L;
     for (int i = 0; i < 4; i++) {
         real inner = 0.0L;

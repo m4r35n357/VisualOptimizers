@@ -3,13 +3,16 @@
 #include <math.h>
 #include "model.h"
 
-struct Model { real _; };
+struct Parameters { real _; };
 
-model *get_parameters () {
-    return NULL;
+model *get_model () {
+	model *m = malloc(sizeof (model));
+    m->p = NULL;
+    m->c = cost;
+    return m;
 }
 
-void cost (int n, point *p, const model *m) { (void)m;
+void cost (int n, point *p, const parameters *m) { (void)m;
     real sum = 0.0L;
     for (int i = 0; i < n; i++) {
         sum += SQR(p->x[i]);

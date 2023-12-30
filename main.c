@@ -38,14 +38,14 @@ int main(int argc, const char *argv[]) {
     solution.x = malloc((size_t)n * sizeof(real)); CHECK(solution.x);
 
     // cost function parameters
-    model *m = get_parameters();
+    model *m = get_model();
 
     // begin optimization
-    simplex *s = nelder_mead(n, &start, &solution, m, &opt);
+    simplex *s = nelder_mead(n, &start, &solution, m->p, &opt);
 
     // print starting point
     printf("%s     Initial ", GRY);
-    cost(n, &start, m);
+    m->c(n, &start, m->p);
     print_point(n, &start, opt.diplay_precision, opt.fmt);
     // print solution
     printf("    %sSolution ", GRY);

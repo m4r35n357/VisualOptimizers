@@ -3,13 +3,15 @@
 #include <math.h>
 #include "model.h"
 
-struct Model { real a, b, c; };
+struct Parameters { real a, b, c; };
 
-model *get_parameters () {
-    model *m = malloc(sizeof (model));
-    m->a = 20.0L;
-    m->b = 0.2L;
-    m->c = 2.0L * acosl(-1.0L);
+model *get_model () {
+	model *m = malloc(sizeof (model));
+    m->p = malloc(sizeof (parameters));
+    m->p->a = 20.0L;
+    m->p->b = 0.2L;
+    m->p->c = 2.0L * acosl(-1.0L);
+    m->c = cost;
     return m;
 }
 
@@ -20,7 +22,7 @@ model *get_parameters () {
 // - arg contains the parameters of the function
 // More details on the function at http://www.sfu.ca/%7Essurjano/ackley.html
 //-----------------------------------------------------------------------------
-void cost (int n, point *p, const model *m) {
+void cost (int n, point *p, const parameters *m) {
     // cost function computation for arguments of exp
     real sum_sqr = 0.0L;
     real sum_cos = 0.0L;

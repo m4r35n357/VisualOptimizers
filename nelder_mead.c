@@ -55,7 +55,7 @@ real distance (int n, const point *a, const point *b) {
  * - args are the optional arguments of cost_function
  * - opt are the optimisation settings
  */
-simplex *nelder_mead (int n, const point *start, point *solution, const model *m, const optimset *o) {
+simplex *nelder_mead (int n, const point *start, point *solution, const parameters *m, const optimset *o) {
     real ALPHA = 1.0L;
     real GAMMA = o->adaptive_scaling ? 1.0L + 2.0L / n : 2.0L;
     real RHO = o->adaptive_scaling ? 0.75L - 0.5L / n : 0.5L;

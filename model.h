@@ -5,11 +5,6 @@ typedef long double real;
 #define SQR(x) ((x) * (x))
 
 /*
- * Model parameters
- */
-typedef struct Model model;
-
-/*
  * Point is an array of dimension n together with a cost function value
  */
 typedef struct Point {
@@ -18,11 +13,26 @@ typedef struct Point {
 } point;
 
 /*
- * Initialize model
+ * Model parameters
  */
-model *get_parameters (void);
+typedef struct Parameters parameters;
 
 /*
  * Function to minimize
  */
-void cost (int, point *, const model *);
+void cost (int, point *, const parameters *);
+
+typedef void (*cost_function)(int, point *, const parameters *);
+
+/*
+ * Cost function interface
+ */
+typedef struct Model {
+  parameters *p;
+  cost_function c;
+} model;
+
+/*
+ * Initialize model
+ */
+model *get_model (void);
