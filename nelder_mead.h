@@ -78,7 +78,7 @@ void sort (simplex *);
 
 void get_centroid (const simplex *, point *);
 
-void project (const point *, int, const point *, real, const point *, point *);
+void project (point *, simplex *, const model *, const point *, real, const point *, point *);
 
 void copy_point (int, const point *, point *);
 

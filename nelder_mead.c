@@ -75,13 +75,9 @@ void nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
         CHECK(s->iterations <= o->max_iterations);
         int shrink = 0;
         get_centroid(s, s->centre);
-        project(s->reflect, s->n, s->centre, ALPHA, worst, s->centre);
-        m->cost(s->reflect, s->n, m->p);
-        s->evaluations++;
+        project(s->reflect, s, m, s->centre, ALPHA, worst, s->centre);
         if (s->reflect->f < best->f) {
-            project(s->expand, s->n, s->centre, GAMMA, worst, s->centre);
-            m->cost(s->expand, s->n, m->p);
-            s->evaluations++;
+            project(s->expand, s, m, s->centre, GAMMA, worst, s->centre);
             if (s->expand->f < s->reflect->f) {
                 if (o->debug) printf("expand        ");
                 copy_point(s->n, s->expand, worst);
@@ -95,9 +91,7 @@ void nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
                 copy_point(s->n, s->reflect, worst);
             } else {
                 if (s->reflect->f < worst->f) {
-                    project(s->contract, s->n, s->centre, RHO, worst, s->centre);
-                    m->cost(s->contract, s->n, m->p);
-                    s->evaluations++;
+                    project(s->contract, s, m, s->centre, RHO, worst, s->centre);
                     if (s->contract->f < s->reflect->f) {
                         if (o->debug) printf("contract_out  ");
                         copy_point(s->n, s->contract, worst);
@@ -105,9 +99,7 @@ void nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
                         shrink = 1;
                     }
                 } else {
-                    project(s->contract, s->n, s->centre, RHO, s->centre, worst);
-                    m->cost(s->contract, s->n, m->p);
-                    s->evaluations++;
+                    project(s->contract, s, m, s->centre, RHO, s->centre, worst);
                     if (s->contract->f <= worst->f) {
                         if (o->debug) printf("contract_in   ");
                         copy_point(s->n, s->contract, worst);
@@ -121,9 +113,7 @@ void nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
             if (o->debug) printf("shrink        ");
             for (int i = 1; i < s->n + 1; i++) {
                 point *non_best = s->p + i;
-                project(non_best, s->n, non_best, SIGMA, non_best, best);
-                m->cost(non_best, s->n, m->p);
-                s->evaluations++;
+                project(non_best, s, m, non_best, SIGMA, non_best, best);
             }
         }
         sort(s);
@@ -167,12 +157,14 @@ void get_centroid (const simplex *s, point *c) {
 }
 
 /*
- * Project from a starting point along a line (pb - pa), scaled by factor
+ * Take the line from pa to pb, shift it to start, and scale it's length by factor
  */
-void project (const point *new, int n, const point *start, real factor, const point *pa, point *pb) {
-    for (int j = 0; j < n; j++) {
+void project (point *new, simplex *s, const model *m, const point *start, real factor, const point *pa, point *pb) {
+    for (int j = 0; j < s->n; j++) {
         new->x[j] = start->x[j] + factor * (pb->x[j] - pa->x[j]);
     }
+    m->cost(new, s->n, m->p);
+    s->evaluations++;
 }
 
 /*
