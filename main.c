@@ -29,30 +29,29 @@ int main(int argc, const char *argv[]) {
     CHECK(opt.simplex_scaling >= 1.0e-12L && opt.simplex_scaling <= 1.0e3L);
 
     const int n = argc - 10;
-    point start, solution;
-    start.x = malloc((size_t)n * sizeof(real));    CHECK(start.x);
+    point *start = get_point(n);
     // set initial point from command arguments
     for (int i = 0; i < n; i++) {
-        start.x[i] = strtod(argv[i + 10], NULL);
+        start->x[i] = strtod(argv[i + 10], NULL);
     }
-    solution.x = malloc((size_t)n * sizeof(real)); CHECK(solution.x);
+    point *solution = get_point(n);
 
     // parameters & cost function
     model *m = get_model();
 
     // get a simplex
-    simplex *s = get_simplex(n, opt.simplex_scaling, &start);
+    simplex *s = get_simplex(n, opt.simplex_scaling, start);
 
     // begin optimization
-    nelder_mead(s, &solution, m, &opt);
+    nelder_mead(s, solution, m, &opt);
 
     // print starting point
     printf("%s     Initial ", GRY);
-    m->c(n, &start, m->p);
-    print_point(n, &start, opt.diplay_precision, opt.fmt);
+    m->c(n, start, m->p);
+    print_point(n, start, opt.diplay_precision, opt.fmt);
     // print solution
     printf("    %sSolution ", GRY);
-    print_point(n, &solution, opt.diplay_precision, opt.fmt);
+    print_point(n, solution, opt.diplay_precision, opt.fmt);
     // print stats
     printf("%s  Iterations/Evaluations%s %d/%d\n", GRY, NRM, s->iterations, s->evaluations);
 

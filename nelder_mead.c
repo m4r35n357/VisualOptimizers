@@ -5,6 +5,12 @@
 #include <math.h>
 #include "nelder_mead.h"
 
+point *get_point (int n) {
+    point *p = malloc(sizeof (point));        CHECK(p);
+    p->x = malloc((size_t)n * sizeof (real)); CHECK(p->x);
+    return p;
+}
+
 /*
  * Initial point at centroid, all vertices equally spaced, trial points allocated
  */
@@ -13,7 +19,7 @@ simplex *get_simplex (int n, real size, const point *start) {
     s->n = n;
     s->p = malloc((size_t)(n + 1) * sizeof (point));    CHECK(s->p);
     for (int i = 0; i < n + 1; i++) {  // simplex vertices
-        s->p[i].x = malloc((size_t)n * sizeof (real));  CHECK(s->p[i].x);
+        s->p[i] = *get_point(n);
         for (int j = 0; j < n; j++) {  // coordinates
             s->p[i].x[j] = 0.0L;
         }
@@ -33,14 +39,10 @@ simplex *get_simplex (int n, real size, const point *start) {
             s->p[i].x[j] = size * s->p[i].x[j] + start->x[j];
         }
     }
-    s->reflected = malloc(sizeof (point));  CHECK(s->reflected);
-    s->expanded = malloc(sizeof (point));   CHECK(s->expanded);
-    s->contracted = malloc(sizeof (point)); CHECK(s->contracted);
-    s->centre = malloc(sizeof (point));     CHECK(s->centre);
-    s->reflected->x = malloc((size_t)n * sizeof (real));  CHECK(s->reflected->x);
-    s->expanded->x = malloc((size_t)n * sizeof (real));   CHECK(s->expanded->x);
-    s->contracted->x = malloc((size_t)n * sizeof (real)); CHECK(s->contracted->x);
-    s->centre->x = malloc((size_t)n * sizeof (real));     CHECK(s->centre->x);
+    s->reflected = get_point(n);
+    s->expanded = get_point(n);
+    s->contracted = get_point(n);
+    s->centre = get_point(n);
     s->iterations = 0;
     s->evaluations = 0;
     return s;
