@@ -66,9 +66,7 @@ void nelder_mead (simplex *, point *, const model *, const optimset *);
 /*
  * Utility functions
  */
-simplex *regular (int, real, const point *);
-
-simplex *get_simplex (int, real, const point *, const model *);
+simplex *get_simplex (int, real, const point *);
 
 real distance (int, const point *, const point *);
 

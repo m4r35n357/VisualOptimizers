@@ -37,11 +37,11 @@ int main(int argc, const char *argv[]) {
     }
     solution.x = malloc((size_t)n * sizeof(real)); CHECK(solution.x);
 
-    // cost function parameters
+    // parameters & cost function
     model *m = get_model();
 
     // get a simplex
-    simplex *s = get_simplex(n, opt.simplex_scaling, &start, m);
+    simplex *s = get_simplex(n, opt.simplex_scaling, &start);
 
     // begin optimization
     nelder_mead(s, &solution, m, &opt);

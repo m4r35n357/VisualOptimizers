@@ -6,14 +6,14 @@
 #include "nelder_mead.h"
 
 /*
- * Initial point at centroid, all vertices equally spaced
+ * Initial point at centroid, all vertices equally spaced, trial points allocated
  */
-simplex *regular (int n, real size, const point *centre) {
-    simplex *s = malloc(sizeof (simplex));
+simplex *get_simplex (int n, real size, const point *start) {
+    simplex *s = malloc(sizeof (simplex));              CHECK(s);
     s->n = n;
-    s->p = malloc((size_t)(n + 1) * sizeof (point));
+    s->p = malloc((size_t)(n + 1) * sizeof (point));    CHECK(s->p);
     for (int i = 0; i < n + 1; i++) {  // simplex vertices
-        s->p[i].x = malloc((size_t)n * sizeof (real));
+        s->p[i].x = malloc((size_t)n * sizeof (real));  CHECK(s->p[i].x);
         for (int j = 0; j < n; j++) {  // coordinates
             s->p[i].x[j] = 0.0L;
         }
@@ -30,16 +30,9 @@ simplex *regular (int n, real size, const point *centre) {
     }
     for (int i = 0; i < n + 1; i++) {
         for (int j = 0; j < n; j++) {
-            s->p[i].x[j] = size * s->p[i].x[j] + centre->x[j];
+            s->p[i].x[j] = size * s->p[i].x[j] + start->x[j];
         }
     }
-    return s;
-}
-
-simplex *get_simplex (int n, real size, const point *start, const model *m) {
-    // initial simplex has size n + 1 where n is the dimensionality of the data
-    simplex *s = regular(n, size, start);
-    // allocate memory for trial points
     s->reflected = malloc(sizeof (point));  CHECK(s->reflected);
     s->expanded = malloc(sizeof (point));   CHECK(s->expanded);
     s->contracted = malloc(sizeof (point)); CHECK(s->contracted);
@@ -50,11 +43,6 @@ simplex *get_simplex (int n, real size, const point *start, const model *m) {
     s->centre->x = malloc((size_t)n * sizeof (real));     CHECK(s->centre->x);
     s->iterations = 0;
     s->evaluations = 0;
-    for (int i = 0; i < n + 1; i++) {  // simplex vertices
-        m->c(n, s->p + i, m->p);
-        s->evaluations++;
-    }
-    sort(s);
     return s;
 }
 
@@ -70,29 +58,26 @@ real distance (int n, const point *a, const point *b) {
 }
 
 /*
- * Main function
- * - start is the initial point (unchanged in output)
- * - n is the dimension of the data
- * - solution is the minimizer
- * - args are the optional arguments of cost_function
- * - opt are the optimisation settings
+ * Nelder-Mead Optimizer
  */
 void nelder_mead (simplex *s, point *solution, const model *m, const optimset *o) {
     real ALPHA = 1.0L;
     real GAMMA = o->adaptive_scaling ? 1.0L + 2.0L / s->n : 2.0L;
     real RHO = o->adaptive_scaling ? 0.75L - 0.5L / s->n : 0.5L;
     real SIGMA = o->adaptive_scaling ? 1.0L - 1.0L / s->n : 0.5L;
-
     point *best = s->p;
     point *worst = s->p + s->n;
     point *second_worst = worst - 1;
+    for (int i = 0; i < s->n + 1; i++) {  // initial cost at simplex vertices
+        m->c(s->n, s->p + i, m->p);
+        s->evaluations++;
+    }
+    sort(s);
     printf(o->fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter %s% .*Lf\n",
             GRY, NRM, o->diplay_precision, distance(s->n, best, worst));
-
     while (processing(s, o)) {
         int shrink = 0;
         get_centroid(s, s->centre);
-
         project(s->reflected, s->n, s->centre, ALPHA, worst, s->centre);
         m->c(s->n, s->reflected, m->p);
         s->evaluations++;
@@ -138,15 +123,14 @@ void nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
         if (shrink) {
             if (o->verbose) printf("shrink        ");
             for (int i = 1; i < s->n + 1; i++) {
-            	point *non_best = s->p + i;
+                point *non_best = s->p + i;
                 project(non_best, s->n, non_best, SIGMA, non_best, best);
                 m->c(s->n, s->p + i, m->p);
                 s->evaluations++;
             }
         }
         sort(s);
-    	s->iterations++;
-
+        s->iterations++;
         if (o->verbose) { // print current minimum
             printf(" %04d %04d  [ ", s->iterations, s->evaluations);
             for (int i = 0; i < s->n; i++) {
@@ -155,7 +139,6 @@ void nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
             printf(o->fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o->diplay_precision, best->f);
         }
     }
-
     // save solution in output argument
     copy_point(s->n, best, solution);
 }
