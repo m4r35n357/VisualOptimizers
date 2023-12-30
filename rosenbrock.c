@@ -4,6 +4,10 @@
 
 struct Parameters { real a, b; };
 
+static void cost (int n, point *p, const parameters *m) { (void)n;
+    p->f = SQR(m->a - p->x[0]) + m->b * SQR(p->x[1] - SQR(p->x[0]));
+}
+
 model *get_model () {
 	model *m = malloc(sizeof (model));
     m->p = malloc(sizeof (parameters));
@@ -11,8 +15,4 @@ model *get_model () {
     m->p->b = 100.0L;
     m->c = cost;
     return m;
-}
-
-void cost (int n, point *p, const parameters *m) { (void)n;
-    p->f = SQR(m->a - p->x[0]) + m->b * SQR(p->x[1] - SQR(p->x[0]));
 }

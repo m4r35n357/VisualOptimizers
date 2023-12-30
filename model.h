@@ -20,8 +20,6 @@ typedef struct Parameters parameters;
 /*
  * Function to minimize
  */
-void cost (int, point *, const parameters *);
-
 typedef void (*cost_function)(int, point *, const parameters *);
 
 /*

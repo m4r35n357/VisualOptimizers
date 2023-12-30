@@ -61,7 +61,7 @@ typedef struct Simplex {
 /*
  * "Simplex" or "Amoeba" optimizer
  */
-simplex *nelder_mead (int, const point *, point *, const parameters *, const optimset *);
+simplex *nelder_mead (int, const point *, point *, const model *, const optimset *);
 
 /*
  * Utility functions

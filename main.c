@@ -41,7 +41,7 @@ int main(int argc, const char *argv[]) {
     model *m = get_model();
 
     // begin optimization
-    simplex *s = nelder_mead(n, &start, &solution, m->p, &opt);
+    simplex *s = nelder_mead(n, &start, &solution, m, &opt);
 
     // print starting point
     printf("%s     Initial ", GRY);

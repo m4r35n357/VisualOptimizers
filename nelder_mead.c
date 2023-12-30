@@ -55,7 +55,7 @@ real distance (int n, const point *a, const point *b) {
  * - args are the optional arguments of cost_function
  * - opt are the optimisation settings
  */
-simplex *nelder_mead (int n, const point *start, point *solution, const parameters *m, const optimset *o) {
+simplex *nelder_mead (int n, const point *start, point *solution, const model *m, const optimset *o) {
     real ALPHA = 1.0L;
     real GAMMA = o->adaptive_scaling ? 1.0L + 2.0L / n : 2.0L;
     real RHO = o->adaptive_scaling ? 0.75L - 0.5L / n : 0.5L;
@@ -78,7 +78,7 @@ simplex *nelder_mead (int n, const point *start, point *solution, const paramete
     s->iterations = 0;
     s->evaluations = 0;
     for (int i = 0; i < n + 1; i++) {  // simplex vertices
-        cost(n, s->p + i, m);
+        m->c(n, s->p + i, m->p);
         s->evaluations++;
     }
     sort(s);
@@ -93,11 +93,11 @@ simplex *nelder_mead (int n, const point *start, point *solution, const paramete
         get_centroid(s, s->centre);
 
         project(s->reflected, n, s->centre, ALPHA, worst, s->centre);
-        cost(n, s->reflected, m);
+        m->c(n, s->reflected, m->p);
         s->evaluations++;
         if (s->reflected->f < best->f) {
             project(s->expanded, n, s->centre, GAMMA, worst, s->centre);
-            cost(n, s->expanded, m);
+            m->c(n, s->expanded, m->p);
             s->evaluations++;
             if (s->expanded->f < s->reflected->f) {
                 if (o->verbose) printf("expand        ");
@@ -113,7 +113,7 @@ simplex *nelder_mead (int n, const point *start, point *solution, const paramete
             } else {
                 if (s->reflected->f < worst->f) {
                     project(s->contracted, n, s->centre, RHO, worst, s->centre);
-                    cost(n, s->contracted, m);
+                    m->c(n, s->contracted, m->p);
                     s->evaluations++;
                     if (s->contracted->f < s->reflected->f) {
                         if (o->verbose) printf("contract_out  ");
@@ -123,7 +123,7 @@ simplex *nelder_mead (int n, const point *start, point *solution, const paramete
                     }
                 } else {
                     project(s->contracted, n, s->centre, RHO, s->centre, worst);
-                    cost(n, s->contracted, m);
+                    m->c(n, s->contracted, m->p);
                     s->evaluations++;
                     if (s->contracted->f <= worst->f) {
                         if (o->verbose) printf("contract_in   ");
@@ -139,7 +139,7 @@ simplex *nelder_mead (int n, const point *start, point *solution, const paramete
             for (int i = 1; i < n + 1; i++) {
             	non_best = s->p + i;
                 project(non_best, n, non_best, SIGMA, non_best, best);
-                cost(n, s->p + i, m);
+                m->c(n, s->p + i, m->p);
                 s->evaluations++;
             }
         }
