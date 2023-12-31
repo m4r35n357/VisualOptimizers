@@ -36,8 +36,8 @@ int main(int argc, const char *argv[]) {
     }
     point *solution = get_point(n);
 
-    // parameters & cost function
-    model *m = get_model();
+    // model parameters
+    model *m = get_parameters();
 
     // get a simplex
     simplex *s = get_simplex(n, opt.size, start);
@@ -47,7 +47,7 @@ int main(int argc, const char *argv[]) {
 
     // print starting point
     printf("%s     Initial ", GRY);
-    m->cost(start, n, m->p);
+    cost(n, start, m);
     print_point(n, start, opt.precision, opt.fmt);
     // print solution
     printf("    %sSolution ", GRY);

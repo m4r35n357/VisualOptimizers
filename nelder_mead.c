@@ -64,7 +64,7 @@ void nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
     point *worst = s->p + s->n;
     point *second_worst = worst - 1;
     for (int i = 0; i < s->n + 1; i++) {  // initial cost at simplex vertices
-        m->cost(s->p + i, s->n, m->p);
+        cost(s->n, s->p + i, m);
         s->evaluations++;
     }
     sort(s);
@@ -163,7 +163,7 @@ void project (point *new, simplex *s, const model *m, const point *start, real f
     for (int j = 0; j < s->n; j++) {
         new->x[j] = start->x[j] + factor * (pb->x[j] - pa->x[j]);
     }
-    m->cost(new, s->n, m->p);
+    cost(s->n, new, m);
     s->evaluations++;
 }
 

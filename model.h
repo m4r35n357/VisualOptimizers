@@ -15,22 +15,14 @@ typedef struct Point {
 /*
  * Model parameters
  */
-typedef struct Parameters parameters;
+typedef struct Model model;
 
 /*
  * Function to minimize
  */
-typedef void (*cost_function)(point *, int, const parameters *);
+void cost (int, point *, const model *);
 
 /*
- * Cost function interface
+ * Initialize parameters
  */
-typedef struct Model {
-  parameters *p;
-  cost_function cost;
-} model;
-
-/*
- * Initialize model
- */
-model *get_model (void);
+model *get_parameters (void);
