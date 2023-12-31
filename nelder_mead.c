@@ -1,7 +1,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <math.h>
 #include "nelder_mead.h"
 
@@ -140,7 +139,7 @@ int compare (const void *arg1, const void *arg2) {
 }
 
 void sort (simplex *s) {
-    qsort((void *)(s->p), (size_t)s->n + 1, sizeof(point), compare);
+    qsort((void *)(s->p), (size_t)s->n + 1, sizeof (point), compare);
 }
 
 /*
@@ -177,7 +176,9 @@ point *get_point (int n) {
 }
 
 void copy_point (int n, const point *src, point *dst) {
-    memcpy(dst->x, src->x, (size_t)n * sizeof (real));
+    for (int i = 0; i < n; i++) {
+        dst->x[i] = src->x[i];
+    }
     dst->f = src->f;
 }
 

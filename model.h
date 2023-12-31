@@ -1,4 +1,6 @@
+
 typedef long double real;
+
 /*
  * "Low-noise" squaring for arguments with no side-effects
  */
