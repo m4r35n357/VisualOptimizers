@@ -1,6 +1,9 @@
 
 CFLAGS=-std=c99 -O3 -fno-math-errno -flto
 WARNINGS=-Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wconversion -Wredundant-decls -Wmissing-declarations
+LIB_STD=-lm
+LIB_GL=-lGLEW -lglut -lGLU -lGL
+
 
 ifeq ($(CCC),clang)
   CC=/usr/bin/clang
@@ -13,10 +16,13 @@ endif
 %.o: %.c
 	$(CC) $(CFLAGS) -MT $@ -MMD -MP -c -o $@ $< $(WARNINGS)
 
-all: nm-ackley nm-hartmann3 nm-hartmann6 nm-rosenbrock nm-himmelblau nm-beale nm-sphere
+all: nm-ackley nm-hartmann3 nm-hartmann6 nm-rosenbrock nm-himmelblau nm-beale nm-sphere simplex-gl
 
 nm-%: %.o nelder_mead.o main.o
-	$(CC) $(CFLAGS) -o $@ $^ -lm
+	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
+
+simplex-gl: nelder_mead.o sphere.o opengl.o simplex-gl.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
 .PHONY: test ctags clean depclean
 

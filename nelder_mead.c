@@ -54,7 +54,7 @@ real distance (int n, const point *a, const point *b) {
 /*
  * Nelder-Mead Optimizer
  */
-void nelder_mead (simplex *s, point *solution, const model *m, const optimset *o) {
+bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o) {
     real ALPHA = 1.0L;
     real GAMMA = o->adaptive ? 1.0L + 2.0L / s->n : 2.0L;
     real RHO = o->adaptive ? 0.75L - 0.5L / s->n : 0.5L;
@@ -72,6 +72,7 @@ void nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
     while (distance(s->n, best, worst) > o->x_tolerance || (worst->f - best->f) > o->f_tolerance) {
         CHECK(s->evaluations <= o->max_evaluations);
         CHECK(s->iterations <= o->max_iterations);
+        if (s->looping) goto resume; else s->looping = true;
         int shrink = 0;
         get_centroid(s, s->centre);
         project(s->reflect, s, m, s->centre, ALPHA, worst, s->centre);
@@ -124,9 +125,12 @@ void nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
             }
             printf(o->fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o->precision, best->f);
         }
+        return true;
+        resume: ;
     }
     // save solution in output argument
     copy_point(s->n, best, solution);
+    return s->looping = false;
 }
 
 /*

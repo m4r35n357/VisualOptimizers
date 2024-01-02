@@ -1,4 +1,5 @@
 
+#include <stdbool.h>
 #include "model.h"
 
 #define BASE 10
@@ -56,12 +57,13 @@ typedef struct Optimset {
 typedef struct Simplex {
     point *p, *reflect, *expand, *contract, *centre;
     int n, iterations, evaluations;
+    bool looping;
 } simplex;
 
 /*
  * "Simplex" or "Amoeba" optimizer
  */
-void nelder_mead (simplex *, point *, const model *, const optimset *);
+bool nelder_mead (simplex *, point *, const model *, const optimset *);
 
 /*
  * Utility functions
