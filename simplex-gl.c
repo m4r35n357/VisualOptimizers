@@ -12,9 +12,9 @@
 static simplex *s;  // the simplex
 static model *m;  // the model
 
-point_gl *get_current (void *data) {
-	simplex *_ = (simplex *)data;
-    return (point_gl){(float)_->p[i].x[0], (float)_->x[1], (float)_->x[2]};
+point_gl get_current (void *data) {
+	point *_ = (point *)data;
+    return (point_gl){(float)_->x[0], (float)_->x[1], (float)_->x[2]};
 }
 
 void Animate () {
@@ -34,9 +34,9 @@ void Animate () {
     }
 
     if (!finished && !paused) {
-        if (nelder_mead(c, nb)) {
-            for (int j = 0; j < nb->n; j++) {
-                s->p[j] = get_current_point(s);
+        if (nelder_mead(s, solution, m, &opt)) {
+            for (int j = 0; j < s->n; j++) {
+                s->p[j] = get_current_point(s->p[j]);
             }
         } else finished = true;
         if (stepping) paused = true;

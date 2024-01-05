@@ -83,7 +83,7 @@ void osd_summary (void);
 /*
  * Extract current coordinates from data
  */
-point_gl *get_current (void *data);
+point_gl get_current (void *data);
 
 /*
  * Push latest point to the track buffer
