@@ -1,7 +1,7 @@
 /*
- *  N-Body OpenGL display
+ *  Nelder-Mead OpenGL display
  *
- * (c) 2018-2023 m4r35n357@gmail.com (Ian Smith), for licencing see the LICENCE file
+ * (c) 2018-2024 m4r35n357@gmail.com (Ian Smith), for licencing see the LICENCE file
  */
 
 #include <stdio.h>
@@ -11,6 +11,8 @@
 
 static simplex *s;  // the simplex
 static model *m;  // the model
+static optimset opt;
+static point *solution;
 
 point_gl get_current (void *data) {
 	point *_ = (point *)data;
@@ -36,7 +38,7 @@ void Animate () {
     if (!finished && !paused) {
         if (nelder_mead(s, solution, m, &opt)) {
             for (int j = 0; j < s->n; j++) {
-                s->p[j] = get_current_point(s->p[j]);
+                s->p[j] = get_current(&s->p[j]);
             }
         } else finished = true;
         if (stepping) paused = true;
@@ -55,7 +57,7 @@ int main (int argc, char **argv) {
     CHECK(argc >= 12);
 
     // optimizer settings
-    optimset opt = {
+    opt = (optimset){
         .precision = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
         .debug = (int)strtol(argv[3], NULL, BASE),
@@ -81,7 +83,7 @@ int main (int argc, char **argv) {
     for (int i = 0; i < n; i++) {
         start->x[i] = strtod(argv[i + 10], NULL);
     }
-    point *solution = get_point(n);
+    solution = get_point(n);
 
     // model parameters
     m = get_parameters();
