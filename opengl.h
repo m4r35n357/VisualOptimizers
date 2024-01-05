@@ -12,7 +12,7 @@
  */
 typedef struct triple_f {
     float a, b, c;
-} rgb, point;
+} rgb, point_gl;
 
 /*
  * Particle/Body tracks
@@ -71,7 +71,7 @@ rgb get_colour (int index);
  */
 void line_trail (trail *track);
 
-void line_position (point p, rgb colour, float scale);
+void line_position (point_gl p, rgb colour, float scale);
 
 /*
  * OSD/HUD
@@ -83,7 +83,7 @@ void osd_summary (void);
 /*
  * Extract current coordinates from data
  */
-point get_current_point (void *data);
+point_gl get_current_point (void *data);
 
 /*
  * Push latest point to the track buffer

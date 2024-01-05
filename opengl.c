@@ -137,7 +137,7 @@ void line_trail (trail *track) {
     glEnd();
 }
 
-void line_position (point p, rgb colour, float scale) {
+void line_position (point_gl p, rgb colour, float scale) {
     glColor3f(0.3F, 0.3F, 0.3F);
     glBegin(GL_LINES);
     glVertex3f(0.0F, 0.0F, 0.0F);
@@ -158,6 +158,6 @@ void osd (int x, int y, char *string) {
 void osd_summary () {
     sprintf(hud, "Elapsed: %.1fs  CPU: %.1fs",
                   elapsed = finished ? elapsed : 0.001F * (float)glutGet(GLUT_ELAPSED_TIME),
-                  cpu = finished ? cpu : (float)(clock() - since) / CLOCKS_PER_SEC));
+                  cpu = finished ? cpu : (float)(clock() - since) / CLOCKS_PER_SEC);
     osd(10, 10, hud);
 }
