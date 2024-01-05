@@ -84,10 +84,10 @@ int main (int argc, char **argv) {
     point *solution = get_point(n);
 
     // model parameters
-    *m = get_parameters();
+    m = get_parameters();
 
     // get a simplex
-    *s = get_simplex(n, opt.size, start);
+    s = get_simplex(n, opt.size, start);
 
     // begin optimization
     nelder_mead(s, solution, m, &opt);
