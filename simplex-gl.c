@@ -25,7 +25,7 @@ void Animate () {
 
     if (mode == BOTH || mode == POSITION) {
         for (int j = 0; j < 4; j++) {
-            line_position(vertices[j], get_colour(j), 0.1F);
+            line_position(vertices[j], get_colour(j), 1.0F);
         }
     }
 
