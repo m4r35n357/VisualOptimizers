@@ -37,6 +37,7 @@ test: all
 	@./run.sh -b nm-sphere-std -p -2.10,-3.04,4.50
 	@./run.sh -b nm-hartmann3-std -p 0.5,0.5,0.5
 	@#./run.sh -b nm-hartmann6-std -p 0.5,0.5,0.5,0.5,0.5,0.5
+	@./run.sh -b nm-rosenbrock-std -p 1.0,0.0,-1.0
 	@./run.sh -b nm-rosenbrock-std -p 1.0,0.0
 	@./run.sh -b nm-rosenbrock-std -p -1.0,0.0
 	@./run.sh -b nm-rosenbrock-std -p -1.0,1.0
