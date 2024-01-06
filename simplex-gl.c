@@ -23,16 +23,23 @@ vertex get_current (void *data) {
 void Animate () {
     SetupView();
 
-    line((vertex){-10.0F, 0.0F, 0.0F}, (vertex){10.0F, 0.0F, 0.0F}, (rgb){0.3F, 0.3F, 0.3F});
-    line((vertex){0.0F, -10.0F, 0.0F}, (vertex){0.0F, 10.0F, 0.0F}, (rgb){0.3F, 0.3F, 0.3F});
-    line((vertex){0.0F, 0.0F, -10.0F}, (vertex){0.0F, 0.0F, 10.0F}, (rgb){0.3F, 0.3F, 0.3F});
+    line((vertex){-10.0F, 0.0F, 0.0F}, (vertex){10.0F, 0.0F, 0.0F}, get_colour(6));
+    line((vertex){0.0F, -10.0F, 0.0F}, (vertex){0.0F, 10.0F, 0.0F}, get_colour(6));
+    line((vertex){0.0F, 0.0F, -10.0F}, (vertex){0.0F, 0.0F, 10.0F}, get_colour(6));
 
     if (mode == BOTH || mode == POSITION) {
-        for (int i = 0; i < s->n + 1; i++) {
-            for (int k = i; k < s->n + 1; k++) {
-            	line(vertices[i], vertices[k], (rgb){0.3F, 0.3F, 0.3F});
+        for (int i = 0; i < 4; i++) {
+            for (int k = i; k < 4; k++) {
+            	line(vertices[i], vertices[k], get_colour(8));
             }
-            point_position(vertices[i], get_colour(i), 1.0F);
+            int colour;
+            switch (i) {
+                case  0: colour = 4; break;
+                case  2: colour = 0; break;
+                case  3: colour = 3; break;
+                default: colour = 7; break;
+            }
+            point_position(vertices[i], get_colour(colour), 1.0F);
         }
     }
 
@@ -45,7 +52,7 @@ void Animate () {
 
     if (!finished && !paused) {
         if (nelder_mead(s, solution, m, &opt)) {
-            for (int i = 0; i < s->n + 1; i++) {
+            for (int i = 0; i < 4; i++) {
                 vertices[i] = get_current(s->p + i);
             }
         } else finished = true;
