@@ -23,6 +23,10 @@ vertex get_current (void *data) {
 void Animate () {
     SetupView();
 
+    line((vertex){-10.0F, 0.0F, 0.0F}, (vertex){10.0F, 0.0F, 0.0F}, (rgb){0.3F, 0.3F, 0.3F});
+    line((vertex){0.0F, -10.0F, 0.0F}, (vertex){0.0F, 10.0F, 0.0F}, (rgb){0.3F, 0.3F, 0.3F});
+    line((vertex){0.0F, 0.0F, -10.0F}, (vertex){0.0F, 0.0F, 10.0F}, (rgb){0.3F, 0.3F, 0.3F});
+
     if (mode == BOTH || mode == POSITION) {
         for (int i = 0; i < 4; i++) {
             for (int j = i; j < 4; j++) {
