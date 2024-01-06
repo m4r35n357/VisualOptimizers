@@ -98,6 +98,7 @@ int main (int argc, char **argv) {
 
     // get a simplex
     s = get_simplex(n, opt.size, start);
+    s->gl = true;
 
     // print starting point
     printf("%s     Initial ", GRY);

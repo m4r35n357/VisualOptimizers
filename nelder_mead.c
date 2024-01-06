@@ -37,7 +37,7 @@ simplex *get_simplex (int n, real size, const point *start) {
     s->contract = get_point(n);
     s->centre = get_point(n);
     s->iterations = s->evaluations = 0;
-    s->looping = false;
+    s->gl = s->looping = false;
     return s;
 }
 
@@ -63,7 +63,7 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
     point *best = s->p;
     point *worst = s->p + s->n;
     point *second_worst = worst - 1;
-    if (s->looping) goto resume; else s->looping = true;
+    if (s->gl && s->looping) goto resume; else s->looping = true;
     for (int i = 0; i < s->n + 1; i++) {  // initial cost at simplex vertices
         cost(s->n, s->p + i, m);
         s->evaluations++;
@@ -126,7 +126,7 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
             }
             printf(o->fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o->precision, best->f);
         }
-        return true;
+        if (s->gl) return true;
         resume: ;
     }
     // save solution in output argument

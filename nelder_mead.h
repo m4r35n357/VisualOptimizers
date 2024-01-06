@@ -57,7 +57,7 @@ typedef struct Optimset {
 typedef struct Simplex {
     point *p, *reflect, *expand, *contract, *centre;
     int n, iterations, evaluations;
-    bool looping;
+    bool gl, looping;
 } simplex;
 
 /*
