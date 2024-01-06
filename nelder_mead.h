@@ -61,6 +61,11 @@ typedef struct Simplex {
 } simplex;
 
 /*
+ * Optimizer settings
+ */
+optimset get_settings (char **);
+
+/*
  * "Simplex" or "Amoeba" optimizer
  */
 bool nelder_mead (simplex *, point *, const model *, const optimset *);

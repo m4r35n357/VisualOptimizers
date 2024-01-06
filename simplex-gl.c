@@ -72,25 +72,7 @@ int main (int argc, char **argv) {
     CHECK(argc >= 12);
 
     // optimizer settings
-    opt = (optimset){
-        .precision = (int)strtol(argv[1], NULL, BASE),
-        .fmt = (int)strtol(argv[2], NULL, BASE),
-        .debug = (int)strtol(argv[3], NULL, BASE),
-        .x_tolerance = strtold(argv[4], NULL),
-        .f_tolerance = strtold(argv[5], NULL),
-        .max_iterations = (int)strtol(argv[6], NULL, BASE),
-        .max_evaluations = (int)strtol(argv[7], NULL, BASE),
-        .adaptive = (int)strtol(argv[8], NULL, BASE),
-        .size = strtold(argv[9], NULL)
-    };
-    CHECK(opt.precision >= 3 && opt.precision <= 36);
-    CHECK(opt.debug == 0 || opt.debug == 1);
-    CHECK(opt.x_tolerance >= 1.0e-36L && opt.x_tolerance <= 1.0e-3L);
-    CHECK(opt.f_tolerance >= 1.0e-36L && opt.f_tolerance <= 1.0e-3L);
-    CHECK(opt.max_iterations >= 1 && opt.max_iterations <= 100000);
-    CHECK(opt.max_evaluations >= 1 && opt.max_evaluations <= 100000);
-    CHECK(opt.adaptive == 0 || opt.adaptive == 1);
-    CHECK(opt.size >= 1.0e-12L && opt.size <= 1.0e3L);
+    opt = get_settings(argv);
 
     const int n = argc - 10;
     point *start = get_point(n);
