@@ -69,6 +69,8 @@ rgb get_colour (int index);
 /*
  * Lines & balls
  */
+void line (vertex a, vertex b, rgb colour);
+
 void line_trail (trail *track);
 
 void point_position (vertex p, rgb colour, float scale);

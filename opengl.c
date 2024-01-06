@@ -22,7 +22,7 @@ bool finished = false, paused = false, stepping = true, running = true, osd_acti
 
 int length, oldest = 0, newest = 0, colour_index = 13, mesh = 10;
 
-static float elapsed, cpu, radius = 2.0F, latitude = 90.0F, longitude = 0.0F, ball_size = 0.01F;
+static float elapsed, cpu, radius = 5.0F, latitude = 90.0F, longitude = 0.0F, ball_size = 0.01F;
 
 void SpecialKeyFunc (int Key, int x, int y) { (void)x; (void)y;
     switch (Key) {
@@ -125,6 +125,14 @@ void buffer_point () {
         oldest = (newest + 1) % length;
         newest %= length;
     }
+}
+
+void line (vertex from, vertex to, rgb colour) {
+    glColor3f(colour.a, colour.b, colour.c);
+    glBegin(GL_LINES);
+    glVertex3f(from.a, from.b, from.c);
+    glVertex3f(to.a, to.b, to.c);
+    glEnd();
 }
 
 void line_trail (trail *track) {

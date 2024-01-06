@@ -26,11 +26,7 @@ void Animate () {
     if (mode == BOTH || mode == POSITION) {
         for (int i = 0; i < 4; i++) {
             for (int j = i; j < 4; j++) {
-                glColor3f(0.3F, 0.3F, 0.3F);
-                glBegin(GL_LINES);
-                glVertex3f(vertices[i].a, vertices[i].b, vertices[i].c);
-                glVertex3f(vertices[j].a, vertices[j].b, vertices[j].c);
-                glEnd();
+            	line(vertices[i], vertices[j], (rgb){0.3F, 0.3F, 0.3F});
             }
             point_position(vertices[i], get_colour(i), 1.0F);
         }
