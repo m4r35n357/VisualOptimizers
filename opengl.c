@@ -137,7 +137,7 @@ void line_trail (trail *track) {
     glEnd();
 }
 
-void line_position (point_gl p, rgb colour, float scale) {
+void line_position (vertex p, rgb colour, float scale) {
     glColor3f(0.3F, 0.3F, 0.3F);
     glBegin(GL_LINES);
     glVertex3f(0.0F, 0.0F, 0.0F);

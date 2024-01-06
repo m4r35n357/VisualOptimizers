@@ -13,11 +13,11 @@ static simplex *s;  // the simplex
 static model *m;  // the model
 static optimset opt;
 static point *solution;
-static point_gl *vertices;
+static vertex *vertices;
 
-point_gl get_current (void *data) {
+vertex get_current (void *data) {
 	point *_ = (point *)data;
-    return (point_gl){(float)_->x[0], (float)_->x[1], (float)_->x[2]};
+    return (vertex){(float)_->x[0], (float)_->x[1], (float)_->x[2]};
 }
 
 void Animate () {
@@ -92,9 +92,6 @@ int main (int argc, char **argv) {
     // get a simplex
     s = get_simplex(n, opt.size, start);
 
-    // begin optimization
-    //nelder_mead(s, solution, m, &opt);
-
     // print starting point
     printf("%s     Initial ", GRY);
     cost(n, start, m);
@@ -105,7 +102,7 @@ int main (int argc, char **argv) {
     // print stats
     printf("%s  Iterations/Evaluations%s %d/%d\n", GRY, NRM, s->iterations, s->evaluations);
 
-    vertices = malloc(4 * sizeof (point_gl));
+    vertices = malloc(4 * sizeof (vertex)); CHECK(vertices);
 
     ApplicationInit(argc, argv, "N-Body Plotter");
     glutCloseFunc(CloseWindow);
