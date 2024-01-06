@@ -24,14 +24,14 @@ void Animate () {
     SetupView();
 
     if (mode == BOTH || mode == POSITION) {
-        //for (int j = 0; j < nb->n; j++) {
-        //    line_position(t[j].points[newest], t[j].colour, nb->bodies[j].r);
-        //}
+        for (int j = 0; j < 4; j++) {
+            line_position(vertices[j], get_colour(j), 0.1F);
+        }
     }
 
     if (osd_active) {
         glColor3f(0.0F, 0.5F, 0.5F);
-        //sprintf(hud, "t: %.1Lf  h: %.6Le  ~sf: %.1Lf", c->step * c->h, h, error(h - nb->h0));
+        sprintf(hud, "iteration: %.1d", s->iterations);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, hud);
         osd_summary();
     }
@@ -93,7 +93,7 @@ int main (int argc, char **argv) {
     s = get_simplex(n, opt.size, start);
 
     // begin optimization
-    nelder_mead(s, solution, m, &opt);
+    //nelder_mead(s, solution, m, &opt);
 
     // print starting point
     printf("%s     Initial ", GRY);
