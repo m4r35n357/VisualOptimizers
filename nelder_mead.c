@@ -121,8 +121,8 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
         s->iterations++;
         if (o->debug) { // print current minimum
             printf(" %04d %04d  [ ", s->iterations, s->evaluations);
-            for (int i = 0; i < s->n; i++) {
-                printf(o->fmt ? "% .*Le " : "% .*Lf ", o->precision, best->x[i]);
+            for (int j = 0; j < s->n; j++) {
+                printf(o->fmt ? "% .*Le " : "% .*Lf ", o->precision, best->x[j]);
             }
             printf(o->fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o->precision, best->f);
         }

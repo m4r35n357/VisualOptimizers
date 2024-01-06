@@ -28,9 +28,9 @@ void Animate () {
     line((vertex){0.0F, 0.0F, -10.0F}, (vertex){0.0F, 0.0F, 10.0F}, (rgb){0.3F, 0.3F, 0.3F});
 
     if (mode == BOTH || mode == POSITION) {
-        for (int i = 0; i < 4; i++) {
-            for (int j = i; j < 4; j++) {
-            	line(vertices[i], vertices[j], (rgb){0.3F, 0.3F, 0.3F});
+        for (int i = 0; i < s->n + 1; i++) {
+            for (int k = i; k < s->n + 1; k++) {
+            	line(vertices[i], vertices[k], (rgb){0.3F, 0.3F, 0.3F});
             }
             point_position(vertices[i], get_colour(i), 1.0F);
         }
@@ -45,8 +45,8 @@ void Animate () {
 
     if (!finished && !paused) {
         if (nelder_mead(s, solution, m, &opt)) {
-            for (int i = 0; i < s->n; i++) {
-                vertices[i] = get_current(&s->p[i]);
+            for (int i = 0; i < s->n + 1; i++) {
+                vertices[i] = get_current(s->p + i);
             }
         } else finished = true;
         if (stepping) paused = true;
@@ -88,8 +88,8 @@ int main (int argc, char **argv) {
     const int n = argc - 10;
     point *start = get_point(n);
     // set initial point from command arguments
-    for (int i = 0; i < n; i++) {
-        start->x[i] = strtod(argv[i + 10], NULL);
+    for (int j = 0; j < n; j++) {
+        start->x[j] = strtod(argv[j + 10], NULL);
     }
     solution = get_point(n);
 
