@@ -71,7 +71,7 @@ rgb get_colour (int index);
  */
 void line_trail (trail *track);
 
-void line_position (vertex p, rgb colour, float scale);
+void point_position (vertex p, rgb colour, float scale);
 
 /*
  * OSD/HUD

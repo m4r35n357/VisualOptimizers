@@ -24,8 +24,15 @@ void Animate () {
     SetupView();
 
     if (mode == BOTH || mode == POSITION) {
-        for (int j = 0; j < 4; j++) {
-            line_position(vertices[j], get_colour(j), 1.0F);
+        for (int i = 0; i < 4; i++) {
+            for (int j = i; j < 4; j++) {
+                glColor3f(0.3F, 0.3F, 0.3F);
+                glBegin(GL_LINES);
+                glVertex3f(vertices[i].a, vertices[i].b, vertices[i].c);
+                glVertex3f(vertices[j].a, vertices[j].b, vertices[j].c);
+                glEnd();
+            }
+            point_position(vertices[i], get_colour(i), 1.0F);
         }
     }
 
@@ -38,8 +45,8 @@ void Animate () {
 
     if (!finished && !paused) {
         if (nelder_mead(s, solution, m, &opt)) {
-            for (int j = 0; j < s->n; j++) {
-                vertices[j] = get_current(&s->p[j]);
+            for (int i = 0; i < s->n; i++) {
+                vertices[i] = get_current(&s->p[i]);
             }
         } else finished = true;
         if (stepping) paused = true;

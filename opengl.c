@@ -18,11 +18,11 @@ char hud[128];
 
 clock_t since;
 
-bool finished = false, paused = false, stepping = false, running = true, osd_active = true, solid = true;
+bool finished = false, paused = false, stepping = true, running = true, osd_active = true, solid = true;
 
 int length, oldest = 0, newest = 0, colour_index = 13, mesh = 10;
 
-static float elapsed, cpu, radius = 5.0F, latitude = 90.0F, longitude = 0.0F, ball_size = 0.01F;
+static float elapsed, cpu, radius = 2.0F, latitude = 90.0F, longitude = 0.0F, ball_size = 0.01F;
 
 void SpecialKeyFunc (int Key, int x, int y) { (void)x; (void)y;
     switch (Key) {
@@ -137,12 +137,7 @@ void line_trail (trail *track) {
     glEnd();
 }
 
-void line_position (vertex p, rgb colour, float scale) {
-    glColor3f(0.3F, 0.3F, 0.3F);
-    glBegin(GL_LINES);
-    glVertex3f(0.0F, 0.0F, 0.0F);
-    glVertex3f(p.a, p.b, p.c);
-    glEnd();
+void point_position (vertex p, rgb colour, float scale) {
     glColor3f(colour.a, colour.b, colour.c);
     glPushMatrix();
     glTranslatef(p.a, p.b, p.c);
