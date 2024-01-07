@@ -8,7 +8,6 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include "opengl.h"
-#include "nelder_mead.h"
 
 char hud[128];
 

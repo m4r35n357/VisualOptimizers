@@ -6,6 +6,7 @@
 
 #include <stdbool.h>
 #include <time.h>
+#include "nelder_mead.h"
 
 /*
  * Triple of floats
@@ -73,7 +74,7 @@ void osd (int x, int y, char *string);
 /*
  * Extract current coordinates from data
  */
-vertex get_current (void *data);
+vertex get_current (point *data);
 
 /*
  * Push latest point to the track buffer

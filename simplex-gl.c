@@ -6,7 +6,6 @@
 
 #include <stdio.h>
 #include <GL/freeglut.h>
-#include "nelder_mead.h"
 #include "opengl.h"
 
 static simplex *s;  // the simplex
@@ -15,9 +14,8 @@ static optimset opt;
 static point *solution;
 static vertex *vertices;
 
-vertex get_current (void *data) {
-	point *_ = (point *)data;
-    return (vertex){(float)_->x[0], (float)_->x[1], (float)_->x[2]};
+vertex get_current (point *p) {
+    return (vertex){(float)p->x[0], (float)p->x[1], (float)p->x[2]};
 }
 
 void Animate () {
@@ -101,15 +99,10 @@ int main (int argc, char **argv) {
     printf("%s     Initial ", GRY);
     cost(n, start, m);
     print_point(n, start, opt.precision, opt.fmt);
-    // print solution
-    printf("    %sSolution ", GRY);
-    print_point(n, solution, opt.precision, opt.fmt);
-    // print stats
-    printf("%s  Iterations/Evaluations%s %d/%d\n", GRY, NRM, s->iterations, s->evaluations);
 
     vertices = malloc(4 * sizeof (vertex)); CHECK(vertices);
 
-    ApplicationInit(argc, argv, "N-Body Plotter");
+    ApplicationInit(argc, argv, "Nelder-Mead Visualizer");
     glutCloseFunc(CloseWindow);
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.
     return 0 ;          // Compiler requires this to be here. (Never reached)
