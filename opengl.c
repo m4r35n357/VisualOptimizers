@@ -16,7 +16,7 @@ char hud[128];
 
 clock_t since;
 
-bool finished = false, paused = false, stepping = true, running = true, osd_active = true, solid = true;
+bool finished = false, paused = false, stepping = true, running = true, osd_active = true, solid = true, axes = true, centroid = false;
 
 int colour_index = 13, mesh = 10;
 
@@ -39,8 +39,8 @@ void SpecialKeyFunc (int Key, int x, int y) { (void)x; (void)y;
 
 void KeyPressFunc (unsigned char Key, int x, int y) { (void)x; (void)y;
     switch (Key) {
-        case 'D': case 'd': colour_index++; break;
-        case 'C': case 'c': colour_index--; break;
+        case 'A': case 'a': axes = !axes; break;
+        case 'C': case 'c': centroid = !centroid; break;
         case 'G': case 'g': ball_size *= 1.1F; break;
         case 'B': case 'b': ball_size /= 1.1F; break;
         case 'S': case 's': running = !running; paused = false; break;

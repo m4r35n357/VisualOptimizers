@@ -23,9 +23,18 @@ vertex get_current (void *data) {
 void Animate () {
     SetupView();
 
-    line((vertex){-10.0F, 0.0F, 0.0F}, (vertex){10.0F, 0.0F, 0.0F}, get_colour(6));
-    line((vertex){0.0F, -10.0F, 0.0F}, (vertex){0.0F, 10.0F, 0.0F}, get_colour(6));
-    line((vertex){0.0F, 0.0F, -10.0F}, (vertex){0.0F, 0.0F, 10.0F}, get_colour(6));
+    if (axes) {
+        line((vertex){-10.0F, 0.0F, 0.0F}, (vertex){10.0F, 0.0F, 0.0F}, get_colour(6));
+        line((vertex){0.0F, -10.0F, 0.0F}, (vertex){0.0F, 10.0F, 0.0F}, get_colour(6));
+        line((vertex){0.0F, 0.0F, -10.0F}, (vertex){0.0F, 0.0F, 10.0F}, get_colour(6));
+    }
+
+    if (centroid) {
+    	vertex c = get_current(s->centre);
+        for (int i = 0; i < 4; i++) {
+        	line(c, vertices[i], get_colour(6));
+        }
+    }
 
     if (mode == BOTH || mode == POSITION) {
         for (int i = 0; i < 4; i++) {
