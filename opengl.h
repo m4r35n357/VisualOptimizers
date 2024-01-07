@@ -14,13 +14,12 @@ typedef struct triple_f {
     float a, b, c;
 } rgb, vertex;
 
-typedef enum Display {BOTH=0, POSITION=1, TRAIL=2} display;
+typedef enum ColourCode {LIGHT_YELLOW=0, LIGHT_CYAN=1, LIGHT_MAGENTA=2, LIGHT_RED=3, LIGHT_GREEN=4, LIGHT_BLUE=5,
+						DARK_GREY=6, LIGHT_GREY=7, GREY=8} colour_code;
 
 /*
  * Global variables
  */
-extern display mode;
-
 extern char hud[];
 
 extern clock_t since;
@@ -57,7 +56,7 @@ void SetupView (void);
 /*
  * Colours
  */
-rgb get_colour (int index);
+rgb get_colour (colour_code colour);
 
 /*
  * Lines & balls

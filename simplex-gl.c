@@ -24,32 +24,31 @@ void Animate () {
     SetupView();
 
     if (axes) {
-        line((vertex){-10.0F, 0.0F, 0.0F}, (vertex){10.0F, 0.0F, 0.0F}, get_colour(6));
-        line((vertex){0.0F, -10.0F, 0.0F}, (vertex){0.0F, 10.0F, 0.0F}, get_colour(6));
-        line((vertex){0.0F, 0.0F, -10.0F}, (vertex){0.0F, 0.0F, 10.0F}, get_colour(6));
+    	rgb axis_colour = get_colour(DARK_GREY);
+        line((vertex){-10.0F, 0.0F, 0.0F}, (vertex){10.0F, 0.0F, 0.0F}, axis_colour);
+        line((vertex){0.0F, -10.0F, 0.0F}, (vertex){0.0F, 10.0F, 0.0F}, axis_colour);
+        line((vertex){0.0F, 0.0F, -10.0F}, (vertex){0.0F, 0.0F, 10.0F}, axis_colour);
     }
 
     if (centroid) {
     	vertex c = get_current(s->centre);
         for (int i = 0; i < 4; i++) {
-        	line(c, vertices[i], get_colour(6));
+        	line(c, vertices[i], get_colour(DARK_GREY));
         }
     }
 
-    if (mode == BOTH || mode == POSITION) {
-        for (int i = 0; i < 4; i++) {
-            for (int k = i; k < 4; k++) {
-            	line(vertices[i], vertices[k], get_colour(8));
-            }
-            int colour;
-            switch (i) {
-                case  0: colour = 4; break;
-                case  2: colour = 0; break;
-                case  3: colour = 3; break;
-                default: colour = 7; break;
-            }
-            point_position(vertices[i], get_colour(colour), 1.0F);
+    for (int i = 0; i < 4; i++) {
+        for (int k = i; k < 4; k++) {
+        	line(vertices[i], vertices[k], get_colour(GREY));
         }
+        colour_code code;
+        switch (i) {
+            case  0: code = LIGHT_GREEN; break;
+            case  2: code = LIGHT_YELLOW; break;
+            case  3: code = LIGHT_RED; break;
+            default: code = LIGHT_GREY; break;
+        }
+        point_position(vertices[i], get_colour(code), 1.0F);
     }
 
     if (osd_active) {

@@ -10,8 +10,6 @@
 #include "opengl.h"
 #include "nelder_mead.h"
 
-display mode = BOTH;
-
 char hud[128];
 
 clock_t since;
@@ -46,7 +44,6 @@ void KeyPressFunc (unsigned char Key, int x, int y) { (void)x; (void)y;
         case 'S': case 's': running = !running; paused = false; break;
         case 'P': case 'p': stepping = !stepping; paused = false; break;
         case 'F': case 'f': glutFullScreenToggle(); break;
-        case 'V': case 'v': mode = (mode + 1) % 3; break;
         case 'H': case 'h': osd_active = !osd_active; break;
         case 'Q': case 'q': case 27: exit(0);  // Code 27 is the Escape key
         default: break;
@@ -105,14 +102,14 @@ void ReDraw () {
     glutPostRedisplay();  // Request a re-draw for animation purposes
 }
 
-rgb get_colour (int index) {
+rgb get_colour (colour_code colour) {
     return (rgb []){
         (rgb){1.0F, 1.0F, 0.0F}, (rgb){0.0F, 1.0F, 1.0F}, (rgb){1.0F, 0.0F, 1.0F},
         (rgb){1.0F, 0.0F, 0.0F}, (rgb){0.0F, 1.0F, 0.0F}, (rgb){0.0F, 0.0F, 1.0F},
         (rgb){0.2F, 0.2F, 0.2F}, (rgb){0.8F, 0.8F, 0.8F}, (rgb){0.5F, 0.5F, 0.5F},
         (rgb){0.5F, 0.5F, 0.0F}, (rgb){0.0F, 0.5F, 0.5F}, (rgb){0.5F, 0.0F, 0.5F},
         (rgb){0.5F, 0.0F, 0.0F}, (rgb){0.0F, 0.5F, 0.0F}, (rgb){0.0F, 0.0F, 0.5F}
-    }[index % 15];
+    }[colour];
 }
 
 void line (vertex from, vertex to, rgb colour) {
