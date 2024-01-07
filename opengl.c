@@ -54,6 +54,8 @@ void OpenGLInit () {
     glClearColor(0.0F, 0.0F, 0.0F, 0.0F);
     glClearDepth(1.0F);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
     glEnable(GL_COLOR_MATERIAL);
 }
 
@@ -90,6 +92,11 @@ void SetupView () {
     glTranslatef(0.0F, 0.0F, - radius);
     glRotatef(elevation, 1.0F, 0.0F, 0.0F);
     glRotatef(azimuth, 0.0F, 0.0F, 1.0F);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, (float[]){0.0F, 0.0F, 0.0F, 1.0F});
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, (float[]){1.0F, 1.0F, 1.0F, 1.0F});
+    glLightfv(GL_LIGHT0, GL_SPECULAR, (float[]){1.0F, 1.0F, 1.0F, 1.0F});
+    glLightfv(GL_LIGHT0, GL_POSITION, (float[]){-100.0F, 100.0F, -100.0F, 0.0F});
+    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 }
 
 void ReDraw () {
