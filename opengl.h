@@ -14,13 +14,6 @@ typedef struct triple_f {
     float a, b, c;
 } rgb, vertex;
 
-/*
- * Particle/Body tracks
- */
-typedef struct Trail {
-    struct triple_f colour, *points;
-} trail;
-
 typedef enum Display {BOTH=0, POSITION=1, TRAIL=2} display;
 
 /*
@@ -34,7 +27,7 @@ extern clock_t since;
 
 extern bool finished, paused, stepping, running, osd_active, solid;
 
-extern int length, oldest, newest, colour_index, mesh;
+extern int colour_index, mesh;
 
 /*
  * OpenGL set-up functions
@@ -71,16 +64,12 @@ rgb get_colour (int index);
  */
 void line (vertex a, vertex b, rgb colour);
 
-void line_trail (trail *track);
-
 void point_position (vertex p, rgb colour, float scale);
 
 /*
  * OSD/HUD
  */
 void osd (int x, int y, char *string);
-
-void osd_summary (void);
 
 /*
  * Extract current coordinates from data

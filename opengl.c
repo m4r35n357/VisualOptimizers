@@ -10,8 +10,6 @@
 #include "opengl.h"
 #include "nelder_mead.h"
 
-trail *t;
-
 display mode = BOTH;
 
 char hud[128];
@@ -20,9 +18,9 @@ clock_t since;
 
 bool finished = false, paused = false, stepping = true, running = true, osd_active = true, solid = true;
 
-int length, oldest = 0, newest = 0, colour_index = 13, mesh = 10;
+int colour_index = 13, mesh = 10;
 
-static float elapsed, cpu, radius = 5.0F, latitude = 90.0F, longitude = 0.0F, ball_size = 0.01F;
+static float radius = 5.0F, latitude = 90.0F, longitude = 0.0F, ball_size = 0.01F;
 
 void SpecialKeyFunc (int Key, int x, int y) { (void)x; (void)y;
     switch (Key) {
@@ -117,31 +115,11 @@ rgb get_colour (int index) {
     }[index % 15];
 }
 
-void buffer_point () {
-    static bool full = false;
-    newest++;
-    if (!full && newest == length) full = true;
-    if (full) {
-        oldest = (newest + 1) % length;
-        newest %= length;
-    }
-}
-
 void line (vertex from, vertex to, rgb colour) {
     glColor3f(colour.a, colour.b, colour.c);
     glBegin(GL_LINES);
     glVertex3f(from.a, from.b, from.c);
     glVertex3f(to.a, to.b, to.c);
-    glEnd();
-}
-
-void line_trail (trail *track) {
-    glColor3f(track->colour.a, track->colour.b, track->colour.c);
-    glBegin(GL_LINE_STRIP);
-    for (int i = oldest; i != newest; i = (i + 1) % length) {  // read buffers
-        glVertex3f(track->points[i].a, track->points[i].b, track->points[i].c);
-    }
-    glVertex3f(track->points[newest].a, track->points[newest].b, track->points[newest].c);
     glEnd();
 }
 
@@ -156,11 +134,4 @@ void point_position (vertex p, rgb colour, float scale) {
 void osd (int x, int y, char *string) {
     glWindowPos2i(x, y);
     glutBitmapString(GLUT_BITMAP_9_BY_15, (const unsigned char *)string);
-}
-
-void osd_summary () {
-    sprintf(hud, "Elapsed: %.1fs  CPU: %.1fs",
-                  elapsed = finished ? elapsed : 0.001F * (float)glutGet(GLUT_ELAPSED_TIME),
-                  cpu = finished ? cpu : (float)(clock() - since) / CLOCKS_PER_SEC);
-    osd(10, 10, hud);
 }
