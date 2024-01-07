@@ -22,22 +22,22 @@ void Animate () {
     SetupView();
 
     if (axes) {
-    	rgb axis_colour = get_colour(DARK_GREY);
+        rgb axis_colour = get_colour(DARK_GREY);
         line((gl_point){-10.0F, 0.0F, 0.0F}, (gl_point){10.0F, 0.0F, 0.0F}, axis_colour);
         line((gl_point){0.0F, -10.0F, 0.0F}, (gl_point){0.0F, 10.0F, 0.0F}, axis_colour);
         line((gl_point){0.0F, 0.0F, -10.0F}, (gl_point){0.0F, 0.0F, 10.0F}, axis_colour);
     }
 
     if (centroid) {
-    	gl_point c = get_gl_point(s->centre);
+        gl_point c = get_gl_point(s->centre);
         for (int i = 0; i < 4; i++) {
-        	line(c, vertices[i], get_colour(DARK_GREY));
+            line(c, vertices[i], get_colour(DARK_GREY));
         }
     }
 
     for (int i = 0; i < 4; i++) {
         for (int k = i; k < 4; k++) {
-        	line(vertices[i], vertices[k], get_colour(GREY));
+            line(vertices[i], vertices[k], get_colour(GREY));
         }
         rgb vertex_colour;
         switch (i) {
@@ -52,7 +52,7 @@ void Animate () {
     if (osd_active) {
         glColor3f(0.0F, 0.5F, 0.5F);
         sprintf(hud, opt.fmt ? "%.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
-        		s->iterations, opt.precision, s->p[0].x[0], opt.precision, s->p[0].x[1], opt.precision, s->p[0].x[2], opt.precision, s->p[0].f);
+                s->iterations, opt.precision, s->p[0].x[0], opt.precision, s->p[0].x[1], opt.precision, s->p[0].x[2], opt.precision, s->p[0].f);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, hud);
     }
 

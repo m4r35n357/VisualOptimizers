@@ -15,8 +15,11 @@ typedef struct triple_f {
     float a, b, c;
 } rgb, gl_point;
 
-typedef enum ColourCode {LIGHT_YELLOW=0, LIGHT_CYAN=1, LIGHT_MAGENTA=2, LIGHT_RED=3, LIGHT_GREEN=4, LIGHT_BLUE=5,
-						DARK_GREY=6, LIGHT_GREY=7, GREY=8} colour_code;
+typedef enum ColourCode {
+    LIGHT_YELLOW=0, LIGHT_CYAN=1, LIGHT_MAGENTA=2, LIGHT_RED=3, LIGHT_GREEN=4, LIGHT_BLUE=5,
+    DARK_GREY=6, LIGHT_GREY=7, GREY=8,
+    DARK_YELLOW=9, DARK_CYAN=10, DARK_MAGENTA=11, DARK_RED=12, DARK_GREEN=13, DARK_BLUE=14
+} colour_code;
 
 /*
  * Global variables
