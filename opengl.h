@@ -13,7 +13,7 @@
  */
 typedef struct triple_f {
     float a, b, c;
-} rgb, vertex;
+} rgb, gl_point;
 
 typedef enum ColourCode {LIGHT_YELLOW=0, LIGHT_CYAN=1, LIGHT_MAGENTA=2, LIGHT_RED=3, LIGHT_GREEN=4, LIGHT_BLUE=5,
 						DARK_GREY=6, LIGHT_GREY=7, GREY=8} colour_code;
@@ -62,9 +62,9 @@ rgb get_colour (colour_code colour);
 /*
  * Lines & balls
  */
-void line (vertex a, vertex b, rgb colour);
+void line (gl_point a, gl_point b, rgb colour);
 
-void point_position (vertex p, rgb colour, float scale);
+void point_position (gl_point p, rgb colour, float scale);
 
 /*
  * OSD/HUD
@@ -74,7 +74,7 @@ void osd (int x, int y, char *string);
 /*
  * Extract current coordinates from data
  */
-vertex get_current (point *data);
+gl_point get_gl_point (point *data);
 
 /*
  * Push latest point to the track buffer

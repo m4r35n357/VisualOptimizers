@@ -12,10 +12,10 @@ static simplex *s;  // the simplex
 static model *m;  // the model
 static optimset opt;
 static point *solution;
-static vertex *vertices;
+static gl_point *vertices;
 
-vertex get_current (point *p) {
-    return (vertex){(float)p->x[0], (float)p->x[1], (float)p->x[2]};
+gl_point get_gl_point (point *p) {
+    return (gl_point){(float)p->x[0], (float)p->x[1], (float)p->x[2]};
 }
 
 void Animate () {
@@ -23,13 +23,13 @@ void Animate () {
 
     if (axes) {
     	rgb axis_colour = get_colour(DARK_GREY);
-        line((vertex){-10.0F, 0.0F, 0.0F}, (vertex){10.0F, 0.0F, 0.0F}, axis_colour);
-        line((vertex){0.0F, -10.0F, 0.0F}, (vertex){0.0F, 10.0F, 0.0F}, axis_colour);
-        line((vertex){0.0F, 0.0F, -10.0F}, (vertex){0.0F, 0.0F, 10.0F}, axis_colour);
+        line((gl_point){-10.0F, 0.0F, 0.0F}, (gl_point){10.0F, 0.0F, 0.0F}, axis_colour);
+        line((gl_point){0.0F, -10.0F, 0.0F}, (gl_point){0.0F, 10.0F, 0.0F}, axis_colour);
+        line((gl_point){0.0F, 0.0F, -10.0F}, (gl_point){0.0F, 0.0F, 10.0F}, axis_colour);
     }
 
     if (centroid) {
-    	vertex c = get_current(s->centre);
+    	gl_point c = get_gl_point(s->centre);
         for (int i = 0; i < 4; i++) {
         	line(c, vertices[i], get_colour(DARK_GREY));
         }
@@ -39,14 +39,14 @@ void Animate () {
         for (int k = i; k < 4; k++) {
         	line(vertices[i], vertices[k], get_colour(GREY));
         }
-        colour_code code;
+        rgb vertex_colour;
         switch (i) {
-            case  0: code = LIGHT_GREEN; break;
-            case  2: code = LIGHT_YELLOW; break;
-            case  3: code = LIGHT_RED; break;
-            default: code = LIGHT_GREY; break;
+            case  0: vertex_colour = get_colour(LIGHT_GREEN); break;
+            case  2: vertex_colour = get_colour(LIGHT_YELLOW); break;
+            case  3: vertex_colour = get_colour(LIGHT_RED); break;
+            default: vertex_colour = get_colour(LIGHT_GREY); break;
         }
-        point_position(vertices[i], get_colour(code), 1.0F);
+        point_position(vertices[i], vertex_colour, 1.0F);
     }
 
     if (osd_active) {
@@ -59,7 +59,7 @@ void Animate () {
     if (!finished && !paused) {
         if (nelder_mead(s, solution, m, &opt)) {
             for (int i = 0; i < 4; i++) {
-                vertices[i] = get_current(s->p + i);
+                vertices[i] = get_gl_point(s->p + i);
             }
         } else finished = true;
         if (stepping) paused = true;
@@ -100,7 +100,7 @@ int main (int argc, char **argv) {
     cost(n, start, m);
     print_point(n, start, opt.precision, opt.fmt);
 
-    vertices = malloc(4 * sizeof (vertex)); CHECK(vertices);
+    vertices = malloc(4 * sizeof (gl_point)); CHECK(vertices);
 
     ApplicationInit(argc, argv, "Nelder-Mead Visualizer");
     glutCloseFunc(CloseWindow);

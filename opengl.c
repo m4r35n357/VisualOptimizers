@@ -111,7 +111,7 @@ rgb get_colour (colour_code colour) {
     }[colour];
 }
 
-void line (vertex from, vertex to, rgb colour) {
+void line (gl_point from, gl_point to, rgb colour) {
     glColor3f(colour.a, colour.b, colour.c);
     glBegin(GL_LINES);
     glVertex3f(from.a, from.b, from.c);
@@ -119,7 +119,7 @@ void line (vertex from, vertex to, rgb colour) {
     glEnd();
 }
 
-void point_position (vertex p, rgb colour, float scale) {
+void point_position (gl_point p, rgb colour, float scale) {
     glColor3f(colour.a, colour.b, colour.c);
     glPushMatrix();
     glTranslatef(p.a, p.b, p.c);
