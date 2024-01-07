@@ -46,7 +46,7 @@ void Animate () {
             case  3: vertex_colour = get_colour(LIGHT_RED); break;
             default: vertex_colour = get_colour(LIGHT_GREY); break;
         }
-        point_position(vertices[i], vertex_colour, 1.0F);
+        ball(vertices[i], vertex_colour, 1.0F);
     }
 
     if (osd_active) {

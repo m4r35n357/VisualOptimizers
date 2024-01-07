@@ -67,7 +67,7 @@ rgb get_colour (colour_code colour);
  */
 void line (gl_point a, gl_point b, rgb colour);
 
-void point_position (gl_point p, rgb colour, float scale);
+void ball (gl_point p, rgb colour, float scale);
 
 /*
  * OSD/HUD

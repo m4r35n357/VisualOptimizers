@@ -17,14 +17,14 @@ bool finished = false, paused = false, stepping = true, running = true, osd_acti
 
 int colour_index = 13, mesh = 10;
 
-static float radius = 5.0F, latitude = 90.0F, longitude = 0.0F, ball_size = 0.01F;
+static float radius = 5.0F, elevation = 90.0F, azimuth = 0.0F, ball_size = 0.01F;
 
 void SpecialKeyFunc (int Key, int x, int y) { (void)x; (void)y;
     switch (Key) {
-        case        GLUT_KEY_UP: latitude += 1.0F; break;
-        case      GLUT_KEY_DOWN: latitude -= 1.0F; break;
-        case      GLUT_KEY_LEFT: longitude += 1.0F; break;
-        case     GLUT_KEY_RIGHT: longitude -= 1.0F; break;
+        case        GLUT_KEY_UP: elevation += 1.0F; break;
+        case      GLUT_KEY_DOWN: elevation -= 1.0F; break;
+        case      GLUT_KEY_LEFT: azimuth += 1.0F; break;
+        case     GLUT_KEY_RIGHT: azimuth -= 1.0F; break;
         case      GLUT_KEY_HOME: radius -= 0.2F; break;
         case       GLUT_KEY_END: radius += 0.2F; break;
         case    GLUT_KEY_INSERT: solid = !solid; break;
@@ -90,8 +90,8 @@ void SetupView () {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // Clear the rendering window
     glLoadIdentity();
     glTranslatef(0.0F, 0.0F, - radius);
-    glRotatef(latitude, 1.0F, 0.0F, 0.0F);
-    glRotatef(longitude, 0.0F, 0.0F, 1.0F);
+    glRotatef(elevation, 1.0F, 0.0F, 0.0F);
+    glRotatef(azimuth, 0.0F, 0.0F, 1.0F);
     glLightfv(GL_LIGHT0, GL_POSITION, (float []){-100.0F, 100.0F, -100.0F, 0.0F});
 }
 
@@ -119,7 +119,7 @@ void line (gl_point from, gl_point to, rgb colour) {
     glEnd();
 }
 
-void point_position (gl_point p, rgb colour, float scale) {
+void ball (gl_point p, rgb colour, float scale) {
     glColor3f(colour.a, colour.b, colour.c);
     glPushMatrix();
     glTranslatef(p.a, p.b, p.c);
