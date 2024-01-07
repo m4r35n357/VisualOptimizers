@@ -116,11 +116,11 @@ void line (gl_point from, gl_point to, rgb colour) {
     glEnd();
 }
 
-void ball (gl_point p, rgb colour, float scale) {
+void ball (gl_point p, rgb colour) {
     glColor3f(colour.a, colour.b, colour.c);
     glPushMatrix();
     glTranslatef(p.a, p.b, p.c);
-    solid ? glutSolidSphere(ball_size * scale, mesh, mesh) : glutWireSphere(ball_size * scale, mesh, mesh);
+    solid ? glutSolidSphere(ball_size, mesh, mesh) : glutWireSphere(ball_size, mesh, mesh);
     glPopMatrix();
 }
 
