@@ -37,7 +37,7 @@ void Animate () {
 
     for (int i = 0; i < 4; i++) {
         for (int k = i; k < 4; k++) {
-            line(vertices[i], vertices[k], get_colour(GREY));
+            line(vertices[i], vertices[k], get_colour(DARK_BLUE));
         }
         rgb vertex_colour;
         switch (i) {

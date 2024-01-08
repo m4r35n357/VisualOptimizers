@@ -184,7 +184,7 @@ void get_centroid (const simplex *s, point *c) {
 }
 
 /*
- * Take the line from pa to pb, shift it to start, and scale it's length by factor
+ * Take the line from pa to pb, shift it to start, and scale its length by factor
  */
 void project (point *new, simplex *s, const model *m, const point *start, real factor, const point *pa, point *pb) {
     for (int j = 0; j < s->n; j++) {
