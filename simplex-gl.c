@@ -21,6 +21,15 @@ gl_point get_gl_point (point *p) {
 void Animate () {
     SetupView();
 
+    if (!finished && !paused) {
+        if (nelder_mead(s, solution, m, &opt)) {
+            for (int i = 0; i < 4; i++) {
+                vertices[i] = get_gl_point(s->p + i);
+            }
+        } else finished = true;
+        if (stepping) paused = true;
+    }
+
     rgb axis_colour = get_colour(DARK_GREY);
     line((gl_point){-10.0F, 0.0F, 0.0F}, (gl_point){10.0F, 0.0F, 0.0F}, axis_colour);
     line((gl_point){0.0F, -10.0F, 0.0F}, (gl_point){0.0F, 10.0F, 0.0F}, axis_colour);
@@ -45,15 +54,6 @@ void Animate () {
         sprintf(hud, opt.fmt ? "%.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
                 s->iterations, opt.precision, s->p[0].x[0], opt.precision, s->p[0].x[1], opt.precision, s->p[0].x[2], opt.precision, s->p[0].f);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, hud);
-    }
-
-    if (!finished && !paused) {
-        if (nelder_mead(s, solution, m, &opt)) {
-            for (int i = 0; i < 4; i++) {
-                vertices[i] = get_gl_point(s->p + i);
-            }
-        } else finished = true;
-        if (stepping) paused = true;
     }
 
     ReDraw();
