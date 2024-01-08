@@ -48,8 +48,6 @@ void ResizeWindow (int w, int h);
 
 void Animate (void);
 
-void CloseWindow (void);
-
 /*
  * View/Camera boilerplate (no logic)
  */
