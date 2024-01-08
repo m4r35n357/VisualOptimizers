@@ -53,7 +53,7 @@ void Animate () {
         glColor3f(0.0F, 0.5F, 0.5F);
         sprintf(hud, opt.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
                 s->iterations, s->evaluations,
-                opt.precision, s->p[0].x[0], opt.precision, s->p[0].x[1], opt.precision, s->p[0].x[2], opt.precision, s->p[0].f);
+                opt.places, s->p[0].x[0], opt.places, s->p[0].x[1], opt.places, s->p[0].x[2], opt.places, s->p[0].f);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, hud);
     }
 
@@ -85,7 +85,7 @@ int main (int argc, char **argv) {
     // print starting point
     printf("%s     Initial ", GRY);
     cost(n, start, m);
-    print_point(n, start, opt.precision, opt.fmt);
+    print_point(n, start, opt.places, opt.fmt);
 
     vertices = malloc(4 * sizeof (gl_point)); CHECK(vertices);
 

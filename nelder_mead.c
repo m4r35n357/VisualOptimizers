@@ -6,7 +6,7 @@
 
 optimset get_settings (char **argv) {
     optimset opt = {
-        .precision = (int)strtol(argv[1], NULL, BASE),
+        .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
         .debug = (int)strtol(argv[3], NULL, BASE),
         .x_tolerance = strtold(argv[4], NULL),
@@ -16,7 +16,7 @@ optimset get_settings (char **argv) {
         .adaptive = (int)strtol(argv[8], NULL, BASE),
         .size = strtold(argv[9], NULL)
     };
-    CHECK(opt.precision >= 3 && opt.precision <= 36);
+    CHECK(opt.places >= 3 && opt.places <= 36);
     CHECK(opt.debug == 0 || opt.debug == 1);
     CHECK(opt.x_tolerance >= 1.0e-36L && opt.x_tolerance <= 1.0e-3L);
     CHECK(opt.f_tolerance >= 1.0e-36L && opt.f_tolerance <= 1.0e-3L);
@@ -93,7 +93,7 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
     }
     sort(s);
     printf(o->fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter %s% .*Lf\n",
-           GRY, NRM, o->precision, distance(s->n, best, worst));
+           GRY, NRM, o->places, distance(s->n, best, worst));
     while (distance(s->n, best, worst) > o->x_tolerance || (worst->f - best->f) > o->f_tolerance) {
         CHECK(s->evaluations <= o->max_evaluations);
         CHECK(s->iterations <= o->max_iterations);
@@ -145,9 +145,9 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
         if (o->debug) { // print current minimum
             printf(" %04d %04d  [ ", s->iterations, s->evaluations);
             for (int j = 0; j < s->n; j++) {
-                printf(o->fmt ? "% .*Le " : "% .*Lf ", o->precision, best->x[j]);
+                printf(o->fmt ? "% .*Le " : "% .*Lf ", o->places, best->x[j]);
             }
-            printf(o->fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o->precision, best->f);
+            printf(o->fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o->places, best->f);
         }
         if (s->gl) return true;
         resume: ;
@@ -210,10 +210,10 @@ void copy_point (int n, const point *src, point *dst) {
     dst->f = src->f;
 }
 
-void print_point (int n, const point *p, int dp, int fmt) {
+void print_point (int n, const point *p, int places, int fmt) {
     printf("[ %s", NRM);
     for (int i = 0; i < n; i++) {
-        printf(fmt ? "% .*Le " : "% .*Lf ", dp, p->x[i]);
+        printf(fmt ? "% .*Le " : "% .*Lf ", places, p->x[i]);
     }
-    printf(fmt ? "%s]%s % .*Le\n" : "%s]%s % .*Lf\n", GRY, NRM, dp, p->f);
+    printf(fmt ? "%s]%s % .*Le\n" : "%s]%s % .*Lf\n", GRY, NRM, places, p->f);
 }

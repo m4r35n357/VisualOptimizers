@@ -74,11 +74,6 @@ void osd (int x, int y, char *string);
 gl_point get_gl_point (point *data);
 
 /*
- * Push latest point to the track buffer
- */
-void buffer_point (void);
-
-/*
  * Re-draw boilerplate (no logic)
  */
 void ReDraw (void);

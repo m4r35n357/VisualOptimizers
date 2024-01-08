@@ -30,10 +30,10 @@ int main(int argc, char **argv) {
     // print starting point
     printf("%s     Initial ", GRY);
     cost(n, start, m);
-    print_point(n, start, opt.precision, opt.fmt);
+    print_point(n, start, opt.places, opt.fmt);
     // print solution
     printf("    %sSolution ", GRY);
-    print_point(n, solution, opt.precision, opt.fmt);
+    print_point(n, solution, opt.places, opt.fmt);
     // print stats
     printf("%s  Iterations/Evaluations%s %d/%d\n", GRY, NRM, s->iterations, s->evaluations);
 

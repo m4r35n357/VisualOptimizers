@@ -47,7 +47,7 @@ typedef struct Optimset {
     int debug;    // toggle verbose output during minimization
     int adaptive;  // simplex updates reduced for dimension > 2
     real size;  // size of initial simplex
-    int precision;  // significant figures in float/exponential output
+    int places;  // significant figures in float/exponential output
     int fmt;  // fixed or exponential floating point format
 } optimset;
 
