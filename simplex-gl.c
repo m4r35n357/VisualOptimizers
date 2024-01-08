@@ -72,8 +72,6 @@ void CloseWindow () {
 }
 
 int main (int argc, char **argv) {
-    since = clock();
-
     PRINT_ARGS(argc, argv);
     CHECK(argc >= 12);
 

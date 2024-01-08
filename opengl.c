@@ -11,8 +11,6 @@
 
 char hud[128];
 
-clock_t since;
-
 bool finished = false, paused = false, stepping = true, running = true, osd_active = true, solid = true, axes = true, centroid = false;
 
 int colour_index = 13, mesh = 10;
