@@ -28,7 +28,7 @@ extern char hud[];
 
 extern bool finished, paused, stepping, running, osd_active, solid;
 
-extern int colour_index, mesh;
+extern int mesh;
 
 /*
  * OpenGL set-up functions

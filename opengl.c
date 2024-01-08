@@ -13,7 +13,7 @@ char hud[128];
 
 bool finished = false, paused = false, stepping = true, running = true, osd_active = true, solid = true;
 
-int colour_index = 13, mesh = 10;
+int mesh = 10;
 
 static float radius = 5.0F, elevation = 90.0F, azimuth = 0.0F, ball_size = 0.02F;
 
