@@ -116,11 +116,13 @@ rgb get_colour (colour_code colour) {
 }
 
 void line (gl_point from, gl_point to, rgb colour) {
+    glDisable(GL_LIGHTING);
     glColor3f(colour.a, colour.b, colour.c);
     glBegin(GL_LINES);
     glVertex3f(from.a, from.b, from.c);
     glVertex3f(to.a, to.b, to.c);
     glEnd();
+    glEnable(GL_LIGHTING);
 }
 
 void ball (gl_point p, rgb colour) {
