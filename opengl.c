@@ -11,9 +11,7 @@
 
 char hud[128];
 
-bool finished = false, paused = false, stepping = true, running = true, osd_active = true, solid = true;
-
-int mesh = 10;
+bool finished = false, paused = false, stepping = true, running = true, osd_active = true;
 
 static float radius = 5.0F, elevation = 90.0F, azimuth = 0.0F, ball_size = 0.02F;
 
@@ -25,9 +23,6 @@ void SpecialKeyFunc (int Key, int x, int y) { (void)x; (void)y;
         case     GLUT_KEY_RIGHT: azimuth -= 1.0F; break;
         case      GLUT_KEY_HOME: radius -= 0.2F; break;
         case       GLUT_KEY_END: radius += 0.2F; break;
-        case    GLUT_KEY_INSERT: solid = !solid; break;
-        case   GLUT_KEY_PAGE_UP: mesh++; break;
-        case GLUT_KEY_PAGE_DOWN: mesh = mesh > 2 ? mesh - 1 : mesh; break;
         default: break;
     }
 }
@@ -125,7 +120,7 @@ void ball (gl_point p, rgb colour) {
     glColor3f(colour.a, colour.b, colour.c);
     glPushMatrix();
     glTranslatef(p.a, p.b, p.c);
-    solid ? glutSolidSphere(ball_size, mesh, mesh) : glutWireSphere(ball_size, mesh, mesh);
+    glutSolidSphere(ball_size, 10, 10);
     glPopMatrix();
 }
 

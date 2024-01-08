@@ -26,9 +26,7 @@ typedef enum ColourCode {
  */
 extern char hud[];
 
-extern bool finished, paused, stepping, running, osd_active, solid;
-
-extern int mesh;
+extern bool finished, paused, stepping, running, osd_active;
 
 /*
  * OpenGL set-up functions
