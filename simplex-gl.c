@@ -21,12 +21,10 @@ gl_point get_gl_point (point *p) {
 void Animate () {
     SetupView();
 
-    if (axes) {
-        rgb axis_colour = get_colour(DARK_GREY);
-        line((gl_point){-10.0F, 0.0F, 0.0F}, (gl_point){10.0F, 0.0F, 0.0F}, axis_colour);
-        line((gl_point){0.0F, -10.0F, 0.0F}, (gl_point){0.0F, 10.0F, 0.0F}, axis_colour);
-        line((gl_point){0.0F, 0.0F, -10.0F}, (gl_point){0.0F, 0.0F, 10.0F}, axis_colour);
-    }
+    rgb axis_colour = get_colour(DARK_GREY);
+    line((gl_point){-10.0F, 0.0F, 0.0F}, (gl_point){10.0F, 0.0F, 0.0F}, axis_colour);
+    line((gl_point){0.0F, -10.0F, 0.0F}, (gl_point){0.0F, 10.0F, 0.0F}, axis_colour);
+    line((gl_point){0.0F, 0.0F, -10.0F}, (gl_point){0.0F, 0.0F, 10.0F}, axis_colour);
 
     for (int i = 0; i < 4; i++) {
         for (int k = i; k < 4; k++) {

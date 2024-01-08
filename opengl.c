@@ -11,7 +11,7 @@
 
 char hud[128];
 
-bool finished = false, paused = false, stepping = true, running = true, osd_active = true, solid = true, axes = true;
+bool finished = false, paused = false, stepping = true, running = true, osd_active = true, solid = true;
 
 int colour_index = 13, mesh = 10;
 
@@ -34,7 +34,6 @@ void SpecialKeyFunc (int Key, int x, int y) { (void)x; (void)y;
 
 void KeyPressFunc (unsigned char Key, int x, int y) { (void)x; (void)y;
     switch (Key) {
-        case 'A': case 'a': axes = !axes; break;
         case 'G': case 'g': ball_size *= 1.1F; break;
         case 'B': case 'b': ball_size /= 1.1F; break;
         case 'S': case 's': running = !running; paused = false; break;
