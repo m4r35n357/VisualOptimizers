@@ -28,13 +28,6 @@ void Animate () {
         line((gl_point){0.0F, 0.0F, -10.0F}, (gl_point){0.0F, 0.0F, 10.0F}, axis_colour);
     }
 
-    if (centroid) {
-        gl_point c = get_gl_point(s->centre);
-        for (int i = 0; i < 4; i++) {
-            line(c, vertices[i], get_colour(DARK_GREY));
-        }
-    }
-
     for (int i = 0; i < 4; i++) {
         for (int k = i; k < 4; k++) {
             line(vertices[i], vertices[k], get_colour(DARK_BLUE));

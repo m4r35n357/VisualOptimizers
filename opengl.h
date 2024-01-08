@@ -26,7 +26,7 @@ typedef enum ColourCode {
  */
 extern char hud[];
 
-extern bool finished, paused, stepping, running, osd_active, solid, axes, centroid;
+extern bool finished, paused, stepping, running, osd_active, solid, axes;
 
 extern int colour_index, mesh;
 
