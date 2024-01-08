@@ -17,7 +17,7 @@ bool finished = false, paused = false, stepping = true, running = true, osd_acti
 
 int colour_index = 13, mesh = 10;
 
-static float radius = 5.0F, elevation = 90.0F, azimuth = 0.0F, ball_size = 0.01F;
+static float radius = 5.0F, elevation = 90.0F, azimuth = 0.0F, ball_size = 0.02F;
 
 void SpecialKeyFunc (int Key, int x, int y) { (void)x; (void)y;
     switch (Key) {
