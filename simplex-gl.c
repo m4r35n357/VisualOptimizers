@@ -51,8 +51,8 @@ void Animate () {
 
     if (osd_active) {
         glColor3f(0.0F, 0.5F, 0.5F);
-        sprintf(hud, opt.fmt ? "%.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
-                s->iterations, opt.precision, s->p[0].x[0], opt.precision, s->p[0].x[1], opt.precision, s->p[0].x[2], opt.precision, s->p[0].f);
+        sprintf(hud, opt.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
+                s->iterations, s->evaluations, opt.precision, s->p[0].x[0], opt.precision, s->p[0].x[1], opt.precision, s->p[0].x[2], opt.precision, s->p[0].f);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, hud);
     }
 
