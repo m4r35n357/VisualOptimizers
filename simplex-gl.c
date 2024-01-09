@@ -39,6 +39,14 @@ void Animate () {
     line((gl_point){0.0F, -10.0F, 0.0F}, (gl_point){0.0F, 10.0F, 0.0F}, axis_colour);
     line((gl_point){0.0F, 0.0F, -10.0F}, (gl_point){0.0F, 0.0F, 10.0F}, axis_colour);
 
+    if (centroid) {
+        gl_point c = (gl_point){(float)s->centroid->x[0], (float)s->centroid->x[1], (float)s->centroid->x[2]};
+        for (int i = 0; i < 3; i++) {
+            line(c, v[i], get_colour(DARK_GREY));
+        }
+        line(c, v[3], get_colour(DARK_RED));
+    }
+
     for (int i = 0; i < 4; i++) {
         for (int k = i; k < 4; k++) {
             line(v[i], v[k], get_colour(DARK_BLUE));

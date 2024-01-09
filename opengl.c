@@ -11,7 +11,7 @@
 
 char hud[128];
 
-bool initial = true, finished = false, paused = false, stepping = true, running = true, osd_active = true;
+bool initial = true, finished = false, paused = false, stepping = true, running = true, osd_active = true, centroid = true;
 
 static float radius = 5.0F, elevation = 90.0F, azimuth = 0.0F, ball_size = 0.01F;
 
@@ -29,6 +29,7 @@ void SpecialKeyFunc (int Key, int x, int y) { (void)x; (void)y;
 
 void KeyPressFunc (unsigned char Key, int x, int y) { (void)x; (void)y;
     switch (Key) {
+        case 'C': case 'c': centroid = !centroid; break;
         case 'G': case 'g': ball_size *= 1.1F; break;
         case 'B': case 'b': ball_size /= 1.1F; break;
         case 'S': case 's': running = !running; paused = false; break;
