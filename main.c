@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
     CHECK(argc >= 12);
 
     // optimizer settings
-    optimset opt = get_settings(argv);
+    optimset o = get_settings(argv);
 
     const int n = argc - 10;
     point *start = get_point(n);
@@ -22,18 +22,18 @@ int main(int argc, char **argv) {
     model *m = get_parameters();
 
     // get a simplex
-    simplex *s = get_simplex(n, opt.size, start);
+    simplex *s = get_simplex(n, o.size, start);
 
     // begin optimization
-    nelder_mead(s, solution, m, &opt);
+    nelder_mead(s, solution, m, &o);
 
     // print starting point
     printf("%s     Initial ", GRY);
     cost(n, start, m);
-    print_point(n, start, opt.places, opt.fmt);
+    print_point(n, start, o.places, o.fmt);
     // print solution
     printf("    %sSolution ", GRY);
-    print_point(n, solution, opt.places, opt.fmt);
+    print_point(n, solution, o.places, o.fmt);
     // print stats
     printf("%s  Iterations/Evaluations%s %d/%d\n", GRY, NRM, s->iterations, s->evaluations);
 

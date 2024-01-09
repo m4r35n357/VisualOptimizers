@@ -10,23 +10,27 @@
 
 static simplex *s;  // the simplex
 static model *m;  // the model
-static optimset opt;
+static optimset o;
 static point *solution;
-static gl_point *vertices;
+static gl_point *v;
 
-gl_point get_gl_point (point *p) {
-    return (gl_point){(float)p->x[0], (float)p->x[1], (float)p->x[2]};
+void get_vertices (gl_point *vertices, point *points) {
+    for (int i = 0; i < 4; i++) {
+        vertices[i] = (gl_point){(float)points[i].x[0], (float)points[i].x[1], (float)points[i].x[2]};
+    }
 }
 
 void Animate () {
     SetupView();
 
     if (!finished && !paused) {
-        if (nelder_mead(s, solution, m, &opt)) {
-            for (int i = 0; i < 4; i++) {
-                vertices[i] = get_gl_point(s->p + i);
-            }
-        } else finished = true;
+        if (initial) {
+        	initial = false;
+        } else {
+            if (nelder_mead(s, solution, m, &o)) {
+            	get_vertices(v, s->p);
+            } else finished = true;
+        }
         if (stepping) paused = true;
     }
 
@@ -37,7 +41,7 @@ void Animate () {
 
     for (int i = 0; i < 4; i++) {
         for (int k = i; k < 4; k++) {
-            line(vertices[i], vertices[k], get_colour(DARK_BLUE));
+            line(v[i], v[k], get_colour(DARK_BLUE));
         }
         rgb vertex_colour;
         switch (i) {
@@ -46,14 +50,14 @@ void Animate () {
             case  3: vertex_colour = get_colour(LIGHT_RED); break;
             default: vertex_colour = get_colour(LIGHT_GREY); break;
         }
-        ball(vertices[i], vertex_colour);
+        ball(v[i], vertex_colour);
     }
 
     if (osd_active) {
         glColor3f(0.0F, 0.5F, 0.5F);
-        sprintf(hud, opt.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
+        sprintf(hud, o.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
                 s->iterations, s->evaluations,
-                opt.places, s->p[0].x[0], opt.places, s->p[0].x[1], opt.places, s->p[0].x[2], opt.places, s->p[0].f);
+                o.places, s->p[0].x[0], o.places, s->p[0].x[1], o.places, s->p[0].x[2], o.places, s->p[0].f);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, hud);
     }
 
@@ -65,7 +69,7 @@ int main (int argc, char **argv) {
     CHECK(argc >= 12);
 
     // optimizer settings
-    opt = get_settings(argv);
+    o = get_settings(argv);
 
     const int n = argc - 10;
     point *start = get_point(n);
@@ -79,15 +83,16 @@ int main (int argc, char **argv) {
     m = get_parameters();
 
     // get a simplex
-    s = get_simplex(n, opt.size, start);
+    s = get_simplex(n, o.size, start);
     s->gl = true;
 
     // print starting point
     printf("%s     Initial ", GRY);
     cost(n, start, m);
-    print_point(n, start, opt.places, opt.fmt);
+    print_point(n, start, o.places, o.fmt);
 
-    vertices = malloc(4 * sizeof (gl_point)); CHECK(vertices);
+    v = malloc(4 * sizeof (gl_point)); CHECK(v);
+    get_vertices(v, s->p);
 
     ApplicationInit(argc, argv, "Nelder-Mead Visualizer");
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.

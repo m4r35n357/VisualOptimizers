@@ -26,7 +26,7 @@ typedef enum ColourCode {
  */
 extern char hud[];
 
-extern bool finished, paused, stepping, running, osd_active;
+extern bool initial, finished, paused, stepping, running, osd_active;
 
 /*
  * OpenGL set-up functions
@@ -71,7 +71,7 @@ void osd (int x, int y, char *string);
 /*
  * Extract current coordinates from data
  */
-gl_point get_gl_point (point *data);
+void get_vertices (gl_point *vertices, point *p);
 
 /*
  * Re-draw boilerplate (no logic)

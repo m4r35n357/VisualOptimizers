@@ -11,9 +11,9 @@
 
 char hud[128];
 
-bool finished = false, paused = false, stepping = true, running = true, osd_active = true;
+bool initial = true, finished = false, paused = false, stepping = true, running = true, osd_active = true;
 
-static float radius = 5.0F, elevation = 90.0F, azimuth = 0.0F, ball_size = 0.02F;
+static float radius = 5.0F, elevation = 90.0F, azimuth = 0.0F, ball_size = 0.01F;
 
 void SpecialKeyFunc (int Key, int x, int y) { (void)x; (void)y;
     switch (Key) {
