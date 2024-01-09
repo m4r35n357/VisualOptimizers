@@ -30,7 +30,8 @@ optimset get_settings (char **argv) {
 /*
  * Initial point at centroid, all vertices equally spaced, trial points allocated
  */
-simplex *get_simplex (int n, real size, const point *start) {
+simplex *get_simplex (int n, real size, const point *start, const model *m) {
+	// create
     simplex *s = malloc(sizeof (simplex));              CHECK(s);
     s->n = n;
     s->p = malloc((size_t)(n + 1) * sizeof (point));    CHECK(s->p);
@@ -55,12 +56,18 @@ simplex *get_simplex (int n, real size, const point *start) {
             s->p[i].x[j] = size * s->p[i].x[j] + start->x[j];
         }
     }
+    // initialize
     s->reflect = get_point(n);
     s->expand = get_point(n);
     s->contract = get_point(n);
     s->centroid = get_point(n);
     s->iterations = s->evaluations = 0;
     s->gl = s->looping = false;
+    for (int i = 0; i < s->n + 1; i++) {  // initial cost at simplex vertices
+        cost(s->n, s->p + i, m);
+        s->evaluations++;
+    }
+    sort(s);
     return s;
 }
 
@@ -87,11 +94,6 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
     point *worst = s->p + s->n;
     point *second_worst = worst - 1;
     if (s->gl && s->looping) goto resume; else s->looping = true;
-    for (int i = 0; i < s->n + 1; i++) {  // initial cost at simplex vertices
-        cost(s->n, s->p + i, m);
-        s->evaluations++;
-    }
-    sort(s);
     printf(o->fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter %s% .*Lf\n",
            GRY, NRM, o->places, distance(s->n, best, worst));
     while (distance(s->n, best, worst) > o->x_tolerance || (worst->f - best->f) > o->f_tolerance) {

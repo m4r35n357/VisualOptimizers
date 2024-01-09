@@ -83,7 +83,7 @@ int main (int argc, char **argv) {
     m = get_parameters();
 
     // get a simplex
-    s = get_simplex(n, o.size, start);
+    s = get_simplex(n, o.size, start, m);
     s->gl = true;
 
     // print starting point

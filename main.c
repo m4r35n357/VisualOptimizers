@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
     model *m = get_parameters();
 
     // get a simplex
-    simplex *s = get_simplex(n, o.size, start);
+    simplex *s = get_simplex(n, o.size, start, m);
 
     // begin optimization
     nelder_mead(s, solution, m, &o);
