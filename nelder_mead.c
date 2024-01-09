@@ -31,7 +31,7 @@ optimset get_settings (char **argv) {
  * Initial point at centroid, all vertices equally spaced, trial points allocated
  */
 simplex *get_simplex (int n, real size, const point *start, const model *m) {
-	// create
+    // create
     simplex *s = malloc(sizeof (simplex));              CHECK(s);
     s->n = n;
     s->p = malloc((size_t)(n + 1) * sizeof (point));    CHECK(s->p);
@@ -172,7 +172,7 @@ void sort (simplex *s) {
     for (int j = 0; j < s->n; j++) {
         s->centroid->x[j] = 0.0L;
         for (int i = 0; i < s->n; i++) {
-        	s->centroid->x[j] += s->p[i].x[j];
+            s->centroid->x[j] += s->p[i].x[j];
         }
         s->centroid->x[j] /= s->n;
     }

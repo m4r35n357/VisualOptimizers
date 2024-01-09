@@ -25,10 +25,10 @@ void Animate () {
 
     if (!finished && !paused) {
         if (initial) {
-        	initial = false;
+            initial = false;
         } else {
             if (nelder_mead(s, solution, m, &o)) {
-            	get_vertices(v, s->p);
+                get_vertices(v, s->p);
             } else finished = true;
         }
         if (stepping) paused = true;
@@ -49,7 +49,7 @@ void Animate () {
 
     for (int i = 0; i < 4; i++) {
         for (int k = i; k < 4; k++) {
-        	rgb edge_colour = !i ? get_colour(DARK_GREEN) : get_colour(DARK_BLUE);
+            rgb edge_colour = !i ? get_colour(DARK_GREEN) : get_colour(DARK_BLUE);
             line(v[i], v[k], edge_colour);
         }
         rgb vertex_colour;
