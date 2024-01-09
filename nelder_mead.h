@@ -55,7 +55,7 @@ typedef struct Optimset {
  * The "simplex" containing an array of n + 1 points each of dimension n
  */
 typedef struct Simplex {
-    point *p, *reflect, *expand, *contract, *centre;
+    point *p, *reflect, *expand, *contract, *centroid;
     int n, iterations, evaluations;
     bool gl, looping;
 } simplex;
@@ -82,8 +82,6 @@ real distance (int, const point *, const point *);
 int compare (const void *, const void *);
 
 void sort (simplex *);
-
-void get_centroid (const simplex *, point *);
 
 void project (point *, simplex *, const model *, const point *, real, const point *, point *);
 

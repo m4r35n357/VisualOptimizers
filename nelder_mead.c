@@ -58,7 +58,7 @@ simplex *get_simplex (int n, real size, const point *start) {
     s->reflect = get_point(n);
     s->expand = get_point(n);
     s->contract = get_point(n);
-    s->centre = get_point(n);
+    s->centroid = get_point(n);
     s->iterations = s->evaluations = 0;
     s->gl = s->looping = false;
     return s;
@@ -98,10 +98,9 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
         CHECK(s->evaluations <= o->max_evaluations);
         CHECK(s->iterations <= o->max_iterations);
         int shrink = 0;
-        get_centroid(s, s->centre);
-        project(s->reflect, s, m, s->centre, ALPHA, worst, s->centre);
+        project(s->reflect, s, m, s->centroid, ALPHA, worst, s->centroid);
         if (s->reflect->f < best->f) {
-            project(s->expand, s, m, s->centre, GAMMA, worst, s->centre);
+            project(s->expand, s, m, s->centroid, GAMMA, worst, s->centroid);
             if (s->expand->f < s->reflect->f) {
                 if (o->debug) printf("expand        ");
                 copy_point(s->n, s->expand, worst);
@@ -115,7 +114,7 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
                 copy_point(s->n, s->reflect, worst);
             } else {
                 if (s->reflect->f < worst->f) {
-                    project(s->contract, s, m, s->centre, RHO, worst, s->centre);
+                    project(s->contract, s, m, s->centroid, RHO, worst, s->centroid);
                     if (s->contract->f < s->reflect->f) {
                         if (o->debug) printf("contract_out  ");
                         copy_point(s->n, s->contract, worst);
@@ -123,7 +122,7 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
                         shrink = 1;
                     }
                 } else {
-                    project(s->contract, s, m, s->centre, RHO, s->centre, worst);
+                    project(s->contract, s, m, s->centroid, RHO, s->centroid, worst);
                     if (s->contract->f <= worst->f) {
                         if (o->debug) printf("contract_in   ");
                         copy_point(s->n, s->contract, worst);
@@ -168,18 +167,12 @@ int compare (const void *arg1, const void *arg2) {
 
 void sort (simplex *s) {
     qsort((void *)(s->p), (size_t)s->n + 1, sizeof (point), compare);
-}
-
-/*
- * Get centroid (average position) of simplex
- */
-void get_centroid (const simplex *s, point *c) {
     for (int j = 0; j < s->n; j++) {
-        c->x[j] = 0.0L;
+        s->centroid->x[j] = 0.0L;
         for (int i = 0; i < s->n; i++) {
-            c->x[j] += s->p[i].x[j];
+        	s->centroid->x[j] += s->p[i].x[j];
         }
-        c->x[j] /= s->n;
+        s->centroid->x[j] /= s->n;
     }
 }
 
