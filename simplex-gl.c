@@ -39,8 +39,8 @@ void Animate () {
     line((gl_point){0.0F, 0.0F, -10.0F}, (gl_point){0.0F, 0.0F, 10.0F}, axis_colour);
 
     if (centroid) {
-        for (int i = 0; i < 4; i++) {
-            line(get_gl_point(s->centroid->x), v[i], i == 3 ? get_colour(DARK_RED) : get_colour(DARK_BLUE));
+        for (int i = 0; i < 3; i++) {
+            line(get_gl_point(s->centroid->x), v[i], get_colour(DARK_MAGENTA));
         }
     }
 
@@ -52,7 +52,7 @@ void Animate () {
 
     for (int i = 0; i < 4; i++) {
         for (int k = i; k < 4; k++) {
-            line(v[i], v[k], !i ? get_colour(DARK_GREEN) : get_colour(DARK_CYAN));
+            line(v[i], v[k], get_colour(DARK_BLUE));
         }
         ball(v[i], !i ? get_colour(LIGHT_GREEN) : (i == 3 ? get_colour(LIGHT_RED) : get_colour(LIGHT_GREY)));
     }
