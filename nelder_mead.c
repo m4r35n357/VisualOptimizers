@@ -31,12 +31,11 @@ optimset get_settings (char **argv) {
  * Initial point at centroid, all vertices equally spaced, trial points allocated
  */
 simplex *get_simplex (int n, real size, const point *start, const model *m) {
-    // create
     simplex *s = malloc(sizeof (simplex));              CHECK(s);
     s->n = n;
     s->p = malloc((size_t)(n + 1) * sizeof (point));    CHECK(s->p);
     for (int i = 0; i < n + 1; i++) {  // simplex vertices
-        s->p[i] = *get_point(n);
+        s->p[i].x = malloc((size_t)n * sizeof (real));    CHECK(s->p[i].x);
         for (int j = 0; j < n; j++) {  // coordinates
             s->p[i].x[j] = 0.0L;
         }
@@ -56,7 +55,6 @@ simplex *get_simplex (int n, real size, const point *start, const model *m) {
             s->p[i].x[j] = size * s->p[i].x[j] + start->x[j];
         }
     }
-    // initialize
     s->reflect = get_point(n);
     s->expand = get_point(n);
     s->contract = get_point(n);

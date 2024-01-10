@@ -1,8 +1,3 @@
-/*
- *  Nelder-Mead OpenGL display
- *
- * (c) 2018-2024 m4r35n357@gmail.com (Ian Smith), for licencing see the LICENCE file
- */
 
 #include <stdio.h>
 #include <GL/freeglut.h>
@@ -40,34 +35,24 @@ void Animate () {
     line((gl_point){0.0F, 0.0F, -10.0F}, (gl_point){0.0F, 0.0F, 10.0F}, axis_colour);
 
     if (centroid) {
-        gl_point c = (gl_point){(float)s->centroid->x[0], (float)s->centroid->x[1], (float)s->centroid->x[2]};
-        for (int i = 0; i < 3; i++) {
-            line(c, v[i], get_colour(DARK_GREY));
+        gl_point c = {(float)s->centroid->x[0], (float)s->centroid->x[1], (float)s->centroid->x[2]};
+        for (int i = 0; i < 4; i++) {
+            line(c, v[i], i == 3 ? get_colour(DARK_RED) : get_colour(DARK_BLUE));
         }
-        line(c, v[3], get_colour(DARK_RED));
     }
 
     for (int i = 0; i < 4; i++) {
         for (int k = i; k < 4; k++) {
-            rgb edge_colour = !i ? get_colour(DARK_GREEN) : get_colour(DARK_BLUE);
-            line(v[i], v[k], edge_colour);
+            line(v[i], v[k], !i ? get_colour(DARK_GREEN) : get_colour(DARK_CYAN));
         }
-        rgb vertex_colour;
-        switch (i) {
-            case  0: vertex_colour = get_colour(LIGHT_GREEN); break;
-            case  2: vertex_colour = get_colour(LIGHT_YELLOW); break;
-            case  3: vertex_colour = get_colour(LIGHT_RED); break;
-            default: vertex_colour = get_colour(LIGHT_GREY); break;
-        }
-        ball(v[i], vertex_colour);
+        ball(v[i], !i ? get_colour(LIGHT_GREEN) : (i == 3 ? get_colour(LIGHT_RED) : get_colour(LIGHT_GREY)));
     }
 
     if (osd_active) {
-        glColor3f(0.0F, 0.5F, 0.5F);
         sprintf(hud, o.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
                 s->iterations, s->evaluations,
                 o.places, s->p[0].x[0], o.places, s->p[0].x[1], o.places, s->p[0].x[2], o.places, s->p[0].f);
-        osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, hud);
+        osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_YELLOW), hud);
     }
 
     ReDraw();

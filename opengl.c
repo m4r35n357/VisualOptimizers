@@ -1,8 +1,3 @@
-/*
- *  OpenGL common code
- *
- * (c) 2018-2023 m4r35n357@gmail.com (Ian Smith), for licencing see the LICENCE file
- */
 
 #include <stdio.h>
 #include <GL/glew.h>
@@ -125,7 +120,8 @@ void ball (gl_point p, rgb colour) {
     glPopMatrix();
 }
 
-void osd (int x, int y, char *string) {
+void osd (int x, int y, rgb colour, char *string) {
+    glColor3f(colour.a, colour.b, colour.c);
     glWindowPos2i(x, y);
     glutBitmapString(GLUT_BITMAP_9_BY_15, (const unsigned char *)string);
 }

@@ -1,6 +1,3 @@
-/*
- * (c) 2018-2023 m4r35n357@gmail.com (Ian Smith), for licencing see the LICENCE file
- */
 
 #pragma once
 
@@ -66,7 +63,7 @@ void ball (gl_point p, rgb colour);
 /*
  * OSD/HUD
  */
-void osd (int x, int y, char *string);
+void osd (int x, int y, rgb colour, char *string);
 
 /*
  * Extract current coordinates from data
