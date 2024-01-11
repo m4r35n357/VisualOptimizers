@@ -2,17 +2,15 @@
  
 # Usage
 # $ ./run.sh -b BIN -p INITIAL_POINT
-#       [-x TOL_X] [-f TOL_F] [-i MAX_ITER] [-e MAX_EVAL]
+#       [-t TOLERANCE] [-i MAX_ITERATIONS]
 #       [-d DISPLAY_PRECISION] [-n NUMBER_FORMAT] [-v VERBOSE] 
 #       [-a ADAPTIVE_SCALING] [-s SIMPLEX_SCALING]
 #         
 # where 
 #  -b  BIN                str    required
 #  -p  INITIAL_POINT      str    required  comma-separated coordinates
-#  -x  TOL_X              float  optional
-#  -f  TOL_F              float  optional
-#  -i  MAX_ITER           int    optional
-#  -e  MAX_EVAL           int    optional
+#  -t  TOLERANCE          float  optional
+#  -i  MAX_ITERATIONS     int    optional
 #  -d  DISPLAY_PRECISION  int    optional
 #  -n  NUMBER_FORMAT      int    optional  0 = fixed point, 1 = exponential
 #  -v  VERBOSE            int    optional  0 = off, 1 = on
@@ -28,26 +26,22 @@ initial_point=""
 display_precision=9
 number_format=0
 verbose=0
-tol_x=1.0e-9
-tol_f=1.0e-9
+tolerance=1.0e-9
 max_iter=5000
-max_eval=5000
 adaptive_scaling=0
 simplex_scaling=1.0
 
 user_defaults='./user-defaults'
 [ -f $user_defaults ] && . $user_defaults
 
-while getopts "b:p:n:x:f:i:e:d:v:a:s:" opt; do
+while getopts "b:p:n:t:i:d:v:a:s:" opt; do
     case $opt in
         b) bin=${OPTARG} ;;
         d) display_precision=${OPTARG} ;;
         n) number_format=${OPTARG} ;;
         v) verbose=${OPTARG} ;;
-        x) tol_x=${OPTARG} ;;
-        f) tol_f=${OPTARG} ;;
+        t) tolerance=${OPTARG} ;;
         i) max_iter=${OPTARG} ;;
-        e) max_eval=${OPTARG} ;;
         a) adaptive_scaling=${OPTARG} ;;
         s) simplex_scaling=${OPTARG} ;;
         p) initial_point=${OPTARG} ;;
@@ -69,4 +63,4 @@ fi
 IFS=','
 set -- $initial_point
 
-./${bin} ${display_precision} ${number_format} ${verbose} ${tol_x} ${tol_f} ${max_iter} ${max_eval} ${adaptive_scaling} ${simplex_scaling} $@
+./${bin} ${display_precision} ${number_format} ${verbose} ${tolerance} ${max_iter} ${adaptive_scaling} ${simplex_scaling} $@

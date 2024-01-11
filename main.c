@@ -5,16 +5,16 @@
 
 int main(int argc, char **argv) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc >= 12);
+    CHECK(argc >= 10);
 
     // optimizer settings
     optimset o = get_settings(argv);
 
-    const int n = argc - 10;
+    const int n = argc - 8;
     point *start = get_point(n);
     // set initial point from command arguments
     for (int i = 0; i < n; i++) {
-        start->x[i] = strtod(argv[i + 10], NULL);
+        start->x[i] = strtod(argv[i + 8], NULL);
     }
     point *solution = get_point(n);
 

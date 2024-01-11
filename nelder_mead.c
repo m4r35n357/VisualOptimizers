@@ -9,19 +9,15 @@ optimset get_settings (char **argv) {
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
         .debug = (int)strtol(argv[3], NULL, BASE),
-        .x_tolerance = strtold(argv[4], NULL),
-        .f_tolerance = strtold(argv[5], NULL),
-        .max_iterations = (int)strtol(argv[6], NULL, BASE),
-        .max_evaluations = (int)strtol(argv[7], NULL, BASE),
-        .adaptive = (int)strtol(argv[8], NULL, BASE),
-        .size = strtold(argv[9], NULL)
+        .tolerance = strtold(argv[4], NULL),
+        .max_iterations = (int)strtol(argv[5], NULL, BASE),
+        .adaptive = (int)strtol(argv[6], NULL, BASE),
+        .size = strtold(argv[7], NULL)
     };
     CHECK(opt.places >= 3 && opt.places <= 36);
     CHECK(opt.debug == 0 || opt.debug == 1);
-    CHECK(opt.x_tolerance >= 1.0e-36L && opt.x_tolerance <= 1.0e-3L);
-    CHECK(opt.f_tolerance >= 1.0e-36L && opt.f_tolerance <= 1.0e-3L);
+    CHECK(opt.tolerance >= 1.0e-36L && opt.tolerance <= 1.0e-3L);
     CHECK(opt.max_iterations >= 1 && opt.max_iterations <= 100000);
-    CHECK(opt.max_evaluations >= 1 && opt.max_evaluations <= 100000);
     CHECK(opt.adaptive == 0 || opt.adaptive == 1);
     CHECK(opt.size >= 1.0e-12L && opt.size <= 1.0e3L);
     return opt;
@@ -94,8 +90,7 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
     if (s->gl && s->looping) goto resume; else s->looping = true;
     printf(o->fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter %s% .*Lf\n",
            GRY, NRM, o->places, distance(s->n, best, worst));
-    while (distance(s->n, best, worst) > o->x_tolerance || (worst->f - best->f) > o->f_tolerance) {
-        CHECK(s->evaluations <= o->max_evaluations);
+    while (distance(s->n, best, worst) > o->tolerance || (worst->f - best->f) > o->tolerance) {
         CHECK(s->iterations <= o->max_iterations);
         int shrink = 0;
         project(s->reflect, s, m, s->centroid, ALPHA, worst, s->centroid);

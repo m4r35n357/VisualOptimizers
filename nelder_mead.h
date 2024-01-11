@@ -40,10 +40,8 @@
  * Optimizer settings
  */
 typedef struct Optimset {
-    real x_tolerance;    // tolerance on the simplex solutions coordinates
-    real f_tolerance;    // tolerance on the function value
+    real tolerance;    // tolerance on the function value
     int max_iterations;   // maximum number of allowed iterations
-    int max_evaluations;   // maximum number of allowed function evaluations
     int debug;    // toggle verbose output during minimization
     int adaptive;  // simplex updates reduced for dimension > 2
     real size;  // size of initial simplex
