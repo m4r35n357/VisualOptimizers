@@ -4,7 +4,7 @@
 # $ ./run.sh -b BIN -p INITIAL_POINT
 #       [-t TOLERANCE] [-i MAX_ITERATIONS]
 #       [-d DECIMAL_PLACES] [-n NUMBER_FORMAT] [-v VERBOSE] 
-#       [-a ADAPTIVE_SCALING] [-s SIMPLEX_SCALING]
+#       [-s SIMPLEX_SCALING]
 #         
 # where 
 #  -b  BIN                str    required
@@ -14,7 +14,6 @@
 #  -d  DECIMAL_PLACES     int    optional
 #  -n  NUMBER_FORMAT      int    optional  0 = fixed point, 1 = exponential
 #  -v  VERBOSE            int    optional  0 = off, 1 = on
-#  -a  ADAPTIVE_SCALING   int    optional  0 = off, 1 = on
 #  -s  SIMPLEX_SCALING    float  optional
 #
 # Examples:
@@ -28,13 +27,12 @@ number_format=0
 verbose=0
 tolerance=1.0e-9
 max_iterations=5000
-adaptive_scaling=0
 simplex_scaling=1.0
 
 user_defaults='./user-defaults'
 [ -f $user_defaults ] && . $user_defaults
 
-while getopts "b:p:n:t:i:d:v:a:s:" opt; do
+while getopts "b:p:n:t:i:d:v:s:" opt; do
     case $opt in
         b) bin=${OPTARG} ;;
         d) decimal_places=${OPTARG} ;;
@@ -42,7 +40,6 @@ while getopts "b:p:n:t:i:d:v:a:s:" opt; do
         v) verbose=${OPTARG} ;;
         t) tolerance=${OPTARG} ;;
         i) max_iterations=${OPTARG} ;;
-        a) adaptive_scaling=${OPTARG} ;;
         s) simplex_scaling=${OPTARG} ;;
         p) initial_point=${OPTARG} ;;
     esac
@@ -63,4 +60,4 @@ fi
 IFS=','
 set -- $initial_point
 
-./${bin} ${decimal_places} ${number_format} ${verbose} ${tolerance} ${max_iterations} ${adaptive_scaling} ${simplex_scaling} $@
+./${bin} ${decimal_places} ${number_format} ${verbose} ${tolerance} ${max_iterations} ${simplex_scaling} $@

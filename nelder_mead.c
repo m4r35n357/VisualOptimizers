@@ -11,14 +11,12 @@ optimset get_settings (char **argv) {
         .debug = (int)strtol(argv[3], NULL, BASE),
         .tolerance = strtold(argv[4], NULL),
         .max_iterations = (int)strtol(argv[5], NULL, BASE),
-        .adaptive = (int)strtol(argv[6], NULL, BASE),
-        .size = strtold(argv[7], NULL)
+        .size = strtold(argv[6], NULL)
     };
     CHECK(opt.places >= 3 && opt.places <= 36);
     CHECK(opt.debug == 0 || opt.debug == 1);
     CHECK(opt.tolerance >= 1.0e-36L && opt.tolerance <= 1.0e-3L);
     CHECK(opt.max_iterations >= 1 && opt.max_iterations <= 100000);
-    CHECK(opt.adaptive == 0 || opt.adaptive == 1);
     CHECK(opt.size >= 1.0e-12L && opt.size <= 1.0e3L);
     return opt;
 }
@@ -79,10 +77,6 @@ real distance (int n, const point *a, const point *b) {
  * Nelder-Mead Optimizer
  */
 bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o) {
-    real ALPHA = 1.0L;
-    real GAMMA = o->adaptive ? 1.0L + 2.0L / s->n : 2.0L;
-    real RHO = o->adaptive ? 0.75L - 0.5L / s->n : 0.5L;
-    real SIGMA = o->adaptive ? 1.0L - 1.0L / s->n : 0.5L;
     point *best = s->p;
     point *worst = s->p + s->n;
     point *second_worst = worst - 1;

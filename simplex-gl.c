@@ -60,16 +60,16 @@ void Animate () {
 
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc >= 10);
+    CHECK(argc >= 9);
 
     // optimizer settings
     o = get_settings(argv);
 
-    const int n = argc - 8;
+    const int n = argc - 7;
     point *start = get_point(n);
     // set initial point from command arguments
     for (int j = 0; j < n; j++) {
-        start->x[j] = strtod(argv[j + 8], NULL);
+        start->x[j] = strtod(argv[j + 7], NULL);
     }
     solution = get_point(n);
 
