@@ -56,6 +56,7 @@ typedef struct Simplex {
     point *p, *reflect, *expand, *contract, *centroid;
     int n, iterations, evaluations;
     bool gl, looping;
+    real delta_x, delta_f;
 } simplex;
 
 /*

@@ -90,7 +90,7 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
     if (s->gl && s->looping) goto resume; else s->looping = true;
     printf(o->fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter %s% .*Lf\n",
            GRY, NRM, o->places, distance(s->n, best, worst));
-    while (distance(s->n, best, worst) > o->tolerance || (worst->f - best->f) > o->tolerance) {
+    while (s->delta_x > o->tolerance || s->delta_f > o->tolerance) {
         CHECK(s->iterations <= o->max_iterations);
         int shrink = 0;
         project(s->reflect, s, m, s->centroid, ALPHA, worst, s->centroid);
@@ -141,7 +141,8 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
             for (int j = 0; j < s->n; j++) {
                 printf(o->fmt ? "% .*Le " : "% .*Lf ", o->places, best->x[j]);
             }
-            printf(o->fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o->places, best->f);
+            printf(o->fmt ? "]  % .*Le  % .*Le % .*Le\n" : "]  % .*Lf  % .*Lf % .*Lf\n",
+                    o->places, best->f, o->places, s->delta_x, o->places, s->delta_f);
         }
         if (s->gl) return true;
         resume: ;
@@ -169,6 +170,8 @@ void sort (simplex *s) {
         }
         s->centroid->x[j] /= s->n;
     }
+    s->delta_x = distance(s->n, s->p, s->p + s->n);
+    s->delta_f = s->p[0].f - s->p[s->n].f;
 }
 
 /*
