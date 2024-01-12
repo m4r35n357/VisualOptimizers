@@ -1,3 +1,6 @@
+/*
+ * Ackley function https://www.sfu.ca/~ssurjano/ackley.html
+ */
 
 #include <stdlib.h>
 #include <math.h>

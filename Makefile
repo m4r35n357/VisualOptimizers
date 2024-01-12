@@ -23,18 +23,19 @@ all: nm-std nm-gl
 nm-%-std: %.o nelder_mead.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-nm-std: nm-ackley-std nm-hartmann3-std nm-hartmann6-std nm-rosenbrock-std nm-himmelblau-std nm-beale-std nm-sphere-std
+nm-std: nm-ackley-std nm-hartmann3-std nm-hartmann6-std nm-rosenbrock-std nm-himmelblau-std nm-sphere-std nm-st-std
 
 nm-%-gl: %.o nelder_mead.o opengl.o simplex-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-nm-gl: nm-ackley-gl nm-hartmann3-gl nm-hartmann6-gl nm-rosenbrock-gl nm-himmelblau-gl nm-beale-gl nm-sphere-gl
+nm-gl: nm-ackley-gl nm-hartmann3-gl nm-hartmann6-gl nm-rosenbrock-gl nm-himmelblau-gl nm-sphere-gl nm-st-gl
 
 .PHONY: test ctags clean depclean
 
 test: all
 	@./run.sh -b nm-ackley-std -d 6 -n 0 -p -2.10,-3.04,4.50 
 	@./run.sh -b nm-sphere-std -d 6 -n 0 -p -2.10,-3.04,4.50
+	@./run.sh -b nm-st-std -d 6 -n 0 -p 0.0,0.0,0.0
 	@./run.sh -b nm-hartmann3-std -d 6 -n 0 -p 0.5,0.5,0.5
 	@./run.sh -b nm-hartmann6-std -d 6 -n 0 -p 0.5,0.5,0.5,0.5,0.5,0.5
 	@./run.sh -b nm-rosenbrock-std -d 6 -n 0 -p 1.0,0.0,-1.0
@@ -43,7 +44,6 @@ test: all
 	@./run.sh -b nm-himmelblau-std -d 6 -n 0 -p 3.0,-3.0
 	@./run.sh -b nm-himmelblau-std -d 6 -n 0 -p -3.0,3.0
 	@./run.sh -b nm-himmelblau-std -d 6 -n 0 -p -3.0,-3.0
-	@./run.sh -b nm-beale-std -d 6 -n 0 -p 0.0,0.0
 
 ctags:
 	@/usr/bin/ctags *.h *.c
