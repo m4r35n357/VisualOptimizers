@@ -23,12 +23,12 @@ all: nm-std nm-gl
 nm-%-std: %.o nelder_mead.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-nm-std: nm-ackley-std nm-hartmann3-std nm-hartmann6-std nm-rosenbrock-std nm-himmelblau-std nm-sphere-std nm-st-std
+nm-std: nm-ackley-std nm-hartmann3-std nm-hartmann6-std nm-rosenbrock-std nm-himmelblau-std nm-sphere-std nm-st-std nm-rastrigin-std
 
 nm-%-gl: %.o nelder_mead.o opengl.o simplex-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-nm-gl: nm-ackley-gl nm-hartmann3-gl nm-hartmann6-gl nm-rosenbrock-gl nm-himmelblau-gl nm-sphere-gl nm-st-gl
+nm-gl: nm-ackley-gl nm-hartmann3-gl nm-hartmann6-gl nm-rosenbrock-gl nm-himmelblau-gl nm-sphere-gl nm-st-gl nm-rastrigin-gl
 
 .PHONY: test ctags clean depclean
 
