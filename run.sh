@@ -3,7 +3,7 @@
 # Usage
 # $ ./run.sh -b BIN -p INITIAL_POINT
 #       [-t TOLERANCE] [-i MAX_ITERATIONS]
-#       [-d DISPLAY_PRECISION] [-n NUMBER_FORMAT] [-v VERBOSE] 
+#       [-d DECIMAL_PLACES] [-n NUMBER_FORMAT] [-v VERBOSE] 
 #       [-a ADAPTIVE_SCALING] [-s SIMPLEX_SCALING]
 #         
 # where 
@@ -11,7 +11,7 @@
 #  -p  INITIAL_POINT      str    required  comma-separated coordinates
 #  -t  TOLERANCE          float  optional
 #  -i  MAX_ITERATIONS     int    optional
-#  -d  DISPLAY_PRECISION  int    optional
+#  -d  DECIMAL_PLACES     int    optional
 #  -n  NUMBER_FORMAT      int    optional  0 = fixed point, 1 = exponential
 #  -v  VERBOSE            int    optional  0 = off, 1 = on
 #  -a  ADAPTIVE_SCALING   int    optional  0 = off, 1 = on
@@ -23,11 +23,11 @@
 bin=""
 initial_point=""
 
-display_precision=9
+decimal_places=9
 number_format=0
 verbose=0
 tolerance=1.0e-9
-max_iter=5000
+max_iterations=5000
 adaptive_scaling=0
 simplex_scaling=1.0
 
@@ -37,11 +37,11 @@ user_defaults='./user-defaults'
 while getopts "b:p:n:t:i:d:v:a:s:" opt; do
     case $opt in
         b) bin=${OPTARG} ;;
-        d) display_precision=${OPTARG} ;;
+        d) decimal_places=${OPTARG} ;;
         n) number_format=${OPTARG} ;;
         v) verbose=${OPTARG} ;;
         t) tolerance=${OPTARG} ;;
-        i) max_iter=${OPTARG} ;;
+        i) max_iterations=${OPTARG} ;;
         a) adaptive_scaling=${OPTARG} ;;
         s) simplex_scaling=${OPTARG} ;;
         p) initial_point=${OPTARG} ;;
@@ -63,4 +63,4 @@ fi
 IFS=','
 set -- $initial_point
 
-./${bin} ${display_precision} ${number_format} ${verbose} ${tolerance} ${max_iter} ${adaptive_scaling} ${simplex_scaling} $@
+./${bin} ${decimal_places} ${number_format} ${verbose} ${tolerance} ${max_iterations} ${adaptive_scaling} ${simplex_scaling} $@
