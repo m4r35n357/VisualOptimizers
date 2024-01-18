@@ -33,17 +33,18 @@ nm-gl: nm-ackley-gl nm-hartmann3-gl nm-hartmann6-gl nm-rosenbrock-gl nm-himmelbl
 .PHONY: test ctags clean depclean
 
 test: all
-	@./run.sh -b nm-ackley-std -d 6 -n 0 -p -2.10,-3.04,4.50 
-	@./run.sh -b nm-sphere-std -d 6 -n 0 -p -2.10,-3.04,4.50
-	@./run.sh -b nm-st-std -d 6 -n 0 -p 0.0,0.0,0.0
-	@./run.sh -b nm-hartmann3-std -d 6 -n 0 -p 0.5,0.5,0.5
-	@./run.sh -b nm-hartmann6-std -d 6 -n 0 -p 0.5,0.5,0.5,0.5,0.5,0.5
-	@./run.sh -b nm-rosenbrock-std -d 6 -n 0 -p 1.0,0.0,-1.0
-	@./run.sh -b nm-rosenbrock-std -d 6 -n 0 -p 1.0,0.0
-	@./run.sh -b nm-himmelblau-std -d 6 -n 0 -p 3.0,3.0
-	@./run.sh -b nm-himmelblau-std -d 6 -n 0 -p 3.0,-3.0
-	@./run.sh -b nm-himmelblau-std -d 6 -n 0 -p -3.0,3.0
-	@./run.sh -b nm-himmelblau-std -d 6 -n 0 -p -3.0,-3.0
+	@./run.sh -b nm-ackley-std -p -2.10,-3.04,4.50 
+	@./run.sh -b nm-sphere-std -p -2.10,-3.04,4.50
+	@./run.sh -b nm-st-std -p 0.0,0.0,0.0
+	@./run.sh -b nm-hartmann3-std -p 0.5,0.5,0.5
+	@./run.sh -b nm-hartmann6-std -p 0.5,0.5,0.5,0.5,0.5,0.5
+	@./run.sh -b nm-rosenbrock-std -p 1.0,0.0,-1.0
+	@./run.sh -b nm-rosenbrock-std -p 1.0,0.0
+	@./run.sh -b nm-himmelblau-std -p 3.0,3.0
+	@./run.sh -b nm-himmelblau-std -p 3.0,-3.0
+	@./run.sh -b nm-himmelblau-std -p -3.0,3.0
+	@./run.sh -b nm-himmelblau-std -p -3.0,-3.0
+	@./run.sh -b nm-rastrigin-std -p 0.0,0.0,0.0
 
 ctags:
 	@/usr/bin/ctags *.h *.c
