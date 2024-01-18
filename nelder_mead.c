@@ -52,9 +52,8 @@ simplex *get_simplex (int n, real size, const point *start, const model *m) {
         }
     }
     s->reflect = get_point(n);
-    s->expand = get_point(n);
-    s->contract = get_point(n);
     s->centroid = get_point(n);
+    s->trial = get_point(n);
     s->iterations = s->evaluations = 0;
     s->gl = s->looping = false;
     for (int i = 0; i < s->n + 1; i++) {  // initial cost at simplex vertices
@@ -98,27 +97,27 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
             if (o->debug) printf("reflect       ");
             copy_point(s->n, s->reflect, worst);
         } else if (s->reflect->f < best->f) {
-            project(s->expand, s, m, s->centroid, GAMMA, worst, s->centroid);
-            if (s->expand->f < s->reflect->f) {
+            project(s->trial, s, m, s->centroid, GAMMA, worst, s->centroid);
+            if (s->trial->f < s->reflect->f) {
                 if (o->debug) printf("expand        ");
-                copy_point(s->n, s->expand, worst);
+                copy_point(s->n, s->trial, worst);
             } else {
                 if (o->debug) printf("reflect       ");
                 copy_point(s->n, s->reflect, worst);
             }
         } else if (s->reflect->f < worst->f) {
-            project(s->contract, s, m, s->centroid, RHO, worst, s->centroid);
-            if (s->contract->f < s->reflect->f) {
+            project(s->trial, s, m, s->centroid, RHO, worst, s->centroid);
+            if (s->trial->f < s->reflect->f) {
                 if (o->debug) printf("contract_out  ");
-                copy_point(s->n, s->contract, worst);
+                copy_point(s->n, s->trial, worst);
             } else {
                 shrink = 1;
             }
         } else {
-            project(s->contract, s, m, s->centroid, RHO, s->centroid, worst);
-            if (s->contract->f < worst->f) {
+            project(s->trial, s, m, s->centroid, RHO, s->centroid, worst);
+            if (s->trial->f < worst->f) {
                 if (o->debug) printf("contract_in   ");
-                copy_point(s->n, s->contract, worst);
+                copy_point(s->n, s->trial, worst);
             } else {
                 shrink = 1;
             }

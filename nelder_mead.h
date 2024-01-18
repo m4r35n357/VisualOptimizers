@@ -53,7 +53,7 @@ typedef struct Optimset {
  * The "simplex" containing an array of n + 1 points each of dimension n
  */
 typedef struct Simplex {
-    point *p, *reflect, *expand, *contract, *centroid;
+    point *p, *reflect, *centroid, *trial;
     int n, iterations, evaluations;
     bool gl, looping;
     real delta_x, delta_f;
