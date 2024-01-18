@@ -94,7 +94,10 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
         CHECK(s->iterations <= o->max_iterations);
         int shrink = 0;
         project(s->reflect, s, m, s->centroid, ALPHA, worst, s->centroid);
-        if (s->reflect->f < best->f) {
+        if (best->f <= s->reflect->f && s->reflect->f < second_worst->f) {
+            if (o->debug) printf("reflect       ");
+            copy_point(s->n, s->reflect, worst);
+        } else if (s->reflect->f < best->f) {
             project(s->expand, s, m, s->centroid, GAMMA, worst, s->centroid);
             if (s->expand->f < s->reflect->f) {
                 if (o->debug) printf("expand        ");
@@ -103,28 +106,21 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
                 if (o->debug) printf("reflect       ");
                 copy_point(s->n, s->reflect, worst);
             }
-        } else {
-            if (s->reflect->f < second_worst->f) {
-                if (o->debug) printf("reflect       ");
-                copy_point(s->n, s->reflect, worst);
+        } else if (s->reflect->f < worst->f) {
+            project(s->contract, s, m, s->centroid, RHO, worst, s->centroid);
+            if (s->contract->f < s->reflect->f) {
+                if (o->debug) printf("contract_out  ");
+                copy_point(s->n, s->contract, worst);
             } else {
-                if (s->reflect->f < worst->f) {
-                    project(s->contract, s, m, s->centroid, RHO, worst, s->centroid);
-                    if (s->contract->f < s->reflect->f) {
-                        if (o->debug) printf("contract_out  ");
-                        copy_point(s->n, s->contract, worst);
-                    } else {
-                        shrink = 1;
-                    }
-                } else {
-                    project(s->contract, s, m, s->centroid, RHO, s->centroid, worst);
-                    if (s->contract->f <= worst->f) {
-                        if (o->debug) printf("contract_in   ");
-                        copy_point(s->n, s->contract, worst);
-                    } else {
-                        shrink = 1;
-                    }
-                }
+                shrink = 1;
+            }
+        } else {
+            project(s->contract, s, m, s->centroid, RHO, s->centroid, worst);
+            if (s->contract->f < worst->f) {
+                if (o->debug) printf("contract_in   ");
+                copy_point(s->n, s->contract, worst);
+            } else {
+                shrink = 1;
             }
         }
         if (shrink) {
