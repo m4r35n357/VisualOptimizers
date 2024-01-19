@@ -59,7 +59,7 @@ void Animate () {
 
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc >= 9);
+    CHECK(argc == 10);
 
     // optimizer settings
     o = get_settings(argv);

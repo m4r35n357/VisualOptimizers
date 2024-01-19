@@ -4,7 +4,7 @@
 
 int main(int argc, char **argv) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc >= 9);
+    CHECK(argc >= 8);
 
     // optimizer settings
     optimset o = get_settings(argv);
