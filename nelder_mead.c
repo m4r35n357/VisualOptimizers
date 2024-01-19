@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -104,17 +103,13 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
             if (s->trial->f < s->reflect->f) {
                 if (o->debug) printf("contract_out  ");
                 copy_point(s->n, s->trial, worst);
-            } else {
-                shrink = 1;
-            }
+            } else shrink = 1;
         } else {
             project(s->trial, s, m, s->centroid, RHO, s->centroid, worst);
             if (s->trial->f < worst->f) {
                 if (o->debug) printf("contract_in   ");
                 copy_point(s->n, s->trial, worst);
-            } else {
-                shrink = 1;
-            }
+            } else shrink = 1;
         }
         if (shrink) {
             if (o->debug) printf("shrink        ");
@@ -136,7 +131,6 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
         if (s->gl) return true;
         resume: ;
     }
-    // save solution in output argument
     copy_point(s->n, best, solution);
     return s->looping = false;
 }

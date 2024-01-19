@@ -1,7 +1,6 @@
 /*
  * Rosenbrock function https://www.sfu.ca/~ssurjano/rosen.html
  */
-
 #include <stdlib.h>
 #include "model.h"
 

@@ -1,4 +1,3 @@
-
 typedef long double real;
 
 /*
