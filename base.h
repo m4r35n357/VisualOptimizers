@@ -60,6 +60,6 @@ typedef struct Simplex {
  * Optional, where known
  */
 typedef struct Minima {
-    point *minima;
+    point *min;
     int n_minima;
 } minima;

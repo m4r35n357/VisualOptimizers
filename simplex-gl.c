@@ -4,14 +4,18 @@
 
 static simplex *s;
 static model *m;
-static minima *min;
+static minima *targets;
 static optimset o;
 static point *solution;
 static gl_point *v;
 
+static gl_point get_gl_point (real *point) {
+    return (gl_point){(float)point[0], (float)point[1], (float)point[2]};
+}
+
 void get_vertices (gl_point *vertices, point *points) {
     for (int i = 0; i < 4; i++) {
-        vertices[i] = (gl_point){(float)points[i].x[0], (float)points[i].x[1], (float)points[i].x[2]};
+        vertices[i] = get_gl_point(points[i].x);
     }
 }
 
@@ -35,9 +39,14 @@ void Animate () {
     line((gl_point){0.0F, 0.0F, -10.0F}, (gl_point){0.0F, 0.0F, 10.0F}, axis_colour);
 
     if (centroid) {
-        gl_point c = {(float)s->centroid->x[0], (float)s->centroid->x[1], (float)s->centroid->x[2]};
         for (int i = 0; i < 4; i++) {
-            line(c, v[i], i == 3 ? get_colour(DARK_RED) : get_colour(DARK_BLUE));
+            line(get_gl_point(s->centroid->x), v[i], i == 3 ? get_colour(DARK_RED) : get_colour(DARK_BLUE));
+        }
+    }
+
+    if (targets) {
+        for (int i = 0; i < targets->n_minima; i++) {
+            ball(get_gl_point(targets->min[i].x), get_colour(LIGHT_YELLOW));
         }
     }
 
@@ -80,8 +89,8 @@ int main (int argc, char **argv) {
     s = get_simplex(n, o.size, start, m);
     s->gl = true;
 
-    // get minima if known
-    min = get_known_minima();
+    // get minima for targets if known
+    targets = get_known_minima();
 
     // print starting point
     printf("%s     Initial ", GRY);

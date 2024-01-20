@@ -1,4 +1,6 @@
-
+/*
+ * Hartmann 6-Dimensional function https://www.sfu.ca/~ssurjano/hart6.html
+ */
 #include <stdlib.h>
 #include <math.h>
 #include "model.h"
