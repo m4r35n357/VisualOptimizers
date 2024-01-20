@@ -9,7 +9,7 @@ static optimset o;
 static point *solution;
 static gl_point *v;
 
-static gl_point get_gl_point (real *point) {
+gl_point get_gl_point (real *point) {
     return (gl_point){(float)point[0], (float)point[1], (float)point[2]};
 }
 
