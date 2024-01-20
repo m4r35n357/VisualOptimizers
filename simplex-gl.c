@@ -2,8 +2,9 @@
 #include <GL/freeglut.h>
 #include "opengl.h"
 
-static simplex *s;  // the simplex
-static model *m;  // the model
+static simplex *s;
+static model *m;
+static minima *min;
 static optimset o;
 static point *solution;
 static gl_point *v;
@@ -73,11 +74,14 @@ int main (int argc, char **argv) {
     solution = get_point(n);
 
     // model parameters
-    m = get_parameters();
+    m = model_init();
 
     // get a simplex
     s = get_simplex(n, o.size, start, m);
     s->gl = true;
+
+    // get minima if known
+    min = get_known_minima();
 
     // print starting point
     printf("%s     Initial ", GRY);

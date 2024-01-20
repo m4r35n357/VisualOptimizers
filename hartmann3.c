@@ -17,7 +17,11 @@ real P[4][3] = {{0.3689L, 0.1170L, 0.2673L},
                   {0.1091L, 0.8732L, 0.5547L},
                   {0.0381L, 0.5743L, 0.8828L}};
 
-model *get_parameters () {
+model *model_init () {
+    return NULL;
+}
+
+minima *get_known_minima () {
     return NULL;
 }
 

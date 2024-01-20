@@ -4,7 +4,11 @@
 
 struct Model { real _; };
 
-model *get_parameters () {
+model *model_init () {
+    return NULL;
+}
+
+minima *get_known_minima () {
     return NULL;
 }
 

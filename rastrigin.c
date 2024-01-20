@@ -7,11 +7,15 @@
 
 struct Model { real A, PI; };
 
-model *get_parameters () {
+model *model_init () {
     model *m = malloc(sizeof (model));
     m->A = 10.0L;
     m->PI = acosl(-1.0L);
     return m;
+}
+
+minima *get_known_minima () {
+    return NULL;
 }
 
 void cost (int n, point *p, const model *m) { (void)m;

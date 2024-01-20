@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
     point *solution = get_point(n);
 
     // model parameters
-    model *m = get_parameters();
+    model *m = model_init();
 
     // get a simplex
     simplex *s = get_simplex(n, o.size, start, m);

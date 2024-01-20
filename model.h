@@ -1,17 +1,11 @@
-typedef long double real;
+#pragma once
+
+#include "base.h"
 
 /*
  * "Low-noise" squaring for arguments with no side-effects
  */
 #define SQR(x) ((x) * (x))
-
-/*
- * Point is an array of dimension n together with a cost function value
- */
-typedef struct Point {
-  real *x;
-  real f;
-} point;
 
 /*
  * Model parameters
@@ -26,4 +20,9 @@ void cost (int, point *, const model *);
 /*
  * Initialize parameters
  */
-model *get_parameters (void);
+model *model_init (void);
+
+/*
+ * Initialize minima, where known
+ */
+minima *get_known_minima (void);
