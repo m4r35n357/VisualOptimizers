@@ -10,7 +10,7 @@ NRM='\e[0m'
 args="$0 $*"
 n_args=$(($# + 1))
 echo "${GRY}args ${NRM}${n_args}${GRY} [ ${MGT}${args}${GRY} ]${NRM}" >&2
-if [ ${n_args} -ne 11 ]
+if [ ${n_args} -ne 10 ]
 then
     echo "${RED}Only works for 3D models at present${NRM}"
     exit 1

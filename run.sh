@@ -3,7 +3,7 @@
 # Usage
 # $ ./run.sh -b BIN -p INITIAL_POINT
 #       [-t TOLERANCE] [-i MAX_ITERATIONS]
-#       [-d DECIMAL_PLACES] [-n NUMBER_FORMAT] [-v VERBOSE] 
+#       [-d DECIMAL_PLACES] [-n NUMBER_FORMAT]
 #       [-s SIMPLEX_SCALING]
 #         
 # where 
@@ -13,7 +13,6 @@
 #  -i  MAX_ITERATIONS     int    optional
 #  -d  DECIMAL_PLACES     int    optional
 #  -n  NUMBER_FORMAT      int    optional  0 = fixed point, 1 = exponential
-#  -v  VERBOSE            int    optional  0 = off, 1 = on
 #  -s  SIMPLEX_SCALING    float  optional
 #
 # Examples:
@@ -24,7 +23,6 @@ initial_point=""
 
 decimal_places=9
 number_format=0
-verbose=0
 tolerance=1.0e-9
 max_iterations=5000
 simplex_scaling=1.0
@@ -32,12 +30,11 @@ simplex_scaling=1.0
 user_defaults='./user-defaults'
 [ -f $user_defaults ] && . $user_defaults
 
-while getopts "b:p:n:t:i:d:v:s:" opt; do
+while getopts "b:p:n:t:i:d:s:" opt; do
     case $opt in
         b) bin=${OPTARG} ;;
         d) decimal_places=${OPTARG} ;;
         n) number_format=${OPTARG} ;;
-        v) verbose=${OPTARG} ;;
         t) tolerance=${OPTARG} ;;
         i) max_iterations=${OPTARG} ;;
         s) simplex_scaling=${OPTARG} ;;
@@ -54,10 +51,8 @@ if [ -z "$initial_point" ]; then
       exit 1
 fi
 
-# workaround, as getops cannot read multiple argument for the same option
-# we pass the coordinates as numbers separated by commas and here we
-# replace all commas with spaces
+# convert initial points argument to positional parameters before appending to command
 IFS=','
 set -- $initial_point
 
-./${bin} ${decimal_places} ${number_format} ${verbose} ${tolerance} ${max_iterations} ${simplex_scaling} $@
+./${bin} ${decimal_places} ${number_format} ${tolerance} ${max_iterations} ${simplex_scaling} $@

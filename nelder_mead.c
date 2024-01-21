@@ -7,14 +7,12 @@ optimset get_settings (char **argv) {
     optimset opt = {
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
-        .debug = (int)strtol(argv[3], NULL, BASE),
-        .tolerance = strtold(argv[4], NULL),
-        .max_iterations = (int)strtol(argv[5], NULL, BASE),
-        .size = strtold(argv[6], NULL)
+        .tolerance = strtold(argv[3], NULL),
+        .max_iterations = (int)strtol(argv[4], NULL, BASE),
+        .size = strtold(argv[5], NULL)
     };
     CHECK(opt.places >= 3 && opt.places <= 36);
     CHECK(opt.fmt == 0 || opt.fmt == 1);
-    CHECK(opt.debug == 0 || opt.debug == 1);
     CHECK(opt.tolerance >= 1.0e-36L && opt.tolerance <= 1.0e-3L);
     CHECK(opt.max_iterations >= 1 && opt.max_iterations <= 100000);
     CHECK(opt.size >= 1.0e-12L && opt.size <= 1.0e3L);
@@ -88,32 +86,32 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
         int shrink = 0;
         project(s->reflect, s, m, s->centroid, ALPHA, worst, s->centroid);
         if (best->f <= s->reflect->f && s->reflect->f < second_worst->f) {
-            if (o->debug) printf("reflect       ");
+            printf("reflect       ");
             copy_point(s->n, s->reflect, worst);
         } else if (s->reflect->f < best->f) {
             project(s->trial, s, m, s->centroid, GAMMA, worst, s->centroid);
             if (s->trial->f < s->reflect->f) {
-                if (o->debug) printf("expand        ");
+                printf("expand        ");
                 copy_point(s->n, s->trial, worst);
             } else {
-                if (o->debug) printf("reflect       ");
+                printf("reflect       ");
                 copy_point(s->n, s->reflect, worst);
             }
         } else if (s->reflect->f < worst->f) {
             project(s->trial, s, m, s->centroid, RHO, worst, s->centroid);
             if (s->trial->f < s->reflect->f) {
-                if (o->debug) printf("contract_out  ");
+                printf("contract_out  ");
                 copy_point(s->n, s->trial, worst);
             } else shrink = 1;
         } else {
             project(s->trial, s, m, s->centroid, RHO, s->centroid, worst);
             if (s->trial->f < worst->f) {
-                if (o->debug) printf("contract_in   ");
+                printf("contract_in   ");
                 copy_point(s->n, s->trial, worst);
             } else shrink = 1;
         }
         if (shrink) {
-            if (o->debug) printf("shrink        ");
+            printf("shrink        ");
             for (int i = 1; i < s->n + 1; i++) {
                 point *non_best = s->p + i;
                 project(non_best, s, m, non_best, SIGMA, non_best, best);
@@ -121,14 +119,12 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
         }
         sort(s);
         s->iterations++;
-        if (o->debug) { // print current minimum
-            printf(" %04d %04d  [ ", s->iterations, s->evaluations);
-            for (int j = 0; j < s->n; j++) {
-                printf(o->fmt ? "% .*Le " : "% .*Lf ", o->places, best->x[j]);
-            }
-            printf(o->fmt ? "]  % .*Le  % .*Le % .*Le\n" : "]  % .*Lf  % .*Lf % .*Lf\n",
-                    o->places, best->f, o->places, s->delta_x, o->places, s->delta_f);
-        }
+		printf(" %04d %04d  [ ", s->iterations, s->evaluations);
+		for (int j = 0; j < s->n; j++) {
+			printf(o->fmt ? "% .*Le " : "% .*Lf ", o->places, best->x[j]);
+		}
+		printf(o->fmt ? "]  % .*Le  % .*Le % .*Le\n" : "]  % .*Lf  % .*Lf % .*Lf\n",
+				o->places, best->f, o->places, s->delta_x, o->places, s->delta_f);
         if (s->gl) return true;
         resume: ;
     }

@@ -14,7 +14,6 @@
 typedef struct Optimset {
     real tolerance;    // tolerance on the function value
     int max_iterations;   // maximum number of allowed iterations
-    int debug;    // toggle verbose output during minimization
     real size;  // size of initial simplex
     int places;  // significant figures in float/exponential output
     int fmt;  // fixed or exponential floating point format
