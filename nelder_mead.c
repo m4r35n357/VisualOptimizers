@@ -13,6 +13,7 @@ optimset get_settings (char **argv) {
         .size = strtold(argv[6], NULL)
     };
     CHECK(opt.places >= 3 && opt.places <= 36);
+    CHECK(opt.fmt == 0 || opt.fmt == 1);
     CHECK(opt.debug == 0 || opt.debug == 1);
     CHECK(opt.tolerance >= 1.0e-36L && opt.tolerance <= 1.0e-3L);
     CHECK(opt.max_iterations >= 1 && opt.max_iterations <= 100000);
