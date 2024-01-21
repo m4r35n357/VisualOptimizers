@@ -1,0 +1,56 @@
+#!/bin/sh
+#
+#  (c) 2018-2024 m4r35n357@gmail.com (Ian Smith), for licencing see the LICENCE file
+
+GRY='\e[1;30m'
+RED='\e[1;31m'
+MGT='\e[0;35m'
+NRM='\e[0m'
+
+args="$0 $*"
+n_args=$(($# + 1))
+echo "${GRY}args ${NRM}${n_args}${GRY} [ ${MGT}${args}${GRY} ]${NRM}" >&2
+if [ ${n_args} -ne 11 ]
+then
+    echo "${RED}Only works for 3D models at present${NRM}"
+    exit 1
+fi
+
+user_dir="/tmp/$USER"
+[ -d $user_dir ] || mkdir $user_dir
+user_data="$user_dir/data"
+
+command=$*
+
+plot () {
+/usr/bin/gnuplot << EOF
+set terminal qt
+set title noenhanced '$command'
+set key right
+set ytics nomirror
+set y2tics
+set xlabel 'Iteration'
+set ylabel 'Coordinates'
+set y2label 'Value'
+set style fill solid border -1
+plot '$user_data' using 2:5 axes x1y1 title 'x' w l, '' u 2:6 axes x1y1 title 'y' w l, '' u 2:7 axes x1y1 title 'z' w l, '' u 2:9 axes x1y2 t 'f' w l
+pause mouse close
+EOF
+}
+
+plot_errors () {
+/usr/bin/gnuplot << EOF
+set terminal qt
+set title noenhanced '$command'
+set key right
+set xlabel 'Iteration'
+set ylabel 'Errors'
+plot '$user_data' using 2:10 title 'distance' w l, '' u 2:11 title 'function' w l
+pause mouse close
+EOF
+}
+
+$command >$user_data
+
+plot &
+plot_errors &
