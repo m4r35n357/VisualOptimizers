@@ -9,8 +9,8 @@ static optimset o;
 static point *solution;
 static gl_point *v;
 
-gl_point get_gl_point (real *point) {
-    return (gl_point){(float)point[0], (float)point[1], (float)point[2]};
+gl_point get_gl_point (real *p) {
+    return (gl_point){(float)p[0], (float)p[1], (float)p[2]};
 }
 
 void get_vertices (gl_point *vertices, point *points) {
