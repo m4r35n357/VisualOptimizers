@@ -31,8 +31,7 @@ set ytics nomirror
 set y2tics
 set xlabel 'Iteration'
 set ylabel 'Coordinates'
-set y2label 'Value'
-set style fill solid border -1
+set y2label 'Function Value'
 plot '$user_data' using 2:5 axes x1y1 title 'x' w l, '' u 2:6 axes x1y1 title 'y' w l, '' u 2:7 axes x1y1 title 'z' w l, '' u 2:9 axes x1y2 t 'f' w l
 pause mouse close
 EOF
@@ -43,9 +42,12 @@ plot_errors () {
 set terminal qt
 set title noenhanced '$command'
 set key right
+set ytics nomirror
+set y2tics
 set xlabel 'Iteration'
-set ylabel 'Errors'
-plot '$user_data' using 2:10 title 'distance' w l, '' u 2:11 title 'function' w l
+set ylabel 'Distance error'
+set y2label 'Value error'
+plot '$user_data' using 2:10 axes x1y1 title 'distance' w l, '' u 2:11 axes x1y2 title 'value' w l
 pause mouse close
 EOF
 }
