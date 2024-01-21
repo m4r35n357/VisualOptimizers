@@ -93,7 +93,7 @@ int main (int argc, char **argv) {
     targets = get_known_minima();
 
     // print starting point
-    printf("%s     Initial ", GRY);
+    fprintf(stderr, "%s     Initial ", GRY);
     cost(n, start, m);
     print_point(n, start, o.places, o.fmt);
 

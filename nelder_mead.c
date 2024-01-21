@@ -80,8 +80,8 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
     point *worst = s->p + s->n;
     point *second_worst = worst - 1;
     if (s->gl && s->looping) goto resume; else s->looping = true;
-    printf(o->fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter %s% .*Lf\n",
-           GRY, NRM, o->places, distance(s->n, best, worst));
+    fprintf(stderr, o->fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter %s% .*Lf\n",
+            GRY, NRM, o->places, distance(s->n, best, worst));
     while (s->delta_x > o->tolerance || s->delta_f > o->tolerance) {
         CHECK(s->iterations <= o->max_iterations);
         int shrink = 0;
@@ -185,9 +185,9 @@ void copy_point (int n, const point *src, point *dst) {
 }
 
 void print_point (int n, const point *p, int places, int fmt) {
-    printf("[ %s", NRM);
+    fprintf(stderr, "[ %s", NRM);
     for (int i = 0; i < n; i++) {
-        printf(fmt ? "% .*Le " : "% .*Lf ", places, p->x[i]);
+        fprintf(stderr, fmt ? "% .*Le " : "% .*Lf ", places, p->x[i]);
     }
-    printf(fmt ? "%s]%s % .*Le\n" : "%s]%s % .*Lf\n", GRY, NRM, places, p->f);
+    fprintf(stderr, fmt ? "%s]%s % .*Le\n" : "%s]%s % .*Lf\n", GRY, NRM, places, p->f);
 }

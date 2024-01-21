@@ -27,14 +27,14 @@ int main(int argc, char **argv) {
     nelder_mead(s, solution, m, &o);
 
     // print starting point
-    printf("%s     Initial ", GRY);
+    fprintf(stderr, "%s     Initial ", GRY);
     cost(n, start, m);
     print_point(n, start, o.places, o.fmt);
     // print solution
-    printf("    %sSolution ", GRY);
+    fprintf(stderr, "    %sSolution ", GRY);
     print_point(n, solution, o.places, o.fmt);
     // print stats
-    printf("%s  Iterations/Evaluations%s %d/%d\n", GRY, NRM, s->iterations, s->evaluations);
+    fprintf(stderr, "%s  Iterations/Evaluations%s %d/%d\n", GRY, NRM, s->iterations, s->evaluations);
 
     return 0;
 }
