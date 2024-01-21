@@ -154,7 +154,7 @@ void sort (simplex *s) {
         s->centroid->x[j] /= s->n;
     }
     s->delta_x = distance(s->n, s->p, s->p + s->n);
-    s->delta_f = s->p[0].f - s->p[s->n].f;
+    s->delta_f = s->p[s->n].f - s->p[0].f;
 }
 
 /*
