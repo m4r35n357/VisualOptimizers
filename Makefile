@@ -44,13 +44,13 @@ test-6d: all
 test-4d: all
 	@./run.sh -b nm-ackley-std -p 3.0,-2.10,-3.04,4.50 >/dev/null
 	@./run.sh -b nm-sphere-std -p 1.0,-2.10,-3.04,4.50 >/dev/null
-	@./run.sh -b nm-dixon-price-std -p 1.0,1.0,1.0,1.0 >/dev/null
+	@./run.sh -b nm-dixon-price-std -p -1.0,0.0,0.0,0.0 >/dev/null
 	@./run.sh -b nm-st-std -p 0.0,0.0,0.0,0.0 >/dev/null
 
 test-3d: all
 	@./run.sh -b nm-ackley-std -p -2.10,-3.04,4.50 >/dev/null
 	@./run.sh -b nm-sphere-std -p -2.10,-3.04,4.50 >/dev/null
-	@./run.sh -b nm-dixon-price-std -p 1.0,1.0,1.0 >/dev/null
+	@./run.sh -b nm-dixon-price-std -p -3.0,0.0,0.0 >/dev/null
 	@./run.sh -b nm-st-std -p 0.0,0.0,0.0 >/dev/null
 	@./run.sh -b nm-hartmann3-std -p 0.5,0.5,0.5 >/dev/null
 	@./run.sh -b nm-rosenbrock-std -p 1.0,0.0,-1.0 >/dev/null
@@ -59,9 +59,9 @@ test-3d: all
 test-2d: all
 	@./run.sh -b nm-ackley-std -p -3.04,4.50 >/dev/null
 	@./run.sh -b nm-sphere-std -p -3.04,4.50 >/dev/null
-	@./run.sh -b nm-dixon-price-std -p 1.0,1.0 >/dev/null
+	@./run.sh -b nm-dixon-price-std -p 6.0,0.0 >/dev/null
 	@./run.sh -b nm-st-std -p 0.0,0.0 >/dev/null
-	@./run.sh -b nm-rosenbrock-std -p 1.0,0.0 >/dev/null
+	@./run.sh -b nm-rosenbrock-std -p -1.5,2.5 >/dev/null
 	@./run.sh -b nm-himmelblau-std -p 3.0,3.0 >/dev/null
 	@./run.sh -b nm-himmelblau-std -p 3.0,-3.0 >/dev/null
 	@./run.sh -b nm-himmelblau-std -p -3.0,3.0 >/dev/null
@@ -69,10 +69,10 @@ test-2d: all
 	@./run.sh -b nm-rastrigin-std -p 0.0,0.0 >/dev/null
 
 test-1d: all
-	@./run.sh -b nm-ackley-std -p 4.50 >/dev/null
-	@./run.sh -b nm-sphere-std -p 4.50 >/dev/null
-	@./run.sh -b nm-dixon-price-std -p 1.0 >/dev/null
-	@./run.sh -b nm-st-std -p 0.0 >/dev/null
+	@./run.sh -b nm-ackley-std -p 10.0 >/dev/null
+	@./run.sh -b nm-sphere-std -p 10.0 >/dev/null
+	@./run.sh -b nm-dixon-price-std -p 10.0 >/dev/null
+	@./run.sh -b nm-st-std -p 10.0 >/dev/null
 	@./run.sh -b nm-rastrigin-std -p 10.0 >/dev/null
 
 ctags:
