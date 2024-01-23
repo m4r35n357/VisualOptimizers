@@ -20,7 +20,7 @@ optimset get_settings (char **argv) {
 }
 
 /*
- * Initial point at centroid, all vertices equally spaced, trial points allocated
+ * Initial point at centre, all vertices equally spaced, trial points allocated
  */
 simplex *get_simplex (int n, real size, const point *start, const model *m) {
     simplex *s = malloc(sizeof (simplex));              CHECK(s);

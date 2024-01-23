@@ -96,8 +96,9 @@ int main (int argc, char **argv) {
     s2 = get_simplex(n, o.size, start, m);
     s2->gl = true;
     for (int i = 0; i < 4; i++) {
-    	project(s2->p + i, s1, m, s1->centroid, 1.0L, s1->p + i, s1->centroid);
+    	project(s2->p + i, s2, m, start, 1.0L, s2->p + i, start);
     }
+    sort(s2);
 
     // get minima for targets if known
     targets = get_known_minima();
