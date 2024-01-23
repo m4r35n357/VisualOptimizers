@@ -95,7 +95,7 @@ int main (int argc, char **argv) {
     s1->gl = true;
     s2 = get_simplex(n, o.size, start, m);
     s2->gl = true;
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 4; i++) {
     	project(s2->p + i, s1, m, s1->centroid, 1.0L, s1->p + i, s1->centroid);
     }
 
