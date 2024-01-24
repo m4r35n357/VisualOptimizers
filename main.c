@@ -28,17 +28,20 @@ int main(int argc, char **argv) {
         s1->evaluations++;
     }
     sort(s1);
-    // begin optimization
-    nelder_mead(s1, solution1, m, &o);
+
     // print starting point
-    fprintf(stderr, "%s     Initial ", GRY);
+    fprintf(stderr, "%s       Initial  ", GRY);
     cost(n, start, m);
     print_point(n, start, o.places, o.fmt);
+    fprintf(stderr, o.fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter%s    % .*Lf\n",
+            GRY, NRM, o.places, distance(s1->n, s1->p, s1->p + s1->n));
+
+    // begin optimization
+    nelder_mead(s1, solution1, m, &o);
     // print solution
-    fprintf(stderr, "    %sSolution ", GRY);
+    fprintf(stderr, "  %s1%s ", GRY, NRM);
+    fprintf(stderr, " %4d %4d  ", s1->iterations, s1->evaluations);
     print_point(n, solution1, o.places, o.fmt);
-    // print stats
-    fprintf(stderr, "%s  Iterations/Evaluations%s %d/%d\n", GRY, NRM, s1->iterations, s1->evaluations);
 
     // . . . and its "dual"
     simplex *s2 = get_simplex(n, o.size, start);
@@ -46,17 +49,13 @@ int main(int argc, char **argv) {
         project(s2->p + i, s2, m, start, 1.0L, s2->p + i, start);
     }
     sort(s2);
+
     // begin optimization
     nelder_mead(s2, solution2, m, &o);
-    // print starting point
-    fprintf(stderr, "%s     Initial ", GRY);
-    cost(n, start, m);
-    print_point(n, start, o.places, o.fmt);
     // print solution
-    fprintf(stderr, "    %sSolution ", GRY);
+    fprintf(stderr, "  %s2%s ", GRY, NRM);
+    fprintf(stderr, " %4d %4d  ", s2->iterations, s2->evaluations);
     print_point(n, solution2, o.places, o.fmt);
-    // print stats
-    fprintf(stderr, "%s  Iterations/Evaluations%s %d/%d\n", GRY, NRM, s2->iterations, s2->evaluations);
 
     return 0;
 }
