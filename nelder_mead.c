@@ -3,13 +3,14 @@
 #include <math.h>
 #include "nelder_mead.h"
 
-optimset get_settings (char **argv) {
+optimset get_settings (char **argv, bool single) {
     optimset opt = {
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
         .tolerance = strtold(argv[3], NULL),
         .max_iterations = (int)strtol(argv[4], NULL, BASE),
-        .size = strtold(argv[5], NULL)
+        .size = strtold(argv[5], NULL),
+		.step_mode = single
     };
     CHECK(opt.places >= 3 && opt.places <= 36);
     CHECK(opt.fmt == 0 || opt.fmt == 1);
@@ -51,7 +52,7 @@ simplex *get_simplex (int n, real size, const point *start, const model *m) {
     s->centroid = get_point(n);
     s->trial = get_point(n);
     s->iterations = s->evaluations = 0;
-    s->gl = s->looping = false;
+    s->looping = false;
     for (int i = 0; i < s->n + 1; i++) {  // initial cost at simplex vertices
         cost(s->n, s->p + i, m);
         s->evaluations++;
@@ -77,7 +78,7 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
     point *best = s->p;
     point *worst = s->p + s->n;
     point *second_worst = worst - 1;
-    if (s->gl && s->looping) goto resume; else s->looping = true;
+    if (o->step_mode && s->looping) goto resume; else s->looping = true;
     fprintf(stderr, o->fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter %s% .*Lf\n",
             GRY, NRM, o->places, distance(s->n, best, worst));
     while (s->delta_x > o->tolerance || s->delta_f > o->tolerance) {
@@ -124,7 +125,7 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
         }
         printf(o->fmt ? "]  % .*Le  % .*Le % .*Le\n" : "]  % .*Lf  % .*Lf % .*Lf\n",
                 o->places, best->f, o->places, s->delta_x, o->places, s->delta_f);
-        if (s->gl) return true;
+        if (o->step_mode) return true;
         resume: ;
     }
     copy_point(s->n, best, solution);

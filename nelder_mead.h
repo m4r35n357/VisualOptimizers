@@ -17,12 +17,13 @@ typedef struct Optimset {
     real size;  // size of initial simplex
     int places;  // significant figures in float/exponential output
     int fmt;  // fixed or exponential floating point format
+    bool step_mode; // free-running or single-step algorithm
 } optimset;
 
 /*
  * Optimizer settings
  */
-optimset get_settings (char **);
+optimset get_settings (char **, bool);
 
 /*
  * "Simplex" or "Amoeba" optimizer

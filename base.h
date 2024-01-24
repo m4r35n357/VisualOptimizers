@@ -52,7 +52,7 @@ typedef struct Point {
 typedef struct Simplex {
     point *p, *reflect, *centroid, *trial;
     int n, iterations, evaluations;
-    bool gl, looping;
+    bool looping;
     real delta_x, delta_f;
 } simplex;
 

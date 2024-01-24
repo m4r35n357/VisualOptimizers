@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
     CHECK(argc >= 7);
 
     // optimizer settings
-    optimset o = get_settings(argv);
+    optimset o = get_settings(argv, false);
 
     const int n = argc - 6;
     point *start = get_point(n);
