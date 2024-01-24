@@ -5,21 +5,19 @@
 int main(int argc, char **argv) {
     PRINT_ARGS(argc, argv);
     CHECK(argc >= 7);
+    const int n = argc - 6;
 
     // optimizer settings
     optimset o = get_settings(argv, false);
 
-    const int n = argc - 6;
-    point *start = get_point(n);
-    // set initial point from command arguments
-    for (int i = 0; i < n; i++) {
-        start->x[i] = strtod(argv[i + 6], NULL);
-    }
-    point *solution1 = get_point(n);
-    point *solution2 = get_point(n);
-
     // model parameters
     model *m = model_init();
+
+    // set initial point from command arguments
+    point *start = get_point(n);
+    for (int j = 0; j < n; j++) {
+        start->x[j] = strtod(argv[j + 6], NULL);
+    }
 
     // default simplex . . .
     simplex *s1 = get_simplex(n, o.size, start);
@@ -37,6 +35,7 @@ int main(int argc, char **argv) {
             GRY, NRM, o.places, distance(s1->n, s1->p, s1->p + s1->n));
 
     // begin optimization
+    point *solution1 = get_point(n);
     nelder_mead(s1, solution1, m, &o);
     // print solution
     fprintf(stderr, "  %s1%s ", GRY, NRM);
@@ -52,6 +51,7 @@ int main(int argc, char **argv) {
         sort(s2);
 
         // begin optimization
+        point *solution2 = get_point(n);
         nelder_mead(s2, solution2, m, &o);
         // print solution
         fprintf(stderr, "  %s2%s ", GRY, NRM);

@@ -78,21 +78,21 @@ void Animate () {
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
     CHECK(argc == 9);
+    const int n = argc - 6;
 
     // optimizer settings
     o = get_settings(argv, true);
 
-    const int n = argc - 6;
-    point *start = get_point(n);
+    // model parameters
+    m = model_init();
+
     // set initial point from command arguments
+    point *start = get_point(n);
     for (int j = 0; j < n; j++) {
         start->x[j] = strtod(argv[j + 6], NULL);
     }
     solution1 = get_point(n);
     solution2 = get_point(n);
-
-    // model parameters
-    m = model_init();
 
     // default simplex . . .
     s1 = get_simplex(n, o.size, start);
@@ -113,7 +113,7 @@ int main (int argc, char **argv) {
     targets = get_known_minima();
 
     // print starting point
-    fprintf(stderr, "%s     Initial ", GRY);
+    fprintf(stderr, "%s       Initial  ", GRY);
     cost(n, start, m);
     print_point(n, start, o.places, o.fmt);
 
