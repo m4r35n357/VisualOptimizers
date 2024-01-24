@@ -43,19 +43,21 @@ int main(int argc, char **argv) {
     fprintf(stderr, " %4d %4d  ", s1->iterations, s1->evaluations);
     print_point(n, solution1, o.places, o.fmt);
 
-    // . . . and its "dual"
-    simplex *s2 = get_simplex(n, o.size, start);
-    for (int i = 0; i < s2->n + 1; i++) {  // form "dual" by projecting vertices through the centre
-        project(s2->p + i, s2, m, start, 1.0L, s2->p + i, start);
-    }
-    sort(s2);
+    if (n > 1) {
+        // . . . and its "dual"
+        simplex *s2 = get_simplex(n, o.size, start);
+        for (int i = 0; i < s2->n + 1; i++) {  // form "dual" by projecting vertices through the centre
+            project(s2->p + i, s2, m, start, 1.0L, s2->p + i, start);
+        }
+        sort(s2);
 
-    // begin optimization
-    nelder_mead(s2, solution2, m, &o);
-    // print solution
-    fprintf(stderr, "  %s2%s ", GRY, NRM);
-    fprintf(stderr, " %4d %4d  ", s2->iterations, s2->evaluations);
-    print_point(n, solution2, o.places, o.fmt);
+        // begin optimization
+        nelder_mead(s2, solution2, m, &o);
+        // print solution
+        fprintf(stderr, "  %s2%s ", GRY, NRM);
+        fprintf(stderr, " %4d %4d  ", s2->iterations, s2->evaluations);
+        print_point(n, solution2, o.places, o.fmt);
+    }
 
     return 0;
 }
