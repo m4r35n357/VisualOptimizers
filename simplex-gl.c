@@ -94,15 +94,18 @@ int main (int argc, char **argv) {
     // model parameters
     m = model_init();
 
-    // get a simplex
+    // get simplex
     s1 = get_simplex(n, o.size, start, m);
+    sort(s1);
     s1->gl = true;
+
+    // form its "dual"
     s2 = get_simplex(n, o.size, start, m);
-    s2->gl = true;
     for (int i = 0; i < 4; i++) {
     	project(s2->p + i, s2, m, start, 1.0L, s2->p + i, start);
     }
     sort(s2);
+    s2->gl = true;
 
     // get minima for targets if known
     targets = get_known_minima();

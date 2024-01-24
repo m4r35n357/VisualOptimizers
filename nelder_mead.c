@@ -56,7 +56,6 @@ simplex *get_simplex (int n, real size, const point *start, const model *m) {
         cost(s->n, s->p + i, m);
         s->evaluations++;
     }
-    sort(s);
     return s;
 }
 
