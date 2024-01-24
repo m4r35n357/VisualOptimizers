@@ -23,7 +23,7 @@ optimset get_settings (char **argv, bool single) {
 /*
  * Initial point at centre, all vertices equally spaced, trial points allocated
  */
-simplex *get_simplex (int n, real size, const point *start, const model *m) {
+simplex *get_simplex (int n, real size, const point *start) {
     simplex *s = malloc(sizeof (simplex));              CHECK(s);
     s->n = n;
     s->p = malloc((size_t)(n + 1) * sizeof (point));    CHECK(s->p);
@@ -53,10 +53,6 @@ simplex *get_simplex (int n, real size, const point *start, const model *m) {
     s->trial = get_point(n);
     s->iterations = s->evaluations = 0;
     s->looping = false;
-    for (int i = 0; i < s->n + 1; i++) {  // initial cost at simplex vertices
-        cost(s->n, s->p + i, m);
-        s->evaluations++;
-    }
     return s;
 }
 

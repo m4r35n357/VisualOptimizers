@@ -21,7 +21,11 @@ int main(int argc, char **argv) {
     model *m = model_init();
 
     // get a simplex
-    simplex *s = get_simplex(n, o.size, start, m);
+    simplex *s = get_simplex(n, o.size, start);
+    for (int i = 0; i < s->n + 1; i++) {  // initial cost at simplex vertices
+        cost(s->n, s->p + i, m);
+        s->evaluations++;
+    }
     sort(s);
 
     // begin optimization

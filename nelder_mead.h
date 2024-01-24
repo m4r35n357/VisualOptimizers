@@ -35,7 +35,7 @@ bool nelder_mead (simplex *, point *, const model *, const optimset *);
  */
 point *get_point (int);
 
-simplex *get_simplex (int, real, const point *, const model *);
+simplex *get_simplex (int, real, const point *);
 
 real distance (int, const point *, const point *);
 

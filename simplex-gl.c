@@ -94,13 +94,17 @@ int main (int argc, char **argv) {
     // model parameters
     m = model_init();
 
-    // get simplex
-    s1 = get_simplex(n, o.size, start, m);
+    // default simplex . . .
+    s1 = get_simplex(n, o.size, start);
+    for (int i = 0; i < s1->n + 1; i++) {  // initial cost at simplex vertices
+        cost(s1->n, s1->p + i, m);
+        s1->evaluations++;
+    }
     sort(s1);
 
-    // form its "dual"
-    s2 = get_simplex(n, o.size, start, m);
-    for (int i = 0; i < 4; i++) {
+    // . . . and its "dual"
+    s2 = get_simplex(n, o.size, start);
+    for (int i = 0; i < s2->n + 1; i++) {  // form "dual" by projecting vertices through the centre
     	project(s2->p + i, s2, m, start, 1.0L, s2->p + i, start);
     }
     sort(s2);
