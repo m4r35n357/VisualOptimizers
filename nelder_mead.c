@@ -10,7 +10,7 @@ optimset get_settings (char **argv, bool single) {
         .tolerance = strtold(argv[3], NULL),
         .max_iterations = (int)strtol(argv[4], NULL, BASE),
         .size = strtold(argv[5], NULL),
-		.step_mode = single
+        .step_mode = single
     };
     CHECK(opt.places >= 3 && opt.places <= 36);
     CHECK(opt.fmt == 0 || opt.fmt == 1);

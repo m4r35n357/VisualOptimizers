@@ -26,14 +26,14 @@ void Animate () {
         if (initial) {
             initial = false;
         } else {
-			if (!finished1) {
-				nelder_mead(s1, solution1, m, &o);
-				get_vertices(v1, s1->p);
-			}
-			if (!finished2) {
-				nelder_mead(s2, solution2, m, &o);
-				get_vertices(v2, s2->p);
-			}
+            if (!finished1) {
+                nelder_mead(s1, solution1, m, &o);
+                get_vertices(v1, s1->p);
+            }
+            if (!finished2) {
+                nelder_mead(s2, solution2, m, &o);
+                get_vertices(v2, s2->p);
+            }
         }
         if (stepping) paused = true;
     }
@@ -105,7 +105,7 @@ int main (int argc, char **argv) {
     // . . . and its "dual"
     s2 = get_simplex(n, o.size, start);
     for (int i = 0; i < s2->n + 1; i++) {  // form "dual" by projecting vertices through the centre
-    	project(s2->p + i, s2, m, start, 1.0L, s2->p + i, start);
+        project(s2->p + i, s2, m, start, 1.0L, s2->p + i, start);
     }
     sort(s2);
 
