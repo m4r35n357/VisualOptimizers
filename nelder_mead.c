@@ -57,17 +57,6 @@ simplex *get_simplex (int n, real size, const point *start) {
 }
 
 /*
- * Euclidean distance between two points
- */
-real distance (int n, const point *a, const point *b) {
-    real sum = 0.0L;
-    for (int j = 0; j < n; j++) {
-        sum += SQR(a->x[j] - b->x[j]);
-    }
-    return sqrtl(sum);
-}
-
-/*
  * Nelder-Mead Optimizer
  */
 bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o) {
@@ -124,6 +113,17 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
     }
     copy_point(s->n, best, solution);
     return s->looping = false;
+}
+
+/*
+ * Euclidean distance between two points
+ */
+real distance (int n, const point *a, const point *b) {
+    real sum = 0.0L;
+    for (int j = 0; j < n; j++) {
+        sum += SQR(a->x[j] - b->x[j]);
+    }
+    return sqrtl(sum);
 }
 
 /*
