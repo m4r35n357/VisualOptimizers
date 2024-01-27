@@ -32,7 +32,11 @@ nm-gl: nm-ackley-gl nm-hartmann3-gl nm-hartmann6-gl nm-rosenbrock-gl nm-dixon-pr
 
 .PHONY: test test-6d test-4d test-3d test-2d test-1d ctags clean depclean
 
-test: test-6d test-4d test-3d test-2d test-1d
+test: test-16d test-8d test-6d test-4d test-3d test-2d test-1d
+
+test-16d: all
+	@./run.sh -b nm-st-std -s 2.0 -p 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0 >/dev/null
+	@./run.sh -b nm-rosenbrock-std -p -1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0 >/dev/null
 
 test-8d: all
 	@./run.sh -b nm-ackley-std -s 3.0 -p 1.0,1.0,1.0,1.0,3.0,-2.10,-3.04,4.50 >/dev/null
