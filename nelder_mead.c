@@ -10,6 +10,7 @@ optimset get_settings (char **argv, bool single) {
         .tolerance = strtold(argv[3], NULL),
         .max_iterations = (int)strtol(argv[4], NULL, BASE),
         .size = strtold(argv[5], NULL),
+        .adaptive = (int)strtol(argv[6], NULL, BASE),
         .step_mode = single
     };
     CHECK(opt.places >= 3 && opt.places <= 36);
@@ -17,6 +18,7 @@ optimset get_settings (char **argv, bool single) {
     CHECK(opt.tolerance >= 1.0e-36L && opt.tolerance <= 1.0e-3L);
     CHECK(opt.max_iterations >= 1 && opt.max_iterations <= 100000);
     CHECK(opt.size >= 1.0e-12L && opt.size <= 1.0e3L);
+    CHECK(opt.adaptive == 0 || opt.adaptive == 1);
     return opt;
 }
 
@@ -60,6 +62,10 @@ simplex *get_simplex (int n, real size, const point *start) {
  * Nelder-Mead Optimizer
  */
 bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o) {
+    real ALPHA = 1.0L;
+    real GAMMA = o->adaptive ? 1.0L + 2.0L / s->n : 2.0L;
+    real RHO = o->adaptive ? 0.75L - 0.5L / s->n : 0.5L;
+    real SIGMA = o->adaptive ? 1.0L - 1.0L / s->n : 0.5L;
     point *best = s->p;
     point *worst = s->p + s->n;
     point *second_worst = worst - 1;

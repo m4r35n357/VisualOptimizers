@@ -77,8 +77,8 @@ void Animate () {
 
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc == 9);
-    const int n = argc - 6;
+    CHECK(argc == 10);
+    const int n = argc - 7;
 
     // optimizer settings
     o = get_settings(argv, true);
@@ -89,7 +89,7 @@ int main (int argc, char **argv) {
     // set initial point from command arguments
     point *start = get_point(n);
     for (int j = 0; j < n; j++) {
-        start->x[j] = strtod(argv[j + 6], NULL);
+        start->x[j] = strtod(argv[j + 7], NULL);
     }
     solution1 = get_point(n);
     solution2 = get_point(n);

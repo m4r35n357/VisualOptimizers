@@ -3,17 +3,13 @@
 #include "base.h"
 #include "model.h"
 
-#define ALPHA 1.0L
-#define GAMMA 2.0L
-#define RHO 0.5L
-#define SIGMA 0.5L
-
 /*
  * Optimizer settings
  */
 typedef struct Optimset {
     real tolerance;    // tolerance on the function value
     int max_iterations;   // maximum number of allowed iterations
+    int adaptive;  // simplex updates reduced for dimension > 2
     real size;  // size of initial simplex
     int places;  // significant figures in float/exponential output
     int fmt;  // fixed or exponential floating point format
