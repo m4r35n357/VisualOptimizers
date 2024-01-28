@@ -39,7 +39,7 @@ int compare (const void *, const void *);
 
 void sort (simplex *);
 
-void project (point *, simplex *, const model *, const point *, real, const point *, point *);
+void project (point *, simplex *, const model *, real, const point *, const point *);
 
 void copy_point (int, const point *, point *);
 

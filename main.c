@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
         // . . . and its "dual"
         simplex *s2 = get_simplex(n, o.size, start);
         for (int i = 0; i < s2->n + 1; i++) {  // form "dual" by projecting vertices through the centre
-            project(s2->p + i, s2, m, start, 1.0L, s2->p + i, start);
+            project(s2->p + i, s2, m, 1.0L, s2->p + i, start);
         }
         sort(s2);
 

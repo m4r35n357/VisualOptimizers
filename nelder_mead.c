@@ -73,12 +73,12 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
     while (s->delta_x > o->tolerance || s->delta_f > o->tolerance) {
         CHECK(s->iterations <= o->max_iterations);
         int shrink = 0;
-        project(s->reflect, s, m, s->centroid, ALPHA, worst, s->centroid);
+        project(s->reflect, s, m, ALPHA, worst, s->centroid);
         if (best->f <= s->reflect->f && s->reflect->f < second_worst->f) {
             printf("reflect       ");
             copy_point(s->n, s->reflect, worst);
         } else if (s->reflect->f < best->f) {
-            project(s->trial, s, m, s->centroid, GAMMA, worst, s->centroid);
+            project(s->trial, s, m, GAMMA, worst, s->centroid);
             if (s->trial->f < s->reflect->f) {
                 printf("expand        ");
                 copy_point(s->n, s->trial, worst);
@@ -87,13 +87,13 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
                 copy_point(s->n, s->reflect, worst);
             }
         } else if (s->reflect->f < worst->f) {
-            project(s->trial, s, m, s->centroid, RHO, worst, s->centroid);
+            project(s->trial, s, m, RHO, worst, s->centroid);
             if (s->trial->f < s->reflect->f) {
                 printf("contract_out  ");
                 copy_point(s->n, s->trial, worst);
             } else shrink = 1;
         } else {
-            project(s->trial, s, m, s->centroid, RHO, s->centroid, worst);
+            project(s->trial, s, m, - RHO, worst, s->centroid);
             if (s->trial->f < worst->f) {
                 printf("contract_in   ");
                 copy_point(s->n, s->trial, worst);
@@ -103,7 +103,7 @@ bool nelder_mead (simplex *s, point *solution, const model *m, const optimset *o
             printf("shrink        ");
             for (int i = 1; i < s->n + 1; i++) {
                 point *non_best = s->p + i;
-                project(non_best, s, m, non_best, SIGMA, non_best, best);
+                project(non_best, s, m, - SIGMA, non_best, best);
             }
         }
         sort(s);
@@ -155,11 +155,11 @@ void sort (simplex *s) {
 }
 
 /*
- * Take the line from pa to pb, shift it to start, and scale its length by factor
+ * Take the line from pa to pb, shift it to pb, and scale its length by factor
  */
-void project (point *new, simplex *s, const model *m, const point *start, real factor, const point *pa, point *pb) {
+void project (point *new, simplex *s, const model *m, real factor, const point *pa, const point *pb) {
     for (int j = 0; j < s->n; j++) {
-        new->x[j] = start->x[j] + factor * (pb->x[j] - pa->x[j]);
+        new->x[j] = pb->x[j] + factor * (pb->x[j] - pa->x[j]);
     }
     cost(s->n, new, m);
     s->evaluations++;
