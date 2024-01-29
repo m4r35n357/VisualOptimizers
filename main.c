@@ -30,11 +30,11 @@ int main(int argc, char **argv) {
     for (int i = 0; i < s1->n + 1; i++) {  // initial cost at simplex vertices
         cost(s1->n, s1->p + i, m);
         s1->evaluations++;
-        fprintf(stderr, "                  ");
+        fprintf(stderr, "%s                  ", GRY);
         for (int j = 0; j < n; j++) {
         	fprintf(stderr, o.fmt ? "% .*Le " : "% .*Lf ", 6, s1->p[i].x[j]);
         }
-        fprintf(stderr, "\n");
+        fprintf(stderr, "%s\n", NRM);
     }
     sort(s1);
 
@@ -51,11 +51,11 @@ int main(int argc, char **argv) {
         simplex *s2 = get_simplex(n, o.size, start);
         for (int i = 0; i < s2->n + 1; i++) {  // form "dual" by projecting vertices through the centre
             project(s2->p + i, s2, m, 1.0L, s2->p + i, start);
-            fprintf(stderr, "                  ");
+            fprintf(stderr, "%s                  ", GRY);
             for (int j = 0; j < n; j++) {
             	fprintf(stderr, o.fmt ? "% .*Le " : "% .*Lf ", 6, s2->p[i].x[j]);
             }
-            fprintf(stderr, "\n");
+            fprintf(stderr, "%s\n", NRM);
         }
         sort(s2);
 
