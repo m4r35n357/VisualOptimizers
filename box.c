@@ -6,7 +6,7 @@ struct Model { real area, min_edge; };
 
 model *model_init () {
     model *m = malloc(sizeof (model));
-    m->area = 48.0L; // equality constraint
+    m->area = 48.0L;      // equality constraint
     m->min_edge = 0.01L;  // inequality constraint
     return m;
 }

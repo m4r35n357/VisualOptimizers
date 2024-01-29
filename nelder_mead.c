@@ -48,7 +48,9 @@ simplex *get_simplex (int n, real size, const point *start) {
     for (int i = 0; i < n + 1; i++) {
         for (int j = 0; j < n; j++) {
             s->p[i].x[j] = size * s->p[i].x[j] + start->x[j];
+            printf("% .*Lf ", 6, s->p[i].x[j]);
         }
+        printf("\n");
     }
     s->reflect = get_point(n);
     s->centroid = get_point(n);
