@@ -73,6 +73,8 @@ test-2d: all
 	@./run.sh -b nm-himmelblau-std -p 3.0,-3.0 >/dev/null
 	@./run.sh -b nm-himmelblau-std -p -3.0,3.0 >/dev/null
 	@./run.sh -b nm-himmelblau-std -p -3.0,-3.0 >/dev/null
+	@./run.sh -b nm-box-std -s 0.1 -p 4.0,4.0 >/dev/null
+	@./run.sh -b nm-box-std -s 0.1 -p -1.0,-1.0 >/dev/null
 
 test-1d: all
 	@./run.sh -b nm-ackley-std -p 10.0 >/dev/null
