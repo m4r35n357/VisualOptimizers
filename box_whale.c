@@ -16,6 +16,7 @@ real cost (real *position, int dim) { (void)dim;
 }
 
 int main(int argc, char *argv[]) {
+    PRINT_ARGS(argc, argv);
     int dim, num_whales, max_iter;
     real min_edge = 0.001L;
     if (argc == 1) {

@@ -15,6 +15,7 @@ real cost (real *position, int n) {
 }
 
 int main(int argc, char *argv[]) {
+    PRINT_ARGS(argc, argv);
     int dim, num_whales, max_iter;
     if (argc == 1) {
         dim = 3;
