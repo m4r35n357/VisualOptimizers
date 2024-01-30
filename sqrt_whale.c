@@ -3,9 +3,9 @@
 #include <math.h>
 #include "whale.h" // Assuming "whale.h" is the C header file for the whale optimization algorithm
 
-double cost (double *position, int length) {
+double cost (double *position, int dim) {
     double value = 0.0;
-    for (int j = 0; j < length; j++) {
+    for (int j = 0; j < dim; j++) {
         double xi = position[j];
         value += sqrt(fabs(xi));
     }
@@ -25,16 +25,11 @@ int main(int argc, char *argv[]) {
     }
 
     double *best_x = woa(max_iter, num_whales, dim, -10.0, 10.0);
-    printf("Best solution found:\n");
+    printf("Best solution found:  ");
     for (int k = 0; k < dim; k++) {
-        printf("%.6f ", best_x[k]);
+        printf("% .6f ", best_x[k]);
     }
-    printf("\nfitness of best solution = %.6f\n", cost(best_x, dim));
-    for (int i = 0; i < dim; i++) {
-        printf(" %f", best_x[i]);
-    }
-    printf("\n");
+    printf("  value = % .6f\n\n", cost(best_x, dim));
 
-    free(best_x); // Assuming woa() dynamically allocates memory for best_x
     return 0;
 }

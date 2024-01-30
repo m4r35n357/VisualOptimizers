@@ -5,35 +5,36 @@
 
 double A = 48.0;
 
-double z(double x, double y) {
+static double z(double x, double y) {
     return (A - 2.0 * x * y) / (2.0 * (x + y));
 }
 
-double box(double position[2]) {
+double cost (double *position, int dim) { (void)dim;
     double x = position[0];
     double y = position[1];
     return A / (x * y * z(x, y));
 }
 
 int main(int argc, char *argv[]) {
-    int num_whales, max_iter;
+    int dim, num_whales, max_iter;
     double min_edge = 0.001;
-    double best_x[2];
 
     if (argc == 1) {
+        dim = 2;
         num_whales = 50;
         max_iter = 100;
     } else {
-        num_whales = atoi(argv[1]);
-        max_iter = atoi(argv[2]);
+        dim = atoi(argv[1]);
+        num_whales = atoi(argv[2]);
+        max_iter = atoi(argv[3]);
     }
 
-    woa(box, max_iter, num_whales, 2, min_edge, sqrt(0.5 * A) - min_edge, best_x);
-
-    printf("Best solution found:\n");
-    printf("x %.6f  y %.6f  z %.6f ", best_x[0], best_x[1], z(best_x[0], best_x[1]));
-    printf("V %.6f\n", best_x[0] * best_x[1] * z(best_x[0], best_x[1]));
-    printf("fitness of best solution = %.6f\n", box(best_x));
+    double *best_x = woa(max_iter, num_whales, dim, min_edge, sqrt(0.5 * A) - min_edge);
+    printf("Best solution found:  ");
+    for (int k = 0; k < dim; k++) {
+        printf("% .6f ", best_x[k]);
+    }
+    printf("  value = % .6f\n\n", cost(best_x, dim));
 
     return 0;
 }

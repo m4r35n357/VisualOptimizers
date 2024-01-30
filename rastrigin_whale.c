@@ -26,23 +26,12 @@ int main(int argc, char *argv[]) {
         max_iter = atoi(argv[3]);
     }
 
-    // Assuming the 'woa' function returns a pointer to the best solution found
     double *best_x = woa(max_iter, num_whales, dim, -10.0, 10.0);
-
-    printf("Best solution found:\n");
+    printf("Best solution found:  ");
     for (int k = 0; k < dim; k++) {
-        printf("%.6f ", best_x[k]);
+        printf("% .6f ", best_x[k]);
     }
-    printf("\nfitness of best solution = %.6f\n", cost(best_x, dim));
-
-    for (int i = 0; i < dim; i++) {
-        printf("%f ", best_x[i]);
-    }
-    printf("\n");
-
-    // Assuming the 'woa' function allocates memory for the best solution
-    // If it does, we need to free it
-    free(best_x);
+    printf("  value = % .6f\n\n", cost(best_x, dim));
 
     return 0;
 }
