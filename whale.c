@@ -10,6 +10,10 @@ int randint (int n) {
     return (int)((double)rand() / ((double)RAND_MAX + 1) * n);
 }
 
+double randreal () {
+    return (double)rand() / (double)RAND_MAX;
+}
+
 whale *create_whale (int dim, double min_x, double max_x) {
     whale *w = (whale *)malloc(sizeof(whale));
     w->x = malloc((size_t)dim * sizeof(double));
@@ -21,6 +25,7 @@ whale *create_whale (int dim, double min_x, double max_x) {
 }
 
 double *woa (int max_i, int n, int dim, double min_x, double max_x) {
+    srand((unsigned int)time(NULL));
     whale **whales = malloc((size_t)n * sizeof(whale *));
     for (int i = 0; i < n; ++i) {
         whales[i] = create_whale(dim, min_x, max_x);
@@ -36,20 +41,19 @@ double *woa (int max_i, int n, int dim, double min_x, double max_x) {
             }
         }
     }
-    srand((unsigned int)time(NULL));
     double PI = acos(-1.0);
     int iteration = 0;
     while (iteration < max_i) {
         if (iteration % 10 == 0 && iteration > 1) {
-            printf("Iter = %d best fitness = %.6f\n", iteration, f_best);
+            printf("Iteration = %d minimum = %.6f\n", iteration, f_best);
         }
         double a = 2.0 * (1.0 - ((double)iteration / max_i));
         for (int i = 0; i < n; ++i) {
-            double A = a * (2.0 * ((double)rand() / (double)RAND_MAX) - 1.0);
-            double C = 2.0 * ((double)rand() / (double)RAND_MAX);
+            double A = a * (2.0 * randreal() - 1.0);
+            double C = 2.0 * randreal();
             double b = 1.0;
-            double l = 2.0 * ((double)rand() / (double)RAND_MAX) - 1.0;
-            if (((double)rand() / (double)RAND_MAX) < 0.5) {
+            double l = 2.0 * randreal() - 1.0;
+            if (randreal() < 0.5) {
                 if (fabs(A) < 1.0) {
                     for (int j = 0; j < dim; ++j) {
                         X_next[j] = Xp[j] - A * fabs(C * Xp[j] - whales[i]->x[j]);
