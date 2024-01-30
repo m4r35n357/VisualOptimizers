@@ -4,7 +4,7 @@ typedef struct Whale {
     double value;
 } whale;
 
-whale *create_whale (int dim, double min_x, double max_x, int seed, double (*cost)(double *, int));
+whale *create_whale (int dim, double min_x, double max_x);
 
 double *woa (int max_i, int n, int dim, double min_x, double max_x);
 

@@ -10,7 +10,7 @@ int randint (int n) {
     return (int)((double)rand() / ((double)RAND_MAX + 1) * n);
 }
 
-whale *create_whale (int dim, double min_x, double max_x, int seed, double (*cost)(double *, int)) {
+whale *create_whale (int dim, double min_x, double max_x) {
     whale *w = (whale *)malloc(sizeof(whale));
     w->x = malloc((size_t)dim * sizeof(double));
     for (int j = 0; j < dim; ++j) {
@@ -23,7 +23,7 @@ whale *create_whale (int dim, double min_x, double max_x, int seed, double (*cos
 double *woa (int max_i, int n, int dim, double min_x, double max_x) {
     whale **whales = malloc((size_t)n * sizeof(whale *));
     for (int i = 0; i < n; ++i) {
-        whales[i] = create_whale(dim, min_x, max_x, i, cost);
+        whales[i] = create_whale(dim, min_x, max_x);
     }
     double *Xp = malloc((size_t)dim * sizeof(double));
     double *X_next = malloc((size_t)dim * sizeof(double));
