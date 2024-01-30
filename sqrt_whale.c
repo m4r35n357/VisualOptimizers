@@ -3,11 +3,11 @@
 #include <math.h>
 #include "whale.h" // Assuming "whale.h" is the C header file for the whale optimization algorithm
 
-double cost (double *position, int dim) {
-    double value = 0.0;
+real cost (real *position, int dim) {
+    real value = 0.0L;
     for (int j = 0; j < dim; j++) {
-        double xi = position[j];
-        value += sqrt(fabs(xi));
+        real xi = position[j];
+        value += sqrtl(fabsl(xi));
     }
     return value;
 }
@@ -24,12 +24,12 @@ int main(int argc, char *argv[]) {
         max_iter = (int)strtol(argv[3], NULL, BASE);
     }
 
-    double *best_x = woa(max_iter, num_whales, dim, -10.0, 10.0);
+    real *best_x = woa(max_iter, num_whales, dim, -10.0L, 10.0L);
     printf("Best solution found:  ");
     for (int k = 0; k < dim; k++) {
-        printf("% .6f ", best_x[k]);
+        printf("% .6Lf ", best_x[k]);
     }
-    printf("  value = % .6f\n\n", cost(best_x, dim));
+    printf("  value = % .6Lf\n\n", cost(best_x, dim));
 
     return 0;
 }

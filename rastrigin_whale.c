@@ -3,13 +3,13 @@
 #include <math.h>
 #include "whale.h"
 
-double cost (double *position, int n) {
-    double PI = acos(-1.0);
-    double a = 10.0;
-    double value = a * n;
+real cost (real *position, int n) {
+    real PI = acos(-1.0L);
+    real a = 10.0L;
+    real value = a * n;
     for (int j = 0; j < n; j++) {
-        double xi = position[j];
-        value += xi * xi - a * cos(2.0 * PI * xi);
+        real xi = position[j];
+        value += xi * xi - a * cosl(2.0L * PI * xi);
     }
     return value;
 }
@@ -26,12 +26,12 @@ int main(int argc, char *argv[]) {
         max_iter = (int)strtol(argv[3], NULL, BASE);
     }
 
-    double *best_x = woa(max_iter, num_whales, dim, -10.0, 10.0);
+    real *best_x = woa(max_iter, num_whales, dim, -10.0L, 10.0L);
     printf("Best solution found:  ");
     for (int k = 0; k < dim; k++) {
-        printf("% .6f ", best_x[k]);
+        printf("% .6Lf ", best_x[k]);
     }
-    printf("  value = % .6f\n\n", cost(best_x, dim));
+    printf("  value = % .6Lf\n\n", cost(best_x, dim));
 
     return 0;
 }

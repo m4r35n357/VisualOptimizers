@@ -7,70 +7,66 @@
 #include "whale.h"
 
 int randint (int n) {
-    return (int)((double)rand() / ((double)RAND_MAX + 1) * n);
+    return (int)((real)rand() / ((real)RAND_MAX + 1) * n);
 }
 
-double randreal () {
-    return (double)rand() / (double)RAND_MAX;
+real randreal () {
+    return (real)rand() / (real)RAND_MAX;
 }
 
-whale *create_whale (int dim, double min_x, double max_x) {
+whale *create_whale (int dim, real min_x, real max_x) {
     whale *w = malloc(sizeof(whale));
-    w->x = malloc((size_t)dim * sizeof(double));
+    w->x = malloc((size_t)dim * sizeof(real));
     for (int j = 0; j < dim; ++j) {
         w->x[j] = (max_x - min_x) * randreal() + min_x;
     }
-    w->value = cost(w->x, dim);
+    w->f = cost(w->x, dim);
     return w;
 }
 
-double *woa (int max_i, int n, int dim, double min_x, double max_x) {
+real *woa (int max_i, int n, int dim, real min_x, real max_x) {
     srand((unsigned int)time(NULL));
     whale **whales = malloc((size_t)n * sizeof(whale *));
     for (int i = 0; i < n; ++i) {
         whales[i] = create_whale(dim, min_x, max_x);
     }
-    double *Xp = malloc((size_t)dim * sizeof(double));
-    double *X_next = malloc((size_t)dim * sizeof(double));
-    double f_best = DBL_MAX;
+    real *Xp = malloc((size_t)dim * sizeof(real));
+    real *X_next = malloc((size_t)dim * sizeof(real));
+    real f_best = DBL_MAX;
     for (int i = 0; i < n; ++i) {
-        if (whales[i]->value < f_best) {
-            f_best = whales[i]->value;
+        if (whales[i]->f < f_best) {
+            f_best = whales[i]->f;
             for (int j = 0; j < dim; ++j) {
                 Xp[j] = whales[i]->x[j];
             }
         }
     }
-    double PI = acos(-1.0);
+    real PI = acosl(-1.0L);
     int iteration = 0;
     while (iteration < max_i) {
-        if (iteration % 10 == 0 && iteration > 1) {
-            printf("Iteration = %d minimum = %.6f\n", iteration, f_best);
-        }
-        double a = 2.0 * (1.0 - (double)iteration / max_i);
+        if (iteration % 10 == 0 && iteration > 1) printf("Iteration = %d minimum = %.6Lf\n", iteration, f_best);
+        real a = 2.0L * (1.0L - (real)iteration / max_i);
         for (int i = 0; i < n; ++i) {
-            double A = a * (2.0 * randreal() - 1.0);
-            double C = 2.0 * randreal();
-            double b = 1.0;
-            double l = 2.0 * randreal() - 1.0;
-            if (randreal() < 0.5) {
-                if (fabs(A) < 1.0) {
+            real A = a * (2.0L * randreal() - 1.0L);
+            real C = 2.0L * randreal();
+            real b = 1.0L;
+            real l = 2.0L * randreal() - 1.0L;
+            if (randreal() < 0.5L) {
+                if (fabsl(A) < 1.0L) {
                     for (int j = 0; j < dim; ++j) {
-                        X_next[j] = Xp[j] - A * fabs(C * Xp[j] - whales[i]->x[j]);
+                        X_next[j] = Xp[j] - A * fabsl(C * Xp[j] - whales[i]->x[j]);
                     }
                 } else {
                     int p = randint(n);
-                    while (p == i) {
-                        p = randint(n);
-                    }
-                    double *Xr = whales[p]->x;
+                    while (p == i) p = randint(n);
+                    real *Xr = whales[p]->x;
                     for (int j = 0; j < dim; ++j) {
-                        X_next[j] = Xr[j] - A * fabs(C * Xr[j] - whales[i]->x[j]);
+                        X_next[j] = Xr[j] - A * fabsl(C * Xr[j] - whales[i]->x[j]);
                     }
                 }
             } else {
                 for (int j = 0; j < dim; ++j) {
-                    X_next[j] = fabs(Xp[j] - whales[i]->x[j]) * exp(b * l) * cos(2.0 * PI * l) + Xp[j];
+                    X_next[j] = fabsl(Xp[j] - whales[i]->x[j]) * expl(b * l) * cosl(2.0L * PI * l) + Xp[j];
                 }
             }
             for (int j = 0; j < dim; ++j) {
@@ -79,15 +75,15 @@ double *woa (int max_i, int n, int dim, double min_x, double max_x) {
         }
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < dim; ++j) {
-                whales[i]->x[j] = fmax(whales[i]->x[j], min_x);
-                whales[i]->x[j] = fmin(whales[i]->x[j], max_x);
+                whales[i]->x[j] = fmaxl(whales[i]->x[j], min_x);
+                whales[i]->x[j] = fminl(whales[i]->x[j], max_x);
             }
-            whales[i]->value = cost(whales[i]->x, dim);
-            if (whales[i]->value < f_best) {
+            whales[i]->f = cost(whales[i]->x, dim);
+            if (whales[i]->f < f_best) {
                 for (int j = 0; j < dim; ++j) {
                     Xp[j] = whales[i]->x[j];
                 }
-                f_best = whales[i]->value;
+                f_best = whales[i]->f;
             }
         }
         iteration++;

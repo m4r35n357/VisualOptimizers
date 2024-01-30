@@ -3,21 +3,21 @@
 #include <math.h>
 #include "whale.h" // Assuming "whale.h" contains the declaration of the woa function
 
-double A = 48.0;
+real A = 48.0L;
 
-static double z(double x, double y) {
-    return (A - 2.0 * x * y) / (2.0 * (x + y));
+static real z(real x, real y) {
+    return (A - 2.0L * x * y) / (2.0L * (x + y));
 }
 
-double cost (double *position, int dim) { (void)dim;
-    double x = position[0];
-    double y = position[1];
+real cost (real *position, int dim) { (void)dim;
+    real x = position[0];
+    real y = position[1];
     return A / (x * y * z(x, y));
 }
 
 int main(int argc, char *argv[]) {
     int dim, num_whales, max_iter;
-    double min_edge = 0.001;
+    real min_edge = 0.001L;
     if (argc == 1) {
         dim = 2;
         num_whales = 50;
@@ -28,12 +28,12 @@ int main(int argc, char *argv[]) {
         max_iter = (int)strtol(argv[3], NULL, BASE);
     }
 
-    double *best_x = woa(max_iter, num_whales, dim, min_edge, sqrt(0.5 * A) - min_edge);
+    real *best_x = woa(max_iter, num_whales, dim, min_edge, sqrtl(0.5L * A) - min_edge);
     printf("Best solution found:  ");
     for (int k = 0; k < dim; k++) {
-        printf("% .6f ", best_x[k]);
+        printf("% .6Lf ", best_x[k]);
     }
-    printf("  value = % .6f\n\n", cost(best_x, dim));
+    printf("  value = % .6Lf\n\n", cost(best_x, dim));
 
     return 0;
 }

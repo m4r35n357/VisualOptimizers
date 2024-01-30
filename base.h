@@ -44,7 +44,7 @@ typedef long double real;
 typedef struct Point {
   real *x;
   real f;
-} point;
+} point, whale;
 
 /*
  * The "simplex" containing an array of n + 1 points each of dimension n
@@ -59,7 +59,7 @@ typedef struct Simplex {
 /*
  * Optional, where known
  */
-typedef struct Minima {
+typedef struct KnownMinima {
     point *min;
     int n_minima;
 } minima;

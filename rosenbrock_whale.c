@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include "whale.h"
 
-double cost (double *position, int dim) {
-    double value = 0.0;
+real cost (real *position, int dim) {
+    real value = 0.0L;
     for (int j = 0; j < dim - 1; j++) {
-        double xi = position[j];
-        value += (1.0 - xi) * (1.0 - xi) + 100.0 * (position[j + 1] - xi * xi) * (position[j + 1] - xi * xi);
+        real xi = position[j];
+        value += (1.0L - xi) * (1.0L - xi) + 100.0L * (position[j + 1] - xi * xi) * (position[j + 1] - xi * xi);
     }
     return value;
 }
@@ -23,12 +23,12 @@ int main (int argc, char *argv[]) {
         max_iter = (int)strtol(argv[3], NULL, BASE);
     }
 
-    double *best_x = woa(max_iter, num_whales, dim, -10.0, 10.0);
+    real *best_x = woa(max_iter, num_whales, dim, -10.0L, 10.0L);
     printf("Best solution found:  ");
     for (int k = 0; k < dim; k++) {
-        printf("% .6f ", best_x[k]);
+        printf("% .6Lf ", best_x[k]);
     }
-    printf("  value = % .6f\n\n", cost(best_x, dim));
+    printf("  value = % .6Lf\n\n", cost(best_x, dim));
 
     return 0;
 }

@@ -1,17 +1,12 @@
 
-#define BASE 10
+#include "base.h"
 
-typedef struct Whale {
-    double *x;
-    double value;
-} whale;
+whale *create_whale (int dim, real min_x, real max_x);
 
-whale *create_whale (int dim, double min_x, double max_x);
+real *woa (int max_i, int n, int dim, real min_x, real max_x);
 
-double *woa (int max_i, int n, int dim, double min_x, double max_x);
-
-double cost (double *x, int dim); // Placeholder for the actual cost function
+real cost (real *x, int dim);
 
 int randint (int n);
 
-double randreal (void);
+real randreal (void);
