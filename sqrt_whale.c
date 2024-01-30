@@ -1,16 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include "whale.h"
-
-real cost (real *position, int dim) {
-    real value = 0.0L;
-    for (int j = 0; j < dim; j++) {
-        real xi = position[j];
-        value += sqrtl(fabsl(xi));
-    }
-    return value;
-}
 
 int main(int argc, char *argv[]) {
     PRINT_ARGS(argc, argv);
@@ -22,10 +12,12 @@ int main(int argc, char *argv[]) {
     real minx = strtold(argv[4], NULL);
     real maxx = strtold(argv[5], NULL);
 
-    point *solution = create_whale(dim, minx, maxx);
-    woa(solution, max_iter, num_whales, dim, minx, maxx);
+    model *m = model_init();
 
-    fprintf(stderr, "Value: % .6Lf  Points:\n", cost(solution->x, dim));
+    point *solution = create_whale(dim, minx, maxx, m);
+    woa(solution, max_iter, num_whales, dim, minx, maxx, m);
+
+    fprintf(stderr, "Value: % .6Lf  Points:\n", solution->f);
     for (int k = 0; k < dim; k++) {
     	fprintf(stdout, "% .6Lf ", solution->x[k]);
     }
