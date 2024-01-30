@@ -23,12 +23,15 @@ int main(int argc, char *argv[]) {
         max_iter = (int)strtol(argv[3], NULL, BASE);
     }
 
-    real *best_x = woa(max_iter, num_whales, dim, -10.0L, 10.0L);
+    real minx = -10.0L;
+    real maxx = 10.0L;
+    point *solution = create_whale(dim, minx, maxx);
+    woa(solution, max_iter, num_whales, dim, minx, maxx);
     printf("Best solution found:  ");
     for (int k = 0; k < dim; k++) {
-        printf("% .6Lf ", best_x[k]);
+        printf("% .6Lf ", solution->x[k]);
     }
-    printf("  value = % .6Lf\n\n", cost(best_x, dim));
+    printf("  value = % .6Lf\n\n", cost(solution->x, dim));
 
     return 0;
 }
