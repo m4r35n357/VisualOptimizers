@@ -18,18 +18,17 @@ endif
 %.o: %.c
 	$(CC) $(CFLAGS) -MT $@ -MMD -MP -c -o $@ $< $(WARNINGS)
 
-#all: nm-std nm-gl whale-std
-all: whale-std
+all: nm-std nm-gl whale-std
 
-#nm-%-std: %.o nelder_mead.o main.o
-#	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
+nm-%-std: %.o nelder_mead.o main.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-#nm-std: nm-ackley-std nm-hartmann3-std nm-hartmann6-std nm-rosenbrock-std nm-dixon-price-std nm-himmelblau-std nm-st-std nm-box-std
+nm-std: nm-ackley-std nm-hartmann3-std nm-hartmann6-std nm-rosenbrock-std nm-dixon-price-std nm-himmelblau-std nm-st-std nm-box-std
 
-#nm-%-gl: %.o nelder_mead.o opengl.o simplex-gl.o
-#	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
+nm-%-gl: %.o nelder_mead.o opengl.o simplex-gl.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-#nm-gl: nm-ackley-gl nm-hartmann3-gl nm-hartmann6-gl nm-rosenbrock-gl nm-dixon-price-gl nm-himmelblau-gl nm-st-gl
+nm-gl: nm-ackley-gl nm-hartmann3-gl nm-hartmann6-gl nm-rosenbrock-gl nm-dixon-price-gl nm-himmelblau-gl nm-st-gl
 
 whale-%-std: %_whale.o whale.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
