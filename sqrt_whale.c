@@ -24,11 +24,12 @@ int main(int argc, char *argv[]) {
 
     point *solution = create_whale(dim, minx, maxx);
     woa(solution, max_iter, num_whales, dim, minx, maxx);
-    printf("Best solution found:  ");
+
+    fprintf(stderr, "Value: % .6Lf  Points:\n", cost(solution->x, dim));
     for (int k = 0; k < dim; k++) {
-        printf("% .6Lf ", solution->x[k]);
+    	fprintf(stdout, "% .6Lf ", solution->x[k]);
     }
-    printf("  value = % .6Lf\n\n", cost(solution->x, dim));
+    fprintf(stdout, "\n");
 
     return 0;
 }
