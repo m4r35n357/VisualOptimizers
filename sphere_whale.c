@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "whale.h" // Assuming whale.h contains the declaration of woa function
+#include "whale.h"
 
-static double sphere(double *position, int length) {
+double cost (double *position, int length) {
     double value = 0.0;
     for (int j = 0; j < length; j++) {
         double xi = position[j];
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
         max_iter = atoi(argv[3]);
     }
 
-    best_x = woa(sphere, max_iter, num_whales, dim, -10.0, 10.0);
+    best_x = woa(max_iter, num_whales, dim, -10.0, 10.0);
 
     printf("Best solution found:\n");
     for (int k = 0; k < dim; k++) {
@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     }
     printf("\n");
 
-    fitness = sphere(best_x, dim);
+    fitness = cost(best_x, dim);
     printf("fitness of best solution = %.6f\n", fitness);
 
     for (int i = 0; i < dim; i++) {

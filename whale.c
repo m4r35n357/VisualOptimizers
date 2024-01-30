@@ -21,7 +21,7 @@ whale *create_whale (int dim, double min_x, double max_x, int seed, double (*cos
     return w;
 }
 
-double *woa (double (*cost)(double *, int), int max_i, int n, int dim, double min_x, double max_x) {
+double *woa (int max_i, int n, int dim, double min_x, double max_x) {
     double PI = acos(-1.0);
     whale **whales = malloc((size_t)n * sizeof(whale *));
     for (int i = 0; i < n; ++i) {

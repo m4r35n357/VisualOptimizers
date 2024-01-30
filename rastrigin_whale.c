@@ -1,13 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
-// Assuming the 'whale' library and 'woa' function are implemented in C
-// and available to include. If not, the corresponding C implementation
-// needs to be provided.
 #include "whale.h"
 
-static double rastrigin(double *position, int n) {
+double cost (double *position, int n) {
     double PI = acos(-1.0);
     double a = 10.0;
     double value = a * n;
@@ -31,13 +27,13 @@ int main(int argc, char *argv[]) {
     }
 
     // Assuming the 'woa' function returns a pointer to the best solution found
-    double *best_x = woa(rastrigin, max_iter, num_whales, dim, -10.0, 10.0);
+    double *best_x = woa(max_iter, num_whales, dim, -10.0, 10.0);
 
     printf("Best solution found:\n");
     for (int k = 0; k < dim; k++) {
         printf("%.6f ", best_x[k]);
     }
-    printf("\nfitness of best solution = %.6f\n", rastrigin(best_x, dim));
+    printf("\nfitness of best solution = %.6f\n", cost(best_x, dim));
 
     for (int i = 0; i < dim; i++) {
         printf("%f ", best_x[i]);

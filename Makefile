@@ -34,7 +34,7 @@ all: whale-std
 whale-%-std: %_whale.o whale.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-whale-std: whale-sphere-std whale-rosenbrock-std whale-rastrigin-std
+whale-std: whale-sphere-std whale-sqrt-std whale-rosenbrock-std whale-rastrigin-std
 
 .PHONY: test test-6d test-4d test-3d test-2d test-1d ctags clean depclean
 

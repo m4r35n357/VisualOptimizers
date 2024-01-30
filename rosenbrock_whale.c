@@ -1,11 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-// Assuming the 'whale' library and 'woa' function are available in C
-// and have been properly translated and adapted.
 #include "whale.h"
 
-static double rosenbrock(double *position, int dim) {
+double cost (double *position, int dim) {
     double value = 0.0;
     for (int j = 0; j < dim - 1; j++) {
         double xi = position[j];
@@ -14,7 +11,7 @@ static double rosenbrock(double *position, int dim) {
     return value;
 }
 
-int main(int argc, char *argv[]) {
+int main (int argc, char *argv[]) {
     int dim, num_whales, max_iter;
     if (argc == 1) {
         dim = 3;
@@ -26,12 +23,12 @@ int main(int argc, char *argv[]) {
         max_iter = atoi(argv[3]);
     }
 
-    double *best_x = woa(rosenbrock, max_iter, num_whales, dim, -10.0, 10.0);
+    double *best_x = woa(max_iter, num_whales, dim, -10.0, 10.0);
     printf("Best solution found:\n");
     for (int k = 0; k < dim; k++) {
         printf("%.6f ", best_x[k]);
     }
-    printf("\nfitness of best solution = %.6f\n", rosenbrock(best_x, dim));
+    printf("\nfitness of best solution = %.6f\n", cost(best_x, dim));
     for (int i = 0; i < dim; i++) {
         printf(" %f", best_x[i]);
     }
