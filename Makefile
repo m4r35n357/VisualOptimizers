@@ -33,11 +33,11 @@ nm-gl: nm-rastrigin-gl nm-sqrt-gl nm-sphere-gl nm-ackley-gl nm-hartmann3-gl nm-h
 whale-%-std: %.o whale.o main-whale.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-whale-std: whale-sphere-std whale-sqrt-std whale-rosenbrock-std whale-box-std whale-rastrigin-std
+whale-std: whale-sphere-std whale-sqrt-std whale-rosenbrock-std whale-box-std whale-rastrigin-std whale-ackley-std whale-dixon-price-std whale-st-std
 
 .PHONY: test test-6d test-4d test-3d test-2d test-1d ctags clean depclean
 
-test: test-16d test-8d test-6d test-4d test-3d test-2d test-1d
+test: test-16d test-8d test-6d test-4d test-3d test-2d test-1d test-whale
 
 test-16d: all
 	@./run.sh -b nm-st-std -a 1 -p 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0 >/dev/null
@@ -86,6 +86,16 @@ test-1d: all
 	@./run.sh -b nm-ackley-std -p 10.0 >/dev/null
 	@./run.sh -b nm-dixon-price-std -p 10.0 >/dev/null
 	@./run.sh -b nm-st-std -p 10.0 >/dev/null
+
+test-whale: all
+	@./whale-sphere-std 3 50 100 -10 10 >/dev/null
+	@./whale-sqrt-std 3 50 100 -10 10 >/dev/null
+	@./whale-ackley-std 3 50 100 -10 10 >/dev/null
+	@./whale-rastrigin-std 3 50 100 -10 10 >/dev/null
+	@./whale-dixon-price-std 3 50 100 -10 10 >/dev/null
+	@./whale-st-std 3 50 100 -10 10 >/dev/null
+	@./whale-rosenbrock-std 3 1000 100 -5 10 >/dev/null
+	@./whale-box-std 3 50 100 0.001 4.8 >/dev/null
 
 ctags:
 	@/usr/bin/ctags *.h *.c

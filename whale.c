@@ -42,7 +42,7 @@ bool woa (point *Xp, int max_i, int n_whales, int n_dim, real min_x, real max_x,
     real PI = acosl(-1.0L);
     int iteration = 0;
     while (iteration < max_i) {
-        if (iteration % 10 == 0 && iteration > 1) fprintf(stderr, "Iteration = %d minimum = %.6Lf\n", iteration, Xp->f);
+        if (iteration % 10 == 0 && iteration > 1) fprintf(stdout, "Iteration = %d minimum = %.6Lf\n", iteration, Xp->f);
         real a = 2.0L * (1.0L - (real)iteration / max_i);
         for (int i = 0; i < n_whales; ++i) {
             real A = a * (2.0L * randreal() - 1.0L);

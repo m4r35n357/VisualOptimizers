@@ -17,11 +17,12 @@ int main(int argc, char *argv[]) {
     point *solution = create_whale(dim, minx, maxx, m);
     woa(solution, max_iter, num_whales, dim, minx, maxx, m);
 
-    fprintf(stderr, "Value: % .6Lf  Points:\n", solution->f);
+    fprintf(stderr, "    %s[%s", GRY, NRM);
     for (int k = 0; k < dim; k++) {
-    	fprintf(stdout, "% .6Lf ", solution->x[k]);
+    	fprintf(stderr, "% .6Lf ", solution->x[k]);
     }
-    fprintf(stdout, "\n");
+    fprintf(stderr, "%s]%s", GRY, NRM);
+    fprintf(stderr, "  % .6Lf\n", solution->f);
 
     return 0;
 }
