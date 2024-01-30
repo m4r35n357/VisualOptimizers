@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "whale.h" // Assuming "whale.h" contains the declaration of the woa function
+#include "whale.h"
 
 real A = 48.0L;
 
@@ -17,17 +17,12 @@ real cost (real *position, int dim) { (void)dim;
 
 int main(int argc, char *argv[]) {
     PRINT_ARGS(argc, argv);
-    int dim, num_whales, max_iter;
+    CHECK(argc == 4);
+
+    int dim = (int)strtol(argv[1], NULL, BASE);         CHECK(dim >= 1 && dim <= 100);
+    int num_whales = (int)strtol(argv[2], NULL, BASE);  CHECK(num_whales >= 1 && num_whales <= 10000);
+    int max_iter = (int)strtol(argv[3], NULL, BASE);    CHECK(max_iter >= 1 && max_iter <= 10000);
     real min_edge = 0.001L;
-    if (argc == 1) {
-        dim = 2;
-        num_whales = 50;
-        max_iter = 100;
-    } else {
-        dim = (int)strtol(argv[1], NULL, BASE);
-        num_whales = (int)strtol(argv[2], NULL, BASE);
-        max_iter = (int)strtol(argv[3], NULL, BASE);
-    }
 
     real minx = min_edge;
     real maxx = sqrtl(0.5L * A) - min_edge;
