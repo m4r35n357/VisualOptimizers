@@ -5,7 +5,7 @@
 // and have been properly translated and adapted.
 #include "whale.h"
 
-double rosenbrock(double *position, int dim) {
+static double rosenbrock(double *position, int dim) {
     double value = 0.0;
     for (int j = 0; j < dim - 1; j++) {
         double xi = position[j];

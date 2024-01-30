@@ -7,12 +7,13 @@
 // needs to be provided.
 #include "whale.h"
 
-double rastrigin(double *position, int n) {
+static double rastrigin(double *position, int n) {
+    double PI = acos(-1.0);
     double a = 10.0;
     double value = a * n;
     for (int j = 0; j < n; j++) {
         double xi = position[j];
-        value += xi * xi - a * cos(2.0 * M_PI * xi);
+        value += xi * xi - a * cos(2.0 * PI * xi);
     }
     return value;
 }

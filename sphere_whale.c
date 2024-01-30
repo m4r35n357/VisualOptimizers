@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "whale.h" // Assuming whale.h contains the declaration of woa function
 
-double sphere(double *position, int length) {
+static double sphere(double *position, int length) {
     double value = 0.0;
     for (int j = 0; j < length; j++) {
         double xi = position[j];
