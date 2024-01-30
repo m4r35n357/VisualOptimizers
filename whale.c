@@ -23,7 +23,7 @@ whale *create_whale (int dim, real min_x, real max_x) {
     return w;
 }
 
-point *woa (point *Xp, int max_i, int n_whales, int n_dim, real min_x, real max_x) {
+bool woa (point *Xp, int max_i, int n_whales, int n_dim, real min_x, real max_x) {
     srand((unsigned int)time(NULL));
     whale **whales = malloc((size_t)n_whales * sizeof(whale *));
     for (int i = 0; i < n_whales; ++i) {

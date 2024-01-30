@@ -23,12 +23,12 @@ all: nm-std nm-gl whale-std
 nm-%-std: %.o nelder_mead.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-nm-std: nm-ackley-std nm-hartmann3-std nm-hartmann6-std nm-rosenbrock-std nm-dixon-price-std nm-himmelblau-std nm-st-std nm-box-std
+nm-std: nm-rastrigin-std nm-sqrt-std nm-sphere-std nm-ackley-std nm-hartmann3-std nm-hartmann6-std nm-rosenbrock-std nm-dixon-price-std nm-himmelblau-std nm-st-std nm-box-std
 
 nm-%-gl: %.o nelder_mead.o opengl.o simplex-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-nm-gl: nm-ackley-gl nm-hartmann3-gl nm-hartmann6-gl nm-rosenbrock-gl nm-dixon-price-gl nm-himmelblau-gl nm-st-gl
+nm-gl: nm-rastrigin-gl nm-sqrt-gl nm-sphere-gl nm-ackley-gl nm-hartmann3-gl nm-hartmann6-gl nm-rosenbrock-gl nm-dixon-price-gl nm-himmelblau-gl nm-st-gl
 
 whale-%-std: %_whale.o whale.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
@@ -68,6 +68,7 @@ test-3d: all
 	@./run.sh -b nm-st-std -p 0.0,0.0,0.0 >/dev/null
 	@./run.sh -b nm-rosenbrock-std -p -1.0,-1.0,-1.0 >/dev/null
 	@./run.sh -b nm-hartmann3-std -p 0.5,0.5,0.5 >/dev/null
+	@./run.sh -b nm-sqrt-std -p 0.5,0.5,0.5 >/dev/null
 
 test-2d: all
 	@./run.sh -b nm-ackley-std -p -3.04,4.50 >/dev/null
