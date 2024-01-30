@@ -7,33 +7,13 @@
 #include "whale.h"
 
 /* Returns an integer in the range [0, n).
- *
  * Uses rand(), and so is affected-by/affects the same seed.
  */
-int randint(int n) {
-  if ((n - 1) == RAND_MAX) {
-    return rand();
-  } else {
-    // Supporting larger values for n would requires an even more
-    // elaborate implementation that combines multiple calls to rand()
-    assert(n <= RAND_MAX);
-
-    // Chop off all of the values that would cause skew...
-    int end = RAND_MAX / n; // truncate skew
-    assert(end > 0);
-    end *= n;
-
-    // ... and ignore results from rand() that fall above that limit.
-    // (Worst case the loop condition should succeed 50% of the time,
-    // so we can expect to bail out of this loop pretty quickly.)
-    int r;
-    while ((r = rand()) >= end);
-
-    return r % n;
-  }
+int randint (int n) {
+    return (int)((double)rand() / ((double)RAND_MAX + 1) * n);
 }
 
-whale *create_whale(int dim, double min_x, double max_x, int seed, double (*cost)(double *, int)) {
+whale *create_whale (int dim, double min_x, double max_x, int seed, double (*cost)(double *, int)) {
     whale *w = (whale *)malloc(sizeof(whale));
     w->x = malloc((size_t)dim * sizeof(double));
     srand((unsigned int)seed);
@@ -44,12 +24,12 @@ whale *create_whale(int dim, double min_x, double max_x, int seed, double (*cost
     return w;
 }
 
-void free_whale(whale *w) {
+void free_whale (whale *w) {
     free(w->x);
     free(w);
 }
 
-double *woa(double (*cost)(double *, int), int max_i, int n, int dim, double min_x, double max_x) {
+double *woa (double (*cost)(double *, int), int max_i, int n, int dim, double min_x, double max_x) {
     double PI = acos(-1.0);
     whale **whales = malloc((size_t)n * sizeof(whale *));
     for (int i = 0; i < n; ++i) {
@@ -84,9 +64,9 @@ double *woa(double (*cost)(double *, int), int max_i, int n, int dim, double min
                         X_next[j] = Xp[j] - A * fabs(C * Xp[j] - whales[i]->x[j]);
                     }
                 } else {
-                    int p = rand() % n;
+                    int p = randint(n);
                     while (p == i) {
-                        p = rand() % n;
+                        p = randint(n);
                     }
                     double *Xr = whales[p]->x;
                     for (int j = 0; j < dim; ++j) {
