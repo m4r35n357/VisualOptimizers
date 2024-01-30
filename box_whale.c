@@ -18,15 +18,14 @@ double cost (double *position, int dim) { (void)dim;
 int main(int argc, char *argv[]) {
     int dim, num_whales, max_iter;
     double min_edge = 0.001;
-
     if (argc == 1) {
         dim = 2;
         num_whales = 50;
         max_iter = 100;
     } else {
-        dim = atoi(argv[1]);
-        num_whales = atoi(argv[2]);
-        max_iter = atoi(argv[3]);
+        dim = (int)strtol(argv[1], NULL, BASE);
+        num_whales = (int)strtol(argv[2], NULL, BASE);
+        max_iter = (int)strtol(argv[3], NULL, BASE);
     }
 
     double *best_x = woa(max_iter, num_whales, dim, min_edge, sqrt(0.5 * A) - min_edge);

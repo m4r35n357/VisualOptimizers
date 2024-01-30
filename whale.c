@@ -15,10 +15,10 @@ double randreal () {
 }
 
 whale *create_whale (int dim, double min_x, double max_x) {
-    whale *w = (whale *)malloc(sizeof(whale));
+    whale *w = malloc(sizeof(whale));
     w->x = malloc((size_t)dim * sizeof(double));
     for (int j = 0; j < dim; ++j) {
-        w->x[j] = ((max_x - min_x) * ((double)rand() / (double)RAND_MAX) + min_x);
+        w->x[j] = (max_x - min_x) * randreal() + min_x;
     }
     w->value = cost(w->x, dim);
     return w;
@@ -47,7 +47,7 @@ double *woa (int max_i, int n, int dim, double min_x, double max_x) {
         if (iteration % 10 == 0 && iteration > 1) {
             printf("Iteration = %d minimum = %.6f\n", iteration, f_best);
         }
-        double a = 2.0 * (1.0 - ((double)iteration / max_i));
+        double a = 2.0 * (1.0 - (double)iteration / max_i);
         for (int i = 0; i < n; ++i) {
             double A = a * (2.0 * randreal() - 1.0);
             double C = 2.0 * randreal();

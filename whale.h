@@ -1,4 +1,6 @@
 
+#define BASE 10
+
 typedef struct Whale {
     double *x;
     double value;
