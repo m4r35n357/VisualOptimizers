@@ -91,7 +91,7 @@ test-whale: all
 	@./whale-sphere-std 3 50 100 -10 10 >/dev/null
 	@./whale-sqrt-std 3 50 100 -10 10 >/dev/null
 	@./whale-ackley-std 3 50 100 -10 10 >/dev/null
-	@./whale-rastrigin-std 3 50 100 -10 10 >/dev/null
+	@./whale-rastrigin-std 3 50 100 -32.768 32.768 >/dev/null
 	@./whale-dixon-price-std 3 50 100 -10 10 >/dev/null
 	@./whale-st-std 3 50 100 -10 10 >/dev/null
 	@./whale-rosenbrock-std 3 1000 100 -5 10 >/dev/null

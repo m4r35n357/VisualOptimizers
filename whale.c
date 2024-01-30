@@ -13,7 +13,7 @@ real randreal () {
     return (real)rand() / (real)RAND_MAX;
 }
 
-whale *create_whale (int dim, real min_x, real max_x, model *m) {
+whale *get_whale (int dim, real min_x, real max_x, model *m) {
     whale *w = malloc(sizeof(whale));
     w->x = malloc((size_t)dim * sizeof(real));
     for (int j = 0; j < dim; ++j) {
@@ -23,19 +23,19 @@ whale *create_whale (int dim, real min_x, real max_x, model *m) {
     return w;
 }
 
-bool woa (point *Xp, int max_i, int n_whales, int n_dim, real min_x, real max_x, model *m) {
+bool whale_algorithm (point *Xp, int max_i, int n_whales, int n_dim, real min_x, real max_x, model *m) {
     srand((unsigned int)time(NULL));
     whale **whales = malloc((size_t)n_whales * sizeof(whale *));
     for (int i = 0; i < n_whales; ++i) {
-        whales[i] = create_whale(n_dim, min_x, max_x, m);
+        whales[i] = get_whale(n_dim, min_x, max_x, m);
     }
     real *X_next = malloc((size_t)n_dim * sizeof(real));
     Xp->f = DBL_MAX;
     for (int i = 0; i < n_whales; ++i) {
         if (whales[i]->f < Xp->f) {
-        	Xp->f = whales[i]->f;
+            Xp->f = whales[i]->f;
             for (int j = 0; j < n_dim; ++j) {
-            	Xp->x[j] = whales[i]->x[j];
+                Xp->x[j] = whales[i]->x[j];
             }
         }
     }
