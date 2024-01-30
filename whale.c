@@ -6,9 +6,6 @@
 #include <time.h>
 #include "whale.h"
 
-/* Returns an integer in the range [0, n).
- * Uses rand(), and so is affected-by/affects the same seed.
- */
 int randint (int n) {
     return (int)((double)rand() / ((double)RAND_MAX + 1) * n);
 }
@@ -22,11 +19,6 @@ whale *create_whale (int dim, double min_x, double max_x, int seed, double (*cos
     }
     w->value = cost(w->x, dim);
     return w;
-}
-
-void free_whale (whale *w) {
-    free(w->x);
-    free(w);
 }
 
 double *woa (double (*cost)(double *, int), int max_i, int n, int dim, double min_x, double max_x) {
@@ -46,6 +38,7 @@ double *woa (double (*cost)(double *, int), int max_i, int n, int dim, double mi
             }
         }
     }
+    double *X_next = malloc((size_t)dim * sizeof(double));
     int iteration = 0;
     while (iteration < max_i) {
         if (iteration % 10 == 0 && iteration > 1) {
@@ -57,7 +50,6 @@ double *woa (double (*cost)(double *, int), int max_i, int n, int dim, double mi
             double C = 2.0 * ((double)rand() / (double)RAND_MAX);
             double b = 1.0;
             double l = 2.0 * ((double)rand() / (double)RAND_MAX) - 1.0;
-            double *X_next = malloc((size_t)dim * sizeof(double));
             if (((double)rand() / (double)RAND_MAX) < 0.5) {
                 if (fabs(A) < 1.0) {
                     for (int j = 0; j < dim; ++j) {
@@ -81,7 +73,6 @@ double *woa (double (*cost)(double *, int), int max_i, int n, int dim, double mi
             for (int j = 0; j < dim; ++j) {
                 whales[i]->x[j] = X_next[j];
             }
-            free(X_next);
         }
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < dim; ++j) {
@@ -98,26 +89,5 @@ double *woa (double (*cost)(double *, int), int max_i, int n, int dim, double mi
         }
         iteration++;
     }
-    for (int i = 0; i < n; ++i) {
-        free_whale(whales[i]);
-    }
-    free(whales);
     return Xp;
 }
-
-// Example usage:
-// double my_cost_function(double *x, int dim) {
-//     // Implement your cost function here
-//     return 0.0;
-// }
-// int main() {
-//     int max_i = 100;
-//     int n = 30;
-//     int dim = 2;
-//     double min_x = -5.0;
-//     double max_x = 5.0;
-//     double *best_solution = woa(my_cost_function, max_i, n, dim, min_x, max_x);
-//     // Use best_solution
-//     free(best_solution);
-//     return 0;
-// }
