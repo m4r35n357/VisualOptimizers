@@ -13,7 +13,6 @@ int randint (int n) {
 whale *create_whale (int dim, double min_x, double max_x, int seed, double (*cost)(double *, int)) {
     whale *w = (whale *)malloc(sizeof(whale));
     w->x = malloc((size_t)dim * sizeof(double));
-    srand((unsigned int)seed);
     for (int j = 0; j < dim; ++j) {
         w->x[j] = ((max_x - min_x) * ((double)rand() / (double)RAND_MAX) + min_x);
     }
@@ -22,13 +21,12 @@ whale *create_whale (int dim, double min_x, double max_x, int seed, double (*cos
 }
 
 double *woa (int max_i, int n, int dim, double min_x, double max_x) {
-    double PI = acos(-1.0);
     whale **whales = malloc((size_t)n * sizeof(whale *));
     for (int i = 0; i < n; ++i) {
         whales[i] = create_whale(dim, min_x, max_x, i, cost);
     }
-    srand((unsigned int)time(NULL));
     double *Xp = malloc((size_t)dim * sizeof(double));
+    double *X_next = malloc((size_t)dim * sizeof(double));
     double f_best = DBL_MAX;
     for (int i = 0; i < n; ++i) {
         if (whales[i]->value < f_best) {
@@ -38,7 +36,8 @@ double *woa (int max_i, int n, int dim, double min_x, double max_x) {
             }
         }
     }
-    double *X_next = malloc((size_t)dim * sizeof(double));
+    srand((unsigned int)time(NULL));
+    double PI = acos(-1.0);
     int iteration = 0;
     while (iteration < max_i) {
         if (iteration % 10 == 0 && iteration > 1) {
