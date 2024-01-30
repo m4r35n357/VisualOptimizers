@@ -30,7 +30,7 @@ nm-%-gl: %.o nelder_mead.o opengl.o simplex-gl.o
 
 nm-gl: nm-rastrigin-gl nm-sqrt-gl nm-sphere-gl nm-ackley-gl nm-hartmann3-gl nm-hartmann6-gl nm-rosenbrock-gl nm-dixon-price-gl nm-himmelblau-gl nm-st-gl
 
-whale-%-std: %_whale.o %.o whale.o
+whale-%-std: %.o whale.o main-whale.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 whale-std: whale-sphere-std whale-sqrt-std whale-rosenbrock-std whale-box-std whale-rastrigin-std
