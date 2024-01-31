@@ -18,7 +18,7 @@ endif
 %.o: %.c
 	$(CC) $(CFLAGS) -MT $@ -MMD -MP -c -o $@ $< $(WARNINGS)
 
-all: nm-std nm-gl whale-std
+all: nm-std nm-gl whale-std whale-gl
 
 nm-%-std: %.o nelder_mead.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
@@ -34,6 +34,11 @@ whale-%-std: %.o whale.o main-whale.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 whale-std: whale-sphere-std whale-sqrt-std whale-rosenbrock-std whale-box-std whale-rastrigin-std whale-ackley-std whale-dixon-price-std whale-st-std
+
+whale-%-gl: %.o whale.o opengl.o woa-gl.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
+
+whale-gl: whale-sphere-gl whale-sqrt-gl whale-rosenbrock-gl whale-box-gl whale-rastrigin-gl whale-ackley-gl whale-dixon-price-gl whale-st-gl
 
 .PHONY: test test-6d test-4d test-3d test-2d test-1d ctags clean depclean
 

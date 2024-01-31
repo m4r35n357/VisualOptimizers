@@ -10,11 +10,11 @@ static optimset o;
 static point *solution1, *solution2;
 static gl_point *v1, *v2;
 
-gl_point get_gl_point (real *p) {
+static gl_point get_gl_point (real *p) {
     return (gl_point){(float)p[0], (float)p[1], (float)p[2]};
 }
 
-void get_vertices (gl_point *vertices, point *points) {
+static void get_vertices (gl_point *vertices, point *points) {
     for (int i = 0; i < 4; i++) {
         vertices[i] = get_gl_point(points[i].x);
     }

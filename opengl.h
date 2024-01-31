@@ -65,16 +65,6 @@ void ball (gl_point p, rgb colour);
 void osd (int x, int y, rgb colour, char *string);
 
 /*
- * Extract GL coordinates from point
- */
-gl_point get_gl_point (real *point);
-
-/*
- * Extract current coordinates from data
- */
-void get_vertices (gl_point *vertices, point *p);
-
-/*
  * Re-draw boilerplate (no logic)
  */
 void ReDraw (void);
