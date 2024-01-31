@@ -4,21 +4,21 @@
 
 int main(int argc, char *argv[]) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc == 6);
+    CHECK(argc == 8);
 
-    int dim = (int)strtol(argv[1], NULL, BASE);         CHECK(dim >= 1 && dim <= 100);
-    int num_whales = (int)strtol(argv[2], NULL, BASE);  CHECK(num_whales >= 1 && num_whales <= 10000);
-    int max_iter = (int)strtol(argv[3], NULL, BASE);    CHECK(max_iter >= 1 && max_iter <= 10000);
-    real minx = strtold(argv[4], NULL);
-    real maxx = strtold(argv[5], NULL);
+    // options
+    options o = get_options(argv, false);
+    real minx = strtold(argv[6], NULL);
+    real maxx = strtold(argv[7], NULL);
 
+    // model parameters
     model *m = model_init();
 
-    point *solution = get_whale(dim, minx, maxx, m);
-    whale_algorithm(solution, max_iter, num_whales, dim, minx, maxx, m);
+    point *solution = get_whale(o.dim, minx, maxx, m);
+    whale_algorithm(solution, minx, maxx, m, o);
 
     fprintf(stderr, "    %s[%s", GRY, NRM);
-    for (int k = 0; k < dim; k++) {
+    for (int k = 0; k < o.dim; k++) {
         fprintf(stderr, "% .6Lf ", solution->x[k]);
     }
     fprintf(stderr, "%s]%s", GRY, NRM);
