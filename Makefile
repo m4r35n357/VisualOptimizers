@@ -23,22 +23,22 @@ all: nm-std nm-gl whale-std whale-gl
 nm-%-std: %.o nelder_mead.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-nm-std: nm-rastrigin-std nm-sqrt-std nm-sphere-std nm-ackley-std nm-hartmann3-std nm-hartmann6-std nm-rosenbrock-std nm-dixon-price-std nm-himmelblau-std nm-st-std nm-box-std
+nm-std: nm-rastrigin-std nm-sqrt-std nm-sphere-std nm-ackley-std nm-hartmann3-std nm-hartmann6-std nm-rosenbrock-std nm-dixon-price-std nm-himmelblau-std nm-st-std nm-box-std nm-schwefel-std
 
 nm-%-gl: %.o nelder_mead.o opengl.o simplex-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-nm-gl: nm-rastrigin-gl nm-sqrt-gl nm-sphere-gl nm-ackley-gl nm-hartmann3-gl nm-hartmann6-gl nm-rosenbrock-gl nm-dixon-price-gl nm-himmelblau-gl nm-st-gl
+nm-gl: nm-rastrigin-gl nm-sqrt-gl nm-sphere-gl nm-ackley-gl nm-hartmann3-gl nm-hartmann6-gl nm-rosenbrock-gl nm-dixon-price-gl nm-himmelblau-gl nm-st-gl nm-schwefel-gl
 
 whale-%-std: %.o whale.o main-whale.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-whale-std: whale-sphere-std whale-sqrt-std whale-rosenbrock-std whale-box-std whale-rastrigin-std whale-ackley-std whale-dixon-price-std whale-st-std
+whale-std: whale-sphere-std whale-sqrt-std whale-rosenbrock-std whale-box-std whale-rastrigin-std whale-ackley-std whale-dixon-price-std whale-st-std whale-schwefel-std
 
 whale-%-gl: %.o whale.o opengl.o woa-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-whale-gl: whale-sphere-gl whale-sqrt-gl whale-rosenbrock-gl whale-box-gl whale-rastrigin-gl whale-ackley-gl whale-dixon-price-gl whale-st-gl
+whale-gl: whale-sphere-gl whale-sqrt-gl whale-rosenbrock-gl whale-box-gl whale-rastrigin-gl whale-ackley-gl whale-dixon-price-gl whale-st-gl whale-schwefel-gl
 
 .PHONY: test test-6d test-4d test-3d test-2d test-1d ctags clean depclean
 
@@ -74,6 +74,7 @@ test-3d: all
 	@./run.sh -b nm-rosenbrock-std -p -1.0,-1.0,-1.0 >/dev/null
 	@./run.sh -b nm-hartmann3-std -p 0.5,0.5,0.5 >/dev/null
 	@./run.sh -b nm-sqrt-std -p 0.5,0.5,0.5 >/dev/null
+	@./run.sh -b nm-schwefel-std -p 0.0,0.0,0.0 >/dev/null
 
 test-2d: all
 	@./run.sh -b nm-ackley-std -p -3.04,4.50 >/dev/null
@@ -97,6 +98,7 @@ test-whale: all
 	@./whale-sqrt-std 6 0 3 50 100 -10 10 >/dev/null
 	@./whale-ackley-std 6 0 3 50 100 -10 10 >/dev/null
 	@./whale-rastrigin-std 6 0 3 50 100 -32.768 32.768 >/dev/null
+	@./whale-schwefel-std 6 0 3 1000 100 -500.0 500.0 >/dev/null
 	@./whale-dixon-price-std 6 0 3 1000 100 -10 10 >/dev/null
 	@./whale-st-std 6 0 3 1000 100 -10 10 >/dev/null
 	@./whale-rosenbrock-std 6 0 3 1000 100 -5 10 >/dev/null
