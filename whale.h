@@ -21,6 +21,7 @@ typedef struct Population {
     whale **whales;
     whale *Xp;
     real *X_next;
+    int n, iterations, evaluations;
     bool looping;
 } population;
 

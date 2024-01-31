@@ -43,12 +43,15 @@ whale *get_whale (int dim, real min_x, real max_x, model *m) {
 population *get_population (real min_x, real max_x, model *m, options o) {
     srand((unsigned int)time(NULL));
     population *p =  malloc(sizeof(population));
+    p->iterations = p->evaluations = 0;
     p->whales = malloc((size_t)o.whales * sizeof(whale *));
     for (int i = 0; i < o.whales; ++i) {
         p->whales[i] = get_whale(o.dim, min_x, max_x, m);
+        p->evaluations++;
     }
     p->Xp = get_whale(o.dim, min_x, max_x, m);
     p->Xp->f = DBL_MAX;
+    p->evaluations++;
     for (int i = 0; i < o.whales; ++i) {
         if (p->whales[i]->f < p->Xp->f) {
             for (int j = 0; j < o.dim; ++j) {
@@ -58,16 +61,18 @@ population *get_population (real min_x, real max_x, model *m, options o) {
         }
     }
     p->X_next = malloc((size_t)o.dim * sizeof(real));
+    p->looping = false;
     return p;
 }
 
 bool woa (population *p, point *solution, real min_x, real max_x, model *m, options o) {
-    static int iteration = 0;
-    real PI = acosl(-1.0L);
+    real TWO_PI = 2.0L * acosl(-1.0L);
     if (o.step_mode && p->looping) goto resume; else p->looping = true;
-    while (iteration < o.iterations) {
-        if (iteration % 10 == 0 && iteration > 1) fprintf(stdout, "Iteration = %d minimum = %.6Lf\n", iteration, p->Xp->f);
-        real a = 2.0L * (1.0L - (real)iteration / o.iterations);
+    while (p->iterations < o.iterations) {
+        if (p->iterations % 10 == 0 && p->iterations > 1) {
+        	fprintf(stdout, "Iteration = %d minimum = %.6Lf\n", p->iterations, p->Xp->f);
+        }
+        real a = 2.0L * (1.0L - (real)p->iterations / o.iterations);
         for (int i = 0; i < o.whales; ++i) {
             real A = a * (2.0L * randreal() - 1.0L);
             real C = 2.0L * randreal();
@@ -88,7 +93,7 @@ bool woa (population *p, point *solution, real min_x, real max_x, model *m, opti
                 }
             } else {
                 for (int j = 0; j < o.dim; ++j) {
-                    p->X_next[j] = fabsl(p->Xp->x[j] - p->whales[i]->x[j]) * expl(b * l) * cosl(2.0L * PI * l) + p->Xp->x[j];
+                    p->X_next[j] = fabsl(p->Xp->x[j] - p->whales[i]->x[j]) * expl(b * l) * cosl(TWO_PI * l) + p->Xp->x[j];
                 }
             }
             for (int j = 0; j < o.dim; ++j) {
@@ -101,6 +106,7 @@ bool woa (population *p, point *solution, real min_x, real max_x, model *m, opti
                 p->whales[i]->x[j] = fminl(p->whales[i]->x[j], max_x);
             }
             cost(o.dim, p->whales[i], m);
+            p->evaluations++;
             if (p->whales[i]->f < p->Xp->f) {
                 for (int j = 0; j < o.dim; ++j) {
                     p->Xp->x[j] = p->whales[i]->x[j];
@@ -108,7 +114,7 @@ bool woa (population *p, point *solution, real min_x, real max_x, model *m, opti
                 p->Xp->f = p->whales[i]->f;
             }
         }
-        iteration++;
+        p->iterations++;
         if (o.step_mode) return true;
         resume: ;
     }
