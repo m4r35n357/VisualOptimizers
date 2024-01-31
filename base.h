@@ -47,16 +47,6 @@ typedef struct Point {
 } point, whale;
 
 /*
- * The "simplex" containing an array of n + 1 points each of dimension n
- */
-typedef struct Simplex {
-    point *p, *reflect, *centroid, *trial;
-    int n, iterations, evaluations;
-    bool looping;
-    real delta_x, delta_f;
-} simplex;
-
-/*
  * Optional, where known
  */
 typedef struct KnownMinima {

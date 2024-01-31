@@ -2,7 +2,7 @@
 
 #include <stdbool.h>
 #include <time.h>
-#include "nelder_mead.h"
+#include "base.h"
 
 /*
  * Triple of floats

@@ -14,10 +14,10 @@ int main(int argc, char *argv[]) {
     // model parameters
     model *m = model_init();
 
-    population *p = get_whales(minx, maxx, m, o);
+    population *p = get_population(minx, maxx, m, o);
 
     point *solution = get_whale(o.dim, minx, maxx, m);
-    whale_algorithm(p, solution, minx, maxx, m, o);
+    woa(p, solution, minx, maxx, m, o);
 
     fprintf(stderr, "    %s[%s", GRY, NRM);
     for (int k = 0; k < o.dim; k++) {

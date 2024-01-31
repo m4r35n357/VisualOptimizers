@@ -12,6 +12,11 @@ typedef struct Options {
     bool step_mode; // free-running or single-step algorithm
 } options;
 
+/*
+ * Options
+ */
+options get_options (char **, bool);
+
 typedef struct Population {
     whale **whales;
     whale *Xp;
@@ -19,16 +24,11 @@ typedef struct Population {
     bool looping;
 } population;
 
-/*
- * Options
- */
-options get_options (char **, bool);
-
 whale *get_whale (int dim, real min_x, real max_x, model *m);
 
-population *get_whales (real min_x, real max_x, model *m, options o);
+population *get_population (real min_x, real max_x, model *m, options o);
 
-bool whale_algorithm (population *whales, point *solution, real min_x, real max_x, model *m, options o);
+bool woa (population *whales, point *solution, real min_x, real max_x, model *m, options o);
 
 int randint (int n);
 

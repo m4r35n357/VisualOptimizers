@@ -40,7 +40,7 @@ whale *get_whale (int dim, real min_x, real max_x, model *m) {
     return w;
 }
 
-population *get_whales (real min_x, real max_x, model *m, options o) {
+population *get_population (real min_x, real max_x, model *m, options o) {
     srand((unsigned int)time(NULL));
     population *p =  malloc(sizeof(population));
     p->whales = malloc((size_t)o.whales * sizeof(whale *));
@@ -61,7 +61,7 @@ population *get_whales (real min_x, real max_x, model *m, options o) {
     return p;
 }
 
-bool whale_algorithm (population *p, point *solution, real min_x, real max_x, model *m, options o) {
+bool woa (population *p, point *solution, real min_x, real max_x, model *m, options o) {
     static int iteration = 0;
     real PI = acosl(-1.0L);
     if (o.step_mode && p->looping) goto resume; else p->looping = true;

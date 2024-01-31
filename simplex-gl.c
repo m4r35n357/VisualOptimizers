@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <GL/freeglut.h>
 #include "opengl.h"
+#include "nelder_mead.h"
 
 static simplex *s1, *s2;
 static model *m;

@@ -22,6 +22,16 @@ typedef struct Optimset {
 optimset get_settings (char **, bool);
 
 /*
+ * The "simplex" containing an array of n + 1 points each of dimension n
+ */
+typedef struct Simplex {
+    point *p, *reflect, *centroid, *trial;
+    int n, iterations, evaluations;
+    bool looping;
+    real delta_x, delta_f;
+} simplex;
+
+/*
  * "Simplex" or "Amoeba" optimizer
  */
 bool nelder_mead (simplex *, point *, const model *, const optimset *);
