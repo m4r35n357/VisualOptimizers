@@ -9,8 +9,7 @@ static minima *targets;
 static options o;
 static point *solution;
 static gl_point *v;
-static real minx;
-static real maxx;
+static real min, max;
 
 static gl_point get_gl_point (real *point) {
     return (gl_point){(float)point[0], (float)point[1], (float)point[2]};
@@ -30,17 +29,34 @@ void Animate () {
             initial = false;
         } else {
             if (!finished1) {
-                woa(p, solution, minx, maxx, m, o);
+                woa(p, solution, min, max, m, o);
                 get_vertices(v, p->whales);
             }
         }
         if (stepping) paused = true;
     }
 
+    float fmin = (float)min, fmax = (float)max;
+    rgb box_colour = get_colour(DARK_BLUE);
+    line((gl_point){fmin, fmin, fmin}, (gl_point){fmax, fmin, fmin}, box_colour);
+    line((gl_point){fmin, fmin, fmax}, (gl_point){fmax, fmin, fmax}, box_colour);
+    line((gl_point){fmin, fmax, fmin}, (gl_point){fmax, fmax, fmin}, box_colour);
+    line((gl_point){fmin, fmax, fmax}, (gl_point){fmax, fmax, fmax}, box_colour);
+
+    line((gl_point){fmin, fmin, fmin}, (gl_point){fmin, fmax, fmin}, box_colour);
+    line((gl_point){fmin, fmin, fmax}, (gl_point){fmin, fmax, fmax}, box_colour);
+    line((gl_point){fmax, fmin, fmin}, (gl_point){fmax, fmax, fmin}, box_colour);
+    line((gl_point){fmax, fmin, fmax}, (gl_point){fmax, fmax, fmax}, box_colour);
+
+    line((gl_point){fmin, fmin, fmin}, (gl_point){fmin, fmin, fmax}, box_colour);
+    line((gl_point){fmin, fmax, fmin}, (gl_point){fmin, fmax, fmax}, box_colour);
+    line((gl_point){fmax, fmin, fmin}, (gl_point){fmax, fmin, fmax}, box_colour);
+    line((gl_point){fmax, fmax, fmin}, (gl_point){fmax, fmax, fmax}, box_colour);
+
     rgb axis_colour = get_colour(DARK_GREY);
-    line((gl_point){-10.0F, 0.0F, 0.0F}, (gl_point){10.0F, 0.0F, 0.0F}, axis_colour);
-    line((gl_point){0.0F, -10.0F, 0.0F}, (gl_point){0.0F, 10.0F, 0.0F}, axis_colour);
-    line((gl_point){0.0F, 0.0F, -10.0F}, (gl_point){0.0F, 0.0F, 10.0F}, axis_colour);
+    line((gl_point){fmin, 0.0F, 0.0F}, (gl_point){fmax, 0.0F, 0.0F}, axis_colour);
+    line((gl_point){0.0F, fmin, 0.0F}, (gl_point){0.0F, fmax, 0.0F}, axis_colour);
+    line((gl_point){0.0F, 0.0F, fmin}, (gl_point){0.0F, 0.0F, fmax}, axis_colour);
 
     if (targets) {
         for (int i = 0; i < targets->n_minima; i++) {
@@ -68,16 +84,16 @@ int main (int argc, char **argv) {
 
     // options
     o = get_options(argv, true);
-    minx = strtold(argv[6], NULL);
-    maxx = strtold(argv[7], NULL);
+    min = strtold(argv[6], NULL);
+    max = strtold(argv[7], NULL);
 
     // model parameters
     m = model_init();
 
-    p = get_population(minx, maxx, m, o);
+    p = get_population(min, max, m, o);
 
-    solution = get_whale(o.dim, minx, maxx, m);
-    woa(p, solution, minx, maxx, m, o);
+    solution = get_whale(o.dim, min, max, m);
+    woa(p, solution, min, max, m, o);
 
     // get minima for targets if known
     targets = get_known_minima();

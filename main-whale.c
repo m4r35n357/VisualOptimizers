@@ -8,16 +8,16 @@ int main(int argc, char *argv[]) {
 
     // options
     options o = get_options(argv, false);
-    real minx = strtold(argv[6], NULL);
-    real maxx = strtold(argv[7], NULL);
+    real min = strtold(argv[6], NULL);
+    real max = strtold(argv[7], NULL);
 
     // model parameters
     model *m = model_init();
 
-    population *p = get_population(minx, maxx, m, o);
+    population *p = get_population(min, max, m, o);
 
-    point *solution = get_whale(o.dim, minx, maxx, m);
-    woa(p, solution, minx, maxx, m, o);
+    point *solution = get_whale(o.dim, min, max, m);
+    woa(p, solution, min, max, m, o);
 
     fprintf(stderr, "    %s[%s", GRY, NRM);
     for (int k = 0; k < o.dim; k++) {
