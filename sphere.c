@@ -24,6 +24,6 @@ minima *get_known_minima () {
 void cost (int n, point *p, const model *m) { (void)m;
     p->f = 0.0L;
     for (int i = 0; i < n; i++) {
-    	p->f += SQR(p->x[i]);
+        p->f += SQR(p->x[i]);
     }
 }

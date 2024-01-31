@@ -6,7 +6,7 @@
 #include "whale.h"
 
 options get_options (char **argv, bool single) {
-	options opt = {
+    options opt = {
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
         .dim = (int)strtol(argv[3], NULL, BASE),
@@ -40,26 +40,32 @@ whale *get_whale (int dim, real min_x, real max_x, model *m) {
     return w;
 }
 
-bool whale_algorithm (point *Xp, real min_x, real max_x, model *m, options o) {
+population *get_whales (real min_x, real max_x, model *m, options o) {
     srand((unsigned int)time(NULL));
-    whale **whales = malloc((size_t)o.whales * sizeof(whale *));
+    population *p =  malloc(sizeof(population));
+    p->whales = malloc((size_t)o.whales * sizeof(whale *));
     for (int i = 0; i < o.whales; ++i) {
-        whales[i] = get_whale(o.dim, min_x, max_x, m);
+        p->whales[i] = get_whale(o.dim, min_x, max_x, m);
     }
-    real *X_next = malloc((size_t)o.dim * sizeof(real));
-    Xp->f = DBL_MAX;
+    p->Xp = get_whale(o.dim, min_x, max_x, m);
+    p->Xp->f = DBL_MAX;
     for (int i = 0; i < o.whales; ++i) {
-        if (whales[i]->f < Xp->f) {
-            Xp->f = whales[i]->f;
+        if (p->whales[i]->f < p->Xp->f) {
             for (int j = 0; j < o.dim; ++j) {
-                Xp->x[j] = whales[i]->x[j];
+                p->Xp->x[j] = p->whales[i]->x[j];
             }
+            p->Xp->f = p->whales[i]->f;
         }
     }
+    p->X_next = malloc((size_t)o.dim * sizeof(real));
+    return p;
+}
+
+bool whale_algorithm (population *p, point *solution, real min_x, real max_x, model *m, options o) {
     real PI = acosl(-1.0L);
     int iteration = 0;
     while (iteration < o.iterations) {
-        if (iteration % 10 == 0 && iteration > 1) fprintf(stdout, "Iteration = %d minimum = %.6Lf\n", iteration, Xp->f);
+        if (iteration % 10 == 0 && iteration > 1) fprintf(stdout, "Iteration = %d minimum = %.6Lf\n", iteration, p->Xp->f);
         real a = 2.0L * (1.0L - (real)iteration / o.iterations);
         for (int i = 0; i < o.whales; ++i) {
             real A = a * (2.0L * randreal() - 1.0L);
@@ -69,39 +75,45 @@ bool whale_algorithm (point *Xp, real min_x, real max_x, model *m, options o) {
             if (randreal() < 0.5L) {
                 if (fabsl(A) < 1.0L) {
                     for (int j = 0; j < o.dim; ++j) {
-                        X_next[j] = Xp->x[j] - A * fabsl(C * Xp->x[j] - whales[i]->x[j]);
+                        p->X_next[j] = p->Xp->x[j] - A * fabsl(C * p->Xp->x[j] - p->whales[i]->x[j]);
                     }
                 } else {
-                    int p = randint(o.whales);
-                    while (p == i) p = randint(o.whales);
-                    real *Xr = whales[p]->x;
+                    int r = randint(o.whales);
+                    while (r == i) r = randint(o.whales);
+                    real *Xr = p->whales[r]->x;
                     for (int j = 0; j < o.dim; ++j) {
-                        X_next[j] = Xr[j] - A * fabsl(C * Xr[j] - whales[i]->x[j]);
+                        p->X_next[j] = Xr[j] - A * fabsl(C * Xr[j] - p->whales[i]->x[j]);
                     }
                 }
             } else {
                 for (int j = 0; j < o.dim; ++j) {
-                    X_next[j] = fabsl(Xp->x[j] - whales[i]->x[j]) * expl(b * l) * cosl(2.0L * PI * l) + Xp->x[j];
+                    p->X_next[j] = fabsl(p->Xp->x[j] - p->whales[i]->x[j]) * expl(b * l) * cosl(2.0L * PI * l) + p->Xp->x[j];
                 }
             }
             for (int j = 0; j < o.dim; ++j) {
-                whales[i]->x[j] = X_next[j];
+                p->whales[i]->x[j] = p->X_next[j];
             }
         }
         for (int i = 0; i < o.whales; ++i) {
             for (int j = 0; j < o.dim; ++j) {
-                whales[i]->x[j] = fmaxl(whales[i]->x[j], min_x);
-                whales[i]->x[j] = fminl(whales[i]->x[j], max_x);
+                p->whales[i]->x[j] = fmaxl(p->whales[i]->x[j], min_x);
+                p->whales[i]->x[j] = fminl(p->whales[i]->x[j], max_x);
             }
-            cost(o.dim, whales[i], m);
-            if (whales[i]->f < Xp->f) {
+            cost(o.dim, p->whales[i], m);
+            if (p->whales[i]->f < p->Xp->f) {
                 for (int j = 0; j < o.dim; ++j) {
-                    Xp->x[j] = whales[i]->x[j];
+                    p->Xp->x[j] = p->whales[i]->x[j];
                 }
-                Xp->f = whales[i]->f;
+                p->Xp->f = p->whales[i]->f;
             }
         }
         iteration++;
+        for (int i = 0; i < o.whales; ++i) {
+            for (int j = 0; j < o.dim; ++j) {
+                solution->x[j] = p->Xp->x[j];
+            }
+            solution->f = p->Xp->f;
+        }
     }
-    return Xp;
+    return solution;
 }

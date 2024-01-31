@@ -1,3 +1,4 @@
+#pragma once
 
 #include "base.h"
 #include "model.h"
@@ -11,6 +12,12 @@ typedef struct Options {
     bool step_mode; // free-running or single-step algorithm
 } options;
 
+typedef struct Population {
+    whale **whales;
+    whale *Xp;
+    real *X_next;
+} population;
+
 /*
  * Options
  */
@@ -18,7 +25,9 @@ options get_options (char **, bool);
 
 whale *get_whale (int dim, real min_x, real max_x, model *m);
 
-bool whale_algorithm (point *solution, real min_x, real max_x, model *m, options o);
+population *get_whales (real min_x, real max_x, model *m, options o);
+
+bool whale_algorithm (population *whales, point *solution, real min_x, real max_x, model *m, options o);
 
 int randint (int n);
 
