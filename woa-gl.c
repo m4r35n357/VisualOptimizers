@@ -100,6 +100,9 @@ int main (int argc, char **argv) {
     v = malloc((size_t)o.whales * sizeof (gl_point)); CHECK(v);
     get_vertices(v, p->whales);
 
+    radius = 1.5F * ((float)max - (float)min);
+    ball_size = 0.005F * ((float)max - (float)min);;
+
     ApplicationInit(argc, argv, "Nelder-Mead Visualizer");
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.
     return 0 ;          // Compiler requires this to be here. (Never reached)

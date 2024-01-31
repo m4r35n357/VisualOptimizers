@@ -7,7 +7,7 @@ char hud[128];
 
 bool initial = true, finished1 = false, finished2 = false, paused = false, stepping = true, running = true, osd_active = true, centroid = true;
 
-static float radius = 5.0F, elevation = 90.0F, azimuth = 0.0F, ball_size = 0.01F;
+float radius = 5.0F, elevation = 90.0F, azimuth = 0.0F, ball_size = 0.01F;
 
 void SpecialKeyFunc (int Key, int x, int y) { (void)x; (void)y;
     switch (Key) {
@@ -17,6 +17,8 @@ void SpecialKeyFunc (int Key, int x, int y) { (void)x; (void)y;
         case     GLUT_KEY_RIGHT: azimuth -= 1.0F; break;
         case      GLUT_KEY_HOME: radius -= 0.2F; break;
         case       GLUT_KEY_END: radius += 0.2F; break;
+        case   GLUT_KEY_PAGE_UP: radius -= 2.0F; break;
+        case GLUT_KEY_PAGE_DOWN: radius += 2.0F; break;
         default: break;
     }
 }
@@ -51,7 +53,7 @@ void ResizeWindow (int w, int h) {
     glViewport(0, 0, w, h);  // View port uses whole window
     glMatrixMode(GL_PROJECTION);  // Set up the projection view matrix (not very well!)
     glLoadIdentity();
-    gluPerspective(60.0F, (float)w / (float)h, 1.0F, 100.0F);
+    gluPerspective(60.0F, (float)w / (float)h, 1.0F, 3000.0F);
     glMatrixMode(GL_MODELVIEW);  // Select the Modelview matrix
 }
 
