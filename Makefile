@@ -73,6 +73,7 @@ test-3d: all
 	@./run.sh -b nm-st-std -p 0.0,0.0,0.0 >/dev/null
 	@./run.sh -b nm-rosenbrock-std -p -1.0,-1.0,-1.0 >/dev/null
 	@./run.sh -b nm-hartmann3-std -p 0.5,0.5,0.5 >/dev/null
+	@./run.sh -b nm-rastrigin-std -p 0.0,0.0,0.0 >/dev/null
 	@./run.sh -b nm-sqrt-std -p 0.5,0.5,0.5 >/dev/null
 	@./run.sh -b nm-schwefel-std -p 0.0,0.0,0.0 >/dev/null
 

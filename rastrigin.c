@@ -6,12 +6,12 @@
 #include <math.h>
 #include "model.h"
 
-struct Model { real A, PI; };
+struct Model { real A, TWO_PI; };
 
 model *model_init () {
     model *m = malloc(sizeof (model));
     m->A = 10.0L;
-    m->PI = acosl(-1.0L);
+    m->TWO_PI = 2.0L * acosl(-1.0L);
     return m;
 }
 
@@ -28,9 +28,8 @@ minima *get_known_minima () {
 }
 
 void cost (int n, point *p, const model *m) { (void)m;
-    real value = m->A * n;
+    p->f = m->A * n;
     for (int i = 0; i < n; i++) {
-        value += SQR(p->x[i]) - m->A * cosl(2.0L * m->PI * p->x[i]);
+    	p->f += SQR(p->x[i]) - m->A * cosl(m->TWO_PI * p->x[i]);
     }
-    p->f = value;
 }
