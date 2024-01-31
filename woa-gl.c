@@ -65,7 +65,7 @@ void Animate () {
     }
 
     for (int i = 0; i < o.whales; i++) {
-        ball(v[i], get_colour(LIGHT_GREEN));
+        ball(v[i], get_colour(DARK_GREEN));
     }
 
     if (osd_active) {
