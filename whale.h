@@ -16,6 +16,7 @@ typedef struct Population {
     whale **whales;
     whale *Xp;
     real *X_next;
+    bool looping;
 } population;
 
 /*

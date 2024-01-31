@@ -62,8 +62,9 @@ population *get_whales (real min_x, real max_x, model *m, options o) {
 }
 
 bool whale_algorithm (population *p, point *solution, real min_x, real max_x, model *m, options o) {
+    static int iteration = 0;
     real PI = acosl(-1.0L);
-    int iteration = 0;
+    if (o.step_mode && p->looping) goto resume; else p->looping = true;
     while (iteration < o.iterations) {
         if (iteration % 10 == 0 && iteration > 1) fprintf(stdout, "Iteration = %d minimum = %.6Lf\n", iteration, p->Xp->f);
         real a = 2.0L * (1.0L - (real)iteration / o.iterations);
@@ -108,12 +109,14 @@ bool whale_algorithm (population *p, point *solution, real min_x, real max_x, mo
             }
         }
         iteration++;
-        for (int i = 0; i < o.whales; ++i) {
-            for (int j = 0; j < o.dim; ++j) {
-                solution->x[j] = p->Xp->x[j];
-            }
-            solution->f = p->Xp->f;
-        }
+        if (o.step_mode) return true;
+        resume: ;
     }
-    return solution;
+    for (int i = 0; i < o.whales; ++i) {
+        for (int j = 0; j < o.dim; ++j) {
+            solution->x[j] = p->Xp->x[j];
+        }
+        solution->f = p->Xp->f;
+    }
+    return p->looping = false;
 }
