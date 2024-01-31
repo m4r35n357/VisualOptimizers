@@ -70,7 +70,7 @@ void Animate () {
 
     if (osd_active) {
         sprintf(hud, o.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
-        		p->iterations, p->evaluations,
+                p->iterations, p->evaluations,
                 o.places, p->Xp->x[0], o.places, p->Xp->x[1], o.places, p->Xp->x[2], o.places, p->Xp->f);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_YELLOW), hud);
     }
@@ -93,7 +93,6 @@ int main (int argc, char **argv) {
     p = get_population(min, max, m, o);
 
     solution = get_whale(o.dim, min, max, m);
-    woa(p, solution, min, max, m, o);
 
     // get minima for targets if known
     targets = get_known_minima();

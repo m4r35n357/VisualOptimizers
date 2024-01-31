@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
         s1->evaluations++;
         fprintf(stderr, "%s                  ", GRY);
         for (int j = 0; j < n; j++) {
-        	fprintf(stderr, o.fmt ? "% .*Le " : "% .*Lf ", 6, s1->p[i].x[j]);
+            fprintf(stderr, o.fmt ? "% .*Le " : "% .*Lf ", o.places, s1->p[i].x[j]);
         }
         fprintf(stderr, "%s\n", NRM);
     }
@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
             project(s2->p + i, s2, m, 1.0L, s2->p + i, start);
             fprintf(stderr, "%s                  ", GRY);
             for (int j = 0; j < n; j++) {
-            	fprintf(stderr, o.fmt ? "% .*Le " : "% .*Lf ", 6, s2->p[i].x[j]);
+                fprintf(stderr, o.fmt ? "% .*Le " : "% .*Lf ", o.places, s2->p[i].x[j]);
             }
             fprintf(stderr, "%s\n", NRM);
         }

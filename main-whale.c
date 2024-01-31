@@ -21,10 +21,10 @@ int main(int argc, char *argv[]) {
 
     fprintf(stderr, "    %s[%s", GRY, NRM);
     for (int k = 0; k < o.dim; k++) {
-        fprintf(stderr, "% .6Lf ", solution->x[k]);
+        fprintf(stderr, o.fmt ? "% .*Le " : "% .*Lf ", o.places, solution->x[k]);
     }
     fprintf(stderr, "%s]%s", GRY, NRM);
-    fprintf(stderr, "  % .6Lf\n", solution->f);
+    fprintf(stderr, "  % .*Lf\n", o.places, solution->f);
 
     return 0;
 }

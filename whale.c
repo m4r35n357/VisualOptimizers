@@ -69,9 +69,6 @@ bool woa (population *p, point *solution, real min_x, real max_x, model *m, opti
     real TWO_PI = 2.0L * acosl(-1.0L);
     if (o.step_mode && p->looping) goto resume; else p->looping = true;
     while (p->iterations < o.iterations) {
-        if (p->iterations % 10 == 0 && p->iterations > 1) {
-        	fprintf(stdout, "Iteration = %d minimum = %.6Lf\n", p->iterations, p->Xp->f);
-        }
         real a = 2.0L * (1.0L - (real)p->iterations / o.iterations);
         for (int i = 0; i < o.whales; ++i) {
             real A = a * (2.0L * randreal() - 1.0L);
@@ -115,6 +112,11 @@ bool woa (population *p, point *solution, real min_x, real max_x, model *m, opti
             }
         }
         p->iterations++;
+        printf(" %05d %06d  [ ", p->iterations, p->evaluations);
+        for (int j = 0; j < o.dim; j++) {
+            printf(o.fmt ? "% .*Le " : "% .*Lf ", o.places, p->Xp->x[j]);
+        }
+        printf(o.fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o.places, p->Xp->f);
         if (o.step_mode) return true;
         resume: ;
     }
