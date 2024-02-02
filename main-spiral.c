@@ -4,7 +4,7 @@
 
 int main(int argc, char *argv[]) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc == 8);
+    CHECK(argc == 9);
 
     // options
     config c = get_config(argv, false);
@@ -15,7 +15,6 @@ int main(int argc, char *argv[]) {
     model *m = model_init();
 
     spiral *p = get_spiral(min, max, m, c);
-
     point *solution = get_point(c.n, min, max, m);
     soa(p, solution, min, max, m, c);
 
@@ -25,6 +24,5 @@ int main(int argc, char *argv[]) {
     }
     fprintf(stderr, "%s]%s", GRY, NRM);
     fprintf(stderr, "  % .*Lf\n", c.places, solution->f);
-
     return 0;
 }

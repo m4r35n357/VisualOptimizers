@@ -4,11 +4,12 @@
 #include "model.h"
 
 typedef struct Config {
-    int n;   // number of dimensions
-    int m;   // number of points
-    int k_max;   // maximum number of allowed iterations
     int places;  // significant figures in float/exponential output
     int fmt;  // fixed or exponential floating point format
+    int n;   // number of dimensions
+    real delta;  // tolerance
+    int m;   // number of points
+    int k_max;   // maximum number of allowed iterations
     bool step_mode; // free-running or single-step algorithm
 } config;
 
@@ -18,14 +19,14 @@ typedef struct Config {
 config get_config (char **, bool);
 
 typedef struct Spiral {
-    point **x;
-    point *x_star;
-    real (*R)[2];
-    int n, iterations, evaluations;
+    point **points;
+    point *x_star, *i_b;
+    real (*R)[2], delta;
+    int n, k, evaluations;
     bool looping;
 } spiral;
 
-whale *get_point (int dim, real min_x, real max_x, model *m);
+point *get_point (int dim, real min_x, real max_x, model *m);
 
 spiral *get_spiral (real min_x, real max_x, model *m, config c);
 
