@@ -18,9 +18,9 @@ typedef struct Config {
 config get_config (char **, bool);
 
 typedef struct Spiral {
-    point **points;
+    point **x;
     point *x_star;
-    real **R;
+    real (*R)[2];
     int n, iterations, evaluations;
     bool looping;
 } spiral;
