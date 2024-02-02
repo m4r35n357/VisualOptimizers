@@ -1,30 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "whale.h"
+#include "spiral.h"
 
 int main(int argc, char *argv[]) {
     PRINT_ARGS(argc, argv);
     CHECK(argc == 8);
 
     // options
-    options o = get_options(argv, false);
+    config c = get_config(argv, false);
     real min = strtold(argv[6], NULL);
     real max = strtold(argv[7], NULL);
 
     // model parameters
     model *m = model_init();
 
-    population *p = get_population(min, max, m, o);
+    spiral *p = get_spiral(min, max, m, c);
 
-    point *solution = get_whale(o.dim, min, max, m);
-    woa(p, solution, min, max, m, o);
+    point *solution = get_point(c.n, min, max, m);
+    soa(p, solution, min, max, m, c);
 
     fprintf(stderr, "    %s[%s", GRY, NRM);
-    for (int k = 0; k < o.dim; k++) {
-        fprintf(stderr, o.fmt ? "% .*Le " : "% .*Lf ", o.places, solution->x[k]);
+    for (int k = 0; k < c.n; k++) {
+        fprintf(stderr, c.fmt ? "% .*Le " : "% .*Lf ", c.places, solution->x[k]);
     }
     fprintf(stderr, "%s]%s", GRY, NRM);
-    fprintf(stderr, "  % .*Lf\n", o.places, solution->f);
+    fprintf(stderr, "  % .*Lf\n", c.places, solution->f);
 
     return 0;
 }

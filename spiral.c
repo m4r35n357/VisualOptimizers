@@ -62,38 +62,10 @@ spiral *get_spiral (real min_x, real max_x, model *m, config c) {
     return s;
 }
 
-bool woa (population *p, point *solution, real min_x, real max_x, model *m, options o) {
-    real TWO_PI = 2.0L * acosl(-1.0L);
-    if (o.step_mode && p->looping) goto resume; else p->looping = true;
-    while (p->iterations < o.iterations) {
-        real a = 2.0L * (1.0L - (real)p->iterations / (real)o.iterations);
-        for (int i = 0; i < o.whales; i++) {
-            real A = a * (2.0L * randreal() - 1.0L);
-            real C = 2.0L * randreal();
-            real b = 1.0L;
-            real l = 2.0L * randreal() - 1.0L;
-            if (randreal() < 0.5L) {
-                if (fabsl(A) < 1.0L) { // "encircling" update (1)
-                    for (int j = 0; j < o.dim; j++) {
-                        p->X_next[j] = p->Xp->x[j] - A * fabsl(C * p->Xp->x[j] - p->whales[i]->x[j]);
-                    }
-                } else {  // "searching/random" update (9)
-                    int r = randint(o.whales);
-                    while (r == i) r = randint(o.whales);
-                    real *Xr = p->whales[r]->x;
-                    for (int j = 0; j < o.dim; j++) {
-                        p->X_next[j] = Xr[j] - A * fabsl(C * Xr[j] - p->whales[i]->x[j]);
-                    }
-                }
-            } else {  // "spiral" update (7)
-                for (int j = 0; j < o.dim; j++) {
-                    p->X_next[j] = fabsl(p->Xp->x[j] - p->whales[i]->x[j]) * expl(b * l) * cosl(TWO_PI * l) + p->Xp->x[j];
-                }
-            }
-            for (int j = 0; j < o.dim; j++) {
-                p->whales[i]->x[j] = p->X_next[j];
-            }
-        }
+bool soa (spiral *s, point *solution, real min_x, real max_x, model *m, config c) {
+    if (c.step_mode && s->looping) goto resume; else s->looping = true;
+    while (s->iterations < c.k_max) {
+    	/*
         for (int i = 0; i < o.whales; i++) {
             for (int j = 0; j < o.dim; j++) {
                 p->whales[i]->x[j] = fmaxl(p->whales[i]->x[j], min_x);
@@ -108,20 +80,21 @@ bool woa (population *p, point *solution, real min_x, real max_x, model *m, opti
                 p->Xp->f = p->whales[i]->f;
             }
         }
-        p->iterations++;
-        printf(" %05d %06d  [ ", p->iterations, p->evaluations);
-        for (int j = 0; j < o.dim; j++) {
-            printf(o.fmt ? "% .*Le " : "% .*Lf ", o.places, p->Xp->x[j]);
+        */
+        s->iterations++;
+        printf(" %05d %06d  [ ", s->iterations, s->evaluations);
+        for (int j = 0; j < c.n; j++) {
+            printf(c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->x_star->x[j]);
         }
-        printf(o.fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o.places, p->Xp->f);
-        if (o.step_mode) return true;
+        printf(c.fmt ? "]  % .*Le\n" : "]  % .*Lf\n", c.places, s->x_star->f);
+        if (c.step_mode) return true;
         resume: ;
     }
-    for (int i = 0; i < o.whales; i++) {
-        for (int j = 0; j < o.dim; j++) {
-            solution->x[j] = p->Xp->x[j];
+    for (int i = 0; i < c.m; i++) {
+        for (int j = 0; j < c.n; j++) {
+            solution->x[j] = s->x_star->x[j];
         }
-        solution->f = p->Xp->f;
+        solution->f = s->x_star->f;
     }
-    return p->looping = false;
+    return s->looping = false;
 }
