@@ -8,8 +8,8 @@ int main(int argc, char *argv[]) {
 
     // options
     config c = get_config(argv, false);
-    real min = strtold(argv[6], NULL);
-    real max = strtold(argv[7], NULL);
+    real min = strtold(argv[7], NULL);
+    real max = strtold(argv[8], NULL);
 
     // model parameters
     model *m = model_init();

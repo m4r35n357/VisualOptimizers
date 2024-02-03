@@ -18,7 +18,7 @@ endif
 %.o: %.c
 	$(CC) $(CFLAGS) -MT $@ -MMD -MP -c -o $@ $< $(WARNINGS)
 
-all: nm-std nm-gl whale-std whale-gl spiral-std
+all: nm-std nm-gl whale-std whale-gl spiral-std spiral-gl
 
 nm-%-std: %.o nelder_mead.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
@@ -44,6 +44,11 @@ spiral-%-std: %.o spiral.o main-spiral.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 spiral-std: spiral-sphere-std
+
+spiral-%-gl: %.o spiral.o opengl.o soa-gl.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
+
+spiral-gl: spiral-sphere-gl
 
 .PHONY: test test-6d test-4d test-3d test-2d test-1d ctags clean depclean
 

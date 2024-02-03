@@ -69,7 +69,8 @@ spiral *get_spiral (real min_x, real max_x, model *m, config c) {
 }
 
 bool soa (spiral *s, model *m, config c) {
-    real r = powl(c.delta, 1.0L / c.k_max);
+    //real r = powl(c.delta, 1.0L / c.k_max);
+	real r = 0.9L;
     if (c.step_mode && s->looping) goto resume; else s->looping = true;
     while (s->k < c.k_max) {
         for (int i = 0; i < c.m; i++) {
