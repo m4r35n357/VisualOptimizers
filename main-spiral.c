@@ -14,15 +14,21 @@ int main(int argc, char *argv[]) {
     // model parameters
     model *m = model_init();
 
-    spiral *p = get_spiral(min, max, m, c);
-    point *solution = get_point(c.n, min, max, m);
-    soa(p, solution, m, c);
+    spiral *s = get_spiral(min, max, m, c);
+    for (int k = 0; k < c.n; k++) {
+        for (int l = 0; l < c.n; l++) {
+            printf("% .1Lf ", s->R[k][l]);
+        }
+        printf("\n");
+    }
+    soa(s, m, c);
 
     fprintf(stderr, "    %s[%s", GRY, NRM);
     for (int k = 0; k < c.n; k++) {
-        fprintf(stderr, c.fmt ? "% .*Le " : "% .*Lf ", c.places, solution->x[k]);
+        fprintf(stderr, c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->x_star->x[k]);
     }
     fprintf(stderr, "%s]%s", GRY, NRM);
-    fprintf(stderr, "  % .*Lf\n", c.places, solution->f);
+    fprintf(stderr, "  % .*Lf\n", c.places, s->x_star->f);
+
     return 0;
 }
