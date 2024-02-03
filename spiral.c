@@ -62,15 +62,20 @@ spiral *get_spiral (real min_x, real max_x, model *m, config c) {
         }
         cost(c.n, s->points + i, m);
     }
-    s->R = malloc(sizeof(real[c.m][c.m]));
+    s->R = malloc((size_t)c.n * sizeof(real *));
+    for (int k = 0; k < c.n; k++) {
+    	s->R[k] = malloc((size_t)c.n * sizeof(real));
+        for (int l = 0; l < c.n; l++) {
+        	s->R[k][l] = k == l + 1 ? 1.0L : 0.0L;
+        }
+    }
+    s->R[0][c.n - 1] = -1.0L;
     for (int k = 0; k < c.n; k++) {
         for (int l = 0; l < c.n; l++) {
-    		s->R[k][l] = (k == l + 1) ? 1.0L : 0.0L;
     		printf("% .1Lf ", s->R[k][l]);
         }
         printf("\n");
     }
-    s->R[0][c.m - 1] = -1.0L;
     s->k = s->evaluations = 0;
     find_best(s, c);
     s->x_star = s->i_b;
@@ -84,11 +89,11 @@ bool soa (spiral *s, point *solution, model *m, config c) {
     while (s->k < c.k_max) {
         for (int i = 0; i < c.m; i++) {
             for (int k = 0; k < c.n; k++) {
-            	real temp = 0.0L;
+            	real _ = 0.0L;
             	for (int l = 0; l < c.n; l++) {
-            		temp += s->R[k][l] * (s->points[i].x[l] - s->x_star->x[l]);
+            		_ += s->R[k][l] * (s->points[i].x[l] - s->x_star->x[l]);
             	}
-            	s->points[i].x[k] = s->x_star->x[k] + r * temp;
+            	s->points[i].x[k] = s->x_star->x[k] + r * _;
             }
             cost(c.n, s->points + i, m);
             s->evaluations++;

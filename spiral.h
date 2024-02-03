@@ -21,7 +21,7 @@ config get_config (char **, bool);
 typedef struct Spiral {
     point *points;
     point *x_star, *i_b;
-    real (*R)[2], delta;
+    real **R, delta;
     int n, k, evaluations;
     bool looping;
 } spiral;
