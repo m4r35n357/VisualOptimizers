@@ -43,54 +43,56 @@ point *get_point (int dim, real min_x, real max_x, model *m) {
 }
 
 static void find_best (spiral *s, config c) {
-	s->i_b = s->points[0];
-    for (int i = 1; i < c.m; i++) {
-        if (s->points[i]->f < s->i_b->f) {
-        	s->i_b = s->points[i];
+	real best = DBL_MAX;
+    for (int i = 0; i < c.m; i++) {
+        if (s->points[i].f < best) {
+        	best = s->points[i].f;
+        	s->i_b = s->points + i;
         }
     }
 }
 
 spiral *get_spiral (real min_x, real max_x, model *m, config c) {
     spiral *s =  malloc(sizeof(spiral));
-    s->R = malloc(sizeof(real[c.m][c.m]));
+    s->points = malloc((size_t)c.m * sizeof (point));    CHECK(s->points);
     for (int i = 0; i < c.m; i++) {
-        for (int k = 0; k < c.m; k++) {
-        	if (i == k + 1) {
-        		s->R[i][k] = 1.0L;
-        	} else {
-                s->R[i][k] = 0.0L;
-        	}
+        s->points[i].x = malloc((size_t)c.n * sizeof (real));    CHECK(s->points[i].x);
+        for (int j = 0; j < c.n; j++) {
+        	s->points[i].x[j] = (max_x - min_x) * randreal() + min_x;
         }
+        cost(c.n, s->points + i, m);
+    }
+    s->R = malloc(sizeof(real[c.m][c.m]));
+    for (int k = 0; k < c.n; k++) {
+        for (int l = 0; l < c.n; l++) {
+    		s->R[k][l] = (k == l + 1) ? 1.0L : 0.0L;
+    		printf("% .1Lf ", s->R[k][l]);
+        }
+        printf("\n");
     }
     s->R[0][c.m - 1] = -1.0L;
     s->k = s->evaluations = 0;
-    s->points = malloc((size_t)c.m * sizeof(point *));
-    for (int i = 0; i < c.m; i++) {
-        s->points[i] = get_point(c.n, min_x, max_x, m);
-        s->evaluations++;
-    }
-    s->x_star = get_point(c.n, min_x, max_x, m);
-    s->evaluations++;
     find_best(s, c);
     s->x_star = s->i_b;
     s->looping = false;
     return s;
 }
 
-bool soa (spiral *s, point *solution, real min_x, real max_x, model *m, config c) {
+bool soa (spiral *s, point *solution, model *m, config c) {
+	real r = powl(c.delta, 1.0L / c.k_max);
     if (c.step_mode && s->looping) goto resume; else s->looping = true;
     while (s->k < c.k_max) {
-    	real r = powl(c.delta, -c.k_max);
         for (int i = 0; i < c.m; i++) {
-            for (int k = 0; k < c.m; k++) {
-            	for (int j = 0; j < c.n; j++) {
-            		s->points[k]->x[j] = s->x_star->x[j] + r * s->R[i][k] * (s->points[k]->x[j] - s->x_star->x[j]);
+            for (int k = 0; k < c.n; k++) {
+            	real temp = 0.0L;
+            	for (int l = 0; l < c.n; l++) {
+            		temp += s->R[k][l] * (s->points[i].x[l] - s->x_star->x[l]);
             	}
+            	s->points[i].x[k] = s->x_star->x[k] + r * temp;
             }
-            cost(c.n, s->points[i], m);
+            cost(c.n, s->points + i, m);
+            s->evaluations++;
         }
-        cost(c.n, s->x_star, m);
         find_best(s, c);
 		if (s->i_b->f < s->x_star->f) s->x_star = s->i_b;
         s->k++;

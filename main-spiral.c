@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 
     spiral *p = get_spiral(min, max, m, c);
     point *solution = get_point(c.n, min, max, m);
-    soa(p, solution, min, max, m, c);
+    soa(p, solution, m, c);
 
     fprintf(stderr, "    %s[%s", GRY, NRM);
     for (int k = 0; k < c.n; k++) {
