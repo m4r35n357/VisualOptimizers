@@ -100,7 +100,7 @@ int main (int argc, char **argv) {
     radius = 1.5F * ((float)max - (float)min);
     ball_size = 0.005F * ((float)max - (float)min);;
 
-    ApplicationInit(argc, argv, "Nelder-Mead Visualizer");
+    ApplicationInit(argc, argv, "Whale Optimization Visualizer");
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.
     return 0 ;          // Compiler requires this to be here. (Never reached)
 }

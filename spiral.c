@@ -33,11 +33,9 @@ real randreal () {
 }
 
 static void find_best (spiral *s, config c) {
-    real best = DBL_MAX;
     for (int i = 0; i < c.m; i++) {
-        if (s->points[i].f < best) {
-            best = s->points[i].f;
-            s->i_b = s->points + i;
+        if (s->points[i]->f < s->i_b->f) {
+            s->i_b = s->points[i];
         }
     }
 }
@@ -45,23 +43,17 @@ static void find_best (spiral *s, config c) {
 spiral *get_spiral (real min_x, real max_x, model *m, config c) {
     spiral *s =  malloc(sizeof(spiral));
     s->k = s->evaluations = 0;
-    s->points = malloc((size_t)c.m * sizeof (point));    CHECK(s->points);
+    s->points = malloc((size_t)c.m * sizeof (point *));    CHECK(s->points);
     for (int i = 0; i < c.m; i++) {
-        s->points[i].x = malloc((size_t)c.n * sizeof (real));    CHECK(s->points[i].x);
+        s->points[i] = malloc((size_t)c.n * sizeof (point));    CHECK(s->points[i]);
+        s->points[i]->x = malloc((size_t)c.n * sizeof (real));    CHECK(s->points[i]->x);
         for (int k = 0; k < c.n; k++) {
-            s->points[i].x[k] = (max_x - min_x) * randreal() + min_x;
+            s->points[i]->x[k] = (max_x - min_x) * randreal() + min_x;
         }
-        cost(c.n, s->points + i, m);
+        cost(c.n, s->points[i], m);
         s->evaluations++;
     }
-    s->R = malloc((size_t)c.n * sizeof(real *));
-    for (int k = 0; k < c.n; k++) {
-        s->R[k] = malloc((size_t)c.n * sizeof(real));
-        for (int l = 0; l < c.n; l++) {
-            s->R[k][l] = k == l + 1 ? 1.0L : 0.0L;
-        }
-    }
-    s->R[0][c.n - 1] = -1.0L;
+    s->i_b = s->points[0];
     find_best(s, c);
     s->x_star = s->i_b;
     s->looping = false;
@@ -75,13 +67,10 @@ bool soa (spiral *s, model *m, config c) {
     while (s->k < c.k_max) {
         for (int i = 0; i < c.m; i++) {
             for (int k = 0; k < c.n; k++) {
-                real _ = 0.0L;
-                for (int l = 0; l < c.n; l++) {
-                    _ += s->R[k][l] * (s->points[i].x[l] - s->x_star->x[l]);
-                }
-                s->points[i].x[k] = s->x_star->x[k] + r * _;
+                s->points[i]->x[k] = s->x_star->x[k] +
+                    r * (k ? (s->points[i]->x[k - 1] - s->x_star->x[k - 1]) : - (s->points[i]->x[c.n - 1] - s->x_star->x[c.n - 1]));
             }
-            cost(c.n, s->points + i, m);
+            cost(c.n, s->points[i], m);
             s->evaluations++;
         }
         find_best(s, c);

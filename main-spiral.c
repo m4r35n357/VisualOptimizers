@@ -15,12 +15,6 @@ int main(int argc, char *argv[]) {
     model *m = model_init();
 
     spiral *s = get_spiral(min, max, m, c);
-    for (int k = 0; k < c.n; k++) {
-        for (int l = 0; l < c.n; l++) {
-            printf("% .1Lf ", s->R[k][l]);
-        }
-        printf("\n");
-    }
     soa(s, m, c);
 
     fprintf(stderr, "    %s[%s", GRY, NRM);

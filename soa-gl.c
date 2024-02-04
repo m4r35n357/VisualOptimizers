@@ -10,13 +10,13 @@ static config c;
 static gl_point *v;
 static real min, max;
 
-static gl_point get_gl_point (real *point) {
-    return (gl_point){(float)point[0], (float)point[1], (float)point[2]};
+static gl_point get_gl_point (real *p) {
+    return (gl_point){(float)p[0], (float)p[1], (float)p[2]};
 }
 
-static void get_vertices (gl_point *vertices, point *points) {
+static void get_vertices (gl_point *vertices, point **points) {
     for (int i = 0; i < c.m; i++) {
-        vertices[i] = get_gl_point(points[i].x);
+        vertices[i] = get_gl_point(points[i]->x);
     }
 }
 
@@ -93,14 +93,16 @@ int main (int argc, char **argv) {
 
     // get minima for targets if known
     targets = get_known_minima();
+    printf("Hi!\n");
 
     v = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v);
     get_vertices(v, s->points);
+    printf("Ho!\n");
 
     radius = 1.5F * ((float)max - (float)min);
     ball_size = 0.005F * ((float)max - (float)min);;
 
-    ApplicationInit(argc, argv, "Nelder-Mead Visualizer");
+    ApplicationInit(argc, argv, "Spiral Optimization Visualizer");
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.
     return 0 ;          // Compiler requires this to be here. (Never reached)
 }
