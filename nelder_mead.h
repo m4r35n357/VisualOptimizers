@@ -34,7 +34,7 @@ typedef struct Simplex {
 /*
  * "Simplex" or "Amoeba" optimizer
  */
-bool nelder_mead (simplex *, point *, const model *, const optimset *);
+bool nelder_mead (simplex *, const model *, const optimset *);
 
 /*
  * Utility functions

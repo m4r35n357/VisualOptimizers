@@ -7,7 +7,6 @@ static population *p;
 static model *m;
 static minima *targets;
 static options o;
-static point *solution;
 static gl_point *v;
 static real min, max;
 
@@ -29,7 +28,7 @@ void Animate () {
             initial = false;
         } else {
             if (!finished1) {
-                woa(p, solution, min, max, m, o);
+                woa(p, min, max, m, o);
                 get_vertices(v, p->whales);
             }
         }
@@ -91,8 +90,6 @@ int main (int argc, char **argv) {
     m = model_init();
 
     p = get_population(min, max, m, o);
-
-    solution = get_whale(o.dim, min, max, m);
 
     // get minima for targets if known
     targets = get_known_minima();

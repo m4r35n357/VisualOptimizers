@@ -65,7 +65,7 @@ population *get_population (real min_x, real max_x, model *m, options o) {
     return p;
 }
 
-bool woa (population *p, point *solution, real min_x, real max_x, model *m, options o) {
+bool woa (population *p, real min_x, real max_x, model *m, options o) {
     real TWO_PI = 2.0L * acosl(-1.0L);
     if (o.step_mode && p->looping) goto resume; else p->looping = true;
     while (p->iterations < o.iterations) {
@@ -119,12 +119,6 @@ bool woa (population *p, point *solution, real min_x, real max_x, model *m, opti
         printf(o.fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o.places, p->Xp->f);
         if (o.step_mode) return true;
         resume: ;
-    }
-    for (int i = 0; i < o.whales; i++) {
-        for (int j = 0; j < o.dim; j++) {
-            solution->x[j] = p->Xp->x[j];
-        }
-        solution->f = p->Xp->f;
     }
     return p->looping = false;
 }

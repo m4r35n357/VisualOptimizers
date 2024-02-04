@@ -29,7 +29,7 @@ whale *get_whale (int dim, real min_x, real max_x, model *m);
 
 population *get_population (real min_x, real max_x, model *m, options o);
 
-bool woa (population *whales, point *solution, real min_x, real max_x, model *m, options o);
+bool woa (population *whales, real min_x, real max_x, model *m, options o);
 
 int randint (int n);
 

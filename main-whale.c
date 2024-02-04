@@ -16,15 +16,14 @@ int main(int argc, char *argv[]) {
 
     population *p = get_population(min, max, m, o);
 
-    point *solution = get_whale(o.dim, min, max, m);
-    woa(p, solution, min, max, m, o);
+    woa(p, min, max, m, o);
 
     fprintf(stderr, "    %s[%s", GRY, NRM);
     for (int k = 0; k < o.dim; k++) {
-        fprintf(stderr, o.fmt ? "% .*Le " : "% .*Lf ", o.places, solution->x[k]);
+        fprintf(stderr, o.fmt ? "% .*Le " : "% .*Lf ", o.places, p->Xp->x[k]);
     }
     fprintf(stderr, "%s]%s", GRY, NRM);
-    fprintf(stderr, "  % .*Lf\n", o.places, solution->f);
+    fprintf(stderr, "  % .*Lf\n", o.places, p->Xp->f);
 
     return 0;
 }

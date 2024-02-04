@@ -39,12 +39,11 @@ int main(int argc, char **argv) {
     sort(s1);
 
     // begin optimization
-    point *solution1 = get_point(n);
-    nelder_mead(s1, solution1, m, &o);
+    nelder_mead(s1, m, &o);
     // print solution
     fprintf(stderr, "  %s1%s ", GRY, NRM);
     fprintf(stderr, " %4d %4d  ", s1->iterations, s1->evaluations);
-    print_point(n, solution1, o.places, o.fmt);
+    print_point(n, s1->p, o.places, o.fmt);
 
     if (n > 1) {
         // . . . and its "dual"
@@ -60,12 +59,11 @@ int main(int argc, char **argv) {
         sort(s2);
 
         // begin optimization
-        point *solution2 = get_point(n);
-        nelder_mead(s2, solution2, m, &o);
+        nelder_mead(s2, m, &o);
         // print solution
         fprintf(stderr, "  %s2%s ", GRY, NRM);
         fprintf(stderr, " %4d %4d  ", s2->iterations, s2->evaluations);
-        print_point(n, solution2, o.places, o.fmt);
+        print_point(n, s2->p, o.places, o.fmt);
     }
 
     return 0;

@@ -7,7 +7,6 @@ static simplex *s1, *s2;
 static model *m;
 static minima *targets;
 static optimset o;
-static point *solution1, *solution2;
 static gl_point *v1, *v2;
 
 static gl_point get_gl_point (real *p) {
@@ -28,11 +27,11 @@ void Animate () {
             initial = false;
         } else {
             if (!finished1) {
-                nelder_mead(s1, solution1, m, &o);
+                nelder_mead(s1, m, &o);
                 get_vertices(v1, s1->p);
             }
             if (!finished2) {
-                nelder_mead(s2, solution2, m, &o);
+                nelder_mead(s2, m, &o);
                 get_vertices(v2, s2->p);
             }
         }
@@ -92,8 +91,6 @@ int main (int argc, char **argv) {
     for (int j = 0; j < n; j++) {
         start->x[j] = strtod(argv[j + 7], NULL);
     }
-    solution1 = get_point(n);
-    solution2 = get_point(n);
 
     // default simplex . . .
     s1 = get_simplex(n, o.size, start);
