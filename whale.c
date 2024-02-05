@@ -22,11 +22,11 @@ options get_options (char **argv, bool single) {
     return opt;
 }
 
-int randint (int n) {
+int rand_int (int n) {
     return (int)((real)rand() / ((real)RAND_MAX + 1) * n);
 }
 
-real randreal () {
+real rand_real () {
     return (real)rand() / (real)RAND_MAX;
 }
 
@@ -34,7 +34,7 @@ whale *get_whale (int dim, real min_x, real max_x, model *m) {
     whale *w = malloc(sizeof(whale));
     w->x = malloc((size_t)dim * sizeof(real));
     for (int j = 0; j < dim; j++) {
-        w->x[j] = (max_x - min_x) * randreal() + min_x;
+        w->x[j] = (max_x - min_x) * rand_real() + min_x;
     }
     cost(dim, w, m);
     return w;
@@ -65,39 +65,39 @@ bool woa (population *p, real min_x, real max_x, model *m, options o) {
     while (p->iterations < o.iterations) {
         real a = 2.0L * (1.0L - (real)p->iterations / (real)o.iterations);
         for (int i = 0; i < o.whales; i++) {
-            real A = a * (2.0L * randreal() - 1.0L);
-            real C = 2.0L * randreal();
+            whale *current = p->whales[i];
+            real A = a * (2.0L * rand_real() - 1.0L);
+            real C = 2.0L * rand_real();
             real b = 1.0L;
-            real l = 2.0L * randreal() - 1.0L;
-            if (randreal() < 0.5L) {
+            real l = 2.0L * rand_real() - 1.0L;
+            if (rand_real() < 0.5L) {
                 if (fabsl(A) < 1.0L) { // "encircling" update (1)
                     for (int j = 0; j < o.dim; j++) {
-                        p->whales[i]->x[j] = p->prey->x[j] - A * fabsl(C * p->prey->x[j] - p->whales[i]->x[j]);
+                        current->x[j] = p->prey->x[j] - A * fabsl(C * p->prey->x[j] - current->x[j]);
                     }
                 } else {  // "searching/random" update (9)
-                    int r = randint(o.whales);
-                    while (r == i) r = randint(o.whales);
-                    real *Xr = p->whales[r]->x;
+                    int r = rand_int(o.whales);
+                    while (r == i) r = rand_int(o.whales);
+                    whale *random = p->whales[r];
                     for (int j = 0; j < o.dim; j++) {
-                        p->whales[i]->x[j] = Xr[j] - A * fabsl(C * Xr[j] - p->whales[i]->x[j]);
+                        current->x[j] = random->x[j] - A * fabsl(C * random->x[j] - current->x[j]);
                     }
                 }
             } else {  // "spiral" update (7)
                 for (int j = 0; j < o.dim; j++) {
-                    p->whales[i]->x[j] = fabsl(p->prey->x[j] - p->whales[i]->x[j]) * expl(b * l) * cosl(TWO_PI * l) + p->prey->x[j];
+                    current->x[j] = fabsl(p->prey->x[j] - current->x[j]) * expl(b * l) * cosl(TWO_PI * l) + p->prey->x[j];
                 }
             }
         }
         for (int i = 0; i < o.whales; i++) {
+            whale *current = p->whales[i];
             for (int j = 0; j < o.dim; j++) {
-                p->whales[i]->x[j] = fmaxl(p->whales[i]->x[j], min_x);
-                p->whales[i]->x[j] = fminl(p->whales[i]->x[j], max_x);
+                current->x[j] = fmaxl(current->x[j], min_x);
+                current->x[j] = fminl(current->x[j], max_x);
             }
             cost(o.dim, p->whales[i], m);
             p->evaluations++;
-            if (p->whales[i]->f < p->prey->f) {
-                p->prey = p->whales[i];
-            }
+            if (current->f < p->prey->f) p->prey = current;
         }
         p->iterations++;
         printf(" %05d %06d  [ ", p->iterations, p->evaluations);

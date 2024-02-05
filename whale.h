@@ -30,6 +30,6 @@ population *get_population (real min_x, real max_x, model *m, options o);
 
 bool woa (population *whales, real min_x, real max_x, model *m, options o);
 
-int randint (int n);
+int rand_int (int n);
 
-real randreal (void);
+real rand_real (void);
