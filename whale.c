@@ -49,18 +49,12 @@ population *get_population (real min_x, real max_x, model *m, options o) {
         p->whales[i] = get_whale(o.dim, min_x, max_x, m);
         p->evaluations++;
     }
-    p->Xp = get_whale(o.dim, min_x, max_x, m);
-    p->Xp->f = DBL_MAX;
-    p->evaluations++;
-    for (int i = 0; i < o.whales; i++) {
-        if (p->whales[i]->f < p->Xp->f) {
-            for (int j = 0; j < o.dim; j++) {
-                p->Xp->x[j] = p->whales[i]->x[j];
-            }
-            p->Xp->f = p->whales[i]->f;
+    p->prey = p->whales[0];
+    for (int i = 1; i < o.whales; i++) {
+        if (p->whales[i]->f < p->prey->f) {
+            p->prey = p->whales[i];
         }
     }
-    p->X_next = malloc((size_t)o.dim * sizeof(real));
     p->looping = false;
     return p;
 }
@@ -78,23 +72,20 @@ bool woa (population *p, real min_x, real max_x, model *m, options o) {
             if (randreal() < 0.5L) {
                 if (fabsl(A) < 1.0L) { // "encircling" update (1)
                     for (int j = 0; j < o.dim; j++) {
-                        p->X_next[j] = p->Xp->x[j] - A * fabsl(C * p->Xp->x[j] - p->whales[i]->x[j]);
+                        p->whales[i]->x[j] = p->prey->x[j] - A * fabsl(C * p->prey->x[j] - p->whales[i]->x[j]);
                     }
                 } else {  // "searching/random" update (9)
                     int r = randint(o.whales);
                     while (r == i) r = randint(o.whales);
                     real *Xr = p->whales[r]->x;
                     for (int j = 0; j < o.dim; j++) {
-                        p->X_next[j] = Xr[j] - A * fabsl(C * Xr[j] - p->whales[i]->x[j]);
+                        p->whales[i]->x[j] = Xr[j] - A * fabsl(C * Xr[j] - p->whales[i]->x[j]);
                     }
                 }
             } else {  // "spiral" update (7)
                 for (int j = 0; j < o.dim; j++) {
-                    p->X_next[j] = fabsl(p->Xp->x[j] - p->whales[i]->x[j]) * expl(b * l) * cosl(TWO_PI * l) + p->Xp->x[j];
+                    p->whales[i]->x[j] = fabsl(p->prey->x[j] - p->whales[i]->x[j]) * expl(b * l) * cosl(TWO_PI * l) + p->prey->x[j];
                 }
-            }
-            for (int j = 0; j < o.dim; j++) {
-                p->whales[i]->x[j] = p->X_next[j];
             }
         }
         for (int i = 0; i < o.whales; i++) {
@@ -104,19 +95,16 @@ bool woa (population *p, real min_x, real max_x, model *m, options o) {
             }
             cost(o.dim, p->whales[i], m);
             p->evaluations++;
-            if (p->whales[i]->f < p->Xp->f) {
-                for (int j = 0; j < o.dim; j++) {
-                    p->Xp->x[j] = p->whales[i]->x[j];
-                }
-                p->Xp->f = p->whales[i]->f;
+            if (p->whales[i]->f < p->prey->f) {
+                p->prey = p->whales[i];
             }
         }
         p->iterations++;
         printf(" %05d %06d  [ ", p->iterations, p->evaluations);
         for (int j = 0; j < o.dim; j++) {
-            printf(o.fmt ? "% .*Le " : "% .*Lf ", o.places, p->Xp->x[j]);
+            printf(o.fmt ? "% .*Le " : "% .*Lf ", o.places, p->prey->x[j]);
         }
-        printf(o.fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o.places, p->Xp->f);
+        printf(o.fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o.places, p->prey->f);
         if (o.step_mode) return true;
         resume: ;
     }

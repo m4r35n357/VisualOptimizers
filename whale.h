@@ -19,8 +19,7 @@ options get_options (char **, bool);
 
 typedef struct Population {
     whale **whales;
-    whale *Xp;
-    real *X_next;
+    whale *prey;
     int n, iterations, evaluations;
     bool looping;
 } population;
