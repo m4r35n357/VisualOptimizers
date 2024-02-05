@@ -13,6 +13,14 @@
 typedef struct Model model;
 
 /*
+ * Optional, where known
+ */
+typedef struct KnownMinima {
+    point *min;
+    int n_minima;
+} minima;
+
+/*
  * Function to minimize
  */
 void cost (int, point *, const model *);

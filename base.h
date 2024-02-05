@@ -45,11 +45,3 @@ typedef struct Point {
   real *x;
   real f;
 } point, whale;
-
-/*
- * Optional, where known
- */
-typedef struct KnownMinima {
-    point *min;
-    int n_minima;
-} minima;
