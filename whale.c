@@ -88,9 +88,6 @@ bool woa (population *p, real min_x, real max_x, model *m, options o) {
                     current->x[j] = fabsl(p->prey->x[j] - current->x[j]) * expl(b * l) * cosl(TWO_PI * l) + p->prey->x[j];
                 }
             }
-        }
-        for (int i = 0; i < o.whales; i++) {
-            whale *current = p->whales[i];
             for (int j = 0; j < o.dim; j++) {
                 current->x[j] = fmaxl(current->x[j], min_x);
                 current->x[j] = fminl(current->x[j], max_x);
