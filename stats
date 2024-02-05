@@ -1,0 +1,25 @@
+#!/bin/sh
+
+GRY='\e[1;30m'
+RED='\e[1;31m'
+MGT='\e[0;35m'
+NRM='\e[0m'
+
+args="$0 $*"
+n_args=$(($# + 1))
+echo "${GRY}args ${NRM}${n_args}${GRY} [ ${MGT}${args}${GRY} ]${NRM}" >&2
+
+samples=$1
+shift
+
+count=1
+while [ $count -le $samples ]
+do
+    echo -n "${GRY}$count ${NRM}"
+    $* 2>/dev/null | tail -1
+    sleep 2
+    count=$((count + 1))
+done | tee /tmp/ian/latest.data
+
+echo -n "${GRY}Failed ${NRM}"
+grep -n -v '0.000...$' /tmp/ian/latest.data | wc -l
