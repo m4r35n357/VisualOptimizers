@@ -43,16 +43,16 @@ whale-gl: whale-sphere-gl whale-sqrt-gl whale-rosenbrock-gl whale-box-gl whale-r
 spiral-%-std: %.o spiral.o main-spiral.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-spiral-std: spiral-sphere-std
+spiral-std: spiral-sphere-std spiral-sqrt-std spiral-rosenbrock-std spiral-box-std spiral-rastrigin-std spiral-ackley-std spiral-dixon-price-std spiral-st-std spiral-schwefel-std
 
 spiral-%-gl: %.o spiral.o opengl.o soa-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-spiral-gl: spiral-sphere-gl
+spiral-gl: spiral-sphere-gl spiral-sqrt-gl spiral-rosenbrock-gl spiral-box-gl spiral-rastrigin-gl spiral-ackley-gl spiral-dixon-price-gl spiral-st-gl spiral-schwefel-gl
 
 .PHONY: test test-6d test-4d test-3d test-2d test-1d ctags clean depclean
 
-test: test-16d test-8d test-6d test-4d test-3d test-2d test-1d test-whale
+test: test-16d test-8d test-6d test-4d test-3d test-2d test-1d test-whale test-spiral
 
 test-16d: all
 	@./run.sh -b nm-st-std -a 1 -p 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0 >/dev/null
@@ -114,6 +114,17 @@ test-whale: all
 	@./whale-st-std 6 0 3 50 100 -10 10 >/dev/null
 	@./whale-rosenbrock-std 6 0 3 50 100 -5 10 >/dev/null
 	@./whale-box-std 6 0 3 50 100 0.001 4.8 >/dev/null
+
+test-spiral: all
+	@./spiral-sphere-std 6 0 3 50 100 1e-3 -10 10 >/dev/null
+	@./spiral-sqrt-std 6 0 3 50 100 1e-3 -10 10 >/dev/null
+	@./spiral-ackley-std 6 0 3 50 100 1e-3 -10 10 >/dev/null
+	@./spiral-rastrigin-std 6 0 3 50 100 1e-3 -32.768 32.768 >/dev/null
+	@./spiral-schwefel-std 6 0 3 50 100 1e-3 -500.0 500.0 >/dev/null
+	@./spiral-dixon-price-std 6 0 3 50 100 1e-3 -10 10 >/dev/null
+	@./spiral-st-std 6 0 3 50 100 1e-3 -5 5 >/dev/null
+	@./spiral-rosenbrock-std 6 0 3 50 100 1e-3 -5 10 >/dev/null
+	@./spiral-box-std 6 0 3 50 100 1e-3 0.001 4.8 >/dev/null
 
 ctags:
 	@/usr/bin/ctags *.h *.c
