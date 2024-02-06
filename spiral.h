@@ -20,7 +20,7 @@ config get_config (char **, bool);
 
 typedef struct Spiral {
     point **points;
-    point *x_star, *i_b;
+    point *x_star, *i_b, *new_point;
     real delta;
     int n, k, evaluations;
     bool looping;
