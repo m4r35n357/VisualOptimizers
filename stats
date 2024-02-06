@@ -1,7 +1,8 @@
 #!/bin/sh
 
 GRY='\e[1;30m'
-RED='\e[1;31m'
+RED='\e[0;31m'
+GRN='\e[0;32m'
 MGT='\e[0;35m'
 NRM='\e[0m'
 
@@ -10,16 +11,28 @@ n_args=$(($# + 1))
 echo "${GRY}args ${NRM}${n_args}${GRY} [ ${MGT}${args}${GRY} ]${NRM}" >&2
 
 samples=$1
-shift
+threshold=$2
+shift 2
+args="$*"
 
+failed=0
 count=1
 while [ $count -le $samples ]
 do
     echo -n "${GRY}$count ${NRM}"
-    $* 2>/dev/null | tail -1
+    set -- $($args 2>/dev/null | tail -1)
+    result=$*
+    shift $(($# - 1))
+    if [ $(echo "scale=9; $1 > $threshold;" | /usr/bin/bc)  -eq 1 ]
+    then
+        failed=$((failed + 1))
+        colour=${RED}
+    else
+        colour=${GRN}
+    fi
+    echo ${colour}${result}${NRM}
     sleep 2
     count=$((count + 1))
-done | tee /tmp/ian/latest.data
+done
 
-echo -n "${GRY}Failed ${NRM}"
-grep -n -v '0.000...$' /tmp/ian/latest.data | wc -l
+echo "${GRY}Failed${NRM} $failed"
