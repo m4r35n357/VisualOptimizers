@@ -44,4 +44,4 @@ typedef long double real;
 typedef struct Point {
   real *x;
   real f;
-} point, whale;
+} point;

@@ -18,13 +18,11 @@ typedef struct Options {
 options get_options (char **, bool);
 
 typedef struct Population {
-    whale **whales;
-    whale *prey;
+    point **whales;
+    point *prey;
     int n, iterations, evaluations;
     bool looping;
 } population;
-
-whale *get_whale (int dim, real min_x, real max_x, model *m);
 
 population *get_population (real min_x, real max_x, model *m, options o);
 

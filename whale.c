@@ -30,23 +30,18 @@ real rand_real () {
     return (real)rand() / (real)RAND_MAX;
 }
 
-whale *get_whale (int dim, real min_x, real max_x, model *m) {
-    whale *w = malloc(sizeof(whale));
-    w->x = malloc((size_t)dim * sizeof(real));
-    for (int j = 0; j < dim; j++) {
-        w->x[j] = (max_x - min_x) * rand_real() + min_x;
-    }
-    cost(dim, w, m);
-    return w;
-}
-
 population *get_population (real min_x, real max_x, model *m, options o) {
     srand((unsigned int)time(NULL));
     population *p =  malloc(sizeof(population));
     p->iterations = p->evaluations = 0;
-    p->whales = malloc((size_t)o.whales * sizeof(whale *));
+    p->whales = malloc((size_t)o.whales * sizeof(point *));
     for (int i = 0; i < o.whales; i++) {
-        p->whales[i] = get_whale(o.dim, min_x, max_x, m);
+        p->whales[i] = malloc(sizeof(point));
+        p->whales[i]->x = malloc((size_t)o.dim * sizeof(real));
+        for (int j = 0; j < o.dim; j++) {
+            p->whales[i]->x[j] = (max_x - min_x) * rand_real() + min_x;
+        }
+        cost(o.dim, p->whales[i], m);
         p->evaluations++;
     }
     p->prey = p->whales[0];
@@ -65,7 +60,7 @@ bool woa (population *p, real min_x, real max_x, model *m, options o) {
     while (p->iterations < o.iterations) {
         real a = 2.0L * (1.0L - (real)p->iterations / (real)o.iterations);
         for (int i = 0; i < o.whales; i++) {
-            whale *current = p->whales[i];
+            point *current = p->whales[i];
             if (current != p->prey) {
                 real A = a * (2.0L * rand_real() - 1.0L);
                 real C = 2.0L * rand_real();
@@ -79,7 +74,7 @@ bool woa (population *p, real min_x, real max_x, model *m, options o) {
                     } else {  // "searching/random" update (9)
                         int r = rand_int(o.whales);
                         while (r == i) r = rand_int(o.whales);
-                        whale *random = p->whales[r];
+                        point *random = p->whales[r];
                         for (int j = 0; j < o.dim; j++) {
                             current->x[j] = random->x[j] - A * fabsl(C * random->x[j] - current->x[j]);
                         }
@@ -91,7 +86,7 @@ bool woa (population *p, real min_x, real max_x, model *m, options o) {
                 }
                 for (int j = 0; j < o.dim; j++) {
                     if (current->x[j] > max_x || current->x[j] < min_x) {
-                    	current->x[j] = (max_x - min_x) * rand_real() + min_x;
+                        current->x[j] = (max_x - min_x) * rand_real() + min_x;
                     }
                 }
                 cost(o.dim, current, m);

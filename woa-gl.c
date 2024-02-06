@@ -14,7 +14,7 @@ static gl_point get_gl_point (real *point) {
     return (gl_point){(float)point[0], (float)point[1], (float)point[2]};
 }
 
-static void get_vertices (gl_point *vertices, whale **whales) {
+static void get_vertices (gl_point *vertices, point **whales) {
     for (int i = 0; i < o.whales; i++) {
         vertices[i] = get_gl_point(whales[i]->x);
     }
