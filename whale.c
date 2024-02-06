@@ -69,7 +69,7 @@ bool woa (population *p, real min_x, real max_x, model *m, options o) {
             if (current != p->prey) {
                 real A = a * (2.0L * rand_real() - 1.0L);
                 real C = 2.0L * rand_real();
-                real b = 1.0L;
+                real b = 5.0L * a;
                 real l = 2.0L * rand_real() - 1.0L;
                 if (rand_real() < 0.5L) {
                     if (fabsl(A) < 1.0L) { // "encircling" update (1)
