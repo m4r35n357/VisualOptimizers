@@ -66,36 +66,38 @@ bool woa (population *p, real min_x, real max_x, model *m, options o) {
         real a = 2.0L * (1.0L - (real)p->iterations / (real)o.iterations);
         for (int i = 0; i < o.whales; i++) {
             whale *current = p->whales[i];
-            real A = a * (2.0L * rand_real() - 1.0L);
-            real C = 2.0L * rand_real();
-            real b = 1.0L;
-            real l = 2.0L * rand_real() - 1.0L;
-            if (rand_real() < 0.5L) {
-                if (fabsl(A) < 1.0L) { // "encircling" update (1)
-                    for (int j = 0; j < o.dim; j++) {
-                        current->x[j] = p->prey->x[j] - A * fabsl(C * p->prey->x[j] - current->x[j]);
+            if (current != p->prey) {
+                real A = a * (2.0L * rand_real() - 1.0L);
+                real C = 2.0L * rand_real();
+                real b = 1.0L;
+                real l = 2.0L * rand_real() - 1.0L;
+                if (rand_real() < 0.5L) {
+                    if (fabsl(A) < 1.0L) { // "encircling" update (1)
+                        for (int j = 0; j < o.dim; j++) {
+                            current->x[j] = p->prey->x[j] - A * fabsl(C * p->prey->x[j] - current->x[j]);
+                        }
+                    } else {  // "searching/random" update (9)
+                        int r = rand_int(o.whales);
+                        while (r == i) r = rand_int(o.whales);
+                        whale *random = p->whales[r];
+                        for (int j = 0; j < o.dim; j++) {
+                            current->x[j] = random->x[j] - A * fabsl(C * random->x[j] - current->x[j]);
+                        }
                     }
-                } else {  // "searching/random" update (9)
-                    int r = rand_int(o.whales);
-                    while (r == i) r = rand_int(o.whales);
-                    whale *random = p->whales[r];
+                } else {  // "spiral" update (7)
                     for (int j = 0; j < o.dim; j++) {
-                        current->x[j] = random->x[j] - A * fabsl(C * random->x[j] - current->x[j]);
+                        current->x[j] = fabsl(p->prey->x[j] - current->x[j]) * expl(b * l) * cosl(TWO_PI * l) + p->prey->x[j];
                     }
                 }
-            } else {  // "spiral" update (7)
                 for (int j = 0; j < o.dim; j++) {
-                    current->x[j] = fabsl(p->prey->x[j] - current->x[j]) * expl(b * l) * cosl(TWO_PI * l) + p->prey->x[j];
+                    if (current->x[j] > max_x || current->x[j] < min_x) {
+                    	current->x[j] = (max_x - min_x) * rand_real() + min_x;
+                    }
                 }
+                cost(o.dim, current, m);
+                p->evaluations++;
+                if (current->f < p->prey->f) p->prey = current;
             }
-            for (int j = 0; j < o.dim; j++) {
-                if (current->x[j] > max_x || current->x[j] < min_x) {
-                	current->x[j] = (max_x - min_x) * rand_real() + min_x;
-                }
-            }
-            cost(o.dim, current, m);
-            p->evaluations++;
-            if (current->f < p->prey->f) p->prey = current;
         }
         p->iterations++;
         printf(" %05d %06d  [ ", p->iterations, p->evaluations);
