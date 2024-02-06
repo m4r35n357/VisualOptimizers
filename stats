@@ -31,7 +31,7 @@ do
         colour=${GRN}
     fi
     echo ${colour}${result}${NRM}
-    sleep 2
+    sleep 1
     count=$((count + 1))
 done
 
