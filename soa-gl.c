@@ -64,7 +64,7 @@ void Animate () {
     }
 
     for (int i = 0; i < c.m; i++) {
-        ball(v[i], get_colour(DARK_GREEN));
+        ball(v[i], s->points[i] == s->x_star ? get_colour(DARK_RED) : get_colour(DARK_GREEN));
     }
 
     if (osd_active) {

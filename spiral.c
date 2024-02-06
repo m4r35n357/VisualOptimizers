@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 #include "spiral.h"
 
 config get_config (char **argv, bool single) {
@@ -39,6 +40,7 @@ static void find_best (spiral *s, config c) {
 }
 
 spiral *get_spiral (real min_x, real max_x, model *m, config c) {
+    srand((unsigned int)time(NULL));
     spiral *s =  malloc(sizeof(spiral));
     s->k = s->evaluations = 0;
     s->points = malloc((size_t)c.m * sizeof (point *));    CHECK(s->points);
@@ -66,8 +68,8 @@ spiral *get_spiral (real min_x, real max_x, model *m, config c) {
 }
 
 bool soa (spiral *s, model *m, config c) {
-    //real r = powl(c.delta, 1.0L / c.k_max);
-	real r = 0.9L;
+    real r = powl(c.delta, 1.0L / c.k_max);
+    //real r = 0.9L;
     if (c.step_mode && s->looping) goto resume; else s->looping = true;
     while (s->k < c.k_max) {
         for (int i = 0; i < c.m; i++) {
@@ -76,7 +78,7 @@ bool soa (spiral *s, model *m, config c) {
                     r * (k ? (s->points[i]->x[k - 1] - s->x_star->x[k - 1]) : - (s->points[i]->x[c.n - 1] - s->x_star->x[c.n - 1]));
             }
             for (int k = 0; k < c.n; k++) {
-            	s->points[i]->x[k] = s->new_point->x[k];
+                s->points[i]->x[k] = s->new_point->x[k];
             }
             cost(c.n, s->points[i], m);
             s->evaluations++;
