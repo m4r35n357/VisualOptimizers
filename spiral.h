@@ -22,14 +22,12 @@ typedef struct Spiral {
     point **points;
     point *x_star, *i_b, *new_point;
     real delta;
-    int n, k, evaluations;
+    int n, k, k_star, evaluations;
     bool looping;
 } spiral;
 
 spiral *get_spiral (real min_x, real max_x, model *m, config c);
 
 bool soa (spiral *s, model *m, config c);
-
-int randint (int n);
 
 real randreal (void);

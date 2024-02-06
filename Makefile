@@ -116,15 +116,15 @@ test-whale: all
 	@./whale-box-std 6 0 3 50 100 0.001 4.8 >/dev/null
 
 test-spiral: all
-	@./spiral-sphere-std 6 0 3 50 100 1e-3 -10 10 >/dev/null
-	@./spiral-sqrt-std 6 0 3 50 100 1e-3 -10 10 >/dev/null
-	@./spiral-ackley-std 6 0 3 50 100 1e-3 -10 10 >/dev/null
-	@./spiral-rastrigin-std 6 0 3 50 100 1e-3 -32.768 32.768 >/dev/null
-	@./spiral-schwefel-std 6 0 3 50 100 1e-3 -500.0 500.0 >/dev/null
-	@./spiral-dixon-price-std 6 0 3 50 100 1e-3 -10 10 >/dev/null
-	@./spiral-st-std 6 0 3 50 100 1e-3 -5 5 >/dev/null
-	@./spiral-rosenbrock-std 6 0 3 50 100 1e-3 -5 10 >/dev/null
-	@./spiral-box-std 6 0 3 50 100 1e-3 0.001 4.8 >/dev/null
+	@./spiral-sphere-std 6 0 3 50 1000 0.5 -10 10 >/dev/null
+	@./spiral-sqrt-std 6 0 3 50 1000 0.5 -10 10 >/dev/null
+	@./spiral-ackley-std 6 0 3 50 1000 0.5 -10 10 >/dev/null
+	@./spiral-rastrigin-std 6 0 3 50 1000 0.5 -32.768 32.768 >/dev/null
+	@./spiral-schwefel-std 6 0 3 50 1000 0.5 -500.0 500.0 >/dev/null
+	@./spiral-dixon-price-std 6 0 3 50 1000 0.5 -10 10 >/dev/null
+	@./spiral-st-std 6 0 3 50 1000 0.5 -5 5 >/dev/null
+	@./spiral-rosenbrock-std 6 0 3 50 1000 0.5 -5 10 >/dev/null
+	@./spiral-box-std 6 0 3 50 1000 0.5 0.001 4.8 >/dev/null
 
 ctags:
 	@/usr/bin/ctags *.h *.c

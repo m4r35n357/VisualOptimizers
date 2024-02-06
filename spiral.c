@@ -18,13 +18,9 @@ config get_config (char **argv, bool single) {
     CHECK(conf.fmt == 0 || conf.fmt == 1);
     CHECK(conf.n >= 1 && conf.n <= 100);
     CHECK(conf.m >= 1 && conf.m <= 10000);
-    CHECK(conf.delta >= 1.0e-36L && conf.delta <= 1.0e-3L);
+    CHECK(conf.delta >= 0.0L && conf.delta <= 1.0L);
     CHECK(conf.k_max >= 1 && conf.k_max <= 100000);
     return conf;
-}
-
-int randint (int n) {
-    return (int)((real)rand() / ((real)RAND_MAX + 1) * n);
 }
 
 real randreal () {
@@ -42,7 +38,7 @@ static void find_best (spiral *s, config c) {
 spiral *get_spiral (real min_x, real max_x, model *m, config c) {
     srand((unsigned int)time(NULL));
     spiral *s =  malloc(sizeof(spiral));
-    s->k = s->evaluations = 0;
+    s->k = s->k_star = s->evaluations = 0;
     s->points = malloc((size_t)c.m * sizeof (point *));    CHECK(s->points);
     for (int i = 0; i < c.m; i++) {
         s->points[i] = malloc(sizeof (point));    CHECK(s->points[i]);
@@ -68,10 +64,10 @@ spiral *get_spiral (real min_x, real max_x, model *m, config c) {
 }
 
 bool soa (spiral *s, model *m, config c) {
-    real r = powl(c.delta, 1.0L / c.k_max);
-    //real r = 0.9L;
+	CHECK(s->k >= s->k_star);
     if (c.step_mode && s->looping) goto resume; else s->looping = true;
     while (s->k < c.k_max) {
+    	real r = (s->k >= s->k_star + 2.0L * c.n) ? powl(c.delta, 0.5L / c.n) : 1.0L;
         for (int i = 0; i < c.m; i++) {
             for (int k = 0; k < c.n; k++) {
                 s->new_point->x[k] = s->x_star->x[k] +
@@ -84,7 +80,10 @@ bool soa (spiral *s, model *m, config c) {
             s->evaluations++;
         }
         find_best(s, c);
-        if (s->i_b->f < s->x_star->f) s->x_star = s->i_b;
+        if (s->i_b->f < s->x_star->f) {
+        	s->x_star = s->i_b;
+        	s->k_star = s->k + 1;
+        }
         s->k++;
         printf(" %05d %06d  [ ", s->k, s->evaluations);
         for (int k = 0; k < c.n; k++) {

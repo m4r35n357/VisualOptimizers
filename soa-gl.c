@@ -93,11 +93,9 @@ int main (int argc, char **argv) {
 
     // get minima for targets if known
     targets = get_known_minima();
-    printf("Hi!\n");
 
     v = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v);
     get_vertices(v, s->points);
-    printf("Ho!\n");
 
     radius = 1.5F * ((float)max - (float)min);
     ball_size = 0.005F * ((float)max - (float)min);;
