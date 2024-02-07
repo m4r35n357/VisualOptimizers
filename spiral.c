@@ -35,27 +35,26 @@ static void find_best (spiral *s, config c) {
     }
 }
 
+point *get_point (spiral *s, real min_x, real max_x, model *m, config c) {
+    point *p = malloc(sizeof (point));          CHECK(p);
+    p->x = malloc((size_t)c.n * sizeof (real)); CHECK(p->x);
+    for (int k = 0; k < c.n; k++) {
+        p->x[k] = (max_x - min_x) * randreal() + min_x;
+    }
+    cost(c.n, p, m);
+    s->evaluations++;
+    return p;
+}
+
 spiral *get_spiral (real min_x, real max_x, model *m, config c) {
     srand((unsigned int)time(NULL));
     spiral *s =  malloc(sizeof(spiral));
     s->k = s->k_star = s->evaluations = 0;
     s->points = malloc((size_t)c.m * sizeof (point *));    CHECK(s->points);
     for (int i = 0; i < c.m; i++) {
-        s->points[i] = malloc(sizeof (point));    CHECK(s->points[i]);
-        s->points[i]->x = malloc((size_t)c.n * sizeof (real));    CHECK(s->points[i]->x);
-        for (int k = 0; k < c.n; k++) {
-            s->points[i]->x[k] = (max_x - min_x) * randreal() + min_x;
-        }
-        cost(c.n, s->points[i], m);
-        s->evaluations++;
+        s->points[i] = get_point(s, min_x, max_x, m, c);
     }
-    s->new_point = malloc(sizeof (point));    CHECK(s->new_point);
-    s->new_point->x = malloc((size_t)c.n * sizeof (real));    CHECK(s->new_point->x);
-    for (int k = 0; k < c.n; k++) {
-        s->new_point->x[k] = (max_x - min_x) * randreal() + min_x;
-    }
-    cost(c.n, s->new_point, m);
-    s->evaluations++;
+    s->new_point = get_point(s, min_x, max_x, m, c);
     s->i_b = s->points[0];
     find_best(s, c);
     s->x_star = s->i_b;
@@ -64,10 +63,9 @@ spiral *get_spiral (real min_x, real max_x, model *m, config c) {
 }
 
 bool soa (spiral *s, model *m, config c) {
-	CHECK(s->k >= s->k_star);
     if (c.step_mode && s->looping) goto resume; else s->looping = true;
     while (s->k < c.k_max) {
-    	real r = (s->k >= s->k_star + 2.0L * c.n) ? powl(c.delta, 0.5L / c.n) : 1.0L;
+        real r = (s->k >= s->k_star + 2.0L * c.n) ? powl(c.delta, 0.5L / c.n) : 1.0L;
         for (int i = 0; i < c.m; i++) {
             for (int k = 0; k < c.n; k++) {
                 s->new_point->x[k] = s->x_star->x[k] +
@@ -81,8 +79,8 @@ bool soa (spiral *s, model *m, config c) {
         }
         find_best(s, c);
         if (s->i_b->f < s->x_star->f) {
-        	s->x_star = s->i_b;
-        	s->k_star = s->k + 1;
+            s->x_star = s->i_b;
+            s->k_star = s->k + 1;
         }
         s->k++;
         printf(" %05d %06d  [ ", s->k, s->evaluations);

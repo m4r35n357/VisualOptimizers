@@ -26,6 +26,8 @@ typedef struct Spiral {
     bool looping;
 } spiral;
 
+point *get_point (spiral *s, real min_x, real max_x, model *m, config c);
+
 spiral *get_spiral (real min_x, real max_x, model *m, config c);
 
 bool soa (spiral *s, model *m, config c);
