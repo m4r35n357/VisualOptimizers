@@ -27,7 +27,7 @@ real randreal () {
     return (real)rand() / (real)RAND_MAX;
 }
 
-static void find_best (spiral *s, config c) {
+void find_best (spiral *s, config c) {
     for (int i = 0; i < c.m; i++) {
         if (s->points[i]->f < s->i_b->f) {
             s->i_b = s->points[i];
