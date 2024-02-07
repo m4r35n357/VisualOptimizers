@@ -112,7 +112,7 @@ test-whale: all
 	@./whale-schwefel-std 6 0 3 50 100 -500.0 500.0 >/dev/null
 	@./whale-dixon-price-std 6 0 3 50 100 -10 10 >/dev/null
 	@./whale-st-std 6 0 3 50 100 -10 10 >/dev/null
-	@./whale-rosenbrock-std 6 0 3 50 100 -5 10 >/dev/null
+	@./whale-rosenbrock-std 6 0 3 50 100 -5 5 >/dev/null
 	@./whale-box-std 6 0 3 50 100 0.001 4.8 >/dev/null
 
 test-spiral: all
@@ -123,7 +123,7 @@ test-spiral: all
 	@./spiral-schwefel-std 6 0 3 50 1000 0.5 -500.0 500.0 >/dev/null
 	@./spiral-dixon-price-std 6 0 3 50 1000 0.5 -10 10 >/dev/null
 	@./spiral-st-std 6 0 3 50 1000 0.5 -5 5 >/dev/null
-	@./spiral-rosenbrock-std 6 0 3 50 1000 0.5 -5 10 >/dev/null
+	@./spiral-rosenbrock-std 6 0 3 50 1000 0.5 -5 5 >/dev/null
 	@./spiral-box-std 6 0 3 50 1000 0.5 0.001 4.8 >/dev/null
 
 ctags:
