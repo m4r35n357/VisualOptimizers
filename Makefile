@@ -105,15 +105,15 @@ test-1d: all
 	@./run.sh -b nm-st-std -p 10.0 >/dev/null
 
 test-whale: all
-	@./whale-sphere-std 6 0 3 50 100 -10 10 >/dev/null
-	@./whale-sqrt-std 6 0 3 50 100 -10 10 >/dev/null
-	@./whale-ackley-std 6 0 3 50 100 -10 10 >/dev/null
-	@./whale-rastrigin-std 6 0 3 50 100 -32.768 32.768 >/dev/null
-	@./whale-schwefel-std 6 0 3 50 100 -500.0 500.0 >/dev/null
-	@./whale-dixon-price-std 6 0 3 50 100 -10 10 >/dev/null
-	@./whale-st-std 6 0 3 50 100 -10 10 >/dev/null
-	@./whale-rosenbrock-std 6 0 3 50 100 -5 5 >/dev/null
-	@./whale-box-std 6 0 3 50 100 0.001 4.8 >/dev/null
+	@./whale-sphere-std 6 0 3 50 1000 -10 10 >/dev/null
+	@./whale-sqrt-std 6 0 3 50 1000 -10 10 >/dev/null
+	@./whale-ackley-std 6 0 3 50 1000 -10 10 >/dev/null
+	@./whale-rastrigin-std 6 0 3 50 1000 -32.768 32.768 >/dev/null
+	@./whale-schwefel-std 6 0 3 50 1000 -500.0 500.0 >/dev/null
+	@./whale-dixon-price-std 6 0 3 50 1000 -10 10 >/dev/null
+	@./whale-st-std 6 0 3 50 1000 -10 10 >/dev/null
+	@./whale-rosenbrock-std 6 0 3 50 1000 -5 5 >/dev/null
+	@./whale-box-std 6 0 3 50 1000 0.001 4.8 >/dev/null
 
 test-spiral: all
 	@./spiral-sphere-std 6 0 3 50 1000 0.5 -10 10 >/dev/null
