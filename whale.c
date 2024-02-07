@@ -18,7 +18,7 @@ options get_options (char **argv, bool single) {
     CHECK(opt.fmt == 0 || opt.fmt == 1);
     CHECK(opt.dim >= 1 && opt.dim <= 100);
     CHECK(opt.whales >= 1 && opt.whales <= 10000);
-    CHECK(opt.iterations >= 1 && opt.iterations <= 10000);
+    CHECK(opt.iterations >= 1 && opt.iterations <= 100000);
     return opt;
 }
 

@@ -17,12 +17,13 @@ int main(int argc, char *argv[]) {
     spiral *s = get_spiral(min, max, m, c);
     soa(s, m, c);
 
-    fprintf(stderr, "    %s[%s", GRY, NRM);
+    fprintf(stderr, " %4d %4d  ", s->k, s->evaluations);
+    fprintf(stderr, " %s[%s ", GRY, NRM);
     for (int k = 0; k < c.n; k++) {
         fprintf(stderr, c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->centre->x[k]);
     }
     fprintf(stderr, "%s]%s", GRY, NRM);
-    fprintf(stderr, "  % .*Lf\n", c.places, s->centre->f);
+    fprintf(stderr, " % .*Lf\n", c.places, s->centre->f);
 
     return 0;
 }
