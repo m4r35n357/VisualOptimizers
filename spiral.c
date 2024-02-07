@@ -29,8 +29,8 @@ real randreal () {
 
 void find_best (spiral *s, config c) {
     for (int i = 0; i < c.m; i++) {
-        if (s->points[i]->f < s->i_b->f) {
-            s->i_b = s->points[i];
+        if (s->points[i]->f < s->best->f) {
+            s->best = s->points[i];
         }
     }
 }
@@ -54,10 +54,10 @@ spiral *get_spiral (real min_x, real max_x, model *m, config c) {
     for (int i = 0; i < c.m; i++) {
         s->points[i] = get_point(s, min_x, max_x, m, c);
     }
-    s->new_point = get_point(s, min_x, max_x, m, c);
-    s->i_b = s->points[0];
+    s->update = get_point(s, min_x, max_x, m, c);
+    s->best = s->points[0];
     find_best(s, c);
-    s->x_star = s->i_b;
+    s->centre = s->best;
     s->looping = false;
     return s;
 }
@@ -67,27 +67,28 @@ bool soa (spiral *s, model *m, config c) {
     while (s->k < c.k_max) {
         real r = (s->k >= s->k_star + 2.0L * c.n) ? powl(c.delta, 0.5L / c.n) : 1.0L;
         for (int i = 0; i < c.m; i++) {
+            point *current = s->points[i];
             for (int k = 0; k < c.n; k++) {
-                s->new_point->x[k] = s->x_star->x[k] +
-                    r * (k ? (s->points[i]->x[k - 1] - s->x_star->x[k - 1]) : - (s->points[i]->x[c.n - 1] - s->x_star->x[c.n - 1]));
+                s->update->x[k] = s->centre->x[k] +
+                    r * (k ? (current->x[k - 1] - s->centre->x[k - 1]) : - (current->x[c.n - 1] - s->centre->x[c.n - 1]));
             }
             for (int k = 0; k < c.n; k++) {
-                s->points[i]->x[k] = s->new_point->x[k];
+                current->x[k] = s->update->x[k];
             }
-            cost(c.n, s->points[i], m);
+            cost(c.n, current, m);
             s->evaluations++;
         }
         find_best(s, c);
-        if (s->i_b->f < s->x_star->f) {
-            s->x_star = s->i_b;
+        if (s->best->f < s->centre->f) {
+            s->centre = s->best;
             s->k_star = s->k + 1;
         }
         s->k++;
         printf(" %05d %06d  [ ", s->k, s->evaluations);
         for (int k = 0; k < c.n; k++) {
-            printf(c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->x_star->x[k]);
+            printf(c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->centre->x[k]);
         }
-        printf(c.fmt ? "]  % .*Le\n" : "]  % .*Lf\n", c.places, s->x_star->f);
+        printf(c.fmt ? "]  % .*Le\n" : "]  % .*Lf\n", c.places, s->centre->f);
         if (c.step_mode) return true;
         resume: ;
     }

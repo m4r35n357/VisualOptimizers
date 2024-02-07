@@ -19,10 +19,10 @@ int main(int argc, char *argv[]) {
 
     fprintf(stderr, "    %s[%s", GRY, NRM);
     for (int k = 0; k < c.n; k++) {
-        fprintf(stderr, c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->x_star->x[k]);
+        fprintf(stderr, c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->centre->x[k]);
     }
     fprintf(stderr, "%s]%s", GRY, NRM);
-    fprintf(stderr, "  % .*Lf\n", c.places, s->x_star->f);
+    fprintf(stderr, "  % .*Lf\n", c.places, s->centre->f);
 
     return 0;
 }

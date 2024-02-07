@@ -64,13 +64,13 @@ void Animate () {
     }
 
     for (int i = 0; i < c.m; i++) {
-        ball(v[i], s->points[i] == s->x_star ? get_colour(DARK_RED) : get_colour(DARK_GREEN));
+        ball(v[i], s->points[i] == s->centre ? get_colour(DARK_RED) : get_colour(DARK_GREEN));
     }
 
     if (osd_active) {
         sprintf(hud, c.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
                 s->k, s->evaluations,
-                c.places, s->x_star->x[0], c.places, s->x_star->x[1], c.places, s->x_star->x[2], c.places, s->x_star->f);
+                c.places, s->centre->x[0], c.places, s->centre->x[1], c.places, s->centre->x[2], c.places, s->centre->f);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_YELLOW), hud);
     }
 
