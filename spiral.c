@@ -23,10 +23,6 @@ config get_config (char **argv, bool single) {
     return conf;
 }
 
-real randreal () {
-    return (real)rand() / (real)RAND_MAX;
-}
-
 void find_best (spiral *s, config c) {
     for (int i = 0; i < c.m; i++) {
         if (s->points[i]->f < s->best->f) {
@@ -39,7 +35,7 @@ point *get_point (spiral *s, real min_x, real max_x, model *m, config c) {
     point *p = malloc(sizeof (point));          CHECK(p);
     p->x = malloc((size_t)c.n * sizeof (real)); CHECK(p->x);
     for (int k = 0; k < c.n; k++) {
-        p->x[k] = (max_x - min_x) * randreal() + min_x;
+        p->x[k] = (max_x - min_x) * (real)rand() / (real)RAND_MAX + min_x;
     }
     cost(c.n, p, m);
     s->evaluations++;
