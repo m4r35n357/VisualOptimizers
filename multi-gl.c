@@ -27,11 +27,11 @@ void Animate () {
             initial = false;
         } else {
             if (!finished1) {
-                nelder_mead(s1, m, &o);
+            	multidirectional_search(s1, m, &o);
                 get_vertices(v1, s1->p);
             }
             if (!finished2) {
-                nelder_mead(s2, m, &o);
+                multidirectional_search(s2, m, &o);
                 get_vertices(v2, s2->p);
             }
         }
@@ -77,8 +77,8 @@ void Animate () {
 
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc == 10);
-    const int n = argc - 7;
+    CHECK(argc == 9);
+    const int n = argc - 6;
 
     // optimizer settings
     o = get_settings(argv, true);
@@ -89,11 +89,11 @@ int main (int argc, char **argv) {
     // set initial point from command arguments
     point *start = get_point(n);
     for (int j = 0; j < n; j++) {
-        start->x[j] = strtod(argv[j + 7], NULL);
+        start->x[j] = strtod(argv[j + 6], NULL);
     }
 
     // default simplex . . .
-    s1 = get_simplex(n, o.size, start);
+    s1 = get_mds_simplex(n, o.size, start);
     for (int i = 0; i < s1->n + 1; i++) {  // initial cost at simplex vertices
         cost(s1->n, s1->p + i, m);
         s1->evaluations++;
@@ -101,7 +101,7 @@ int main (int argc, char **argv) {
     sort(s1);
 
     // . . . and its "dual"
-    s2 = get_simplex(n, o.size, start);
+    s2 = get_mds_simplex(n, o.size, start);
     for (int i = 0; i < s2->n + 1; i++) {  // form "dual" by projecting vertices through the centre
         project(s2->p + i, s2, m, 1.0L, s2->p + i, start);
     }

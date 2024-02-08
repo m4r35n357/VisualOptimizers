@@ -1,6 +1,5 @@
 #pragma once
 
-#include "base.h"
 #include "model.h"
 
 /*
@@ -36,12 +35,27 @@ typedef struct Simplex {
  */
 bool nelder_mead (simplex *, const model *, const optimset *);
 
+bool greedy_nelder_mead (simplex *, const model *, const optimset *);
+
+bool restricted_nelder_mead (simplex *, const model *, const optimset *);
+
+/*
+ * Multidirectional Search Optimizer
+ */
+bool multidirectional_search (simplex *, const model *, const optimset *);
+
 /*
  * Utility functions
  */
 point *get_point (int);
 
 simplex *get_simplex (int, real, const point *);
+
+simplex *get_regular_simplex (int, real, const point *);
+
+simplex *get_nm_simplex (int, real, const point *);
+
+simplex *get_mds_simplex (int, real, const point *);
 
 real distance (int, const point *, const point *);
 
@@ -50,6 +64,8 @@ int compare (const void *, const void *);
 void sort (simplex *);
 
 void project (point *, simplex *, const model *, real, const point *, const point *);
+
+void multi_project (point *, simplex *, const model *, real);
 
 void copy_point (int, const point *, point *);
 
