@@ -95,6 +95,16 @@ test-8d: all
 	@./mds-rosenbrock-std 6 0 1.0e-9 100000 1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 >/dev/null
 	@./spiral-rosenbrock-std 6 0 8 100 10000 0.5 -5 5 >/dev/null
 	@./whale-rosenbrock-std 6 0 8 100 10000 -5 5 >/dev/null
+	@echo ""
+	@./nm-rastrigin-std 6 0 1.0e-9 10000 10.0 0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 >/dev/null
+	@./mds-rastrigin-std 6 0 1.0e-9 10000 10.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 >/dev/null
+	@./spiral-rastrigin-std 6 0 8 100 10000 0.5 -32.768 32.768 >/dev/null
+	@./whale-rastrigin-std 6 0 8 100 10000 -32.768 32.768 >/dev/null
+	@echo ""
+	@./run.sh -b nm-sqrt-std -a 1 -p -1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0 >/dev/null
+	@./mds-sqrt-std 6 0 1.0e-9 10000 1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 >/dev/null
+	@./spiral-sqrt-std 6 0 8 100 10000 0.5 -5 5 >/dev/null
+	@./whale-sqrt-std 6 0 8 100 10000 -5 5 >/dev/null
 
 test-6d: all
 	@./run.sh -b nm-ackley-std -s 2.0 -p 1.0,1.0,3.0,-2.10,-3.04,4.50 >/dev/null
@@ -123,6 +133,16 @@ test-4d: all
 	@./mds-rosenbrock-std 6 0 1.0e-9 100000 1.0 -1.0 -1.0 -1.0 -1.0 >/dev/null
 	@./spiral-rosenbrock-std 6 0 4 100 2000 0.5 -5 5 >/dev/null
 	@./whale-rosenbrock-std 6 0 4 100 2000 -5 5 >/dev/null
+	@echo ""
+	@./nm-rastrigin-std 6 0 1.0e-9 10000 10.0 0 0.0 0.0 0.0 0.0 >/dev/null
+	@./mds-rastrigin-std 6 0 1.0e-9 10000 10.0 0.0 0.0 0.0 0.0 >/dev/null
+	@./spiral-rastrigin-std 6 0 4 50 1000 0.5 -32.768 32.768 >/dev/null
+	@./whale-rastrigin-std 6 0 4 50 1000 -32.768 32.768 >/dev/null
+	@echo ""
+	@./nm-sqrt-std 6 0 1.0e-9 10000 1.0 0 -1.0 -1.0 -1.0 -1.0 >/dev/null
+	@./mds-sqrt-std 6 0 1.0e-9 10000 1.0 -1.0 -1.0 -1.0 -1.0 >/dev/null
+	@./spiral-sqrt-std 6 0 4 100 2000 0.5 -5 5 >/dev/null
+	@./whale-sqrt-std 6 0 4 100 2000 -5 5 >/dev/null
 
 test-3d: all
 	@./nm-ackley-std 6 0 1.0e-9 10000 1.0 0 -2.10 -3.04 4.50 >/dev/null

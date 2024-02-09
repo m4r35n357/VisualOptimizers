@@ -4,7 +4,7 @@
 #include "simplex.h"
 
 /*
- * Initial point at centre, all vertices equally spaced, trial points allocated
+ * Initial point at centre, all vertices equally spaced
  */
 simplex *get_regular_simplex (int n, real size, const point *start) {
     simplex *s = malloc(sizeof (simplex));              CHECK(s);
