@@ -77,18 +77,22 @@ test-16d: all
 
 test-8d: all
 	@./run.sh -b nm-ackley-std -s 3.0 -p 1.0,1.0,1.0,1.0,3.0,-2.10,-3.04,4.50 >/dev/null
+	@./mds-ackley-std 6 0 1.0e-9 10000 1.0 1.0 1.0 1.0 1.0 3.0 -2.10 -3.04 4.50 >/dev/null
 	@./spiral-ackley-std 6 0 8 100 10000 0.5 -10 10 >/dev/null
 	@./whale-ackley-std 6 0 8 100 10000 -10 10 >/dev/null
 	@echo ""
 	@./run.sh -b nm-st-std -a 1 -s 2.0 -p 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0 >/dev/null
+	@./mds-st-std 6 0 1.0e-9 10000 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 >/dev/null
 	@./spiral-st-std 6 0 8 100 10000 0.5 -5 5 >/dev/null
 	@./whale-st-std 6 0 8 100 10000 -10 10 >/dev/null
 	@echo ""
 	@./run.sh -b nm-dixon-price-std -p 1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0 >/dev/null
+	@./mds-dixon-price-std 6 0 1.0e-9 10000 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 >/dev/null
 	@./spiral-dixon-price-std 6 0 8 100 10000 0.5 -10 10 >/dev/null
 	@./whale-dixon-price-std 6 0 8 100 10000 -10 10 >/dev/null
 	@echo ""
 	@./run.sh -b nm-rosenbrock-std -a 1 -p -1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0 >/dev/null
+	@./mds-rosenbrock-std 6 0 1.0e-9 100000 1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 >/dev/null
 	@./spiral-rosenbrock-std 6 0 8 100 10000 0.5 -5 5 >/dev/null
 	@./whale-rosenbrock-std 6 0 8 100 10000 -5 5 >/dev/null
 
