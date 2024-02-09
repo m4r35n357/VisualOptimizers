@@ -35,10 +35,6 @@ typedef struct Simplex {
  */
 bool nelder_mead (simplex *, const model *, const optimset *);
 
-bool greedy_nelder_mead (simplex *, const model *, const optimset *);
-
-bool restricted_nelder_mead (simplex *, const model *, const optimset *);
-
 /*
  * Multidirectional Search Optimizer
  */
@@ -48,10 +44,6 @@ bool multidirectional_search (simplex *, const model *, const optimset *);
  * Utility functions
  */
 point *get_point (int);
-
-simplex *get_simplex (int, real, const point *);
-
-simplex *get_regular_simplex (int, real, const point *);
 
 simplex *get_nm_simplex (int, real, const point *);
 

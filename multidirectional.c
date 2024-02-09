@@ -28,7 +28,7 @@ optimset get_settings (char **argv, bool single) {
 /*
  * Initial point at centre, all vertices equally spaced, trial points allocated
  */
-simplex *get_regular_simplex (int n, real size, const point *start) {
+simplex *get_mds_simplex (int n, real size, const point *start) {
     simplex *s = malloc(sizeof (simplex));              CHECK(s);
     s->n = n;
     s->p = malloc((size_t)(n + 1) * sizeof (point));    CHECK(s->p);
@@ -53,21 +53,6 @@ simplex *get_regular_simplex (int n, real size, const point *start) {
             s->p[i].x[j] = size * s->p[i].x[j] + start->x[j];
         }
     }
-    return s;
-}
-
-simplex *get_nm_simplex (int n, real size, const point *start) {
-    simplex *s = get_regular_simplex (n, size, start);
-    s->reflect = get_point(n);
-    s->centroid = get_point(n);
-    s->trial = get_point(n);
-    s->iterations = s->evaluations = 0;
-    s->looping = false;
-    return s;
-}
-
-simplex *get_mds_simplex (int n, real size, const point *start) {
-    simplex *s = get_regular_simplex (n, size, start);
     s->reflect = malloc((size_t)(n + 1) * sizeof (point));   CHECK(s->reflect);
     for (int i = 0; i < n + 1; i++) {
         s->reflect[i].x = malloc((size_t)n * sizeof (real)); CHECK(s->reflect[i].x);
@@ -115,107 +100,6 @@ bool multidirectional_search (simplex *s, const model *m, const optimset *o) {
         }
         s->delta_x = distance(s->n, worst, best);
         s->delta_f = worst->f - best->f;
-        s->iterations++;
-        printf(" %04d %04d  [ ", s->iterations, s->evaluations);
-        for (int j = 0; j < s->n; j++) {
-            printf(o->fmt ? "% .*Le " : "% .*Lf ", o->places, best->x[j]);
-        }
-        printf(o->fmt ? "]  % .*Le  % .*Le % .*Le\n" : "]  % .*Lf  % .*Lf % .*Lf\n",
-                o->places, best->f, o->places, s->delta_x, o->places, s->delta_f);
-        if (o->step_mode) return true;
-        resume: ;
-    }
-    return s->looping = false;
-}
-
-bool greedy_nelder_mead (simplex *s, const model *m, const optimset *o) {
-    point *best = s->p;
-    point *worst = s->p + s->n;
-    point *second_worst = worst - 1;
-    if (o->step_mode && s->looping) goto resume; else s->looping = true;
-    while (s->delta_x > o->tolerance || s->delta_f > o->tolerance) {
-        CHECK(s->iterations <= o->max_iterations);
-        int shrink = 0;
-        project(s->reflect, s, m, ALPHA, worst, s->centroid);
-        if (best->f <= s->reflect->f && s->reflect->f < second_worst->f) {
-            printf("reflect       ");
-            copy_point(s->n, s->reflect, worst);
-        } else if (s->reflect->f < best->f) {
-            project(s->trial, s, m, GAMMA, worst, s->centroid);
-            if (s->trial->f < best->f) {
-                printf("expand        ");
-                copy_point(s->n, s->trial, worst);
-            } else {
-                printf("reflect       ");
-                copy_point(s->n, s->reflect, worst);
-            }
-        } else if (s->reflect->f < worst->f) {
-            project(s->trial, s, m, RHO, worst, s->centroid);
-            if (s->trial->f < s->reflect->f) {
-                printf("contract_out  ");
-                copy_point(s->n, s->trial, worst);
-            } else shrink = 1;
-        } else {
-            project(s->trial, s, m, - RHO, worst, s->centroid);
-            if (s->trial->f < worst->f) {
-                printf("contract_in   ");
-                copy_point(s->n, s->trial, worst);
-            } else shrink = 1;
-        }
-        if (shrink) {
-            printf("shrink        ");
-            for (int i = 1; i < s->n + 1; i++) {
-                point *non_best = s->p + i;
-                project(non_best, s, m, - SIGMA, non_best, best);
-            }
-        }
-        sort(s);
-        s->iterations++;
-        printf(" %04d %04d  [ ", s->iterations, s->evaluations);
-        for (int j = 0; j < s->n; j++) {
-            printf(o->fmt ? "% .*Le " : "% .*Lf ", o->places, best->x[j]);
-        }
-        printf(o->fmt ? "]  % .*Le  % .*Le % .*Le\n" : "]  % .*Lf  % .*Lf % .*Lf\n",
-                o->places, best->f, o->places, s->delta_x, o->places, s->delta_f);
-        if (o->step_mode) return true;
-        resume: ;
-    }
-    return s->looping = false;
-}
-
-bool restricted_nelder_mead (simplex *s, const model *m, const optimset *o) {
-    point *best = s->p;
-    point *worst = s->p + s->n;
-    point *second_worst = worst - 1;
-    if (o->step_mode && s->looping) goto resume; else s->looping = true;
-    while (s->delta_x > o->tolerance || s->delta_f > o->tolerance) {
-        CHECK(s->iterations <= o->max_iterations);
-        int shrink = 0;
-        project(s->reflect, s, m, ALPHA, worst, s->centroid);
-        if (s->reflect->f < second_worst->f) {
-            printf("reflect       ");
-            copy_point(s->n, s->reflect, worst);
-        } else if (s->reflect->f < worst->f) {
-            project(s->trial, s, m, RHO, worst, s->centroid);
-            if (s->trial->f < s->reflect->f) {
-                printf("contract_out  ");
-                copy_point(s->n, s->trial, worst);
-            } else shrink = 1;
-        } else {
-            project(s->trial, s, m, RHO, s->centroid, worst);
-            if (s->trial->f < worst->f) {
-                printf("contract_in   ");
-                copy_point(s->n, s->trial, worst);
-            } else shrink = 1;
-        }
-        if (shrink) {
-            printf("shrink        ");
-            for (int i = 1; i < s->n + 1; i++) {
-                point *non_best = s->p + i;
-                project(non_best, s, m, - SIGMA, non_best, best);
-            }
-        }
-        sort(s);
         s->iterations++;
         printf(" %04d %04d  [ ", s->iterations, s->evaluations);
         for (int j = 0; j < s->n; j++) {

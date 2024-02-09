@@ -25,7 +25,7 @@ optimset get_settings (char **argv, bool single) {
 /*
  * Initial point at centre, all vertices equally spaced, trial points allocated
  */
-simplex *get_simplex (int n, real size, const point *start) {
+simplex *get_nm_simplex (int n, real size, const point *start) {
     simplex *s = malloc(sizeof (simplex));              CHECK(s);
     s->n = n;
     s->p = malloc((size_t)(n + 1) * sizeof (point));    CHECK(s->p);
