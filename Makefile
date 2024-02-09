@@ -25,22 +25,22 @@ all: nm-std nm-gl mds-std mds-gl whale-std whale-gl spiral-std spiral-gl
 #all: mds-gl whale-std whale-gl spiral-std spiral-gl
 #all: mds-gl
 
-nm-%-std: %.o nelder_mead.o main.o
+nm-%-std: %.o nelder_mead.o simplex.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 nm-std: nm-rastrigin-std nm-sqrt-std nm-sphere-std nm-ackley-std nm-hartmann3-std nm-hartmann6-std nm-rosenbrock-std nm-dixon-price-std nm-himmelblau-std nm-st-std nm-box-std nm-schwefel-std
 
-nm-%-gl: %.o nelder_mead.o opengl.o simplex-gl.o
+nm-%-gl: %.o nelder_mead.o simplex.o opengl.o simplex-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
 nm-gl: nm-rastrigin-gl nm-sqrt-gl nm-sphere-gl nm-ackley-gl nm-hartmann3-gl nm-hartmann6-gl nm-rosenbrock-gl nm-dixon-price-gl nm-himmelblau-gl nm-st-gl nm-schwefel-gl
 
-mds-%-std: %.o multidirectional.o main-mds.o
+mds-%-std: %.o multidirectional.o simplex.o main-mds.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 mds-std: mds-rastrigin-std mds-sqrt-std mds-sphere-std mds-ackley-std mds-hartmann3-std mds-hartmann6-std mds-rosenbrock-std mds-dixon-price-std mds-himmelblau-std mds-st-std mds-box-std mds-schwefel-std
 
-mds-%-gl: %.o multidirectional.o opengl.o multi-gl.o
+mds-%-gl: %.o multidirectional.o simplex.o opengl.o multi-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
 mds-gl: mds-rastrigin-gl mds-sqrt-gl mds-sphere-gl mds-ackley-gl mds-hartmann3-gl mds-hartmann6-gl mds-rosenbrock-gl mds-dixon-price-gl mds-himmelblau-gl mds-st-gl mds-schwefel-gl

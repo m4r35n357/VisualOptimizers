@@ -27,7 +27,7 @@ void Animate () {
             initial = false;
         } else {
             if (!finished1) {
-            	multidirectional_search(s1, m, &o);
+                multidirectional_search(s1, m, &o);
                 get_vertices(v1, s1->p);
             }
             if (!finished2) {
