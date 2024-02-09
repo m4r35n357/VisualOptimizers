@@ -120,7 +120,7 @@ int main (int argc, char **argv) {
     v2 = malloc(4 * sizeof (gl_point)); CHECK(v2);
     get_vertices(v2, s2->p);
 
-    ApplicationInit(argc, argv, "Nelder-Mead Visualizer");
+    ApplicationInit(argc, argv, "Multidirectional Search Visualizer");
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.
     return 0 ;          // Compiler requires this to be here. (Never reached)
 }

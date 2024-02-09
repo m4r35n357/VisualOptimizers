@@ -5,7 +5,7 @@
 
 char hud[128];
 
-bool initial = true, finished1 = false, finished2 = false, paused = false, stepping = true, running = true, osd_active = true, centroid = true;
+bool initial = true, finished1 = false, finished2 = false, paused = false, stepping = true, running = true, osd_active = true, centroid = false;
 
 float radius = 5.0F, elevation = 90.0F, azimuth = 0.0F, ball_size = 0.01F;
 
