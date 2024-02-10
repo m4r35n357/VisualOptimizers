@@ -28,22 +28,22 @@ all: nm-std nm-gl mds-std mds-gl whale-std whale-gl spiral-std spiral-gl
 nm-%-std: %.o nelder_mead.o simplex.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-nm-std: nm-rastrigin-std nm-sqrt-std nm-sphere-std nm-ackley-std nm-hartmann3-std nm-hartmann6-std nm-rosenbrock-std nm-dixon-price-std nm-himmelblau-std nm-st-std nm-box-std nm-schwefel-std
+nm-std: nm-rastrigin-std nm-sqrt-std nm-sphere-std nm-ackley-std nm-hartmann3-std nm-rosenbrock-std nm-dixon-price-std nm-himmelblau-std nm-st-std nm-box-std nm-schwefel-std
 
 nm-%-gl: %.o nelder_mead.o simplex.o opengl.o simplex-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-nm-gl: nm-rastrigin-gl nm-sqrt-gl nm-sphere-gl nm-ackley-gl nm-hartmann3-gl nm-hartmann6-gl nm-rosenbrock-gl nm-dixon-price-gl nm-himmelblau-gl nm-st-gl nm-schwefel-gl
+nm-gl: nm-rastrigin-gl nm-sqrt-gl nm-sphere-gl nm-ackley-gl nm-hartmann3-gl nm-rosenbrock-gl nm-dixon-price-gl nm-himmelblau-gl nm-st-gl nm-schwefel-gl
 
 mds-%-std: %.o multidirectional.o simplex.o main-mds.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-mds-std: mds-rastrigin-std mds-sqrt-std mds-sphere-std mds-ackley-std mds-hartmann3-std mds-hartmann6-std mds-rosenbrock-std mds-dixon-price-std mds-himmelblau-std mds-st-std mds-box-std mds-schwefel-std
+mds-std: mds-rastrigin-std mds-sqrt-std mds-sphere-std mds-ackley-std mds-hartmann3-std mds-rosenbrock-std mds-dixon-price-std mds-himmelblau-std mds-st-std mds-box-std mds-schwefel-std
 
 mds-%-gl: %.o multidirectional.o simplex.o opengl.o multi-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-mds-gl: mds-rastrigin-gl mds-sqrt-gl mds-sphere-gl mds-ackley-gl mds-hartmann3-gl mds-hartmann6-gl mds-rosenbrock-gl mds-dixon-price-gl mds-himmelblau-gl mds-st-gl mds-schwefel-gl
+mds-gl: mds-rastrigin-gl mds-sqrt-gl mds-sphere-gl mds-ackley-gl mds-hartmann3-gl mds-rosenbrock-gl mds-dixon-price-gl mds-himmelblau-gl mds-st-gl mds-schwefel-gl
 
 whale-%-std: %.o whale.o main-whale.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
@@ -65,9 +65,9 @@ spiral-%-gl: %.o spiral.o opengl.o soa-gl.o
 
 spiral-gl: spiral-sphere-gl spiral-sqrt-gl spiral-rosenbrock-gl spiral-box-gl spiral-rastrigin-gl spiral-ackley-gl spiral-dixon-price-gl spiral-st-gl spiral-schwefel-gl spiral-hartmann3-gl
 
-.PHONY: test test-6d test-4d test-3d test-2d test-1d ctags clean depclean
+.PHONY: test test-16d test-8d test-4d test-3d test-2d test-1d ctags clean depclean
 
-test: test-8d test-6d test-4d test-3d test-2d test-1d
+test: test-8d test-4d test-3d test-2d test-1d
 
 test-16d: all
 	@./run.sh -b nm-st-std -a 1 -p 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0 >/dev/null
@@ -105,13 +105,6 @@ test-8d: all
 	@./mds-sqrt-std 6 0 1.0e-9 10000 1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 -1.0 >/dev/null
 	@./spiral-sqrt-std 6 0 8 100 10000 0.5 -5 5 >/dev/null
 	@./whale-sqrt-std 6 0 8 100 10000 -5 5 >/dev/null
-
-test-6d: all
-	@./run.sh -b nm-ackley-std -s 2.0 -p 1.0,1.0,3.0,-2.10,-3.04,4.50 >/dev/null
-	@./run.sh -b nm-st-std -p 0.0,0.0,0.0,0.0,0.0,0.0 >/dev/null
-	@./run.sh -b nm-dixon-price-std -p 1.0,1.0,1.0,1.0,1.0,1.0 >/dev/null
-	@./run.sh -b nm-rosenbrock-std -p -1.0,-1.0,-1.0,-1.0,-1.0,-1.0 >/dev/null
-	@./run.sh -b nm-hartmann6-std -s 2.0 -p 0.5,0.5,0.5,0.5,0.5,0.5 >/dev/null
 
 test-4d: all
 	@./nm-ackley-std 6 0 1.0e-9 10000 1.0 0 3.0 -2.10 -3.04 4.50 >/dev/null
@@ -180,8 +173,8 @@ test-3d: all
 	@./spiral-schwefel-std 6 0 3 50 1000 0.5 -500.0 500.0 >/dev/null
 	@./whale-schwefel-std 6 0 3 50 1000 -500.0 500.0 >/dev/null
 	@echo ""
-	@./nm-hartmann3-std 6 0 1.0e-9 10000 1.0 0 0.5 0.5 0.5 >/dev/null
-	@./mds-hartmann3-std 6 0 1.0e-9 10000 1.0 0.5 0.5 0.5 >/dev/null
+	@./nm-hartmann3-std 6 0 1.0e-9 10000 1.0 0 -1.5 -1.5 -1.5 >/dev/null
+	@./mds-hartmann3-std 6 0 1.0e-9 10000 1.0 -1.5 -1.5 -1.5 >/dev/null
 	@./spiral-hartmann3-std 6 0 3 50 1000 0.5 0.0 1.0 >/dev/null
 	@./whale-hartmann3-std 6 0 3 50 1000 0.0 1.0 >/dev/null
 
