@@ -68,7 +68,7 @@ bool soa (spiral *s, model *m, config c) {
                     r * (k ? s->p[i]->x[k - 1] - s->centre->x[k - 1] : s->centre->x[c.n - 1] - s->p[i]->x[c.n - 1]);
             }
             for (int k = 0; k < c.n; k++) {
-            	s->p[i]->x[k] = s->update->x[k];
+                s->p[i]->x[k] = s->update->x[k];
             }
             cost(c.n, s->p[i], m);
             s->evaluations++;

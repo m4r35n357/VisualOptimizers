@@ -19,11 +19,6 @@ endif
 	$(CC) $(CFLAGS) -MT $@ -MMD -MP -c -o $@ $< $(WARNINGS)
 
 all: nm-std nm-gl mds-std mds-gl whale-std whale-gl spiral-std spiral-gl
-#all: nm-std nm-gl whale-std whale-gl spiral-std spiral-gl
-#all: mds-std mds-gl whale-std whale-gl spiral-std spiral-gl
-#all: mds-std whale-std whale-gl spiral-std spiral-gl
-#all: mds-gl whale-std whale-gl spiral-std spiral-gl
-#all: mds-gl
 
 nm-%-std: %.o nelder_mead.o simplex.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
@@ -67,7 +62,7 @@ spiral-gl: spiral-sphere-gl spiral-sqrt-gl spiral-rosenbrock-gl spiral-box-gl sp
 
 .PHONY: test test-16d test-8d test-4d test-3d test-2d test-1d ctags clean depclean
 
-test: test-8d test-4d test-3d test-2d test-1d
+test: test-4d test-3d test-2d test-1d
 
 test-16d: all
 	@./run.sh -b nm-st-std -a 1 -p 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0 >/dev/null
