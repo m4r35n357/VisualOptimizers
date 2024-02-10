@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 
     woa(p, min, max, m, o);
 
-    fprintf(stderr, " %4d %4d  ", p->iterations, p->evaluations);
+    fprintf(stderr, "  %5d %6d ", p->iterations, p->evaluations);
     fprintf(stderr, " %s[%s ", GRY, NRM);
     for (int k = 0; k < o.dim; k++) {
         fprintf(stderr, o.fmt ? "% .*Le " : "% .*Lf ", o.places, p->prey->x[k]);

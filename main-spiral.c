@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
     spiral *s = get_spiral(min, max, m, c);
     soa(s, m, c);
 
-    fprintf(stderr, " %4d %4d  ", s->k, s->evaluations);
+    fprintf(stderr, "  %5d %6d ", s->k, s->evaluations);
     fprintf(stderr, " %s[%s ", GRY, NRM);
     for (int k = 0; k < c.n; k++) {
         fprintf(stderr, c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->centre->x[k]);
