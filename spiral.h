@@ -19,7 +19,7 @@ typedef struct Config {
 config get_config (char **, bool);
 
 typedef struct Spiral {
-    point **points;
+    point **p;
     point *centre, *best, *update;
     real delta;
     int n, k, k_star, evaluations;

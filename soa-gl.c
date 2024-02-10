@@ -29,7 +29,7 @@ void Animate () {
         } else {
             if (!finished1) {
                 soa(s, m, c);
-                get_vertices(v, s->points);
+                get_vertices(v, s->p);
             }
         }
         if (stepping) paused = true;
@@ -64,7 +64,7 @@ void Animate () {
     }
 
     for (int i = 0; i < c.m; i++) {
-        ball(v[i], s->points[i] == s->centre ? get_colour(DARK_RED) : get_colour(DARK_GREEN));
+        ball(v[i], s->p[i] == s->centre ? get_colour(DARK_RED) : get_colour(DARK_GREEN));
     }
 
     if (osd_active) {
@@ -95,7 +95,7 @@ int main (int argc, char **argv) {
     targets = get_known_minima();
 
     v = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v);
-    get_vertices(v, s->points);
+    get_vertices(v, s->p);
 
     radius = 1.5F * ((float)max - (float)min);
     ball_size = 0.005F * ((float)max - (float)min);;

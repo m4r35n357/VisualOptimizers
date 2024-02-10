@@ -25,8 +25,8 @@ config get_config (char **argv, bool single) {
 
 void find_best (spiral *s, config c) {
     for (int i = 0; i < c.m; i++) {
-        if (s->points[i]->f < s->best->f) {
-            s->best = s->points[i];
+        if (s->p[i]->f < s->best->f) {
+            s->best = s->p[i];
         }
     }
 }
@@ -46,12 +46,12 @@ spiral *get_spiral (real min_x, real max_x, model *m, config c) {
     srand((unsigned int)time(NULL));
     spiral *s =  malloc(sizeof(spiral));
     s->k = s->k_star = s->evaluations = 0;
-    s->points = malloc((size_t)c.m * sizeof (point *));    CHECK(s->points);
+    s->p = malloc((size_t)c.m * sizeof (point *));    CHECK(s->p);
     for (int i = 0; i < c.m; i++) {
-        s->points[i] = get_point(s, min_x, max_x, m, c);
+        s->p[i] = get_point(s, min_x, max_x, m, c);
     }
     s->update = get_point(s, min_x, max_x, m, c);
-    s->best = s->points[0];
+    s->best = s->p[0];
     find_best(s, c);
     s->centre = s->best;
     s->looping = false;
@@ -63,15 +63,14 @@ bool soa (spiral *s, model *m, config c) {
     while (s->k < c.k_max) {
         real r = (s->k >= s->k_star + 2.0L * c.n) ? powl(c.delta, 0.5L / c.n) : 1.0L;
         for (int i = 0; i < c.m; i++) {
-            point *current = s->points[i];
             for (int k = 0; k < c.n; k++) {
                 s->update->x[k] = s->centre->x[k] +
-                    r * (k ? (current->x[k - 1] - s->centre->x[k - 1]) : - (current->x[c.n - 1] - s->centre->x[c.n - 1]));
+                    r * (k ? s->p[i]->x[k - 1] - s->centre->x[k - 1] : s->centre->x[c.n - 1] - s->p[i]->x[c.n - 1]);
             }
             for (int k = 0; k < c.n; k++) {
-                current->x[k] = s->update->x[k];
+            	s->p[i]->x[k] = s->update->x[k];
             }
-            cost(c.n, current, m);
+            cost(c.n, s->p[i], m);
             s->evaluations++;
         }
         find_best(s, c);
