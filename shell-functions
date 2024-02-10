@@ -1,15 +1,16 @@
 
 # generate string of random floats from integer range
 # Example:  random 10 -5 5
-# Example:  echo $(random 10 -5 5) to use output as a shell variable
+# Example:  echo $(random 10 -5 5)  to use output as a shell variable
+# Example:  typeset -f random       to list function source in shell
 #
 random() {
-dim=$1
+length=$1
 lower=$(($2 + 1))
 upper=$3
 string=""
 count=1
-while [ $count -le $dim ]
+while [ $count -le $length ]
 do
     string="$string $((lower + RANDOM%(upper - lower))).$((RANDOM%999))"
     count=$((count + 1))
