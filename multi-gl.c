@@ -66,9 +66,10 @@ void Animate () {
     }
 
     if (osd_active) {
+        point *best = s1->p[0].f <= s2->p[0].f ? s1->p : s2->p;
         sprintf(hud, o.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
                 s1->iterations, s1->evaluations,
-                o.places, s1->p[0].x[0], o.places, s1->p[0].x[1], o.places, s1->p[0].x[2], o.places, s1->p[0].f);
+                o.places, best->x[0], o.places, best->x[1], o.places, best->x[2], o.places, best->f);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_YELLOW), hud);
     }
 

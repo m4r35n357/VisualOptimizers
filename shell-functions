@@ -1,8 +1,8 @@
 
 # generate string of random floats from integer range
+# Example:  typeset -f random
 # Example:  random 10 -5 5
-# Example:  echo $(random 10 -5 5)  to use output as a shell variable
-# Example:  typeset -f random       to list function source in shell
+# Example:  ./nm-rastrigin-gl 6 0 1.0e-9 10000 5.0 0 $(random 3 -5 5)
 #
 random() {
 length=$1
