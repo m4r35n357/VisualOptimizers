@@ -1,4 +1,8 @@
 
+# generate string of random floats from integer range
+# Example:  random 10 -5 5
+# Example:  echo $(random 10 -5 5) to use output as a shell variable
+#
 random() {
 dim=$1
 lower=$(($2 + 1))
@@ -12,4 +16,3 @@ do
 done
 echo $string
 }
-
