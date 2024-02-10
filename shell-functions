@@ -7,7 +7,6 @@
 random() {
 length=$1
 lower=$2
-llower=$lower
 [ $lower -lt 0 ] && lower=$((lower + 1))
 upper=$3
 string=""
