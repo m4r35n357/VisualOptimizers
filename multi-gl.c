@@ -75,6 +75,18 @@ void Animate () {
     ReDraw();
 }
 
+void CloseWindow () {
+    point *best = s1->p[0].f <= s2->p[0].f ? s1->p : s2->p;
+    // print solution 1
+    fprintf(stderr, "%s%s1%s ", s1->p == best ? "->" : "  ", GRY, NRM);
+    fprintf(stderr, " %4d %4d  ", s1->iterations, s1->evaluations);
+    print_point(s1->n, s1->p, o.places, o.fmt);
+    // print solution 2
+    fprintf(stderr, "%s%s2%s ", s2->p == best ? "->" : "  ", GRY, NRM);
+    fprintf(stderr, " %4d %4d  ", s2->iterations, s2->evaluations);
+    print_point(s2->n, s2->p, o.places, o.fmt);
+}
+
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
     CHECK(argc == 9);
@@ -107,13 +119,15 @@ int main (int argc, char **argv) {
     }
     sort(s2);
 
-    // get minima for targets if known
-    targets = get_known_minima();
-
     // print starting point
     fprintf(stderr, "%s       Initial  ", GRY);
     cost(n, start, m);
     print_point(n, start, o.places, o.fmt);
+    fprintf(stderr, o.fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter%s    % .*Lf\n",
+            GRY, NRM, o.places, distance(s1->n, s1->p, s1->p + s1->n));
+
+    // get minima for targets if known
+    targets = get_known_minima();
 
     v1 = malloc(4 * sizeof (gl_point)); CHECK(v1);
     get_vertices(v1, s1->p);
@@ -121,6 +135,8 @@ int main (int argc, char **argv) {
     get_vertices(v2, s2->p);
 
     ApplicationInit(argc, argv, "Multidirectional Search Visualizer");
+    glutCloseFunc(CloseWindow);
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.
+
     return 0 ;          // Compiler requires this to be here. (Never reached)
 }
