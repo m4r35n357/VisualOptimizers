@@ -1,13 +1,13 @@
 
 random() {
 dim=$1
-lower=$2
+lower=$(($2 + 1))
 upper=$3
 string=""
 count=1
 while [ $count -le $dim ]
 do
-    string="$string $((lower+$RANDOM%(upper-lower))).$(($RANDOM%999))"
+    string="$string $((lower + RANDOM%(upper - lower))).$((RANDOM%999))"
     count=$((count + 1))
 done
 echo $string
