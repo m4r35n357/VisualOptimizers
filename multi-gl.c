@@ -102,7 +102,7 @@ int main (int argc, char **argv) {
     // set initial point from command arguments
     point *start = get_point(n);
     for (int j = 0; j < n; j++) {
-        start->x[j] = strtod(argv[j + 6], NULL);
+        start->x[j] = strtold(argv[j + 6], NULL);
     }
 
     // default simplex . . .
