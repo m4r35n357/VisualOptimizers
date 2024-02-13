@@ -1,4 +1,9 @@
 
+# ensure user directory under /tmp
+user_dir="/tmp/$USER"
+[ -d $user_dir ] || mkdir $user_dir
+user_data="$user_dir/data"
+
 # generate string of random floats from integer range
 # Example:  typeset -f random
 # Example:  random 10 -5 5
