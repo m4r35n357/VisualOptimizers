@@ -64,3 +64,5 @@ void multi_project (point *, simplex *, const model *, real);
 void copy_point (int, const point *, point *);
 
 void print_point (int, const point *, int, int);
+
+void print_progress (const simplex *, const point *, const optimset *);

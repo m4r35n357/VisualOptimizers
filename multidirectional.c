@@ -77,12 +77,7 @@ bool multidirectional_search (simplex *s, const model *m, const optimset *o) {
         s->delta_x = distance(s->n, worst, best);
         s->delta_f = worst->f - best->f;
         s->iterations++;
-        printf(" %04d %04d  [ ", s->iterations, s->evaluations);
-        for (int j = 0; j < s->n; j++) {
-            printf(o->fmt ? "% .*Le " : "% .*Lf ", o->places, best->x[j]);
-        }
-        printf(o->fmt ? "]  % .*Le  % .*Le % .*Le\n" : "]  % .*Lf  % .*Lf % .*Lf\n",
-                o->places, best->f, o->places, s->delta_x, o->places, s->delta_f);
+        print_progress(s, best, o);
         if (o->step_mode) return true;
         resume: ;
     }

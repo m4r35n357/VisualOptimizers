@@ -79,7 +79,7 @@ void project (point *new, simplex *s, const model *m, real factor, const point *
 }
 
 /*
- * Point utilities
+ * Point & output utilities
  */
 point *get_point (int n) {
     point *p = malloc(sizeof (point));        CHECK(p);
@@ -100,4 +100,13 @@ void print_point (int n, const point *p, int places, int fmt) {
         fprintf(stderr, fmt ? "% .*Le " : "% .*Lf ", places, p->x[i]);
     }
     fprintf(stderr, fmt ? "%s]%s % .*Le\n" : "%s]%s % .*Lf\n", GRY, NRM, places, p->f);
+}
+
+void print_progress (const simplex *s, const point *best, const optimset *o) {
+    printf(" %04d %04d  [ ", s->iterations, s->evaluations);
+    for (int j = 0; j < s->n; j++) {
+        printf(o->fmt ? "% .*Le " : "% .*Lf ", o->places, best->x[j]);
+    }
+    printf(o->fmt ? "]  % .*Le  % .*Le % .*Le\n" : "]  % .*Lf  % .*Lf % .*Lf\n",
+            o->places, best->f, o->places, s->delta_x, o->places, s->delta_f);
 }
