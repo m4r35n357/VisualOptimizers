@@ -106,7 +106,7 @@ int main (int argc, char **argv) {
     }
 
     // default simplex . . .
-    s1 = get_nm_simplex(n, o.size, start);
+    s1 = get_nm_simplex(n, o.size, start, o.adaptive);
     for (int i = 0; i < s1->n + 1; i++) {  // initial cost at simplex vertices
         cost(s1->n, s1->p + i, m);
         s1->evaluations++;
@@ -114,7 +114,7 @@ int main (int argc, char **argv) {
     sort(s1);
 
     // . . . and its "dual"
-    s2 = get_nm_simplex(n, o.size, start);
+    s2 = get_nm_simplex(n, o.size, start, o.adaptive);
     for (int i = 0; i < s2->n + 1; i++) {  // form "dual" by projecting vertices through the centre
         project(s2->p + i, s2, m, 1.0L, s2->p + i, start);
     }

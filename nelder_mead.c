@@ -24,8 +24,12 @@ optimset get_settings (char **argv, bool single) {
 /*
  * Initialize for Nelder-Mead
  */
-simplex *get_nm_simplex (int n, real size, const point *start) {
+simplex *get_nm_simplex (int n, real size, const point *start, bool adaptive) {
     simplex *s = get_regular_simplex (n, size, start);
+    s->ALPHA = 1.0L;
+    s->GAMMA = adaptive ? 1.0L + 2.0L / n : 2.0L;
+    s->RHO = adaptive ? 0.75L - 0.5L / n : 0.5L;
+    s->SIGMA = adaptive ? 1.0L - 1.0L / n : 0.5L;
     s->reflect = get_point(n);
     s->centroid = get_point(n);
     s->trial = get_point(n);
@@ -38,10 +42,6 @@ simplex *get_nm_simplex (int n, real size, const point *start) {
  * Nelder-Mead Optimizer
  */
 bool nelder_mead (simplex *s, const model *m, const optimset *o) {
-    real ALPHA = 1.0L;
-    real GAMMA = o->adaptive ? 1.0L + 2.0L / s->n : 2.0L;
-    real RHO = o->adaptive ? 0.75L - 0.5L / s->n : 0.5L;
-    real SIGMA = o->adaptive ? 1.0L - 1.0L / s->n : 0.5L;
     point *best = s->p;
     point *worst = s->p + s->n;
     point *second_worst = worst - 1;
@@ -49,12 +49,12 @@ bool nelder_mead (simplex *s, const model *m, const optimset *o) {
     while (s->delta_x > o->tolerance || s->delta_f > o->tolerance) {
         CHECK(s->iterations <= o->max_iterations);
         int shrink = 0;
-        project(s->reflect, s, m, ALPHA, worst, s->centroid);
+        project(s->reflect, s, m, s->ALPHA, worst, s->centroid);
         if (best->f <= s->reflect->f && s->reflect->f < second_worst->f) {
             printf("reflect       ");
             copy_point(s->n, s->reflect, worst);
         } else if (s->reflect->f < best->f) {
-            project(s->trial, s, m, GAMMA, worst, s->centroid);
+            project(s->trial, s, m, s->GAMMA, worst, s->centroid);
             if (s->trial->f < s->reflect->f) {
                 printf("expand        ");
                 copy_point(s->n, s->trial, worst);
@@ -63,13 +63,13 @@ bool nelder_mead (simplex *s, const model *m, const optimset *o) {
                 copy_point(s->n, s->reflect, worst);
             }
         } else if (s->reflect->f < worst->f) {
-            project(s->trial, s, m, RHO, worst, s->centroid);
+            project(s->trial, s, m, s->RHO, worst, s->centroid);
             if (s->trial->f < s->reflect->f) {
                 printf("contract_out  ");
                 copy_point(s->n, s->trial, worst);
             } else shrink = 1;
         } else {
-            project(s->trial, s, m, - RHO, worst, s->centroid);
+            project(s->trial, s, m, - s->RHO, worst, s->centroid);
             if (s->trial->f < worst->f) {
                 printf("contract_in   ");
                 copy_point(s->n, s->trial, worst);
@@ -79,7 +79,7 @@ bool nelder_mead (simplex *s, const model *m, const optimset *o) {
             printf("shrink        ");
             for (int i = 1; i < s->n + 1; i++) {
                 point *non_best = s->p + i;
-                project(non_best, s, m, - SIGMA, non_best, best);
+                project(non_best, s, m, - s->SIGMA, non_best, best);
             }
         }
         sort(s);

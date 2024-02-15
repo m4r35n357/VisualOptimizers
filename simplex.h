@@ -27,7 +27,7 @@ typedef struct Simplex {
     point *p, *reflect, *centroid, *trial;
     int n, iterations, evaluations;
     bool looping;
-    real delta_x, delta_f;
+    real ALPHA, GAMMA, RHO, SIGMA, delta_x, delta_f;
 } simplex;
 
 /*
@@ -47,7 +47,7 @@ point *get_point (int);
 
 simplex *get_regular_simplex (int, real, const point *);
 
-simplex *get_nm_simplex (int, real, const point *);
+simplex *get_nm_simplex (int, real, const point *, bool);
 
 simplex *get_mds_simplex (int, real, const point *);
 
