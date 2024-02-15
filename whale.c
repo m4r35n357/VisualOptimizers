@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <float.h>
 #include <time.h>
 #include "whale.h"
 
@@ -20,10 +19,6 @@ options get_options (char **argv, bool single) {
     CHECK(opt.whales >= 1 && opt.whales <= 10000);
     CHECK(opt.iterations >= 1 && opt.iterations <= 100000);
     return opt;
-}
-
-int rand_int (int n) {
-    return (int)((real)rand() / ((real)RAND_MAX + 1) * n);
 }
 
 real rand_real () {
@@ -72,8 +67,7 @@ bool woa (population *p, real min_x, real max_x, model *m, options o) {
                             current->x[j] = p->prey->x[j] - A * fabsl(C * p->prey->x[j] - current->x[j]);
                         }
                     } else {  // "searching/random" update (9)
-                        int r = rand_int(o.whales);
-                        while (r == i) r = rand_int(o.whales);
+                        int r; do r = (int)((real)rand() / ((real)RAND_MAX + 1) * o.whales); while (r == i);
                         point *random = p->whales[r];
                         for (int j = 0; j < o.dim; j++) {
                             current->x[j] = random->x[j] - A * fabsl(C * random->x[j] - current->x[j]);
