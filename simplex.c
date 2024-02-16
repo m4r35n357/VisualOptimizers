@@ -6,7 +6,7 @@
 /*
  * Initial point at centre, all vertices equally spaced
  */
-simplex *get_regular_simplex (int n, real size, const point *start) {
+simplex *regular_simplex (int n, real size, const point *start) {
     simplex *s = malloc(sizeof (simplex));              CHECK(s);
     s->n = n;
     s->p = malloc((size_t)(n + 1) * sizeof (point));    CHECK(s->p);
@@ -94,7 +94,7 @@ void copy_point (int n, const point *src, point *dst) {
     dst->f = src->f;
 }
 
-void print_point (int n, const point *p, int places, int fmt) {
+void print_result (int n, const point *p, int places, int fmt) {
     fprintf(stderr, "%s[%s ", GRY, NRM);
     for (int i = 0; i < n; i++) {
         fprintf(stderr, fmt ? "% .*Le " : "% .*Lf ", places, p->x[i]);

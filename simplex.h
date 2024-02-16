@@ -45,11 +45,11 @@ bool multidirectional_search (simplex *, const model *, const optimset *);
  */
 point *get_point (int);
 
-simplex *get_regular_simplex (int, real, const point *);
+simplex *regular_simplex (int, real, const point *);
 
-simplex *get_nm_simplex (int, real, const point *, bool);
+simplex *nm_simplex (int, real, const point *, bool);
 
-simplex *get_mds_simplex (int, real, const point *);
+simplex *mds_simplex (int, real, const point *);
 
 real distance (int, const point *, const point *);
 
@@ -63,6 +63,6 @@ void multi_project (point *, simplex *, const model *, real);
 
 void copy_point (int, const point *, point *);
 
-void print_point (int, const point *, int, int);
+void print_result (int, const point *, int, int);
 
 void print_progress (const simplex *, const point *, const optimset *);

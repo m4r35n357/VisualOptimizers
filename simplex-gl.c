@@ -81,11 +81,11 @@ void CloseWindow () {
     // print solution 1
     fprintf(stderr, "%s%s1%s ", s1->p == best ? "* " : "  ", GRY, NRM);
     fprintf(stderr, " %4d %4d  ", s1->iterations, s1->evaluations);
-    print_point(s1->n, s1->p, o.places, o.fmt);
+    print_result(s1->n, s1->p, o.places, o.fmt);
     // print solution 2
     fprintf(stderr, "%s%s2%s ", s2->p == best ? "* " : "  ", GRY, NRM);
     fprintf(stderr, " %4d %4d  ", s2->iterations, s2->evaluations);
-    print_point(s2->n, s2->p, o.places, o.fmt);
+    print_result(s2->n, s2->p, o.places, o.fmt);
 }
 
 int main (int argc, char **argv) {
@@ -106,7 +106,7 @@ int main (int argc, char **argv) {
     }
 
     // default simplex . . .
-    s1 = get_nm_simplex(n, o.size, start, o.adaptive);
+    s1 = nm_simplex(n, o.size, start, o.adaptive);
     for (int i = 0; i < s1->n + 1; i++) {  // initial cost at simplex vertices
         cost(s1->n, s1->p + i, m);
         s1->evaluations++;
@@ -114,7 +114,7 @@ int main (int argc, char **argv) {
     sort(s1);
 
     // . . . and its "dual"
-    s2 = get_nm_simplex(n, o.size, start, o.adaptive);
+    s2 = nm_simplex(n, o.size, start, o.adaptive);
     for (int i = 0; i < s2->n + 1; i++) {  // form "dual" by projecting vertices through the centre
         project(s2->p + i, s2, m, 1.0L, s2->p + i, start);
     }
@@ -123,7 +123,7 @@ int main (int argc, char **argv) {
     // print starting point
     fprintf(stderr, "%s       Initial  ", GRY);
     cost(n, start, m);
-    print_point(n, start, o.places, o.fmt);
+    print_result(n, start, o.places, o.fmt);
     fprintf(stderr, o.fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter%s    % .*Lf\n",
             GRY, NRM, o.places, distance(s1->n, s1->p, s1->p + s1->n));
 
