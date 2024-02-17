@@ -78,12 +78,13 @@ bool soa (spiral *s, model *m, config c) {
             s->centre = s->best;
             s->k_star = s->k + 1;
         }
-        s->k++;
-        printf(" %05d %06d  [ ", s->k, s->evaluations);
-        for (int k = 0; k < c.n; k++) {
-            printf(c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->centre->x[k]);
+        if (++s->k % 10 == 0) {
+            printf("  %05d %06d  [ ", s->k, s->evaluations);
+            for (int k = 0; k < c.n; k++) {
+                printf(c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->centre->x[k]);
+            }
+            printf(c.fmt ? "]  % .*Le\n" : "]  % .*Lf\n", c.places, s->centre->f);
         }
-        printf(c.fmt ? "]  % .*Le\n" : "]  % .*Lf\n", c.places, s->centre->f);
         if (c.step_mode) return true;
         resume: ;
     }

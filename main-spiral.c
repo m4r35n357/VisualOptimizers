@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->centre->x[k]);
     }
     fprintf(stderr, "%s]%s", GRY, NRM);
-    fprintf(stderr, " % .*Lf\n", c.places, s->centre->f);
+    fprintf(stderr, "  % .*Lf\n", c.places, s->centre->f);
 
     return 0;
 }

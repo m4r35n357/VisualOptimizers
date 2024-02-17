@@ -88,12 +88,13 @@ bool woa (population *p, real min_x, real max_x, model *m, options o) {
                 if (current->f < p->prey->f) p->prey = current;
             }
         }
-        p->iterations++;
-        printf(" %05d %06d  [ ", p->iterations, p->evaluations);
-        for (int j = 0; j < o.dim; j++) {
-            printf(o.fmt ? "% .*Le " : "% .*Lf ", o.places, p->prey->x[j]);
+        if (++p->iterations % 10 == 0) {
+            printf("  %05d %06d  [ ", p->iterations, p->evaluations);
+            for (int j = 0; j < o.dim; j++) {
+                printf(o.fmt ? "% .*Le " : "% .*Lf ", o.places, p->prey->x[j]);
+            }
+            printf(o.fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o.places, p->prey->f);
         }
-        printf(o.fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o.places, p->prey->f);
         if (o.step_mode) return true;
         resume: ;
     }
