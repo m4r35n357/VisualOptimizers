@@ -4,11 +4,13 @@
 #include "model.h"
 
 typedef struct Options {
+    int places;  // significant figures in float/exponential output
+    int fmt;  // fixed or exponential floating point format
     int dim;   // number of dimensions
     int whales;   // number of whales
     int iterations;   // maximum number of allowed iterations
-    int places;  // significant figures in float/exponential output
-    int fmt;  // fixed or exponential floating point format
+    real lower;   // bottom of coordinate range
+    real upper;   // top of coordinate range
     bool step_mode; // free-running or single-step algorithm
 } options;
 
@@ -24,8 +26,8 @@ typedef struct Population {
     bool looping;
 } population;
 
-population *get_population (real min_x, real max_x, model *m, options o);
+population *get_population (model *m, options o);
 
-bool woa (population *whales, real min_x, real max_x, model *m, options o);
+bool woa (population *whales, model *m, options o);
 
 real rand_real (void);

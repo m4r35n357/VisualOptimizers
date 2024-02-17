@@ -8,13 +8,11 @@ int main(int argc, char *argv[]) {
 
     // options
     config c = get_config(argv, false);
-    real min = strtold(argv[7], NULL);
-    real max = strtold(argv[8], NULL);
 
     // model parameters
     model *m = model_init();
 
-    spiral *s = get_spiral(min, max, m, c);
+    spiral *s = get_spiral(m, c);
     soa(s, m, c);
 
     fprintf(stderr, "  %5d %6d ", s->k, s->evaluations);

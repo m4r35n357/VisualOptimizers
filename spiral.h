@@ -7,9 +7,11 @@ typedef struct Config {
     int places;  // significant figures in float/exponential output
     int fmt;  // fixed or exponential floating point format
     int n;   // number of dimensions
-    real delta;  // tolerance
     int m;   // number of points
     int k_max;   // maximum number of allowed iterations
+    real delta;  // tolerance
+    real lower;   // bottom of coordinate range
+    real upper;   // top of coordinate range
     bool step_mode; // free-running or single-step algorithm
 } config;
 
@@ -26,9 +28,9 @@ typedef struct Spiral {
     bool looping;
 } spiral;
 
-point *get_point (spiral *s, real min_x, real max_x, model *m, config c);
+point *get_point (spiral *s, model *m, config c);
 
-spiral *get_spiral (real min_x, real max_x, model *m, config c);
+spiral *get_spiral (model *m, config c);
 
 void find_best (spiral *s, config c);
 

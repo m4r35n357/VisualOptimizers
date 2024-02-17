@@ -12,6 +12,8 @@ config get_config (char **argv, bool single) {
         .m = (int)strtol(argv[4], NULL, BASE),
         .k_max = (int)strtol(argv[5], NULL, BASE),
         .delta = strtold(argv[6], NULL),
+	    .lower = strtold(argv[7], NULL),
+	    .upper = strtold(argv[8], NULL),
         .step_mode = single
     };
     CHECK(conf.places >= 3 && conf.places <= 36);
@@ -20,6 +22,7 @@ config get_config (char **argv, bool single) {
     CHECK(conf.m >= 1 && conf.m <= 10000);
     CHECK(conf.delta >= 0.0L && conf.delta <= 1.0L);
     CHECK(conf.k_max >= 1 && conf.k_max <= 100000);
+    CHECK(conf.upper >= conf.lower);
     return conf;
 }
 
@@ -31,26 +34,26 @@ void find_best (spiral *s, config c) {
     }
 }
 
-point *get_point (spiral *s, real min_x, real max_x, model *m, config c) {
+point *get_point (spiral *s, model *m, config c) {
     point *p = malloc(sizeof (point));          CHECK(p);
     p->x = malloc((size_t)c.n * sizeof (real)); CHECK(p->x);
     for (int k = 0; k < c.n; k++) {
-        p->x[k] = (max_x - min_x) * (real)rand() / (real)RAND_MAX + min_x;
+        p->x[k] = (c.upper - c.lower) * (real)rand() / (real)RAND_MAX + c.lower;
     }
     cost(c.n, p, m);
     s->evaluations++;
     return p;
 }
 
-spiral *get_spiral (real min_x, real max_x, model *m, config c) {
+spiral *get_spiral (model *m, config c) {
     srand((unsigned int)time(NULL));
     spiral *s =  malloc(sizeof(spiral));
     s->k = s->k_star = s->evaluations = 0;
     s->p = malloc((size_t)c.m * sizeof (point *));    CHECK(s->p);
     for (int i = 0; i < c.m; i++) {
-        s->p[i] = get_point(s, min_x, max_x, m, c);
+        s->p[i] = get_point(s, m, c);
     }
-    s->update = get_point(s, min_x, max_x, m, c);
+    s->update = get_point(s, m, c);
     s->best = s->p[0];
     find_best(s, c);
     s->centre = s->best;
@@ -68,6 +71,9 @@ bool soa (spiral *s, model *m, config c) {
                     r * (k ? s->p[i]->x[k - 1] - s->centre->x[k - 1] : s->centre->x[c.n - 1] - s->p[i]->x[c.n - 1]);
             }
             for (int k = 0; k < c.n; k++) {
+                if (s->update->x[k] > c.upper || s->update->x[k] < c.lower) {
+                    s->update->x[k] = (c.upper - c.lower) * (real)rand() / (real)RAND_MAX + c.lower;
+                }
                 s->p[i]->x[k] = s->update->x[k];
             }
             cost(c.n, s->p[i], m);

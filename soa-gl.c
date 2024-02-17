@@ -8,7 +8,6 @@ static model *m;
 static minima *targets;
 static config c;
 static gl_point *v;
-static real min, max;
 
 static gl_point get_gl_point (real *p) {
     return (gl_point){(float)p[0], (float)p[1], (float)p[2]};
@@ -35,7 +34,7 @@ void Animate () {
         if (stepping) paused = true;
     }
 
-    float fmin = (float)min, fmax = (float)max;
+    float fmin = (float)c.lower, fmax = (float)c.upper;
     rgb box_colour = get_colour(DARK_BLUE);
     line((gl_point){fmin, fmin, fmin}, (gl_point){fmax, fmin, fmin}, box_colour);
     line((gl_point){fmin, fmin, fmax}, (gl_point){fmax, fmin, fmax}, box_colour);
@@ -83,13 +82,11 @@ int main (int argc, char **argv) {
 
     // options
     c = get_config(argv, true);
-    min = strtold(argv[7], NULL);
-    max = strtold(argv[8], NULL);
 
     // model parameters
     m = model_init();
 
-    s = get_spiral(min, max, m, c);
+    s = get_spiral(m, c);
 
     // get minima for targets if known
     targets = get_known_minima();
@@ -97,8 +94,8 @@ int main (int argc, char **argv) {
     v = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v);
     get_vertices(v, s->p);
 
-    radius = 1.5F * ((float)max - (float)min);
-    ball_size = 0.005F * ((float)max - (float)min);;
+    radius = 1.5F * ((float)c.upper - (float)c.lower);
+    ball_size = 0.005F * ((float)c.upper - (float)c.lower);
 
     ApplicationInit(argc, argv, "Spiral Optimization Visualizer");
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.

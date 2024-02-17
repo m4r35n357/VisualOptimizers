@@ -8,15 +8,13 @@ int main(int argc, char *argv[]) {
 
     // options
     options o = get_options(argv, false);
-    real min = strtold(argv[6], NULL);
-    real max = strtold(argv[7], NULL);
 
     // model parameters
     model *m = model_init();
 
-    population *p = get_population(min, max, m, o);
+    population *p = get_population(m, o);
 
-    woa(p, min, max, m, o);
+    woa(p, m, o);
 
     fprintf(stderr, "  %5d %6d ", p->iterations, p->evaluations);
     fprintf(stderr, " %s[%s ", GRY, NRM);

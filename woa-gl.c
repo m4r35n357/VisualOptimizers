@@ -28,7 +28,7 @@ void Animate () {
             initial = false;
         } else {
             if (!finished1) {
-                woa(p, min, max, m, o);
+                woa(p, m, o);
                 get_vertices(v, p->whales);
             }
         }
@@ -89,7 +89,7 @@ int main (int argc, char **argv) {
     // model parameters
     m = model_init();
 
-    p = get_population(min, max, m, o);
+    p = get_population(m, o);
 
     // get minima for targets if known
     targets = get_known_minima();

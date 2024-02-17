@@ -11,6 +11,8 @@ options get_options (char **argv, bool single) {
         .dim = (int)strtol(argv[3], NULL, BASE),
         .whales = (int)strtol(argv[4], NULL, BASE),
         .iterations = (int)strtol(argv[5], NULL, BASE),
+	    .lower = strtold(argv[6], NULL),
+	    .upper = strtold(argv[7], NULL),
         .step_mode = single
     };
     CHECK(opt.places >= 3 && opt.places <= 36);
@@ -18,6 +20,7 @@ options get_options (char **argv, bool single) {
     CHECK(opt.dim >= 1 && opt.dim <= 100);
     CHECK(opt.whales >= 1 && opt.whales <= 10000);
     CHECK(opt.iterations >= 1 && opt.iterations <= 100000);
+    CHECK(opt.upper >= opt.lower);
     return opt;
 }
 
@@ -25,7 +28,7 @@ real rand_real () {
     return (real)rand() / (real)RAND_MAX;
 }
 
-population *get_population (real min_x, real max_x, model *m, options o) {
+population *get_population (model *m, options o) {
     srand((unsigned int)time(NULL));
     population *p =  malloc(sizeof(population));
     p->iterations = p->evaluations = 0;
@@ -34,7 +37,7 @@ population *get_population (real min_x, real max_x, model *m, options o) {
         p->whales[i] = malloc(sizeof(point));
         p->whales[i]->x = malloc((size_t)o.dim * sizeof(real));
         for (int j = 0; j < o.dim; j++) {
-            p->whales[i]->x[j] = (max_x - min_x) * rand_real() + min_x;
+            p->whales[i]->x[j] = (o.upper - o.lower) * rand_real() + o.lower;
         }
         cost(o.dim, p->whales[i], m);
         p->evaluations++;
@@ -49,7 +52,7 @@ population *get_population (real min_x, real max_x, model *m, options o) {
     return p;
 }
 
-bool woa (population *p, real min_x, real max_x, model *m, options o) {
+bool woa (population *p, model *m, options o) {
     real TWO_PI = 2.0L * acosl(-1.0L);
     if (o.step_mode && p->looping) goto resume; else p->looping = true;
     while (p->iterations < o.iterations) {
@@ -79,8 +82,8 @@ bool woa (population *p, real min_x, real max_x, model *m, options o) {
                     }
                 }
                 for (int j = 0; j < o.dim; j++) {
-                    if (current->x[j] > max_x || current->x[j] < min_x) {
-                        current->x[j] = (max_x - min_x) * rand_real() + min_x;
+                    if (current->x[j] > o.upper || current->x[j] < o.lower) {
+                        current->x[j] = (o.upper - o.lower) * rand_real() + o.lower;
                     }
                 }
                 cost(o.dim, current, m);
