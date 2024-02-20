@@ -11,8 +11,8 @@ options get_options (char **argv, bool single) {
         .dim = (int)strtol(argv[3], NULL, BASE),
         .whales = (int)strtol(argv[4], NULL, BASE),
         .iterations = (int)strtol(argv[5], NULL, BASE),
-	    .lower = strtold(argv[6], NULL),
-	    .upper = strtold(argv[7], NULL),
+        .lower = strtold(argv[6], NULL),
+        .upper = strtold(argv[7], NULL),
         .step_mode = single
     };
     CHECK(opt.places >= 3 && opt.places <= 36);

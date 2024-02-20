@@ -12,8 +12,8 @@ config get_config (char **argv, bool single) {
         .m = (int)strtol(argv[4], NULL, BASE),
         .k_max = (int)strtol(argv[5], NULL, BASE),
         .delta = strtold(argv[6], NULL),
-	    .lower = strtold(argv[7], NULL),
-	    .upper = strtold(argv[8], NULL),
+        .lower = strtold(argv[7], NULL),
+        .upper = strtold(argv[8], NULL),
         .step_mode = single
     };
     CHECK(conf.places >= 3 && conf.places <= 36);
@@ -66,22 +66,24 @@ bool soa (spiral *s, model *m, config c) {
     while (s->k < c.k_max) {
         real r = (s->k >= s->k_star + 2 * c.n) ? powl(c.delta, 0.5L / c.n) : 1.0L;
         for (int i = 0; i < c.m; i++) {
-            for (int k = 0; k < c.n; k++) {
-                s->update->x[k] = s->centre->x[k] +
-                    r * (k ? s->p[i]->x[k - 1] - s->centre->x[k - 1] : s->centre->x[c.n - 1] - s->p[i]->x[c.n - 1]);
-            }
-            bool oor = false;
-            for (int k = 0; k < c.n; k++) {
-                if (s->update->x[k] > c.upper || s->update->x[k] < c.lower) {
-                    oor = true;
-                    break;
+            if (s->p[i] != s->centre) {
+                for (int k = 0; k < c.n; k++) {
+                    s->update->x[k] = s->centre->x[k] +
+                        r * (k ? s->p[i]->x[k - 1] - s->centre->x[k - 1] : s->centre->x[c.n - 1] - s->p[i]->x[c.n - 1]);
                 }
+                bool oor = false;
+                for (int k = 0; k < c.n; k++) {
+                    if (s->update->x[k] > c.upper || s->update->x[k] < c.lower) {
+                        oor = true;
+                        break;
+                    }
+                }
+                for (int k = 0; k < c.n; k++) {
+                    s->p[i]->x[k] = oor ? (c.upper - c.lower) * (real)rand() / (real)RAND_MAX + c.lower : s->update->x[k];
+                }
+                cost(c.n, s->p[i], m);
+                s->evaluations++;
             }
-            for (int k = 0; k < c.n; k++) {
-            	s->p[i]->x[k] = oor ? (c.upper - c.lower) * (real)rand() / (real)RAND_MAX + c.lower : s->update->x[k];
-            }
-            cost(c.n, s->p[i], m);
-            s->evaluations++;
         }
         find_best(s, c);
         if (s->best->f < s->centre->f) {
