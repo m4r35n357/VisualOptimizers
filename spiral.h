@@ -24,7 +24,7 @@ typedef struct Spiral {
     point **p;
     point *centre, *best, *update;
     real delta;
-    int n, k, k_star, evaluations;
+    int n, k, evaluations;
     bool looping;
 } spiral;
 

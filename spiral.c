@@ -48,7 +48,7 @@ point *get_point (spiral *s, model *m, config c) {
 spiral *get_spiral (model *m, config c) {
     srand((unsigned int)time(NULL));
     spiral *s =  malloc(sizeof(spiral));
-    s->k = s->k_star = s->evaluations = 0;
+    s->k = s->evaluations = 0;
     s->p = malloc((size_t)c.m * sizeof (point *));    CHECK(s->p);
     for (int i = 0; i < c.m; i++) {
         s->p[i] = get_point(s, m, c);
@@ -62,9 +62,9 @@ spiral *get_spiral (model *m, config c) {
 }
 
 bool soa (spiral *s, model *m, config c) {
+    real r = powl(c.delta, 1.0L / c.k_max);
     if (c.step_mode && s->looping) goto resume; else s->looping = true;
     while (s->k < c.k_max) {
-        real r = (s->k >= s->k_star + 2 * c.n) ? powl(c.delta, 0.5L / c.n) : 1.0L;
         for (int i = 0; i < c.m; i++) {
             if (s->p[i] != s->centre) {
                 for (int k = 0; k < c.n; k++) {
@@ -88,7 +88,6 @@ bool soa (spiral *s, model *m, config c) {
         find_best(s, c);
         if (s->best->f < s->centre->f) {
             s->centre = s->best;
-            s->k_star = s->k + 1;
         }
         if (++s->k % 10 == 0) {
             printf("  %05d %06d  [ ", s->k, s->evaluations);
