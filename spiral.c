@@ -70,11 +70,15 @@ bool soa (spiral *s, model *m, config c) {
                 s->update->x[k] = s->centre->x[k] +
                     r * (k ? s->p[i]->x[k - 1] - s->centre->x[k - 1] : s->centre->x[c.n - 1] - s->p[i]->x[c.n - 1]);
             }
+            bool oor = false;
             for (int k = 0; k < c.n; k++) {
                 if (s->update->x[k] > c.upper || s->update->x[k] < c.lower) {
-                    s->update->x[k] = (c.upper - c.lower) * (real)rand() / (real)RAND_MAX + c.lower;
+                    oor = true;
+                    break;
                 }
-                s->p[i]->x[k] = s->update->x[k];
+            }
+            for (int k = 0; k < c.n; k++) {
+            	s->p[i]->x[k] = oor ? (c.upper - c.lower) * (real)rand() / (real)RAND_MAX + c.lower : s->update->x[k];
             }
             cost(c.n, s->p[i], m);
             s->evaluations++;

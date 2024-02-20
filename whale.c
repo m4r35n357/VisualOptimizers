@@ -81,8 +81,15 @@ bool woa (population *p, model *m, options o) {
                         current->x[j] = fabsl(p->prey->x[j] - current->x[j]) * expl(b * l) * cosl(TWO_PI * l) + p->prey->x[j];
                     }
                 }
+                bool oor = false;
                 for (int j = 0; j < o.dim; j++) {
                     if (current->x[j] > o.upper || current->x[j] < o.lower) {
+                        oor = true;
+                        break;
+                    }
+                }
+                if (oor) {
+                    for (int j = 0; j < o.dim; j++) {
                         current->x[j] = (o.upper - o.lower) * rand_real() + o.lower;
                     }
                 }
