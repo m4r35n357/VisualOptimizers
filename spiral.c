@@ -24,6 +24,10 @@ config get_config (char **argv, bool single) {
     return conf;
 }
 
+static real rand_range (real lower, real upper) {
+	return (upper - lower) * (real)rand() / (real)RAND_MAX + lower;
+}
+
 void find_best (spiral *s, config c) {
     for (int i = 0; i < c.m; i++) {
         if (s->p[i]->f < s->best->f) {
@@ -36,7 +40,7 @@ point *get_point (spiral *s, model *m, config c) {
     point *p = malloc(sizeof (point));          CHECK(p);
     p->x = malloc((size_t)c.n * sizeof (real)); CHECK(p->x);
     for (int k = 0; k < c.n; k++) {
-        p->x[k] = (c.upper - c.lower) * (real)rand() / (real)RAND_MAX + c.lower;
+        p->x[k] = rand_range(c.lower, c.upper);
     }
     cost(c.n, p, m);
     s->evaluations++;
@@ -81,7 +85,7 @@ bool soa (spiral *s, model *m, config c) {
                         }
                     }
                     for (int k = 0; k < c.n; k++) {
-                        s->p[i]->x[k] = oor ? (c.upper - c.lower) * (real)rand() / (real)RAND_MAX + c.lower : s->update->x[k];
+                        s->p[i]->x[k] = oor ? rand_range(c.lower, c.upper) : s->update->x[k];
                     }
                 }
                 cost(c.n, s->p[i], m);
@@ -106,7 +110,7 @@ bool soa (spiral *s, model *m, config c) {
             for (int i = 0; i < c.m; i++) {
                 if (s->p[i] != s->centre) {
             		for (int k = 0; k < c.n; k++) {
-            			s->p[i]->x[k] = (c.upper - c.lower) * (real)rand() / (real)RAND_MAX + c.lower;
+            			s->p[i]->x[k] = rand_range(c.lower, c.upper);
             		}
                 }
                 cost(c.n, s->p[i], m);
