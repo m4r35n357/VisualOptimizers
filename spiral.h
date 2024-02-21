@@ -25,7 +25,7 @@ typedef struct Spiral {
     point *centre, *best, *update;
     real delta;
     int n, k, evaluations;
-    bool looping;
+    bool looping, restart;
 } spiral;
 
 point *get_point (spiral *s, model *m, config c);
