@@ -11,16 +11,14 @@ config get_config (char **argv, bool single) {
         .n = (int)strtol(argv[3], NULL, BASE),
         .m = (int)strtol(argv[4], NULL, BASE),
         .k_max = (int)strtol(argv[5], NULL, BASE),
-        .delta = strtold(argv[6], NULL),
-        .lower = strtold(argv[7], NULL),
-        .upper = strtold(argv[8], NULL),
+        .lower = strtold(argv[6], NULL),
+        .upper = strtold(argv[7], NULL),
         .step_mode = single
     };
     CHECK(conf.places >= 3 && conf.places <= 36);
     CHECK(conf.fmt == 0 || conf.fmt == 1);
     CHECK(conf.n >= 1 && conf.n <= 100);
     CHECK(conf.m >= 1 && conf.m <= 10000);
-    CHECK(conf.delta >= 0.0L && conf.delta <= 1.0L);
     CHECK(conf.k_max >= 1 && conf.k_max <= 100000);
     CHECK(conf.upper >= conf.lower);
     return conf;
@@ -115,9 +113,7 @@ bool soa (spiral *s, model *m, config c) {
                 s->evaluations++;
             }
             find_best(s, c);
-            if (s->best->f < s->centre->f) {
-                s->centre = s->best;
-            }
+            if (s->best->f < s->centre->f) s->centre = s->best;
         }
     }
     return s->looping = false;
