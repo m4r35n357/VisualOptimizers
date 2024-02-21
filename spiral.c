@@ -68,20 +68,6 @@ bool soa (spiral *s, model *m, config c) {
     while (s->restart) {
         s->restart = false;
     	s->k = 0;
-        for (int i = 0; i < c.m; i++) {
-            if (s->p[i] != s->centre) {
-        		for (int k = 0; k < c.n; k++) {
-        			s->p[i]->x[k] = (c.upper - c.lower) * (real)rand() / (real)RAND_MAX + c.lower;
-        		}
-            }
-            cost(c.n, s->p[i], m);
-            s->evaluations++;
-        }
-        find_best(s, c);
-        if (s->best->f < s->centre->f) {
-            s->centre = s->best;
-            s->restart = true;
-        }
         while (s->k < c.k_max) {
             for (int i = 0; i < c.m; i++) {
                 if (s->p[i] != s->centre) {
@@ -117,6 +103,21 @@ bool soa (spiral *s, model *m, config c) {
             }
             if (c.step_mode) return true;
             resume: ;
+        }
+        if (s->restart) {
+            for (int i = 0; i < c.m; i++) {
+                if (s->p[i] != s->centre) {
+            		for (int k = 0; k < c.n; k++) {
+            			s->p[i]->x[k] = (c.upper - c.lower) * (real)rand() / (real)RAND_MAX + c.lower;
+            		}
+                }
+                cost(c.n, s->p[i], m);
+                s->evaluations++;
+            }
+            find_best(s, c);
+            if (s->best->f < s->centre->f) {
+                s->centre = s->best;
+            }
         }
     }
     return s->looping = false;
