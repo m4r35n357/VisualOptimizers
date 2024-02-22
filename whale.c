@@ -123,9 +123,9 @@ bool woa (population *p, model *m, options o) {
                 	for (int j = 0; j < o.dim; j++) {
                 		p->whales[i]->x[j] = (o.upper - o.lower) * rand_real() + o.lower;
             		}
+                    cost(o.dim, p->whales[i], m);
+                    p->evaluations++;
                 }
-                cost(o.dim, p->whales[i], m);
-                p->evaluations++;
             }
             for (int i = 0; i < o.whales; i++) {
                 if (p->whales[i]->f < p->prey->f) {
