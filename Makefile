@@ -117,7 +117,7 @@ test-4d: all
 	@./nm-st-std 3 0 1.0e-6 10000 1.0 0 0.0 0.0 0.0 0.0 >/dev/null
 	@./mds-st-std 3 0 1.0e-6 10000 1.0 0.0 0.0 0.0 0.0 >/dev/null
 	@./spiral-st-std 3 0 4 100 200 -5 5 >/dev/null
-	@./whale-st-std 3 0 4 100 200 -10 10 >/dev/null
+	@./whale-st-std 3 0 4 100 200 -5 5 >/dev/null
 	@echo ""
 	@./nm-dixon-price-std 3 0 1.0e-6 10000 1.0 0 -1.0 0.0 0.0 0.0 >/dev/null
 	@./mds-dixon-price-std 3 0 1.0e-6 10000 1.0 -1.0 0.0 0.0 0.0 >/dev/null
@@ -148,7 +148,7 @@ test-3d: all
 	@./nm-st-std 3 0 1.0e-6 10000 1.0 0 0.0 0.0 0.0 >/dev/null
 	@./mds-st-std 3 0 1.0e-6 10000 1.0 0.0 0.0 0.0 >/dev/null
 	@./spiral-st-std 3 0 3 50 150 -5 5 >/dev/null
-	@./whale-st-std 3 0 3 50 150 -10 10 >/dev/null
+	@./whale-st-std 3 0 3 50 150 -5 5 >/dev/null
 	@echo ""
 	@./nm-dixon-price-std 3 0 1.0e-6 10000 1.0 0 -3.0 0.0 0.0 >/dev/null
 	@./mds-dixon-price-std 3 0 1.0e-6 10000 1.0 -3.0 0.0 0.0 >/dev/null

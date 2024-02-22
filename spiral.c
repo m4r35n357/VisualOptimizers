@@ -87,9 +87,9 @@ bool soa (spiral *s, model *m, config c) {
                     for (int k = 0; k < c.n; k++) {
                         s->p[i]->x[k] = oor ? rand_range(c.lower, c.upper) : s->update->x[k];
                     }
+                    cost(c.n, s->p[i], m);
+                    s->evaluations++;
                 }
-                cost(c.n, s->p[i], m);
-                s->evaluations++;
             }
             find_best(s, c);
             if (s->best->f < s->centre->f) {

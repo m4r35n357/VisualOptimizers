@@ -1,9 +1,11 @@
 #!/bin/bash
 
 model=$1
-dim=$2
-lower=$3
-upper=$4
+places=$2
+format=$3
+dim=$4
+lower=$5
+upper=$6
 
 . shell-functions
 
@@ -15,8 +17,8 @@ else
     adaptive=0
 fi
 
-./nm-$model-std 6 0 1.0e-6 10000 $size $adaptive $(random $dim $lower $upper) >/dev/null
+./nm-$model-std $places $format 1.0e-6 10000 $size $adaptive $(random $dim $lower $upper) >/dev/null
 
-./whale-$model-std 6 0 $dim 200 500 $lower $upper >/dev/null
+./whale-$model-std $places $format $dim 200 500 $lower $upper >/dev/null
 
-./spiral-$model-std 6 0 $dim 200 500 0.05 $lower $upper >/dev/null
+./spiral-$model-std $places $format $dim 200 500 $lower $upper >/dev/null
