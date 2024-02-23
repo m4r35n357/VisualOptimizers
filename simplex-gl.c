@@ -108,7 +108,7 @@ void CloseWindow () {
 
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc == 10);
+    CHECK(argc == 9);
 
     // optimizer settings
     o = get_settings(argv, true);
