@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 model=$1
 places=$2
@@ -7,17 +7,15 @@ dim=$4
 lower=$5
 upper=$6
 
-. shell-functions
-
-size=$(echo "scale=3; ($upper - $lower) / 10.0;" | /usr/bin/bc)
-
 if [ $dim -ge 8 ]; then
     adaptive=1
 else
     adaptive=0
 fi
 
-./nm-$model-std $places $format 1.0e-6 10000 $size $adaptive $(random $dim $lower $upper) >/dev/null
+./nm-$model-std $places $format $dim 1.0e-6 10000 $adaptive $lower $upper >/dev/null
+
+./mds-$model-std $places $format $dim 1.0e-6 10000 $lower $upper >/dev/null
 
 ./whale-$model-std $places $format $dim 200 500 $lower $upper >/dev/null
 
