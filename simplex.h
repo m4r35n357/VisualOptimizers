@@ -7,11 +7,13 @@
  */
 typedef struct Optimset {
     real tolerance;    // tolerance on the function value
+    int n;   // number of dimensions
     int max_iterations;   // maximum number of allowed iterations
     int adaptive;  // simplex updates reduced for dimension > 2
     real size;  // size of initial simplex
     int places;  // significant figures in float/exponential output
     int fmt;  // fixed or exponential floating point format
+    real lower, upper;  // range for coordinates of initial point
     bool step_mode; // free-running or single-step algorithm
 } optimset;
 
@@ -44,6 +46,8 @@ bool multidirectional_search (simplex *, const model *, const optimset *);
  * Utility functions
  */
 point *get_point (int);
+
+point *get_random_point (int, real, real);
 
 simplex *regular_simplex (int, real, const point *);
 
