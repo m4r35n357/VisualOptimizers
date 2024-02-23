@@ -10,7 +10,7 @@ optimset get_settings (char **argv, bool single) {
         .tolerance = strtold(argv[4], NULL),
         .max_iterations = (int)strtol(argv[5], NULL, BASE),
         .adaptive = (int)strtol(argv[6], NULL, BASE),
-        .lower = strtold(argv[6], NULL),
+        .lower = strtold(argv[7], NULL),
         .upper = strtold(argv[8], NULL),
         .step_mode = single
     };

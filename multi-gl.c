@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include <GL/freeglut.h>
 #include "opengl.h"
 #include "simplex.h"
@@ -38,10 +39,27 @@ void Animate () {
         if (stepping) paused = true;
     }
 
+    float fmin = (float)o.lower, fmax = (float)o.upper;
+    rgb box_colour = get_colour(DARK_BLUE);
+    line((gl_point){fmin, fmin, fmin}, (gl_point){fmax, fmin, fmin}, box_colour);
+    line((gl_point){fmin, fmin, fmax}, (gl_point){fmax, fmin, fmax}, box_colour);
+    line((gl_point){fmin, fmax, fmin}, (gl_point){fmax, fmax, fmin}, box_colour);
+    line((gl_point){fmin, fmax, fmax}, (gl_point){fmax, fmax, fmax}, box_colour);
+
+    line((gl_point){fmin, fmin, fmin}, (gl_point){fmin, fmax, fmin}, box_colour);
+    line((gl_point){fmin, fmin, fmax}, (gl_point){fmin, fmax, fmax}, box_colour);
+    line((gl_point){fmax, fmin, fmin}, (gl_point){fmax, fmax, fmin}, box_colour);
+    line((gl_point){fmax, fmin, fmax}, (gl_point){fmax, fmax, fmax}, box_colour);
+
+    line((gl_point){fmin, fmin, fmin}, (gl_point){fmin, fmin, fmax}, box_colour);
+    line((gl_point){fmin, fmax, fmin}, (gl_point){fmin, fmax, fmax}, box_colour);
+    line((gl_point){fmax, fmin, fmin}, (gl_point){fmax, fmin, fmax}, box_colour);
+    line((gl_point){fmax, fmax, fmin}, (gl_point){fmax, fmax, fmax}, box_colour);
+
     rgb axis_colour = get_colour(DARK_GREY);
-    line((gl_point){-10.0F, 0.0F, 0.0F}, (gl_point){10.0F, 0.0F, 0.0F}, axis_colour);
-    line((gl_point){0.0F, -10.0F, 0.0F}, (gl_point){0.0F, 10.0F, 0.0F}, axis_colour);
-    line((gl_point){0.0F, 0.0F, -10.0F}, (gl_point){0.0F, 0.0F, 10.0F}, axis_colour);
+    line((gl_point){fmin, 0.0F, 0.0F}, (gl_point){fmax, 0.0F, 0.0F}, axis_colour);
+    line((gl_point){0.0F, fmin, 0.0F}, (gl_point){0.0F, fmax, 0.0F}, axis_colour);
+    line((gl_point){0.0F, 0.0F, fmin}, (gl_point){0.0F, 0.0F, fmax}, axis_colour);
 
     if (centroid) {
         for (int i = 0; i < 3; i++) {
@@ -58,8 +76,8 @@ void Animate () {
 
     for (int i = 0; i < 4; i++) {
         for (int k = i; k < 4; k++) {
-            line(v1[i], v1[k], get_colour(DARK_BLUE));
-            line(v2[i], v2[k], get_colour(DARK_BLUE));
+            line(v1[i], v1[k], get_colour(DARK_CYAN));
+            line(v2[i], v2[k], get_colour(DARK_CYAN));
         }
         ball(v1[i], !i ? get_colour(LIGHT_GREEN) : (i == 3 ? get_colour(LIGHT_RED) : get_colour(LIGHT_GREY)));
         ball(v2[i], !i ? get_colour(LIGHT_GREEN) : (i == 3 ? get_colour(LIGHT_RED) : get_colour(LIGHT_GREY)));
@@ -90,8 +108,7 @@ void CloseWindow () {
 
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc == 9);
-    const int n = argc - 6;
+    CHECK(argc == 8);
 
     // optimizer settings
     o = get_settings(argv, true);
@@ -100,13 +117,12 @@ int main (int argc, char **argv) {
     m = model_init();
 
     // set initial point from command arguments
-    point *start = get_point(n);
-    for (int j = 0; j < n; j++) {
-        start->x[j] = strtold(argv[j + 6], NULL);
-    }
+    srand((unsigned int)time(NULL));
+    point *start = get_random_point(o.n, o.lower, o.upper);
 
     // default simplex . . .
-    s1 = mds_simplex(n, o.size, start);
+    real size = (o.upper - o.lower) * 0.1L;
+    s1 = mds_simplex(o.n, size, start);
     for (int i = 0; i < s1->n + 1; i++) {  // initial cost at simplex vertices
         cost(s1->n, s1->p + i, m);
         s1->evaluations++;
@@ -114,7 +130,7 @@ int main (int argc, char **argv) {
     sort(s1);
 
     // . . . and its "dual"
-    s2 = mds_simplex(n, o.size, start);
+    s2 = mds_simplex(o.n, size, start);
     for (int i = 0; i < s2->n + 1; i++) {  // form "dual" by projecting vertices through the centre
         project(s2->p + i, s2, m, 1.0L, s2->p + i, start);
     }
@@ -122,8 +138,8 @@ int main (int argc, char **argv) {
 
     // print starting point
     fprintf(stderr, "%s       Initial  ", GRY);
-    cost(n, start, m);
-    print_result(n, start, o.places, o.fmt);
+    cost(o.n, start, m);
+    print_result(o.n, start, o.places, o.fmt);
     fprintf(stderr, o.fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter%s    % .*Lf\n",
             GRY, NRM, o.places, distance(s1->n, s1->p, s1->p + s1->n));
 
@@ -135,7 +151,10 @@ int main (int argc, char **argv) {
     v2 = malloc(4 * sizeof (gl_point)); CHECK(v2);
     get_vertices(v2, s2->p);
 
-    ApplicationInit(argc, argv, "Multidirectional Search Visualizer");
+    radius = 1.5F * ((float)o.upper - (float)o.lower);
+    ball_size = 0.002F * ((float)o.upper - (float)o.lower);
+
+    ApplicationInit(argc, argv, "Nelder-Mead Visualizer");
     glutCloseFunc(CloseWindow);
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.
 
