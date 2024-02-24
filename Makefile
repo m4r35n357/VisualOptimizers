@@ -73,6 +73,9 @@ test-16d: all
 	@echo ""
 	@./nm-rosenbrock-std 3 0 16 1.0e-6 10000 1 -5 5 >/dev/null
 	@./whale-rosenbrock-std 3 0 16 200 1000 -5 5 >/dev/null
+	@echo ""
+	@./nm-trid-std 3 0 16 1.0e-6 10000 1 -100 100 >/dev/null
+	@./whale-trid-std 3 0 16 200 1000 -100 100 >/dev/null
 
 test-8d: all
 	@./nm-ackley-std 3 0 8 1.0e-6 10000 0 -10 10 >/dev/null
