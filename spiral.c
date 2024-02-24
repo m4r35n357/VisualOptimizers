@@ -25,7 +25,7 @@ config get_config (char **argv, bool single) {
 }
 
 static real rand_range (real lower, real upper) {
-	return (upper - lower) * (real)rand() / (real)RAND_MAX + lower;
+    return (upper - lower) * (real)rand() / (real)RAND_MAX + lower;
 }
 
 void find_best (spiral *s, config c) {
@@ -65,23 +65,23 @@ spiral *get_spiral (model *m, config c) {
 }
 
 bool soa (spiral *s, model *m, config c) {
-	real r = powl(0.1L / c.k_max, 1.0L / c.k_max);
+    real r = powl(0.1L / c.k_max, 1.0L / c.k_max);
     if (c.step_mode && s->looping) goto resume; else s->looping = true;
     while (s->restart) {
         s->restart = false;
-    	s->k = s->k_star = 0;
+        s->k = s->k_star = 0;
         while (s->k < c.k_max) {
-        	//real r = (s->k >= s->k_star + 2.0L * c.n) ? powl(0.1L, 0.5L / c.n) : 1.0L;
+            //real r = (s->k >= s->k_star + 2.0L * c.n) ? powl(0.1L, 0.5L / c.n) : 1.0L;
             for (int i = 0; i < c.m; i++) {
                 if (s->p[i] != s->centre) {
                     for (int k = 0; k < c.n; k++) {
-                    	if (i % 2) {
+                        if (i % 2) {
                             s->update->x[k] = s->centre->x[k] +
                                 r * (k == 0 ? s->centre->x[c.n - 1] - s->p[i]->x[c.n - 1] : s->p[i]->x[k - 1] - s->centre->x[k - 1]);
-                    	} else {
+                        } else {
                             s->update->x[k] = s->centre->x[k] +
                                 r * (k == c.n - 1 ? s->centre->x[0] - s->p[i]->x[0] : s->p[i]->x[k + 1] - s->centre->x[k + 1]);
-                    	}
+                        }
                     }
                     bool oor = false;
                     for (int k = 0; k < c.n; k++) {
@@ -116,9 +116,9 @@ bool soa (spiral *s, model *m, config c) {
         if (s->restart) {
             for (int i = 0; i < c.m; i++) {
                 if (s->p[i] != s->centre) {
-            		for (int k = 0; k < c.n; k++) {
-            			s->p[i]->x[k] = rand_range(c.lower, c.upper);
-            		}
+                    for (int k = 0; k < c.n; k++) {
+                        s->p[i]->x[k] = rand_range(c.lower, c.upper);
+                    }
                     cost(c.n, s->p[i], m);
                     s->evaluations++;
                 }

@@ -102,7 +102,7 @@ bool woa (population *p, model *m, options o) {
                 }
                 if (current != p->prey) {
                     if (current->f < p->prey->f) {
-                    	p->prey = current;
+                        p->prey = current;
                         //p->restart = true;
                     }
                 }
@@ -120,9 +120,9 @@ bool woa (population *p, model *m, options o) {
         if (p->restart) {
             for (int i = 0; i < o.whales; i++) {
                 if (p->whales[i] != p->prey) {
-                	for (int j = 0; j < o.dim; j++) {
-                		p->whales[i]->x[j] = (o.upper - o.lower) * rand_real() + o.lower;
-            		}
+                    for (int j = 0; j < o.dim; j++) {
+                        p->whales[i]->x[j] = (o.upper - o.lower) * rand_real() + o.lower;
+                    }
                     cost(o.dim, p->whales[i], m);
                     p->evaluations++;
                 }
