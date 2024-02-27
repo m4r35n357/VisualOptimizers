@@ -87,13 +87,15 @@ point *get_point (int n) {
     return p;
 }
 
-point *get_random_point (int n, real lower, real upper) {
-    point *p = malloc(sizeof (point));        CHECK(p);
-    p->x = malloc((size_t)n * sizeof (real)); CHECK(p->x);
+point *get_random_coordinates (point *p, int n, real lower, real upper) {
     for (int j = 0; j < n; j++) {
         p->x[j] = (upper - lower) * (real)rand() / (real)RAND_MAX + lower;
     }
     return p;
+}
+
+point *get_random_point (int n, real lower, real upper) {
+	return get_random_coordinates(get_point(n), n, lower, upper);
 }
 
 void copy_point (int n, const point *src, point *dst) {

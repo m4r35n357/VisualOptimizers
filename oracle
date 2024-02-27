@@ -13,9 +13,9 @@ else
     adaptive=0
 fi
 
-./nm-$model-std $places $format $dim 1.0e-6 10000 1.0 $adaptive $lower $upper >/dev/null
+./nm-$model-std $places $format $dim 1.0e-6 10000 1.0 $adaptive 10 $lower $upper >/dev/null
 
-./mds-$model-std $places $format $dim 1.0e-6 10000 $lower $upper >/dev/null
+./mds-$model-std $places $format $dim 1.0e-6 10000 1.0 $lower 10 $upper >/dev/null
 
 ./whale-$model-std $places $format $dim 50 150 $lower $upper >/dev/null
 
