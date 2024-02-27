@@ -108,7 +108,7 @@ void CloseWindow () {
 
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc == 9);
+    CHECK(argc == 10);
 
     // optimizer settings
     o = get_settings(argv, true);
@@ -121,8 +121,7 @@ int main (int argc, char **argv) {
     point *start = get_random_point(o.n, o.lower, o.upper);
 
     // default simplex . . .
-    real size = (o.upper - o.lower) * 0.1L;
-    s1 = nm_simplex(o.n, size, start, o.adaptive);
+    s1 = nm_simplex(o.n, o.size, start, o.adaptive);
     for (int i = 0; i < s1->n + 1; i++) {  // initial cost at simplex vertices
         cost(s1->n, s1->p + i, m);
         s1->evaluations++;
@@ -130,7 +129,7 @@ int main (int argc, char **argv) {
     sort(s1);
 
     // . . . and its "dual"
-    s2 = nm_simplex(o.n, size, start, o.adaptive);
+    s2 = nm_simplex(o.n, o.size, start, o.adaptive);
     for (int i = 0; i < s2->n + 1; i++) {  // form "dual" by projecting vertices through the centre
         project(s2->p + i, s2, m, 1.0L, s2->p + i, start);
     }
