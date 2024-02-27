@@ -16,8 +16,6 @@ optimset get_settings (char **argv, bool single) {
         .max_iterations = (int)strtol(argv[5], NULL, BASE),
         .size = strtold(argv[6], NULL),
         .random_init = (int)strtol(argv[7], NULL, BASE),
-        .lower = strtold(argv[8], NULL),
-        .upper = strtold(argv[9], NULL),
         .step_mode = single
     };
     CHECK(opt.places >= 3 && opt.places <= 36);
