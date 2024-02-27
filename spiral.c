@@ -11,8 +11,9 @@ config get_config (char **argv, bool single) {
         .n = (int)strtol(argv[3], NULL, BASE),
         .m = (int)strtol(argv[4], NULL, BASE),
         .k_max = (int)strtol(argv[5], NULL, BASE),
-        .lower = strtold(argv[6], NULL),
-        .upper = strtold(argv[7], NULL),
+        .rule = (strategy)strtol(argv[6], NULL, BASE),
+        .lower = strtold(argv[7], NULL),
+        .upper = strtold(argv[8], NULL),
         .step_mode = single
     };
     CHECK(conf.places >= 3 && conf.places <= 36);
@@ -20,6 +21,7 @@ config get_config (char **argv, bool single) {
     CHECK(conf.n >= 1 && conf.n <= 100);
     CHECK(conf.m >= 1 && conf.m <= 10000);
     CHECK(conf.k_max >= 1 && conf.k_max <= 100000);
+    CHECK(conf.rule == DESCENT || conf.rule == CONVERGENCE);
     CHECK(conf.upper >= conf.lower);
     return conf;
 }
@@ -65,13 +67,14 @@ spiral *get_spiral (model *m, config c) {
 }
 
 bool soa (spiral *s, model *m, config c) {
-    real r = powl(0.1L / c.k_max, 1.0L / c.k_max);
+	real r;
+    if (c.rule == DESCENT) r = powl(0.1L / c.k_max, 1.0L / c.k_max);
     if (c.step_mode && s->looping) goto resume; else s->looping = true;
     while (s->restart) {
         s->restart = false;
         s->k = s->k_star = 0;
         while (s->k < c.k_max) {
-            //real r = (s->k >= s->k_star + 2.0L * c.n) ? powl(0.1L, 0.5L / c.n) : 1.0L;
+        	if (c.rule == CONVERGENCE) r = (s->k >= s->k_star + 2.0L * c.n) ? powl(0.1L, 0.5L / c.n) : 1.0L;
             for (int i = 0; i < c.m; i++) {
                 if (s->p[i] != s->centre) {
                     for (int k = 0; k < c.n; k++) {

@@ -4,7 +4,7 @@
 
 int main(int argc, char *argv[]) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc == 8);
+    CHECK(argc == 9);
 
     // options
     config c = get_config(argv, false);

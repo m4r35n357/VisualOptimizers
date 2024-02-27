@@ -2,13 +2,18 @@
 
 #include "model.h"
 
+/*
+ * Operating mode
+ */
+typedef enum Strategy {DESCENT=0, CONVERGENCE=1} strategy;
+
 typedef struct Config {
     int places;  // significant figures in float/exponential output
     format fmt;  // fixed or exponential floating point format
     int n;   // number of dimensions
     int m;   // number of points
     int k_max;   // maximum number of allowed iterations
-    real delta;  // tolerance
+    strategy rule;  // strategy
     real lower;   // bottom of coordinate range
     real upper;   // top of coordinate range
     bool step_mode; // free-running or single-step algorithm

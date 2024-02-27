@@ -78,7 +78,7 @@ void Animate () {
 
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc == 8);
+    CHECK(argc == 9);
 
     // options
     c = get_config(argv, true);

@@ -21,4 +21,4 @@ fi
 
 ./whale-$model-std $places $format $dim 200 500 $lower $upper >/dev/null
 
-./spiral-$model-std $places $format $dim 200 500 $lower $upper >/dev/null
+./spiral-$model-std $places $format $dim 200 500 0 $lower $upper >/dev/null
