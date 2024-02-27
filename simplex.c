@@ -95,7 +95,7 @@ point *get_random_coordinates (point *p, int n, real lower, real upper) {
 }
 
 point *get_random_point (int n, real lower, real upper) {
-	return get_random_coordinates(get_point(n), n, lower, upper);
+    return get_random_coordinates(get_point(n), n, lower, upper);
 }
 
 void copy_point (int n, const point *src, point *dst) {

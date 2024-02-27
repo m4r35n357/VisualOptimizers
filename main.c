@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
     cost(o.n, best, m);
     point *trial = get_point(o.n);
     for (int i = 0; i < o.random_init * o.n; i++) {
-    	get_random_coordinates(trial, o.n, o.lower, o.upper);
+        get_random_coordinates(trial, o.n, o.lower, o.upper);
         cost(o.n, trial, m);
         if (trial->f < best->f) copy_point(o.n, trial, best);
     }

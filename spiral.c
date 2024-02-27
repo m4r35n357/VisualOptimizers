@@ -67,14 +67,14 @@ spiral *get_spiral (model *m, config c) {
 }
 
 bool soa (spiral *s, model *m, config c) {
-	real r;
+    real r;
     if (c.rule == DESCENT) r = powl(0.1L / c.k_max, 1.0L / c.k_max);
     if (c.step_mode && s->looping) goto resume; else s->looping = true;
     while (s->restart) {
         s->restart = false;
         s->k = s->k_star = 0;
         while (s->k < c.k_max) {
-        	if (c.rule == CONVERGENCE) r = (s->k >= s->k_star + 2.0L * c.n) ? powl(0.1L, 0.5L / c.n) : 1.0L;
+            if (c.rule == CONVERGENCE) r = (s->k >= s->k_star + 2.0L * c.n) ? powl(0.1L, 0.5L / c.n) : 1.0L;
             for (int i = 0; i < c.m; i++) {
                 if (s->p[i] != s->centre) {
                     for (int k = 0; k < c.n; k++) {
