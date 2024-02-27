@@ -105,7 +105,7 @@ void copy_point (int n, const point *src, point *dst) {
     dst->f = src->f;
 }
 
-void print_result (int n, const point *p, int places, int fmt) {
+void print_result (int n, const point *p, int places, format fmt) {
     fprintf(stderr, "%s[%s ", GRY, NRM);
     for (int i = 0; i < n; i++) {
         fprintf(stderr, fmt ? "% .*Le " : "% .*Lf ", places, p->x[i]);
@@ -113,11 +113,11 @@ void print_result (int n, const point *p, int places, int fmt) {
     fprintf(stderr, fmt ? "%s]%s % .*Le\n" : "%s]%s % .*Lf\n", GRY, NRM, places, p->f);
 }
 
-void print_progress (const simplex *s, const point *best, const optimset *o) {
+void print_progress (const simplex *s, const point *best, int places, format fmt) {
     printf(" %04d %04d  [ ", s->iterations, s->evaluations);
     for (int j = 0; j < s->n; j++) {
-        printf(o->fmt ? "% .*Le " : "% .*Lf ", o->places, best->x[j]);
+        printf(fmt ? "% .*Le " : "% .*Lf ", places, best->x[j]);
     }
-    printf(o->fmt ? "]  % .*Le  % .*Le % .*Le\n" : "]  % .*Lf  % .*Lf % .*Lf\n",
-            o->places, best->f, o->places, s->delta_x, o->places, s->delta_f);
+    printf(fmt ? "]  % .*Le  % .*Le % .*Le\n" : "]  % .*Lf  % .*Lf % .*Lf\n",
+            places, best->f, places, s->delta_x, places, s->delta_f);
 }

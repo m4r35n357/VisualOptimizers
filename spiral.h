@@ -1,11 +1,10 @@
 #pragma once
 
-#include "base.h"
 #include "model.h"
 
 typedef struct Config {
     int places;  // significant figures in float/exponential output
-    int fmt;  // fixed or exponential floating point format
+    format fmt;  // fixed or exponential floating point format
     int n;   // number of dimensions
     int m;   // number of points
     int k_max;   // maximum number of allowed iterations

@@ -36,6 +36,8 @@
     } \
 } while (0)
 
+typedef enum Format {FIXED=0, EXPONENTIAL=1} format;
+
 typedef long double real;
 
 /*

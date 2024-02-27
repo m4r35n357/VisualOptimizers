@@ -7,7 +7,7 @@
 config get_config (char **argv, bool single) {
     config conf = {
         .places = (int)strtol(argv[1], NULL, BASE),
-        .fmt = (int)strtol(argv[2], NULL, BASE),
+        .fmt = (format)strtol(argv[2], NULL, BASE),
         .n = (int)strtol(argv[3], NULL, BASE),
         .m = (int)strtol(argv[4], NULL, BASE),
         .k_max = (int)strtol(argv[5], NULL, BASE),
@@ -16,7 +16,7 @@ config get_config (char **argv, bool single) {
         .step_mode = single
     };
     CHECK(conf.places >= 3 && conf.places <= 36);
-    CHECK(conf.fmt == 0 || conf.fmt == 1);
+    CHECK(conf.fmt == FIXED || conf.fmt == EXPONENTIAL);
     CHECK(conf.n >= 1 && conf.n <= 100);
     CHECK(conf.m >= 1 && conf.m <= 10000);
     CHECK(conf.k_max >= 1 && conf.k_max <= 100000);

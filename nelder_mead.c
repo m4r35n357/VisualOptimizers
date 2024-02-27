@@ -5,24 +5,24 @@
 optimset get_settings (char **argv, bool single) {
     optimset opt = {
         .places = (int)strtol(argv[1], NULL, BASE),
-        .fmt = (int)strtol(argv[2], NULL, BASE),
+        .fmt = (format)strtol(argv[2], NULL, BASE),
         .n = (int)strtol(argv[3], NULL, BASE),
         .tolerance = strtold(argv[4], NULL),
         .max_iterations = (int)strtol(argv[5], NULL, BASE),
         .size = strtold(argv[6], NULL),
-        .adaptive = (int)strtol(argv[7], NULL, BASE),
+        .adaptive = (bool)strtol(argv[7], NULL, BASE),
         .random_init = (int)strtol(argv[8], NULL, BASE),
         .lower = strtold(argv[9], NULL),
         .upper = strtold(argv[10], NULL),
         .step_mode = single
     };
     CHECK(opt.places >= 3 && opt.places <= 36);
-    CHECK(opt.fmt == 0 || opt.fmt == 1);
+    CHECK(opt.fmt == FIXED || opt.fmt == EXPONENTIAL);
     CHECK(opt.n >= 1);
     CHECK(opt.tolerance >= 1.0e-36L && opt.tolerance <= 1.0e-3L);
     CHECK(opt.max_iterations >= 1 && opt.max_iterations <= 100000);
     CHECK(opt.size >= 1.0e-12L && opt.size <= 1.0e3L);
-    CHECK(opt.adaptive == 0 || opt.adaptive == 1);
+    CHECK(opt.adaptive == false || opt.adaptive == true);
     CHECK(opt.random_init > 0 || opt.random_init < 1001);
     return opt;
 }
@@ -90,7 +90,7 @@ bool nelder_mead (simplex *s, const model *m, const optimset *o) {
         }
         sort(s);
         s->iterations++;
-        print_progress(s, best, o);
+        print_progress(s, best, o->places, o->fmt);
         if (o->step_mode) return true;
         resume: ;
     }

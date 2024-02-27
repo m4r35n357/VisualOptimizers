@@ -7,7 +7,7 @@
 options get_options (char **argv, bool single) {
     options opt = {
         .places = (int)strtol(argv[1], NULL, BASE),
-        .fmt = (int)strtol(argv[2], NULL, BASE),
+        .fmt = (format)strtol(argv[2], NULL, BASE),
         .dim = (int)strtol(argv[3], NULL, BASE),
         .whales = (int)strtol(argv[4], NULL, BASE),
         .iterations = (int)strtol(argv[5], NULL, BASE),
@@ -16,7 +16,7 @@ options get_options (char **argv, bool single) {
         .step_mode = single
     };
     CHECK(opt.places >= 3 && opt.places <= 36);
-    CHECK(opt.fmt == 0 || opt.fmt == 1);
+    CHECK(opt.fmt == FIXED || opt.fmt == EXPONENTIAL);
     CHECK(opt.dim >= 1 && opt.dim <= 100);
     CHECK(opt.whales >= 1 && opt.whales <= 10000);
     CHECK(opt.iterations >= 1 && opt.iterations <= 100000);

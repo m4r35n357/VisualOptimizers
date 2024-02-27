@@ -1,11 +1,10 @@
 #pragma once
 
-#include "base.h"
 #include "model.h"
 
 typedef struct Options {
     int places;  // significant figures in float/exponential output
-    int fmt;  // fixed or exponential floating point format
+    format fmt;  // fixed or exponential floating point format
     int dim;   // number of dimensions
     int whales;   // number of whales
     int iterations;   // maximum number of allowed iterations
