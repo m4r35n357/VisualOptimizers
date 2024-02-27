@@ -32,6 +32,13 @@ int main(int argc, char **argv) {
     }
     sort(s1);
 
+    // . . . and its "dual"
+    simplex *s2 = mds_simplex(o.n, o.size, best);
+    for (int i = 0; i < s2->n + 1; i++) {  // form "dual" by projecting vertices through the centre
+        project(s2->p + i, s2, m, 1.0L, s2->p + i, best);
+    }
+    sort(s2);
+
     // print starting point
     fprintf(stderr, "%s       Initial  ", GRY);
     print_result(o.n, best, o.places, o.fmt);
@@ -40,22 +47,14 @@ int main(int argc, char **argv) {
 
     // begin optimization
     multidirectional_search(s1, m, &o);
-
-    // . . . and its "dual"
-    simplex *s2 = mds_simplex(o.n, o.size, best);
-    for (int i = 0; i < s2->n + 1; i++) {  // form "dual" by projecting vertices through the centre
-        project(s2->p + i, s2, m, 1.0L, s2->p + i, best);
-    }
-    sort(s2);
-
-    // begin optimization
     multidirectional_search(s2, m, &o);
-
     best = s1->p[0].f <= s2->p[0].f ? s1->p : s2->p;
+
     // print solution 1
     fprintf(stderr, "%s%s1%s ", s1->p == best ? "* " : "  ", GRY, NRM);
     fprintf(stderr, " %4d %4d  ", s1->iterations, s1->evaluations);
     print_result(s1->n, s1->p, o.places, o.fmt);
+
     // print solution 2
     fprintf(stderr, "%s%s2%s ", s2->p == best ? "* " : "  ", GRY, NRM);
     fprintf(stderr, " %4d %4d  ", s2->iterations, s2->evaluations);
