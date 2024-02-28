@@ -1,5 +1,8 @@
 #!/bin/sh
 
+MGT='\e[0;35m'
+NRM='\e[0m'
+
 model=$1
 places=$2
 format=$3
@@ -17,17 +20,17 @@ else
     adaptive=0
 fi
 
-echo "Nelder-Mead"
-./nm-$model-std $places $format $dim $precision 10000 $size $adaptive 10 $lower $upper >/dev/null
+echo "${MGT}Nelder-Mead${NRM}"
+./nm-$model-std $places $format $dim $precision 100000 $size $adaptive 10 $lower $upper >/dev/null
 echo ""
 sleep 1
 
-echo "Multidirectional Search"
-./mds-$model-std $places $format $dim $precision 10000 $size 10 $lower $upper >/dev/null
+echo "${MGT}Multidirectional Search${NRM}"
+./mds-$model-std $places $format $dim $precision 100000 $size 10 $lower $upper >/dev/null
 echo ""
 sleep 1
 
-echo "Spiral & Nelder-Mead"
+echo "${MGT}Spiral & Nelder-Mead${NRM}"
 set -- $(./spiral-$model-std $places $format $dim 100 200 0 $lower $upper 2>&1 >/dev/null | tail -1)
 echo "     $*"
 shift 3
@@ -39,7 +42,7 @@ done
 echo ""
 sleep 1
 
-echo "Whale & Nelder-Mead"
+echo "${MGT}Whale & Nelder-Mead${NRM}"
 set -- $(./whale-$model-std $places $format $dim 100 200 $lower $upper 2>&1 >/dev/null | tail -1)
 echo "     $*"
 shift 3
