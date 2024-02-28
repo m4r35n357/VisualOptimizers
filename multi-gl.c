@@ -134,6 +134,7 @@ int main (int argc, char **argv) {
         for (int j = 0; j < o.n; j++) {
             start->x[j] = strtold(argv[8 + j], NULL);
         }
+        cost(o.n, start, m);
     }
 
     // default simplex . . .
