@@ -104,7 +104,7 @@ bool soa (spiral *s, model *m, config c) {
             if (s->best->f < s->centre->f) {
                 s->centre = s->best;
                 s->k_star = s->k + 1;
-                s->restart = true;
+                //s->restart = true;
             }
             if (++s->k % 10 == 0) {
                 printf("  %05d %06d  [ ", s->k, s->evaluations);

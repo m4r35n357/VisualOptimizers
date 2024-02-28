@@ -9,16 +9,42 @@ upper=$6
 
 size=$(echo "scale=3; ($upper - $lower) / 10.0;" | /usr/bin/bc)
 
+precision='1.0e-6'
+
 if [ $dim -ge 8 ]; then
     adaptive=1
 else
     adaptive=0
 fi
 
-./nm-$model-std $places $format $dim 1.0e-6 10000 $size $adaptive 100 $lower $upper >/dev/null
+echo "Nelder-Mead"
+./nm-$model-std $places $format $dim $precision 10000 $size $adaptive 10 $lower $upper >/dev/null
+echo ""
+sleep 1
 
-./mds-$model-std $places $format $dim 1.0e-6 10000 $size 100 $lower $upper >/dev/null
+echo "Multidirectional Search"
+./mds-$model-std $places $format $dim $precision 10000 $size 10 $lower $upper >/dev/null
+echo ""
+sleep 1
 
-./whale-$model-std $places $format $dim 200 500 $lower $upper >/dev/null
+echo "Spiral & Nelder-Mead"
+set -- $(./spiral-$model-std $places $format $dim 100 200 0 $lower $upper 2>&1 >/dev/null | tail -1)
+echo "     $*"
+shift 3
+while [ $# -gt 2 ]; do
+    spiral_args="$spiral_args $1 "
+    shift
+done
+./nm-$model-std $places $format $dim $precision 10000 $(echo "scale=9; ($upper - $lower) / 100000.0;" | /usr/bin/bc) $adaptive 0 $spiral_args >/dev/null
+echo ""
+sleep 1
 
-./spiral-$model-std $places $format $dim 200 500 0 $lower $upper >/dev/null
+echo "Whale & Nelder-Mead"
+set -- $(./whale-$model-std $places $format $dim 100 200 $lower $upper 2>&1 >/dev/null | tail -1)
+echo "     $*"
+shift 3
+while [ $# -gt 2 ]; do
+    whale_args="$whale_args $1 "
+    shift
+done
+./nm-$model-std $places $format $dim $precision 10000 $(echo "scale=9; ($upper - $lower) / 100000.0;" | /usr/bin/bc) $adaptive 0 $whale_args >/dev/null
