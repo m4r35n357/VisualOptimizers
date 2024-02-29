@@ -22,7 +22,7 @@ typedef struct Population {
     point **whales;
     point *prey;
     int n, iterations, evaluations;
-    bool looping, restart;
+    bool looping;
 } population;
 
 population *get_population (model *m, options o);

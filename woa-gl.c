@@ -64,7 +64,7 @@ void Animate () {
     }
 
     for (int i = 0; i < o.whales; i++) {
-        ball(v[i], p->whales[i] == p->prey ? get_colour(DARK_RED) : (p->restart ? get_colour(DARK_CYAN) : get_colour(DARK_GREEN)));
+        ball(v[i], p->whales[i] == p->prey ? get_colour(DARK_RED) : get_colour(DARK_GREEN));
     }
 
     if (osd_active) {
