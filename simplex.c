@@ -105,7 +105,7 @@ void copy_point (int n, const point *src, point *dst) {
     dst->f = src->f;
 }
 
-void print_result (int n, const point *p, int places, format fmt) {
+void print_result (int n, const point *p, int places, int fmt) {
     fprintf(stderr, "%s[%s ", GRY, NRM);
     for (int i = 0; i < n; i++) {
         fprintf(stderr, fmt ? "% .*Le " : "% .*Lf ", places, p->x[i]);
@@ -113,7 +113,7 @@ void print_result (int n, const point *p, int places, format fmt) {
     fprintf(stderr, fmt ? "%s]%s % .*Le\n" : "%s]%s % .*Lf\n", GRY, NRM, places, p->f);
 }
 
-void print_progress (const simplex *s, const point *best, int places, format fmt) {
+void print_progress (const simplex *s, const point *best, int places, int fmt) {
     printf(" %04d %04d  [ ", s->iterations, s->evaluations);
     for (int j = 0; j < s->n; j++) {
         printf(fmt ? "% .*Le " : "% .*Lf ", places, best->x[j]);

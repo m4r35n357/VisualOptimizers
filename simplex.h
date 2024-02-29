@@ -7,7 +7,7 @@
  */
 typedef struct Optimset {
     int places;  // significant figures in float/exponential output
-    format fmt;  // fixed or exponential floating point format
+    int fmt;  // fixed or exponential floating point format
     int n;   // number of dimensions
     real tolerance;    // tolerance on the function value
     int max_iterations;   // maximum number of allowed iterations
@@ -70,6 +70,6 @@ void multi_project (point *, simplex *, const model *, real);
 
 void copy_point (int, const point *, point *);
 
-void print_result (int, const point *, int, format);
+void print_result (int, const point *, int, int);
 
-void print_progress (const simplex *, const point *, int, format);
+void print_progress (const simplex *, const point *, int, int);

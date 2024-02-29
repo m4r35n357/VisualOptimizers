@@ -10,7 +10,7 @@
 optimset get_settings (char **argv, bool single) {
     optimset opt = {
         .places = (int)strtol(argv[1], NULL, BASE),
-        .fmt = (format)strtol(argv[2], NULL, BASE),
+        .fmt = (int)strtol(argv[2], NULL, BASE),
         .n = (int)strtol(argv[3], NULL, BASE),
         .tolerance = strtold(argv[4], NULL),
         .max_iterations = (int)strtol(argv[5], NULL, BASE),
@@ -19,12 +19,12 @@ optimset get_settings (char **argv, bool single) {
         .step_mode = single
     };
     CHECK(opt.places >= 3 && opt.places <= 36);
-    CHECK(opt.fmt == FIXED || opt.fmt == EXPONENTIAL);
+    CHECK(opt.fmt == 0 || opt.fmt == 1);
     CHECK(opt.n >= 1);
     CHECK(opt.tolerance >= 1.0e-36L && opt.tolerance <= 1.0e-3L);
     CHECK(opt.max_iterations >= 1 && opt.max_iterations <= 100000);
     CHECK(opt.size >= 1.0e-12L && opt.size <= 1.0e3L);
-    CHECK(opt.random_init > 0 || opt.random_init < 1001);
+    CHECK(opt.random_init == 0 || opt.random_init == 1);
     return opt;
 }
 

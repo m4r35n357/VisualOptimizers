@@ -118,24 +118,19 @@ int main (int argc, char **argv) {
 
     point *start;
     if (o.random_init) {  // random initial point in range
+        CHECK(argc == 10);
         srand((unsigned int)time(NULL));
-        o.lower = strtold(argv[8], NULL),
-        o.upper = strtold(argv[9], NULL),
+        o.lower = strtold(argv[8], NULL);
+        o.upper = strtold(argv[9], NULL);  CHECK(o.upper > o.lower);
         start = get_random_point(o.n, o.lower, o.upper);
-        cost(o.n, start, m);
-        point *trial = get_point(o.n);
-        for (int i = 0; i < o.random_init * o.n; i++) {
-            get_random_coordinates(trial, o.n, o.lower, o.upper);
-            cost(o.n, trial, m);
-            if (trial->f < start->f) copy_point(o.n, trial, start);
-        }
     } else {  // set initial point from command arguments
+        CHECK(argc == 8 + o.n);
         start = get_point(o.n);
         for (int j = 0; j < o.n; j++) {
             start->x[j] = strtold(argv[8 + j], NULL);
         }
-        cost(o.n, start, m);
     }
+    cost(o.n, start, m);
 
     // default simplex . . .
     s1 = mds_simplex(o.n, o.size, start);

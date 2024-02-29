@@ -37,11 +37,6 @@
 } while (0)
 
 /*
- * Floating point output format
- */
-typedef enum Format {FIXED=0, EXPONENTIAL=1} format;
-
-/*
  * Floating point internal format
  */
 typedef long double real;
