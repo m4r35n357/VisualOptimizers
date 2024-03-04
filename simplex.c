@@ -87,15 +87,12 @@ point *get_point (int n) {
     return p;
 }
 
-point *get_random_coordinates (point *p, int n, real lower, real upper) {
+point *get_random_point (int n, real lower, real upper) {
+    point *p = get_point(n);
     for (int j = 0; j < n; j++) {
         p->x[j] = (upper - lower) * (real)rand() / (real)RAND_MAX + lower;
     }
     return p;
-}
-
-point *get_random_point (int n, real lower, real upper) {
-    return get_random_coordinates(get_point(n), n, lower, upper);
 }
 
 void copy_point (int n, const point *src, point *dst) {
@@ -114,10 +111,10 @@ void print_result (int n, const point *p, int places, int fmt) {
 }
 
 void print_progress (const simplex *s, const point *best, int places, int fmt) {
-    printf(" %04d %04d  [ ", s->iterations, s->evaluations);
+    fprintf(stdout, " %04d %04d  [ ", s->iterations, s->evaluations);
     for (int j = 0; j < s->n; j++) {
-        printf(fmt ? "% .*Le " : "% .*Lf ", places, best->x[j]);
+        fprintf(stdout, fmt ? "% .*Le " : "% .*Lf ", places, best->x[j]);
     }
-    printf(fmt ? "]  % .*Le  % .*Le % .*Le\n" : "]  % .*Lf  % .*Lf % .*Lf\n",
+    fprintf(stdout, fmt ? "]  % .*Le  % .*Le % .*Le\n" : "]  % .*Lf  ( % .*Lf % .*Lf )\n",
             places, best->f, places, s->delta_x, places, s->delta_f);
 }

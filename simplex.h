@@ -48,8 +48,6 @@ bool multidirectional_search (simplex *, const model *, const optimset *);
  */
 point *get_point (int);
 
-point *get_random_coordinates (point *p, int n, real lower, real upper);
-
 point *get_random_point (int, real, real);
 
 simplex *regular_simplex (int, real, const point *);
