@@ -48,7 +48,7 @@ whale-std: whale-sqrt-std whale-rosenbrock-std whale-box-std whale-rastrigin-std
 whale-%-gl: %.o whale.o opengl.o woa-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-whale-gl: whale-sqrt-gl whale-rosenbrock-gl whale-box-gl whale-rastrigin-gl whale-ackley-gl whale-dixon-price-gl whale-st-gl whale-schwefel-gl whale-trid-gl
+whale-gl: whale-sqrt-gl whale-rosenbrock-gl whale-rastrigin-gl whale-ackley-gl whale-dixon-price-gl whale-st-gl whale-schwefel-gl whale-trid-gl
 
 spiral-%-std: %.o spiral.o main-spiral.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
@@ -58,7 +58,7 @@ spiral-std: spiral-sqrt-std spiral-rosenbrock-std spiral-box-std spiral-rastrigi
 spiral-%-gl: %.o spiral.o opengl.o soa-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-spiral-gl: spiral-sqrt-gl spiral-rosenbrock-gl spiral-box-gl spiral-rastrigin-gl spiral-ackley-gl spiral-dixon-price-gl spiral-st-gl spiral-schwefel-gl spiral-trid-gl
+spiral-gl: spiral-sqrt-gl spiral-rosenbrock-gl spiral-rastrigin-gl spiral-ackley-gl spiral-dixon-price-gl spiral-st-gl spiral-schwefel-gl spiral-trid-gl
 
 .PHONY: test test-16d test-8d test-4d test-3d test-2d test-1d ctags clean depclean
 
