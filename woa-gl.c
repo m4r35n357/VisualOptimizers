@@ -8,7 +8,6 @@ static model *m;
 static minima *targets;
 static options o;
 static gl_point *v;
-static real min, max;
 
 static gl_point get_gl_point (real *point) {
     return (gl_point){(float)point[0], (float)point[1], (float)point[2]};
@@ -35,8 +34,8 @@ void Animate () {
         if (stepping) paused = true;
     }
 
-    float fmin = (float)min, fmax = (float)max;
-    rgb box_colour = get_colour(DARK_BLUE);
+    float fmin = (float)o.lower, fmax = (float)o.upper;
+    rgb box_colour = get_colour(LIGHT_BLUE);
     line((gl_point){fmin, fmin, fmin}, (gl_point){fmax, fmin, fmin}, box_colour);
     line((gl_point){fmin, fmin, fmax}, (gl_point){fmax, fmin, fmax}, box_colour);
     line((gl_point){fmin, fmax, fmin}, (gl_point){fmax, fmax, fmin}, box_colour);
@@ -52,10 +51,25 @@ void Animate () {
     line((gl_point){fmax, fmin, fmin}, (gl_point){fmax, fmin, fmax}, box_colour);
     line((gl_point){fmax, fmax, fmin}, (gl_point){fmax, fmax, fmax}, box_colour);
 
-    rgb axis_colour = get_colour(DARK_GREY);
+    rgb axis_colour = get_colour(DARK_BLUE);
     line((gl_point){fmin, 0.0F, 0.0F}, (gl_point){fmax, 0.0F, 0.0F}, axis_colour);
     line((gl_point){0.0F, fmin, 0.0F}, (gl_point){0.0F, fmax, 0.0F}, axis_colour);
     line((gl_point){0.0F, 0.0F, fmin}, (gl_point){0.0F, 0.0F, fmax}, axis_colour);
+
+    line((gl_point){fmax, fmin, 0.0F}, (gl_point){fmax, fmax, 0.0F}, axis_colour);
+    line((gl_point){fmax, 0.0F, fmin}, (gl_point){fmax, 0.0F, fmax}, axis_colour);
+    line((gl_point){fmin, fmin, 0.0F}, (gl_point){fmin, fmax, 0.0F}, axis_colour);
+    line((gl_point){fmin, 0.0F, fmin}, (gl_point){fmin, 0.0F, fmax}, axis_colour);
+
+    line((gl_point){fmin, fmax, 0.0F}, (gl_point){fmax, fmax, 0.0F}, axis_colour);
+    line((gl_point){0.0F, fmax, fmin}, (gl_point){0.0F, fmax, fmax}, axis_colour);
+    line((gl_point){fmin, fmin, 0.0F}, (gl_point){fmax, fmin, 0.0F}, axis_colour);
+    line((gl_point){0.0F, fmin, fmin}, (gl_point){0.0F, fmin, fmax}, axis_colour);
+
+    line((gl_point){fmin, 0.0F, fmax}, (gl_point){fmax, 0.0F, fmax}, axis_colour);
+    line((gl_point){0.0F, fmin, fmax}, (gl_point){0.0F, fmax, fmax}, axis_colour);
+    line((gl_point){fmin, 0.0F, fmin}, (gl_point){fmax, 0.0F, fmin}, axis_colour);
+    line((gl_point){0.0F, fmin, fmin}, (gl_point){0.0F, fmax, fmin}, axis_colour);
 
     if (targets) {
         for (int i = 0; i < targets->n_minima; i++) {
@@ -83,8 +97,6 @@ int main (int argc, char **argv) {
 
     // options
     o = get_options(argv, true);
-    min = strtold(argv[6], NULL);
-    max = strtold(argv[7], NULL);
 
     // model parameters
     m = model_init();
@@ -97,8 +109,8 @@ int main (int argc, char **argv) {
     v = malloc((size_t)o.whales * sizeof (gl_point)); CHECK(v);
     get_vertices(v, p->whales);
 
-    radius = 1.5F * ((float)max - (float)min);
-    ball_size = 0.005F * ((float)max - (float)min);;
+    radius = 1.5F * ((float)o.upper - (float)o.lower);
+    ball_size = 0.005F * ((float)o.upper - (float)o.lower);;
 
     ApplicationInit(argc, argv, "Whale Optimization Visualizer");
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.
