@@ -115,7 +115,7 @@ https://uk.mathworks.com/matlabcentral/fileexchange/55667-the-whale-optimization
 
 This is a _tweaked_ version of the algorithm as published:
 * "Prey" is explicitly excluded from the update code
-* New "prey" is used immediately rather than waiting for each iteration to complete
+* Updated "prey" is calculated and used immediately rather than waiting for each iteration to complete
 * Out-of-range agents are randomly "teleported" instead of "clipping" them at the limit
 * I have attempted to set the algorithm variable "b" to something useful
 
@@ -169,11 +169,11 @@ HOME | zoom in (fine)
 END | zoom out (fine)
 PAGE UP | zoom in (coarse)
 PAGE DOWN | zoom out (coarse)
-'C' 'c' | Show centroid for Nelder-Mead
-'G' 'g' | Increase ball size
-'B' 'b' | Decrease ball size
-'S' 's' | Iterate
-'F' 'f' | Toggle fullscreen mode
-'H' 'h' | Toggle OSD text
-'Q' 'q' ESC | Exit
+'C' 'c' | show centroid for Nelder-Mead
+'G' 'g' | increase ball size
+'B' 'b' | decrease ball size
+'S' 's' | iterate
+'F' 'f' | toggle fullscreen mode
+'H' 'h' | toggle OSD text
+'Q' 'q' ESC | exit
 
