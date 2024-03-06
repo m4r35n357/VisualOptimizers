@@ -51,7 +51,7 @@ This code was originally forked from a project by Matteo Maggioni (https://githu
 Parameter | Meaning
 ----------|-----------
 1 | Display precision (3..36)
-2 | Number format (0 for fixed, 1 for exponential)
+2 | Floating point format (0 for fixed, 1 for exponential)
 3 | Number of dimensions
 4 | Epsilon
 5 | Maximum number of iterations
@@ -83,7 +83,7 @@ See https://www.osti.gov/biblio/5827867 (incidentally, osti.gov have got their p
 Parameter | Meaning
 ----------|-----------
 1 | Display precision (3..36)
-2 | Number format (0 for fixed, 1 for exponential)
+2 | Floating point format (0 for fixed, 1 for exponential)
 3 | Number of dimensions
 4 | Epsilon
 5 | Maximum number of iterations
@@ -116,7 +116,7 @@ https://uk.mathworks.com/matlabcentral/fileexchange/55667-the-whale-optimization
 Parameter | Meaning
 ----------|-----------
 1 | Display precision (3..36)
-2 | Number format (0 for fixed, 1 for exponential)
+2 | Floating point format (0 for fixed, 1 for exponential)
 3 | Number of dimensions
 4 | Number of search agents
 5 | Number of iterations
@@ -136,7 +136,7 @@ See https://en.wikipedia.org/wiki/Spiral_optimization_algorithm
 Parameter | Meaning
 ----------|-----------
 1 | Display precision (3..36)
-2 | Number format (0 for fixed, 1 for exponential)
+2 | Floating point format (0 for fixed, 1 for exponential)
 3 | Number of dimensions
 4 | Number of search agents
 5 | Number of iterations
