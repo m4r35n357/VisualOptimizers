@@ -43,6 +43,11 @@ There should be NO errors or warnings.
 # Usage
 
 ## Nelder-Mead
+
+Nelder, John A.; R. Mead (1965). "A simplex method for function minimization". Computer Journal. 7 (4): 308–313. doi:10.1093/comjnl/7.4.308.
+
+This code was originally forked from a project by Matteo Maggioni (https://github.com/matteotiziano/nelder-mead) in 2023.
+
 Parameter | Meaning
 ----------|-----------
 1 | Display precision (3..36)
@@ -52,24 +57,29 @@ Parameter | Meaning
 5 | Maximum number of iterations
 6 | Simplex scale
 7 | Adaptive
-8 | Initialization (0 for coordinates, 1 for range)
+8 | Initialization (0 for explicit coordinates, 1 for random in range)
 
 If Initialization = 0
+Parameter | Meaning
+----------|-----------
+9+ | Coordinate list
+
+If Initialization = 1
 Parameter | Meaning
 ----------|-----------
 9 | Lower limit
 10 | Upper limit
 
-If Initialization = 1
-Parameter | Meaning
-----------|-----------
-9+ | Coordinates
-
-Example
+Examples
 ```
 ./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
+./nm-ackley-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
 ```
-## Multidirectional Search
+
+## Multi-directional Search
+
+See https://www.osti.gov/biblio/5827867 (incidentally, osti.gov have got their pronouns in a twist in a rather surprising way, see https://en.wikipedia.org/wiki/Virginia_Torczon)
+
 Parameter | Meaning
 ----------|-----------
 1 | Display precision (3..36)
@@ -78,20 +88,65 @@ Parameter | Meaning
 4 | Epsilon
 5 | Maximum number of iterations
 6 | Simplex scale
-7 | Initialization (0 for coordinates, 1 for range)
+7 | Initialization (0 for explicit coordinates, 1 for random in range)
 
 If Initialization = 0
+Parameter | Meaning
+----------|-----------
+8+ | Coordinate list
+
+If Initialization = 1
 Parameter | Meaning
 ----------|-----------
 8 | Lower limit
 9 | Upper limit
 
-If Initialization = 1
-Parameter | Meaning
-----------|-----------
-8+ | Coordinates
-
-Example
+Examples
 ```
 ./mds-ackley-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
+./mds-ackley-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
 ```
+
+## Whale Optimization
+
+Mirjalili, Seyedali, and Andrew Lewis. "The whale optimization algorithm." Advances in Engineering Software 95 (2016): 51-67.
+
+https://uk.mathworks.com/matlabcentral/fileexchange/55667-the-whale-optimization-algorithm
+
+Parameter | Meaning
+----------|-----------
+1 | Display precision (3..36)
+2 | Verbose (0/1)
+3 | Number of dimensions
+4 | Number of search agents
+5 | Number of iterations
+6 | Lower limit
+7 | Upper limit
+
+Examples
+```
+./whale-ackley-std 3 0 3 50 100 -5 5
+./whale-ackley-gl 3 0 3 50 100 -5 5
+```
+
+## Spiral Optimization
+
+See https://en.wikipedia.org/wiki/Spiral_optimization_algorithm
+
+Parameter | Meaning
+----------|-----------
+1 | Display precision (3..36)
+2 | Verbose (0/1)
+3 | Number of dimensions
+4 | Number of search agents
+5 | Number of iterations
+6 | Spiral "rule" (0 for "periodic descent", 1 for "convergence")
+7 | Lower limit
+8 | Upper limit
+
+Examples
+```
+./spiral-ackley-std 3 0 3 50 100 0 -5 5
+./spiral-ackley-gl 3 0 3 50 100 0 -5 5
+```
+
