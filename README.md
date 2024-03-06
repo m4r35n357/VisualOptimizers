@@ -53,7 +53,7 @@ Parameter | Meaning
 1 | Display precision (3..36)
 2 | Floating point format (0 for fixed, 1 for exponential)
 3 | Number of dimensions
-4 | Epsilon
+4 | Maximum error for convergence
 5 | Maximum number of iterations
 6 | Simplex scale
 7 | Adaptive
@@ -85,7 +85,7 @@ Parameter | Meaning
 1 | Display precision (3..36)
 2 | Floating point format (0 for fixed, 1 for exponential)
 3 | Number of dimensions
-4 | Epsilon
+4 | Maximum error for convergence
 5 | Maximum number of iterations
 6 | Simplex scale
 7 | Initialization (0 for explicit coordinates, 1 for random in range)
