@@ -40,7 +40,7 @@ void Animate () {
     }
 
     float fmin = (float)o.lower, fmax = (float)o.upper;
-    rgb box_colour = get_colour(DARK_BLUE);
+    rgb box_colour = get_colour(LIGHT_BLUE);
     line((gl_point){fmin, fmin, fmin}, (gl_point){fmax, fmin, fmin}, box_colour);
     line((gl_point){fmin, fmin, fmax}, (gl_point){fmax, fmin, fmax}, box_colour);
     line((gl_point){fmin, fmax, fmin}, (gl_point){fmax, fmax, fmin}, box_colour);
@@ -56,17 +56,25 @@ void Animate () {
     line((gl_point){fmax, fmin, fmin}, (gl_point){fmax, fmin, fmax}, box_colour);
     line((gl_point){fmax, fmax, fmin}, (gl_point){fmax, fmax, fmax}, box_colour);
 
-    rgb axis_colour = get_colour(DARK_GREY);
+    rgb axis_colour = get_colour(DARK_BLUE);
     line((gl_point){fmin, 0.0F, 0.0F}, (gl_point){fmax, 0.0F, 0.0F}, axis_colour);
     line((gl_point){0.0F, fmin, 0.0F}, (gl_point){0.0F, fmax, 0.0F}, axis_colour);
     line((gl_point){0.0F, 0.0F, fmin}, (gl_point){0.0F, 0.0F, fmax}, axis_colour);
 
-    if (centroid) {
-        for (int i = 0; i < 3; i++) {
-            line(get_gl_point(s1->centroid->x), v1[i], get_colour(DARK_MAGENTA));
-            line(get_gl_point(s2->centroid->x), v2[i], get_colour(DARK_MAGENTA));
-        }
-    }
+    line((gl_point){fmax, fmin, 0.0F}, (gl_point){fmax, fmax, 0.0F}, axis_colour);
+    line((gl_point){fmax, 0.0F, fmin}, (gl_point){fmax, 0.0F, fmax}, axis_colour);
+    line((gl_point){fmin, fmin, 0.0F}, (gl_point){fmin, fmax, 0.0F}, axis_colour);
+    line((gl_point){fmin, 0.0F, fmin}, (gl_point){fmin, 0.0F, fmax}, axis_colour);
+
+    line((gl_point){fmin, fmax, 0.0F}, (gl_point){fmax, fmax, 0.0F}, axis_colour);
+    line((gl_point){0.0F, fmax, fmin}, (gl_point){0.0F, fmax, fmax}, axis_colour);
+    line((gl_point){fmin, fmin, 0.0F}, (gl_point){fmax, fmin, 0.0F}, axis_colour);
+    line((gl_point){0.0F, fmin, fmin}, (gl_point){0.0F, fmin, fmax}, axis_colour);
+
+    line((gl_point){fmin, 0.0F, fmax}, (gl_point){fmax, 0.0F, fmax}, axis_colour);
+    line((gl_point){0.0F, fmin, fmax}, (gl_point){0.0F, fmax, fmax}, axis_colour);
+    line((gl_point){fmin, 0.0F, fmin}, (gl_point){fmax, 0.0F, fmin}, axis_colour);
+    line((gl_point){0.0F, fmin, fmin}, (gl_point){0.0F, fmax, fmin}, axis_colour);
 
     if (targets) {
         for (int i = 0; i < targets->n_minima; i++) {
@@ -76,8 +84,8 @@ void Animate () {
 
     for (int i = 0; i < 4; i++) {
         for (int k = i; k < 4; k++) {
-            line(v1[i], v1[k], get_colour(DARK_CYAN));
-            line(v2[i], v2[k], get_colour(DARK_CYAN));
+            line(v1[i], v1[k], get_colour(DARK_GREY));
+            line(v2[i], v2[k], get_colour(DARK_GREY));
         }
         ball(v1[i], !i ? get_colour(LIGHT_GREEN) : (i == 3 ? get_colour(LIGHT_RED) : get_colour(LIGHT_GREY)));
         ball(v2[i], !i ? get_colour(LIGHT_GREEN) : (i == 3 ? get_colour(LIGHT_RED) : get_colour(LIGHT_GREY)));
