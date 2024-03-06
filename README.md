@@ -46,7 +46,7 @@ There should be NO errors or warnings.
 
 Nelder, John A.; R. Mead (1965). "A simplex method for function minimization". Computer Journal. 7 (4): 308–313. doi:10.1093/comjnl/7.4.308.
 
-This code was originally forked from a project by Matteo Maggioni (https://github.com/matteotiziano/nelder-mead) in 2023.
+This code was originally based on a [project](https://github.com/matteotiziano/nelder-mead) by Matteo Maggioni in 2023.
 
 Parameter | Meaning
 ----------|-----------
@@ -113,6 +113,12 @@ Mirjalili, Seyedali, and Andrew Lewis. "The whale optimization algorithm." Advan
 
 https://uk.mathworks.com/matlabcentral/fileexchange/55667-the-whale-optimization-algorithm
 
+This is a _tweaked_ version of the algorithm as published:
+* "Prey" is explicitly excluded from the update code
+* New "prey" is used immediately rather than waiting for each iteration to complete
+* Out-of-range agents are randomly "teleported" instead of "clipping" them at the limit
+* I have attempted to set the algorithm variable "b" to something useful
+
 Parameter | Meaning
 ----------|-----------
 1 | Display precision (3..36)
@@ -132,6 +138,9 @@ Examples
 ## Spiral Optimization
 
 See https://en.wikipedia.org/wiki/Spiral_optimization_algorithm
+
+There is experimental code for repeatedly restarting the algorithm until the result stops changing.
+Un-comment the commented line in spiral.c and rebuild to try it.
 
 Parameter | Meaning
 ----------|-----------
