@@ -158,4 +158,22 @@ Examples
 ./spiral-ackley-std 3 0 3 50 100 0 -5 5
 ./spiral-ackley-gl 3 0 3 50 100 0 -5 5
 ```
+## OpenGL Keyboard Controls
+Parameter | Meaning
+----------|-----------
+UP arrow | increase view elevation
+DOWN arrow | decrease view elevation
+LEFT arrow | increase view azimuth
+RIGHT arrow | decrease view azimuth
+HOME | zoom in (fine)
+END | zoom out (fine)
+PAGE UP | zoom in (coarse)
+PAGE DOWN | zoom out (coarse)
+'C' 'c' | Show centroid for Nelder-Mead
+'G' 'g' | Increase ball size
+'B' 'b' | Decrease ball size
+'S' 's' | Iterate
+'F' 'f' | Toggle fullscreen mode
+'H' 'h' | Toggle OSD text
+'Q' 'q' ESC | Exit
 
