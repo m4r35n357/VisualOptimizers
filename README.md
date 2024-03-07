@@ -159,7 +159,7 @@ Examples
 ./spiral-ackley-gl 3 0 3 50 100 0 -5 5
 ```
 ## OpenGL Keyboard Controls
-Parameter | Meaning
+Key | Action
 ----------|-----------
 UP arrow | increase view elevation
 DOWN arrow | decrease view elevation
