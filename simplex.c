@@ -6,7 +6,7 @@
 /*
  * Initial point at centre, all vertices equally spaced
  */
-simplex *regular_simplex (int n, real size, const point *start) {
+simplex *basic_simplex (int n) {
     simplex *s = malloc(sizeof (simplex));              CHECK(s);
     s->n = n;
     s->p = malloc((size_t)(n + 1) * sizeof (point));    CHECK(s->p);
@@ -16,22 +16,25 @@ simplex *regular_simplex (int n, real size, const point *start) {
             s->p[i].x[j] = 0.0L;
         }
     }
+    return s;
+}
+
+void regular_simplex (simplex *s, real size, const point *start) {
     real b = 0.0L;
-    for (int j = 0; j < n; j++) {
+    for (int j = 0; j < s->n; j++) {
         real c = sqrtl(1.0L - b);
         s->p[j].x[j] = c;
-        real r = - (1.0L / n + b) / c;
-        for (int i = j + 1; i < n + 1; i++) {
+        real r = - (1.0L / s->n + b) / c;
+        for (int i = j + 1; i < s->n + 1; i++) {
             s->p[i].x[j] = r;
         }
         b += SQR(r);
     }
-    for (int i = 0; i < n + 1; i++) {
-        for (int j = 0; j < n; j++) {
+    for (int i = 0; i < s->n + 1; i++) {
+        for (int j = 0; j < s->n; j++) {
             s->p[i].x[j] = size * s->p[i].x[j] + start->x[j];
         }
     }
-    return s;
 }
 
 /*

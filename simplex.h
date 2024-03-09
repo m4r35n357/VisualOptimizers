@@ -50,7 +50,9 @@ point *get_point (int);
 
 point *get_random_point (int, real, real);
 
-simplex *regular_simplex (int, real, const point *);
+simplex *basic_simplex (int);
+
+void regular_simplex (simplex *, real, const point *);
 
 simplex *nm_simplex (int, real, const point *, bool);
 

@@ -32,7 +32,7 @@ optimset get_settings (char **argv, bool single) {
  * Initialize for Multidirectional Search
  */
 simplex *mds_simplex (int n, real size, const point *start) {
-    simplex *s = regular_simplex(n, size, start);
+    simplex *s = basic_simplex(n);
     s->reflect = malloc((size_t)(n + 1) * sizeof (point));   CHECK(s->reflect);
     for (int i = 0; i < n + 1; i++) {
         s->reflect[i].x = malloc((size_t)n * sizeof (real)); CHECK(s->reflect[i].x);
@@ -44,6 +44,7 @@ simplex *mds_simplex (int n, real size, const point *start) {
     s->centroid = get_point(n);
     s->iterations = s->evaluations = 0;
     s->looping = false;
+    regular_simplex(s, size, start);
     return s;
 }
 

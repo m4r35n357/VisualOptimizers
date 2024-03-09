@@ -29,7 +29,7 @@ optimset get_settings (char **argv, bool single) {
  * Initialize for Nelder-Mead
  */
 simplex *nm_simplex (int n, real size, const point *start, bool adaptive) {
-    simplex *s = regular_simplex(n, size, start);
+    simplex *s = basic_simplex(n);
     s->ALPHA = 1.0L;
     s->GAMMA = adaptive ? 1.0L + 2.0L / n : 2.0L;
     s->RHO = adaptive ? 0.75L - 0.5L / n : 0.5L;
@@ -39,6 +39,7 @@ simplex *nm_simplex (int n, real size, const point *start, bool adaptive) {
     s->trial = get_point(n);
     s->iterations = s->evaluations = 0;
     s->looping = false;
+    regular_simplex(s, size, start);
     return s;
 }
 
