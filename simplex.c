@@ -35,6 +35,8 @@ void regular_simplex (simplex *s, real size, const point *start) {
             s->p[i].x[j] = size * s->p[i].x[j] + start->x[j];
         }
     }
+    s->iterations = s->evaluations = 0;
+    s->looping = false;
 }
 
 /*

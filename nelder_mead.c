@@ -37,8 +37,6 @@ simplex *nm_simplex (int n, real size, const point *start, bool adaptive) {
     s->reflect = get_point(n);
     s->centroid = get_point(n);
     s->trial = get_point(n);
-    s->iterations = s->evaluations = 0;
-    s->looping = false;
     regular_simplex(s, size, start);
     return s;
 }

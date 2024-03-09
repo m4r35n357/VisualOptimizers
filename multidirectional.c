@@ -42,8 +42,6 @@ simplex *mds_simplex (int n, real size, const point *start) {
         s->trial[i].x = malloc((size_t)n * sizeof (real));   CHECK(s->trial[i].x);
     }
     s->centroid = get_point(n);
-    s->iterations = s->evaluations = 0;
-    s->looping = false;
     regular_simplex(s, size, start);
     return s;
 }
