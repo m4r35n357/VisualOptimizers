@@ -45,11 +45,17 @@ make nogl
 There should be NO errors or warnings.
 The default build requires OpenGL development libraries, and produces the *-gl executables.
 The nogl build is pure c99 and produces the *-std executables.
+See the Makefile for various additional "test" targets.
 Optionally
 ```
 make ctags
 ```
 can make things more comfortable in some editors and IDEs.
+There is a pre-commit script for use with git, which rebuilds everything and runs some tests.
+To use it:
+```
+cp pre-commit .git/hooks
+```
 
 # Usage
 
@@ -72,7 +78,7 @@ Parameter | Meaning
 5 | Maximum number of iterations
 6 | Initial simplex scale
 7 | Adaptive (0 for no, 1 for yes)
-8 | Initialization (0 for explicit coordinates, 1 for random in range)
+8 | Initialization (0 for explicit coordinates, 1 or more for number of random "runs")
 
 If Initialization = 0
 Parameter | Meaning
@@ -190,6 +196,34 @@ Examples
 ./stats 100 0.001 ./whale-dixon-price-std 3 0 6 100 100 -5 5
 ./stats 100 -117 ./spiral-st-std 3 0 3 30 100 1 -5 5
 ```
+
+## "Global" Optimization
+
+Whale and spiral are widely recognized as "global" optimizers.
+A common feature of these "meta-heuristic" methods is an _exploration_ phase followed by a _refinement_ phase (in practice the transition is a gradual process).
+Refinement is not the same as convergence, you get what you are given after a specified number of iterations!
+Perhaps "settling" is a better description.
+The refinement makes it harder to jump out of a stubborn local minimum.
+
+I have adapted the Nelder-Mead method to do a series of random runs, while keeping the best result. and accounting for total number of iterations and function evaluations.
+The randomness is not reduced by refinement so global minima are always accessible, even if not actually reached within the set limits.
+
+The [Dixon-Price function](https://www.sfu.ca/~ssurjano/dixonpr.html) is a very good example of a function with a stubborn local minimum (and _all_ minima at non-zero coordinates) that gets harder to escape as dimension increases.
+To see the problem, try these commands, and then experiment with changing the number of agents, iterations etc.:
+```
+./stats 100 0.001 ./whale-dixon-price-std 3 0 8 1000 1000 -10 10
+./stats 100 0.001 ./spiral-dixon-price-std 3 0 8 1000 1000 0 -10 10
+./stats 100 0.001 ./spiral-dixon-price-std 3 0 8 1000 1000 1 -10 10
+./nm-dixon-price-std 3 0 8 1.0e-6 100000 1.0 1 1000 -10 10 >/dev/null
+```
+The [Styblinski-Tang function](https://www.sfu.ca/~ssurjano/stybtang.html) is also troublesome, but less "pathlogical".
+```
+./stats 100 -313.0 ./whale-st-std 3 0 8 100 1000 -5 5
+./stats 100 -313.0 ./spiral-st-std 3 0 8 100 1000 0 -5 5
+./stats 100 -313.0 ./spiral-st-std 3 0 8 100 1000 1 -5 5
+./nm-st-std 3 0 8 1.0e-6 100000 1.0 1 1000 -5 5 >/dev/null
+```
+Of course this is comparing apples to oranges, with just two functions, and the results are not always clear-cut (and vary with each run), but total iterations and function evaluations are shown explicitly in each case.
 
 ## OpenGL Keyboard Controls
 Key | Action
