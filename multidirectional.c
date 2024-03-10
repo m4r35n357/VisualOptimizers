@@ -15,7 +15,7 @@ optimset get_settings (char **argv, bool single) {
         .tolerance = strtold(argv[4], NULL),
         .max_iterations = (int)strtol(argv[5], NULL, BASE),
         .size = strtold(argv[6], NULL),
-        .random_init = (int)strtol(argv[7], NULL, BASE),
+        .init_mode = (int)strtol(argv[7], NULL, BASE),
         .step_mode = single
     };
     CHECK(opt.places >= 3 && opt.places <= 36);
@@ -24,7 +24,7 @@ optimset get_settings (char **argv, bool single) {
     CHECK(opt.tolerance >= 1.0e-36L && opt.tolerance <= 1.0e-3L);
     CHECK(opt.max_iterations >= 1 && opt.max_iterations <= 100000);
     CHECK(opt.size >= 1.0e-12L && opt.size <= 1.0e3L);
-    CHECK(opt.random_init == 0 || opt.random_init == 1);
+    CHECK(opt.init_mode == 0 || opt.init_mode == 1);
     return opt;
 }
 

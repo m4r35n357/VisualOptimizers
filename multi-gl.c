@@ -124,16 +124,15 @@ int main (int argc, char **argv) {
     // model parameters
     m = model_init();
 
-    point *start;
-    if (o.random_init) {  // random initial point in range
+    point *start = get_point(o.n);
+    if (o.init_mode) {  // random initial point in range
         CHECK(argc == 10);
         srand((unsigned int)time(NULL));
         o.lower = strtold(argv[8], NULL);
         o.upper = strtold(argv[9], NULL);  CHECK(o.upper > o.lower);
-        start = get_random_point(o.n, o.lower, o.upper);
+        set_random_coordinates(start, o.n, o.lower, o.upper);
     } else {  // set initial point from command arguments
         CHECK(argc == 8 + o.n);
-        start = get_point(o.n);
         for (int j = 0; j < o.n; j++) {
             start->x[j] = strtold(argv[8 + j], NULL);
         }

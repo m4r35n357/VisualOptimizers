@@ -13,7 +13,7 @@ typedef struct Optimset {
     int max_iterations;   // maximum number of allowed iterations
     real size;  // size of initial simplex
     int adaptive;  // simplex updates reduced for dimension > 2
-    int random_init;  // simplex updates reduced for dimension > 2
+    int init_mode;  // 0 for explicit coordinates, 1 for random initialization
     real lower, upper;  // range for coordinates of initial point
     bool step_mode; // free-running or single-step algorithm
 } optimset;
@@ -48,7 +48,7 @@ bool multidirectional_search (simplex *, const model *, const optimset *);
  */
 point *get_point (int);
 
-point *get_random_point (int, real, real);
+void set_random_coordinates (point *p, int n, real lower, real upper);
 
 simplex *basic_simplex (int);
 
