@@ -48,6 +48,10 @@ Nelder, John A.; R. Mead (1965). "A simplex method for function minimization". C
 
 This code was originally based on a [project](https://github.com/matteotiziano/nelder-mead) by Matteo Maggioni in 2023.
 
+This implementation is a little different from those in most popular/common solvers in that it uses a pair of _regular_ (dual) simplexes, and the user must specify an initial "scale".
+The vertex coordinates are generated using an algorithm which is described (open access) [here](https://link.springer.com/article/10.1007/s11590-022-01953-y).
+The adaptive algorithm is described (open access) [here](https://www.researchgate.net/publication/225691623_Implementing_the_Nelder-Mead_simplex_algorithm_with_adaptive_parameters).
+
 Parameter | Meaning
 ----------|-----------
 1 | Display precision (3..36)
@@ -55,8 +59,8 @@ Parameter | Meaning
 3 | Number of dimensions
 4 | Maximum error for convergence
 5 | Maximum number of iterations
-6 | Simplex scale
-7 | Adaptive
+6 | Initial simplex scale
+7 | Adaptive (0 for no, 1 for yes)
 8 | Initialization (0 for explicit coordinates, 1 for random in range)
 
 If Initialization = 0
@@ -87,7 +91,7 @@ Parameter | Meaning
 3 | Number of dimensions
 4 | Maximum error for convergence
 5 | Maximum number of iterations
-6 | Simplex scale
+6 | Initial simplex scale
 7 | Initialization (0 for explicit coordinates, 1 for random in range)
 
 If Initialization = 0
@@ -111,7 +115,7 @@ Examples
 
 Mirjalili, Seyedali, and Andrew Lewis. "The whale optimization algorithm." Advances in Engineering Software 95 (2016): 51-67.
 
-https://uk.mathworks.com/matlabcentral/fileexchange/55667-the-whale-optimization-algorithm
+There is a Matlab implementation available from [here](https://mathworks.com/matlabcentral/fileexchange/55667-the-whale-optimization-algorithm)
 
 This is a _tweaked_ version of the algorithm as published:
 * "Prey" is explicitly excluded from the update code
@@ -137,7 +141,7 @@ Examples
 
 ## Spiral Optimization
 
-See https://en.wikipedia.org/wiki/Spiral_optimization_algorithm
+Based on the algorithm described [here](https://en.wikipedia.org/wiki/Spiral_optimization_algorithm).
 
 There is experimental code for repeatedly restarting the algorithm until the result stops changing.
 Un-comment the commented line in spiral.c and rebuild to try it.
