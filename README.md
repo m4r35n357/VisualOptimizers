@@ -162,6 +162,24 @@ Examples
 ./spiral-ackley-std 3 0 3 50 100 0 -5 5
 ./spiral-ackley-gl 3 0 3 50 100 0 -5 5
 ```
+
+## "stats" script
+
+Runs either spiral or whale algorithms multiple times agains a target value.
+For each run, the output is green if the result is below the threshold, and red otherwise.
+
+Parameter | Meaning
+----------|-----------
+1 | Number of runs
+2 | Threshold
+3+ | whale or spiral "std" command
+
+Examples
+```
+./stats 100 0.001 ./whale-dixon-price-std 3 0 6 100 100 -5 5
+./stats 100 -117 ./spiral-st-std 3 0 3 30 100 1 -5 5
+```
+
 ## OpenGL Keyboard Controls
 Key | Action
 ----------|-----------
@@ -180,4 +198,3 @@ PAGE DOWN | zoom out (coarse)
 'F' 'f' | toggle fullscreen mode
 'H' 'h' | toggle OSD text
 'Q' 'q' ESC | exit
-
