@@ -1,6 +1,6 @@
 # Various Gradient-free optimizers
 
-## Pure c99 (plus OpenGL)
+## Pure c99 (plus optional 3D OpenGL visualization)
 
 The programs can be built either with Clang or GCC.
 All console programs are written to and depend _only_ on the c99 standard and library (strictly speaking, the WG14/N1256 _draft_ standard!).
@@ -42,12 +42,14 @@ once only, unless you have edited any header files, then either of
 make
 make nogl
 ```
-The nogl build is pure c99.
 There should be NO errors or warnings.
+The default build requires OpenGL development libraries, and produces the *-gl executables.
+The nogl build is pure c99 and produces the *-std executables.
 Optionally
 ```
 make ctags
 ```
+can make things more comfortable in some editors and IDEs.
 
 # Usage
 
