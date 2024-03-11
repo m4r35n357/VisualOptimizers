@@ -50,7 +50,11 @@ point *get_point (spiral *s, model *m, config c) {
 }
 
 spiral *get_spiral (model *m, config c) {
-    srand((unsigned int)time(NULL));
+    unsigned int seed = 0;
+    FILE *devrnd = fopen("/dev/urandom","r");  CHECK(devrnd);
+    fread(&seed, 4, 1, devrnd);
+    int opened = fclose(devrnd);  CHECK(!opened);
+    srand(seed);
     spiral *s =  malloc(sizeof(spiral));
     s->k_star = s->k = s->evaluations = 0;
     s->p = malloc((size_t)c.m * sizeof (point *));    CHECK(s->p);
