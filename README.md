@@ -36,9 +36,18 @@ cd single-simplex-ic
 
 ```
 make depclean
-make
 ```
+once only, unless you have edited any header files, then either of
+```
+make
+make nogl
+```
+The nogl build is pure c99.
 There should be NO errors or warnings.
+Optionally
+```
+make ctags
+```
 
 # Usage
 

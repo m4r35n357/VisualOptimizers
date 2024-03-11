@@ -18,7 +18,9 @@ endif
 %.o: %.c
 	$(CC) $(CFLAGS) -MT $@ -MMD -MP -c -o $@ $< $(WARNINGS)
 
-all: nm-std nm-gl mds-std mds-gl whale-std whale-gl spiral-std spiral-gl
+all: nogl nm-gl mds-gl whale-gl spiral-gl
+
+nogl: nm-std mds-std whale-std spiral-std
 
 nm-%-std: %.o nelder_mead.o simplex.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
@@ -64,7 +66,7 @@ spiral-gl: spiral-sqrt-gl spiral-rosenbrock-gl spiral-rastrigin-gl spiral-ackley
 
 test: test-4d test-3d test-2d test-1d
 
-test-16d: all
+test-16d: nogl
 	@./nm-ackley-std 3 0 16 1.0e-6 20000 5.0 1 1 -10 10 >/dev/null
 	@./whale-ackley-std 3 0 16 100 200 -10 10 >/dev/null
 	@echo ""
@@ -86,7 +88,7 @@ test-16d: all
 	@./nm-sqrt-std 3 0 16 1.0e-6 20000 1.0 1 1 -5 5 >/dev/null
 	@./whale-sqrt-std 3 0 16 100 200 -5 5 >/dev/null
 
-test-8d: all
+test-8d: nogl
 	@./nm-ackley-std 3 0 8 1.0e-6 10000 3.0 1 1 -10 10 >/dev/null
 	@./whale-ackley-std 3 0 8 100 200 -10 10 >/dev/null
 	@echo ""
@@ -108,7 +110,7 @@ test-8d: all
 	@./nm-sqrt-std 3 0 8 1.0e-6 10000 1.0 1 1 -5 5 >/dev/null
 	@./whale-sqrt-std 3 0 8 100 200 -5 5 >/dev/null
 
-test-4d: all
+test-4d: nogl
 	@./nm-ackley-std 3 0 4 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
 	@./whale-ackley-std 3 0 4 50 150 -10 10 >/dev/null
 	@echo ""
@@ -130,7 +132,7 @@ test-4d: all
 	@./nm-sqrt-std 3 0 4 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
 	@./whale-sqrt-std 3 0 4 50 200 -5 5 >/dev/null
 
-test-3d: all
+test-3d: nogl
 	@./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
 	@./whale-ackley-std 3 0 3 30 100 -10 10 >/dev/null
 	@echo ""
@@ -155,7 +157,7 @@ test-3d: all
 	@./nm-schwefel-std 3 0 3 1.0e-6 10000 1.0 0 1 -500 500 >/dev/null
 	@./whale-schwefel-std 3 0 3 30 100 -500.0 500.0 >/dev/null
 
-test-2d: all
+test-2d: nogl
 	@./nm-ackley-std 3 0 2 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
 	@./nm-st-std 3 0 2 1.0e-6 10000 10.0 0 1 -5 5 >/dev/null
 	@./nm-dixon-price-std 3 0 2 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
@@ -163,7 +165,7 @@ test-2d: all
 	@./nm-trid-std 3 0 2 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
 	@./nm-box-std 3 0 2 1.0e-6 10000 1.0 0 1 0 4 >/dev/null
 
-test-1d: all
+test-1d: nogl
 	@./nm-ackley-std 3 0 1 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
 	@./nm-st-std 3 0 1 1.0e-6 10000 10.0 0 1 -10 10 >/dev/null
 	@./nm-dixon-price-std 3 0 1 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
