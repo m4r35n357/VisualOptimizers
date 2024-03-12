@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "simplex.h"
 
 optimset get_settings (char **argv, bool single) {
+    srand((unsigned int)time(NULL));
     optimset opt = {
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),

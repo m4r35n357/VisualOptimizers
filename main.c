@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include "simplex.h"
 
 int main (int argc, char **argv) {
@@ -15,7 +14,6 @@ int main (int argc, char **argv) {
     point *start = get_point(o.n);
     if (o.init_mode) {  // random initial point in range
         CHECK(argc == 11);
-        srand((unsigned int)time(NULL));
         o.lower = strtold(argv[9], NULL);
         o.upper = strtold(argv[10], NULL);  CHECK(o.upper > o.lower);
         set_random_coordinates(start, o.n, o.lower, o.upper);

@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <time.h>
 #include <GL/freeglut.h>
 #include "opengl.h"
 #include "simplex.h"
@@ -127,7 +126,6 @@ int main (int argc, char **argv) {
     point *start = get_point(o.n);
     if (o.init_mode) {  // random initial point in range
         CHECK(argc == 10);
-        srand((unsigned int)time(NULL));
         o.lower = strtold(argv[8], NULL);
         o.upper = strtold(argv[9], NULL);  CHECK(o.upper > o.lower);
         set_random_coordinates(start, o.n, o.lower, o.upper);

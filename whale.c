@@ -5,6 +5,11 @@
 #include "whale.h"
 
 options get_options (char **argv, bool single) {
+    unsigned int seed = 0;
+    FILE *devrnd = fopen("/dev/urandom","r");  CHECK(devrnd);
+    fread(&seed, 4, 1, devrnd);
+    int opened = fclose(devrnd);  CHECK(!opened);
+    srand(seed);
     options opt = {
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
@@ -29,11 +34,6 @@ real rand_real () {
 }
 
 population *get_population (model *m, options o) {
-    unsigned int seed = 0;
-    FILE *devrnd = fopen("/dev/urandom","r");  CHECK(devrnd);
-    fread(&seed, 4, 1, devrnd);
-    int opened = fclose(devrnd);  CHECK(!opened);
-    srand(seed);
     population *p =  malloc(sizeof(population));
     p->iterations = p->evaluations = 0;
     p->whales = malloc((size_t)o.whales * sizeof(point *));

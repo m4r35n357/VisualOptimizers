@@ -5,6 +5,11 @@
 #include "spiral.h"
 
 config get_config (char **argv, bool single) {
+    unsigned int seed = 0;
+    FILE *devrnd = fopen("/dev/urandom","r");  CHECK(devrnd);
+    fread(&seed, 4, 1, devrnd);
+    int opened = fclose(devrnd);  CHECK(!opened);
+    srand(seed);
     config conf = {
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
@@ -50,11 +55,6 @@ point *get_point (spiral *s, model *m, config c) {
 }
 
 spiral *get_spiral (model *m, config c) {
-    unsigned int seed = 0;
-    FILE *devrnd = fopen("/dev/urandom","r");  CHECK(devrnd);
-    fread(&seed, 4, 1, devrnd);
-    int opened = fclose(devrnd);  CHECK(!opened);
-    srand(seed);
     spiral *s =  malloc(sizeof(spiral));
     s->k_star = s->k = s->evaluations = 0;
     s->p = malloc((size_t)c.m * sizeof (point *));    CHECK(s->p);
