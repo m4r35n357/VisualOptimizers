@@ -1,11 +1,12 @@
 # Simple Gradient-free optimizers
 
-Currently just two candidates:
+Currently just two _real_ candidates:
 
-* Nelder-Mead
-* Spiral Optimization
+* Nelder-Mead (using "dual" regular initial simplexes)
+* Spiral Optimization (using "dual" rotations)
 
-Presented for application in local or global optimization in up to 8 dimensions.
+Presented for application in local or global optimization in up to 16 dimensions.
+There is also a "random" optimizer (with no OpenGL visualization) to use as a base-line.
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
 
@@ -85,6 +86,7 @@ shows expanded output - multiple Nelder-Mead, and spiral x 2 with additional NM 
 Nelder, John A.; R. Mead (1965). "A simplex method for function minimization". Computer Journal. 7 (4): 308–313. doi:10.1093/comjnl/7.4.308.
 
 This code was originally based on a [project](https://github.com/matteotiziano/nelder-mead) by Matteo Maggioni in 2023.
+It now uses "dual" regular simplexes (the best answer is selected), and has a "multi-run" mode for use as a global optimizer.
 
 The implementation in this project is a little different from those in most popular/common solvers in that it uses a pair of _regular_ (dual) simplexes (the best answer is selected), and the user must specify an initial "scale".
 Use the OpenGL visualizations to see how this works.
