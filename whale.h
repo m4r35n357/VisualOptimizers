@@ -8,6 +8,7 @@ typedef struct Options {
     int dim;   // number of dimensions
     int whales;   // number of whales
     int iterations;   // maximum number of allowed iterations
+    int nelder_mead;   // add an NM convergence step
     real lower;   // bottom of coordinate range
     real upper;   // top of coordinate range
     bool step_mode; // free-running or single-step algorithm

@@ -147,13 +147,14 @@ Parameter | Meaning
 3 | Number of dimensions
 4 | Number of search agents
 5 | Number of iterations
-6 | Lower limit
-7 | Upper limit
+6 | Optional Nelder-Mead convergence step (0 for no, 1 for yes)
+7 | Lower limit
+8 | Upper limit
 
 Examples
 ```
-./whale-ackley-std 3 0 3 50 100 -5 5
-./whale-ackley-gl 3 0 3 50 100 -5 5
+./whale-ackley-std 3 0 3 50 100 0 -5 5
+./whale-ackley-gl 3 0 3 50 100 0 -5 5
 ```
 
 ## Spiral Optimization
@@ -193,7 +194,7 @@ Parameter | Meaning
 
 Examples
 ```
-./stats 100 0.001 ./whale-dixon-price-std 3 0 6 100 100 -5 5
+./stats 100 0.001 ./whale-dixon-price-std 3 0 6 100 100 0 -5 5
 ./stats 100 -117 ./spiral-st-std 3 0 3 30 100 1 -5 5
 ```
 
@@ -211,25 +212,25 @@ The randomness is not reduced by refinement so global minima are always accessib
 The [Dixon-Price function](https://www.sfu.ca/~ssurjano/dixonpr.html) is a very good example of a function with a stubborn local minimum (and _all_ minima at non-zero coordinates) that gets harder to escape as dimension increases.
 To see the problem, try these commands, and then experiment with changing the number of agents, iterations etc.:
 ```
-./stats 100 0.001 ./whale-dixon-price-std 3 0 8 1000 1000 -10 10
+./stats 100 0.001 ./whale-dixon-price-std 3 0 8 1000 1000 0 -10 10
 ./stats 100 0.001 ./spiral-dixon-price-std 3 0 8 1000 1000 0 -10 10
 ./stats 100 0.001 ./spiral-dixon-price-std 3 0 8 1000 1000 1 -10 10
 ./nm-dixon-price-std 3 0 8 1.0e-6 100000 20.0 1 100 -10 10 >/dev/null
 ```
 The [Styblinski-Tang function](https://www.sfu.ca/~ssurjano/stybtang.html) is also troublesome, but less "pathlogical".
 ```
-./stats 100 -313.0 ./whale-st-std 3 0 8 100 200 -5 5
+./stats 100 -313.0 ./whale-st-std 3 0 8 100 200 0 -5 5
 ./stats 100 -313.0 ./spiral-st-std 3 0 8 100 1000 0 -5 5
 ./stats 100 -313.0 ./spiral-st-std 3 0 8 100 1000 1 -5 5
 ./nm-st-std 3 0 8 1.0e-6 100000 10.0 1 100 -5 5 >/dev/null
 ```
 Here are some 16-D starting points:
 ```
-./stats 100 0.001 ./whale-dixon-price-std 3 0 16 1000 1000 -10 10
+./stats 100 0.001 ./whale-dixon-price-std 3 0 16 1000 1000 0 -10 10
 ./nm-dixon-price-std 3 0 16 1.0e-6 100000 20.0 1 1000 -10 10 >/dev/null
 ```
 ```
-./stats 100 -626.0 ./whale-st-std 3 0 16 200 200 -5 5
+./stats 100 -626.0 ./whale-st-std 3 0 16 200 200 0 -5 5
 ./nm-st-std 3 0 16 1.0e-6 100000 10.0 1 1000 -5 5 >/dev/null
 ```
 Of course this is comparing apples to oranges, with just two functions, and the results are not always clear-cut (and vary with each run), but total iterations and function evaluations are shown explicitly in each case.

@@ -16,8 +16,9 @@ options get_options (char **argv, bool single) {
         .dim = (int)strtol(argv[3], NULL, BASE),
         .whales = (int)strtol(argv[4], NULL, BASE),
         .iterations = (int)strtol(argv[5], NULL, BASE),
-        .lower = strtold(argv[6], NULL),
-        .upper = strtold(argv[7], NULL),
+        .nelder_mead = (int)strtol(argv[6], NULL, BASE),
+        .lower = strtold(argv[7], NULL),
+        .upper = strtold(argv[8], NULL),
         .step_mode = single
     };
     CHECK(opt.places >= 3 && opt.places <= 36);
@@ -25,6 +26,7 @@ options get_options (char **argv, bool single) {
     CHECK(opt.dim >= 1 && opt.dim <= 100);
     CHECK(opt.whales >= 1 && opt.whales <= 10000);
     CHECK(opt.iterations >= 1 && opt.iterations <= 100000);
+    CHECK(opt.nelder_mead == 0 || opt.nelder_mead == 1);
     CHECK(opt.upper > opt.lower);
     return opt;
 }

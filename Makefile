@@ -42,7 +42,7 @@ mds-%-gl: %.o multidirectional.o simplex.o opengl.o multi-gl.o
 
 mds-gl: mds-michalewicz-gl mds-rastrigin-gl mds-sqrt-gl mds-ackley-gl mds-rosenbrock-gl mds-dixon-price-gl mds-st-gl mds-schwefel-gl mds-trid-gl
 
-whale-%-std: %.o whale.o main-whale.o
+whale-%-std: %.o whale.o nelder_mead.o simplex.o main-whale.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 whale-std: whale-michalewicz-std whale-sqrt-std whale-rosenbrock-std whale-box-std whale-rastrigin-std whale-ackley-std whale-dixon-price-std whale-st-std whale-schwefel-std whale-trid-std
@@ -64,119 +64,120 @@ spiral-gl: spiral-michalewicz-gl spiral-sqrt-gl spiral-rosenbrock-gl spiral-rast
 
 .PHONY: test test-16d test-8d test-4d test-3d test-2d test-1d ctags clean depclean
 
-test: test-4d test-3d test-2d test-1d
+test: test-8d test-3d
 
 test-16d: nogl
-	@./nm-ackley-std 3 0 16 1.0e-6 100000 5.0 1 1 -10 10 >/dev/null
-	@./whale-ackley-std 3 0 16 100 200 -10 10 >/dev/null
+	@./nm-ackley-std 3 0 16 1.0e-6 1000000 5.0 1 1 -10 10 >/dev/null
+	@./whale-ackley-std 3 0 16 500 500 0 -10 10 >/dev/null
 	@echo ""
-	@./nm-st-std 3 0 16 1.0e-6 100000 10.0 1 1 -5 5 >/dev/null
-	@./whale-st-std 3 0 16 100 200 -5 5 >/dev/null
+	@./nm-st-std 3 0 16 1.0e-6 1000000 10.0 1 1 -5 5 >/dev/null
+	@./whale-st-std 3 0 16 500 500 0 -5 5 >/dev/null
 	@echo ""
-	@./nm-dixon-price-std 3 0 16 1.0e-6 100000 1.0 1 1 -10 10 >/dev/null
-	@./whale-dixon-price-std 3 0 16 100 200 -10 10 >/dev/null
+	@./nm-dixon-price-std 3 0 16 1.0e-6 1000000 1.0 1 1 -10 10 >/dev/null
+	@./whale-dixon-price-std 3 0 16 500 500 0 -10 10 >/dev/null
 	@echo ""
-	@./nm-rosenbrock-std 3 0 16 1.0e-6 100000 1.0 1 1 -5 5 >/dev/null
-	@./whale-rosenbrock-std 3 0 16 100 200 -5 5 >/dev/null
+	@./nm-rosenbrock-std 3 0 16 1.0e-6 1000000 1.0 1 1 -5 5 >/dev/null
+	@./whale-rosenbrock-std 3 0 16 500 500 0 -5 5 >/dev/null
 	@echo ""
-	@./nm-trid-std 3 0 16 1.0e-6 100000 1.0 1 1 -100 100 >/dev/null
-	@./whale-trid-std 3 0 16 100 200 -100 100 >/dev/null
+	@./nm-trid-std 3 0 16 1.0e-6 1000000 1.0 1 1 -100 100 >/dev/null
+	@./whale-trid-std 3 0 16 500 500 0 -100 100 >/dev/null
 	@echo ""
-	@./nm-rastrigin-std 3 0 16 1.0e-6 100000 10.0 1 1 -32.768 32.768 >/dev/null
-	@./whale-rastrigin-std 3 0 16 100 200 -32.768 32.768 >/dev/null
+	@./nm-rastrigin-std 3 0 16 1.0e-6 1000000 10.0 1 1 -32.768 32.768 >/dev/null
+	@./whale-rastrigin-std 3 0 16 500 500 0 -32.768 32.768 >/dev/null
 	@echo ""
-	@./nm-sqrt-std 3 0 16 1.0e-6 100000 1.0 1 1 -5 5 >/dev/null
-	@./whale-sqrt-std 3 0 16 100 200 -5 5 >/dev/null
+	@./nm-sqrt-std 3 0 16 1.0e-6 1000000 1.0 1 1 -5 5 >/dev/null
+	@./whale-sqrt-std 3 0 16 500 500 0 -5 5 >/dev/null
 	@echo ""
-	@./nm-schwefel-std 3 0 16 1.0e-6 100000 100.0 1 1 -500 500 >/dev/null
-	@./whale-schwefel-std 3 0 16 100 200 -500.0 500.0 >/dev/null
+	@./nm-michalewicz-std 3 0 16 1.0e-6 1000000 1.0 0 1 -3.14 3.14 >/dev/null
+	@./whale-michalewicz-std 3 0 16 500 500 0 -3.14 3.14 >/dev/null
 	@echo ""
-	@./nm-michalewicz-std 3 0 16 1.0e-6 100000 1.0 0 1 -3.14 3.14 >/dev/null
-	@./whale-michalewicz-std 3 0 16 100 200 -3.14 3.14 >/dev/null
 
 test-8d: nogl
-	@./nm-ackley-std 3 0 8 1.0e-6 20000 3.0 1 1 -10 10 >/dev/null
-	@./whale-ackley-std 3 0 8 100 200 -10 10 >/dev/null
+	@./nm-ackley-std 3 0 8 1.0e-6 20000 3.0 1 10 -10 10 >/dev/null
+	@./whale-ackley-std 3 0 8 200 200 1 -10 10 >/dev/null
 	@echo ""
-	@./nm-st-std 3 0 8 1.0e-6 20000 10.0 1 1 -5 5 >/dev/null
-	@./whale-st-std 3 0 8 100 200 -5 5 >/dev/null
+	@./nm-st-std 3 0 8 1.0e-6 20000 10.0 1 10 -5 5 >/dev/null
+	@./whale-st-std 3 0 8 200 200 1 -5 5 >/dev/null
 	@echo ""
-	@./nm-dixon-price-std 3 0 8 1.0e-6 20000 1.0 1 1 -10 10 >/dev/null
-	@./whale-dixon-price-std 3 0 8 100 200 -10 10 >/dev/null
+	@./nm-dixon-price-std 3 0 8 1.0e-6 20000 1.0 1 10 -10 10 >/dev/null
+	@./whale-dixon-price-std 3 0 8 200 200 1 -10 10 >/dev/null
 	@echo ""
-	@./nm-rosenbrock-std 3 0 8 1.0e-6 20000 1.0 1 1 -5 5 >/dev/null
-	@./whale-rosenbrock-std 3 0 8 100 200 -5 5 >/dev/null
+	@./nm-rosenbrock-std 3 0 8 1.0e-6 20000 1.0 1 10 -5 5 >/dev/null
+	@./whale-rosenbrock-std 3 0 8 200 200 1 -5 5 >/dev/null
 	@echo ""
-	@./nm-trid-std 3 0 8 1.0e-6 20000 1.0 1 1 -25 25 >/dev/null
-	@./whale-trid-std 3 0 8 100 200 -25 25 >/dev/null
+	@./nm-trid-std 3 0 8 1.0e-6 20000 1.0 1 10 -25 25 >/dev/null
+	@./whale-trid-std 3 0 8 200 200 1 -25 25 >/dev/null
 	@echo ""
-	@./nm-rastrigin-std 3 0 8 1.0e-6 20000 10.0 1 1 -32.768 32.768 >/dev/null
-	@./whale-rastrigin-std 3 0 8 100 200 -32.768 32.768 >/dev/null
+	@./nm-rastrigin-std 3 0 8 1.0e-6 20000 10.0 1 10 -32.768 32.768 >/dev/null
+	@./whale-rastrigin-std 3 0 8 200 200 1 -32.768 32.768 >/dev/null
 	@echo ""
-	@./nm-sqrt-std 3 0 8 1.0e-6 20000 1.0 1 1 -5 5 >/dev/null
-	@./whale-sqrt-std 3 0 8 100 200 -5 5 >/dev/null
+	@./nm-sqrt-std 3 0 8 1.0e-6 20000 1.0 1 10 -5 5 >/dev/null
+	@./whale-sqrt-std 3 0 8 200 200 1 -5 5 >/dev/null
 	@echo ""
-	@./nm-schwefel-std 3 0 8 1.0e-6 20000 100.0 1 1 -500 500 >/dev/null
-	@./whale-schwefel-std 3 0 8 100 200 -500.0 500.0 >/dev/null
+	@./nm-schwefel-std 3 0 8 1.0e-6 100000 100.0 1 10 -500 500 >/dev/null
+	@./whale-schwefel-std 3 0 8 200 200 1 -500.0 500.0 >/dev/null
 	@echo ""
-	@./nm-michalewicz-std 3 0 8 1.0e-6 20000 1.0 0 1 -3.14 3.14 >/dev/null
-	@./whale-michalewicz-std 3 0 8 100 200 -3.14 3.14 >/dev/null
+	@./nm-michalewicz-std 3 0 8 1.0e-6 20000 1.0 0 10 -3.14 3.14 >/dev/null
+	@./whale-michalewicz-std 3 0 8 200 200 1 -3.14 3.14 >/dev/null
+	@echo ""
 
 test-4d: nogl
 	@./nm-ackley-std 3 0 4 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
-	@./whale-ackley-std 3 0 4 50 150 -10 10 >/dev/null
+	@./whale-ackley-std 3 0 4 50 150 0 -10 10 >/dev/null
 	@echo ""
 	@./nm-st-std 3 0 4 1.0e-6 10000 10.0 0 1 -5 5 >/dev/null
-	@./whale-st-std 3 0 4 50 150 -5 5 >/dev/null
+	@./whale-st-std 3 0 4 50 150 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-dixon-price-std 3 0 4 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
-	@./whale-dixon-price-std 3 0 4 50 150 -10 10 >/dev/null
+	@./whale-dixon-price-std 3 0 4 50 150 0 -10 10 >/dev/null
 	@echo ""
 	@./nm-rosenbrock-std 3 0 4 1.0e-6 100000 1.0 0 1 -5 5 >/dev/null
-	@./whale-rosenbrock-std 3 0 4 50 150 -5 5 >/dev/null
+	@./whale-rosenbrock-std 3 0 4 50 150 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-trid-std 3 0 4 1.0e-6 10000 1.0 1 1 -10 10 >/dev/null
-	@./whale-trid-std 3 0 4 50 150 -10 10 >/dev/null
+	@./whale-trid-std 3 0 4 50 150 0 -10 10 >/dev/null
 	@echo ""
 	@./nm-rastrigin-std 3 0 4 1.0e-6 10000 10.0 0 1 -32.768 32.768 >/dev/null
-	@./whale-rastrigin-std 3 0 4 50 150 -32.768 32.768 >/dev/null
+	@./whale-rastrigin-std 3 0 4 50 150 0 -32.768 32.768 >/dev/null
 	@echo ""
 	@./nm-sqrt-std 3 0 4 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
-	@./whale-sqrt-std 3 0 4 50 200 -5 5 >/dev/null
+	@./whale-sqrt-std 3 0 4 50 200 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-schwefel-std 3 0 4 1.0e-6 10000 100.0 0 1 -500 500 >/dev/null
-	@./whale-schwefel-std 3 0 4 50 150 -500.0 500.0 >/dev/null
+	@./whale-schwefel-std 3 0 4 50 150 0 -500.0 500.0 >/dev/null
 	@echo ""
 	@./nm-michalewicz-std 3 0 4 1.0e-6 10000 1.0 0 1 -3.14 3.14 >/dev/null
-	@./whale-michalewicz-std 3 0 4 50 150 -3.14 3.14 >/dev/null
+	@./whale-michalewicz-std 3 0 4 50 150 0 -3.14 3.14 >/dev/null
+	@echo ""
 
 test-3d: nogl
 	@./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
-	@./whale-ackley-std 3 0 3 30 100 -10 10 >/dev/null
+	@./whale-ackley-std 3 0 3 30 100 0 -10 10 >/dev/null
 	@echo ""
 	@./nm-st-std 3 0 3 1.0e-6 10000 10.0 0 1 -5 5 >/dev/null
-	@./whale-st-std 3 0 3 30 100 -5 5 >/dev/null
+	@./whale-st-std 3 0 3 30 100 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-dixon-price-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
-	@./whale-dixon-price-std 3 0 3 30 100 -10 10 >/dev/null
+	@./whale-dixon-price-std 3 0 3 30 100 0 -10 10 >/dev/null
 	@echo ""
 	@./nm-rosenbrock-std 3 0 3 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
-	@./whale-rosenbrock-std 3 0 3 30 100 -5 5 >/dev/null
+	@./whale-rosenbrock-std 3 0 3 30 100 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-trid-std 3 0 3 1.0e-6 10000 1.0 1 1 -5 5 >/dev/null
-	@./whale-trid-std 3 0 3 30 100 -5 5 >/dev/null
+	@./whale-trid-std 3 0 3 30 100 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-rastrigin-std 3 0 3 1.0e-6 10000 10.0 0 1 -32.768 32.768 >/dev/null
-	@./whale-rastrigin-std 3 0 3 30 100 -32.768 32.768 >/dev/null
+	@./whale-rastrigin-std 3 0 3 30 100 0 -32.768 32.768 >/dev/null
 	@echo ""
 	@./nm-sqrt-std 3 0 3 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
-	@./whale-sqrt-std 3 0 3 30 100 -5 5 >/dev/null
+	@./whale-sqrt-std 3 0 3 30 100 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-schwefel-std 3 0 3 1.0e-6 10000 100.0 0 1 -500 500 >/dev/null
-	@./whale-schwefel-std 3 0 3 30 100 -500.0 500.0 >/dev/null
+	@./whale-schwefel-std 3 0 3 30 100 0 -500.0 500.0 >/dev/null
 	@echo ""
 	@./nm-michalewicz-std 3 0 3 1.0e-6 10000 1.0 0 1 -3.14 3.14 >/dev/null
-	@./whale-michalewicz-std 3 0 3 30 100 -3.14 3.14 >/dev/null
+	@./whale-michalewicz-std 3 0 3 30 100 0 -3.14 3.14 >/dev/null
+	@echo ""
 
 test-2d: nogl
 	@./nm-ackley-std 3 0 2 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
@@ -187,11 +188,13 @@ test-2d: nogl
 	@./nm-box-std 3 0 2 1.0e-6 10000 1.0 0 1 0 4 >/dev/null
 	@./nm-schwefel-std 3 0 2 1.0e-6 10000 1.0 0 1 -500 500 >/dev/null
 	@./nm-michalewicz-std 3 0 2 1.0e-6 10000 1.0 0 1 -3.14 3.14 >/dev/null
+	@echo ""
 
 test-1d: nogl
 	@./nm-ackley-std 3 0 1 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
 	@./nm-st-std 3 0 1 1.0e-6 10000 10.0 0 1 -10 10 >/dev/null
 	@./nm-dixon-price-std 3 0 1 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
+	@echo ""
 
 ctags:
 	@/usr/bin/ctags *.h *.c
