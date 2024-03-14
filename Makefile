@@ -186,7 +186,7 @@ ctags:
 	@/usr/bin/ctags *.h *.c
 
 clean:
-	@rm -rf nm-* mds-* whale-* spiral-* *.o
+	@rm -rf *-std *-gl *.o
 
 depclean: clean
 	@rm -f *.d
