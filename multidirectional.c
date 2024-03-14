@@ -24,9 +24,9 @@ optimset get_settings (char **argv, bool single) {
     CHECK(opt.fmt == 0 || opt.fmt == 1);
     CHECK(opt.n >= 1);
     CHECK(opt.tolerance >= 1.0e-36L && opt.tolerance <= 1.0e-3L);
-    CHECK(opt.max_iterations >= 1 && opt.max_iterations <= 100000);
+    CHECK(opt.max_iterations >= 1 && opt.max_iterations <= 1000000);
     CHECK(opt.size >= 1.0e-12L && opt.size <= 1.0e3L);
-    CHECK(opt.init_mode == 0 || opt.init_mode == 1);
+    CHECK(opt.init_mode >= 0 && opt.init_mode <= 10000);
     return opt;
 }
 
