@@ -60,6 +60,11 @@ To install it:
 ```
 cp pre-commit .git/hooks
 ```
+Fast executables (using -O3 -fno-math-errno -flto) make a big difference with "bulk" running (e.g. multi-run Nelder-Mead, and particularly the stats script):
+```
+make CCC=gcc
+make CCC=clang
+```
 
 # Usage
 
