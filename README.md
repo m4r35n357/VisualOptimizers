@@ -87,7 +87,7 @@ Parameter | Meaning
 5 | Maximum number of iterations
 6 | Initial simplex scale
 7 | Adaptive (0 for no, 1 for yes)
-8 | Initialization (0 for explicit coordinates, 1 or more for number of random "runs")
+8 | Initialization (0 for explicit coordinates, 1 or more for number of random "runs") - ignored for GL
 
 If Initialization = 0
 Parameter | Meaning
@@ -103,6 +103,7 @@ Parameter | Meaning
 Examples
 ```
 ./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
+./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 100 -10 10
 ./nm-ackley-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
 ```
 
@@ -118,7 +119,7 @@ Parameter | Meaning
 4 | Maximum error for convergence
 5 | Maximum number of iterations
 6 | Initial simplex scale
-7 | Initialization (0 for explicit coordinates, 1 for random in range)
+7 | Initialization (0 for explicit coordinates, 1 or more for number of random "runs") - ignored for GL
 
 If Initialization = 0
 Parameter | Meaning
@@ -134,6 +135,7 @@ Parameter | Meaning
 Examples
 ```
 ./mds-ackley-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
+./mds-ackley-std 3 0 3 1.0e-6 10000 1.0 0 100 -10 10
 ./mds-ackley-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
 ```
 
@@ -156,13 +158,14 @@ Parameter | Meaning
 3 | Number of dimensions
 4 | Number of search agents
 5 | Number of iterations
-6 | Optional Nelder-Mead convergence step (0 for no, 1 for yes)
+6 | Optional Nelder-Mead convergence step (0 for no, 1 for yes) - ignored for GL
 7 | Lower limit
 8 | Upper limit
 
 Examples
 ```
 ./whale-ackley-std 3 0 3 50 100 0 -5 5
+./whale-ackley-std 3 0 3 50 100 1 -5 5
 ./whale-ackley-gl 3 0 3 50 100 0 -5 5
 ```
 
@@ -187,6 +190,7 @@ Parameter | Meaning
 Examples
 ```
 ./spiral-ackley-std 3 0 3 50 100 0 -5 5
+./spiral-ackley-std 3 0 3 50 100 1 -5 5
 ./spiral-ackley-gl 3 0 3 50 100 0 -5 5
 ```
 
