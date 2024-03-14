@@ -46,12 +46,8 @@ There should be NO errors or warnings.
 The default build requires OpenGL development libraries, and produces the *-gl executables.
 The nogl build is pure c99 and produces the *-std executables.
 See the Makefile for various additional "test" targets.
-Optionally
-```
-make ctags
-```
-can make things more comfortable in some editors and IDEs.
-There is a pre-commit script for use with git, which rebuilds everything and runs some tests.
+C tags are built automatically, which can make things more comfortable in some editors and IDEs.
+Also, there is a pre-commit script for use with git, which rebuilds everything and runs some tests.
 To run it:
 ```
 ./pre-commit

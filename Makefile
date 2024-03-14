@@ -20,7 +20,7 @@ endif
 
 all: nogl nm-gl mds-gl whale-gl spiral-gl
 
-nogl: nm-std mds-std whale-std spiral-std
+nogl: nm-std mds-std whale-std spiral-std ctags
 
 nm-%-std: %.o nelder_mead.o simplex.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
