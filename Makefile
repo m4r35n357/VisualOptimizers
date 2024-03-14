@@ -120,27 +120,43 @@ test-8d: nogl
 
 test-3d: nogl
 	@./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
+	@./mds-ackley-std 3 0 3 1.0e-6 10000 1.0 1 -10 10 >/dev/null
+	@./spiral-ackley-std 3 0 3 30 100 0 -10 10 >/dev/null
 	@./whale-ackley-std 3 0 3 30 100 0 -10 10 >/dev/null
 	@echo ""
 	@./nm-st-std 3 0 3 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
+	@./mds-st-std 3 0 3 1.0e-6 10000 1.0 1 -5 5 >/dev/null
+	@./spiral-st-std 3 0 3 30 100 0 -5 5 >/dev/null
 	@./whale-st-std 3 0 3 30 100 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-dixon-price-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
+	@./mds-dixon-price-std 3 0 3 1.0e-6 10000 1.0 1 -10 10 >/dev/null
+	@./spiral-dixon-price-std 3 0 3 30 100 0 -10 10 >/dev/null
 	@./whale-dixon-price-std 3 0 3 30 100 0 -10 10 >/dev/null
 	@echo ""
 	@./nm-rosenbrock-std 3 0 3 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
+	@./mds-rosenbrock-std 3 0 3 1.0e-6 10000 1.0 1 -5 5 >/dev/null
+	@./spiral-rosenbrock-std 3 0 3 30 100 0 -5 5 >/dev/null
 	@./whale-rosenbrock-std 3 0 3 30 100 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-trid-std 3 0 3 1.0e-6 10000 1.0 1 1 -5 5 >/dev/null
+	@./mds-trid-std 3 0 3 1.0e-6 10000 1.0 1 -5 5 >/dev/null
+	@./spiral-trid-std 3 0 3 30 100 0 -5 5 >/dev/null
 	@./whale-trid-std 3 0 3 30 100 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-rastrigin-std 3 0 3 1.0e-6 10000 10.0 0 1 -32.768 32.768 >/dev/null
+	@./mds-rastrigin-std 3 0 3 1.0e-6 10000 10.0 1 -32.768 32.768 >/dev/null
+	@./spiral-rastrigin-std 3 0 3 30 100 0 -32.768 32.768 >/dev/null
 	@./whale-rastrigin-std 3 0 3 30 100 0 -32.768 32.768 >/dev/null
 	@echo ""
 	@./nm-sqrt-std 3 0 3 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
+	@./mds-sqrt-std 3 0 3 1.0e-6 10000 1.0 1 -5 5 >/dev/null
+	@./spiral-sqrt-std 3 0 3 30 100 0 -5 5 >/dev/null
 	@./whale-sqrt-std 3 0 3 30 100 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-michalewicz-std 3 0 3 1.0e-6 10000 1.0 0 1 -3.14 3.14 >/dev/null
+	@./mds-michalewicz-std 3 0 3 1.0e-6 10000 1.0 1 -3.14 3.14 >/dev/null
+	@./spiral-michalewicz-std 3 0 3 30 100 0 -3.14 3.14 >/dev/null
 	@./whale-michalewicz-std 3 0 3 30 100 0 -3.14 3.14 >/dev/null
 	@echo ""
 
