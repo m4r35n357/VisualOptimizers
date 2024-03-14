@@ -236,11 +236,11 @@ The [Styblinski-Tang function](https://www.sfu.ca/~ssurjano/stybtang.html) is al
 Here are some 16-D starting points:
 ```
 ./stats 100 0.001 ./whale-dixon-price-std 3 0 16 1000 1000 0 -10 10
-./nm-dixon-price-std 3 0 16 1.0e-6 100000 20.0 1 1000 -10 10 >/dev/null
+./nm-dixon-price-std 3 0 16 1.0e-6 1000000 10.0 1 1000 -10 10 >/dev/null
 ```
 ```
 ./stats 100 -626.0 ./whale-st-std 3 0 16 200 200 0 -5 5
-./nm-st-std 3 0 16 1.0e-6 100000 10.0 1 1000 -5 5 >/dev/null
+./nm-st-std 3 0 16 1.0e-6 1000000 10.0 1 1000 -5 5 >/dev/null
 ```
 Of course this is comparing apples to oranges, with just two functions, and the results are not always clear-cut (and vary with each run), but total iterations and function evaluations are shown explicitly in each case.
 Do your own experiments!
