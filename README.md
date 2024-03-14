@@ -52,7 +52,11 @@ make ctags
 ```
 can make things more comfortable in some editors and IDEs.
 There is a pre-commit script for use with git, which rebuilds everything and runs some tests.
-To use it:
+To run it:
+```
+./pre-commit
+```
+To install it:
 ```
 cp pre-commit .git/hooks
 ```
