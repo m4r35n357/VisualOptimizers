@@ -86,16 +86,19 @@ void Animate () {
             line(v1[i], v1[k], get_colour(DARK_GREY));
             line(v2[i], v2[k], get_colour(DARK_GREY));
         }
-        ball(v1[i], !i ? get_colour(LIGHT_GREEN) : (i == 3 ? get_colour(LIGHT_RED) : get_colour(LIGHT_GREY)));
-        ball(v2[i], !i ? get_colour(LIGHT_GREEN) : (i == 3 ? get_colour(LIGHT_RED) : get_colour(LIGHT_GREY)));
+        ball(v1[i], !i ? get_colour(LIGHT_GREEN) : (i == 3 ? get_colour(LIGHT_RED) : get_colour(DARK_YELLOW)));
+        ball(v2[i], !i ? get_colour(LIGHT_GREEN) : (i == 3 ? get_colour(LIGHT_RED) : get_colour(DARK_CYAN)));
     }
 
     if (osd_active) {
-        point *best = s1->p[0].f <= s2->p[0].f ? s1->p : s2->p;
-        sprintf(hud, o.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
+        sprintf(hud1, o.fmt ? "%.3d %.3d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.3d %.3d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
                 s1->iterations, s1->evaluations,
-                o.places, best->x[0], o.places, best->x[1], o.places, best->x[2], o.places, best->f);
-        osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_YELLOW), hud);
+                o.places, s1->p[0].x[0], o.places, s1->p[0].x[1], o.places, s1->p[0].x[2], o.places, s1->p[0].f);
+        sprintf(hud2, o.fmt ? "%.3d %.3d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.3d %.3d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
+                s2->iterations, s2->evaluations,
+                o.places, s2->p[0].x[0], o.places, s2->p[0].x[1], o.places, s2->p[0].x[2], o.places, s2->p[0].f);
+        osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_YELLOW), hud1);
+        osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 40, get_colour(DARK_CYAN), hud2);
     }
 
     ReDraw();

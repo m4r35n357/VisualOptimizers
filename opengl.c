@@ -3,7 +3,7 @@
 #include <GL/freeglut.h>
 #include "opengl.h"
 
-char hud[128];
+char hud1[128], hud2[128];
 
 bool initial = true, finished1 = false, finished2 = false, paused = false, stepping = true, running = true, osd_active = true, centroid = false;
 

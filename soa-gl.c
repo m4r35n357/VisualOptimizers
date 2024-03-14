@@ -82,10 +82,10 @@ void Animate () {
     }
 
     if (osd_active) {
-        sprintf(hud, c.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
+        sprintf(hud1, c.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
                 s->k, s->evaluations,
                 c.places, s->centre->x[0], c.places, s->centre->x[1], c.places, s->centre->x[2], c.places, s->centre->f);
-        osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_YELLOW), hud);
+        osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_YELLOW), hud1);
     }
 
     ReDraw();

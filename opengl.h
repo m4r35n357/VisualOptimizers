@@ -20,7 +20,7 @@ typedef enum ColourCode {
 /*
  * Global variables
  */
-extern char hud[];
+extern char hud1[], hud2[];
 
 extern bool initial, finished1, finished2, paused, stepping, running, osd_active, centroid;
 
