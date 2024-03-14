@@ -102,8 +102,8 @@ Parameter | Meaning
 
 Examples
 ```
-./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
-./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 100 -10 10
+./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
+./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 100 -10 10 >/dev/null
 ./nm-ackley-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
 ```
 
@@ -134,8 +134,8 @@ Parameter | Meaning
 
 Examples
 ```
-./mds-ackley-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
-./mds-ackley-std 3 0 3 1.0e-6 10000 1.0 0 100 -10 10
+./mds-ackley-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
+./mds-ackley-std 3 0 3 1.0e-6 10000 1.0 0 100 -10 10 >/dev/null
 ./mds-ackley-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
 ```
 

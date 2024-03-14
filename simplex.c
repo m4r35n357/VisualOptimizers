@@ -114,7 +114,7 @@ void print_result (int n, const point *p, int places, int fmt) {
 }
 
 void print_progress (const simplex *s, const point *best, int places, int fmt) {
-    fprintf(stdout, " %04d %04d  [ ", s->iterations, s->evaluations);
+    fprintf(stdout, " %4d %4d  [ ", s->iterations, s->evaluations);
     for (int j = 0; j < s->n; j++) {
         fprintf(stdout, fmt ? "% .*Le " : "% .*Lf ", places, best->x[j]);
     }

@@ -104,11 +104,11 @@ bool woa (population *p, model *m, options o) {
             }
         }
         if (++p->iterations % 10 == 0) {
-            printf("  %05d %06d  [ ", p->iterations, p->evaluations);
+            printf("  %5d %6d  [ ", p->iterations, p->evaluations);
             for (int j = 0; j < o.dim; j++) {
                 printf(o.fmt ? "% .*Le " : "% .*Lf ", o.places, p->prey->x[j]);
             }
-            printf(o.fmt ? "]  % .*Le\n" : "]  % .*Lf\n", o.places, p->prey->f);
+            printf(o.fmt ? "] % .*Le\n" : "] % .*Lf\n", o.places, p->prey->f);
         }
         if (o.step_mode) return true;
         resume: ;

@@ -111,11 +111,11 @@ bool soa (spiral *s, model *m, config c) {
                 //s->restart = true;
             }
             if (++s->k % 10 == 0) {
-                printf("  %05d %06d  [ ", s->k, s->evaluations);
+                printf("  %5d %6d  [ ", s->k, s->evaluations);
                 for (int k = 0; k < c.n; k++) {
                     printf(c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->centre->x[k]);
                 }
-                printf(c.fmt ? "]  % .*Le\n" : "]  % .*Lf\n", c.places, s->centre->f);
+                printf(c.fmt ? "] % .*Le\n" : "] % .*Lf\n", c.places, s->centre->f);
             }
             if (c.step_mode) return true;
             resume: ;
