@@ -9,8 +9,8 @@ static minima *targets;
 static options o;
 static gl_point *v;
 
-static gl_point get_gl_point (real *point) {
-    return (gl_point){(float)point[0], (float)point[1], (float)point[2]};
+static gl_point get_gl_point (real *pt) {
+    return (gl_point){(float)pt[0], (float)pt[1], (float)pt[2]};
 }
 
 static void get_vertices (gl_point *vertices, point **whales) {
