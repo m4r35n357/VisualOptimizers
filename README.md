@@ -32,7 +32,7 @@ git clone https://github.com/m4r35n357/GradientFreeOptimizers/single-simplex-ic
 cd single-simplex-ic
 ```
 
-### c Build (Clang by default)
+### c Build (Clang with debug by default)
 
 ```
 make depclean
@@ -45,7 +45,6 @@ make nogl
 There should be NO errors or warnings.
 The default build requires OpenGL development libraries, and produces the *-gl executables.
 The nogl build is pure c99 and produces the *-std executables.
-See the Makefile for various additional "test" targets.
 C tags are built automatically, which can make things more comfortable in some editors and IDEs.
 Also, there is a pre-commit script for use with git, which rebuilds everything and runs some tests.
 To run it:
@@ -61,6 +60,16 @@ Fast executables (using -O3 -fno-math-errno -flto) make a big difference with "b
 make CCC=gcc
 make CCC=clang
 ```
+See the Makefile for various additional "test" targets.
+In particular:
+```
+make test-3d
+```
+shows basic program output (with stdout suppressed!) and can be used to get OpenGL commands by cut & paste - just change std to gl in the program names.
+```
+make test-8d
+```
+shows expanded output - multiple Nelder-Mead and multi-directional search runs, and whale with additional NM convergence step (again with stdout suppressed).
 
 # Usage
 

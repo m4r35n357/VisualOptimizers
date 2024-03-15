@@ -85,8 +85,8 @@ test-16d: nogl
 	@./nm-rastrigin-std 3 0 16 1.0e-6 1000000 10.0 1 1 -32.768 32.768 >/dev/null
 	@./whale-rastrigin-std 3 0 16 500 500 0 -32.768 32.768 >/dev/null
 	@echo ""
-	@./nm-sqrt-std 3 0 16 1.0e-6 1000000 1.0 1 1 -5 5 >/dev/null
-	@./whale-sqrt-std 3 0 16 500 500 0 -5 5 >/dev/null
+	@./nm-sqrt-std 3 0 16 1.0e-6 1000000 5.0 1 1 -10 10 >/dev/null
+	@./whale-sqrt-std 3 0 16 500 500 0 -10 10 >/dev/null
 	@echo ""
 	@./nm-michalewicz-std 3 0 16 1.0e-6 1000000 1.0 0 1 -3.14 3.14 >/dev/null
 	@./whale-michalewicz-std 3 0 16 500 500 0 -3.14 3.14 >/dev/null
@@ -111,8 +111,8 @@ test-8d: nogl
 	@./nm-rastrigin-std 3 0 8 1.0e-6 100000 10.0 1 10 -32.768 32.768 >/dev/null
 	@./whale-rastrigin-std 3 0 8 200 200 1 -32.768 32.768 >/dev/null
 	@echo ""
-	@./nm-sqrt-std 3 0 8 1.0e-6 100000 1.0 1 10 -5 5 >/dev/null
-	@./whale-sqrt-std 3 0 8 200 200 1 -5 5 >/dev/null
+	@./nm-sqrt-std 3 0 8 1.0e-6 100000 5.0 1 10 -10 10 >/dev/null
+	@./whale-sqrt-std 3 0 8 200 200 1 -10 10 >/dev/null
 	@echo ""
 	@./nm-michalewicz-std 3 0 8 1.0e-6 100000 1.0 0 10 -3.14 3.14 >/dev/null
 	@./whale-michalewicz-std 3 0 8 200 200 1 -3.14 3.14 >/dev/null
@@ -149,10 +149,10 @@ test-3d: nogl
 	@./spiral-rastrigin-std 3 0 3 30 100 0 -32.768 32.768 >/dev/null
 	@./whale-rastrigin-std 3 0 3 30 100 0 -32.768 32.768 >/dev/null
 	@echo ""
-	@./nm-sqrt-std 3 0 3 1.0e-6 100000 1.0 0 1 -5 5 >/dev/null
-	@./mds-sqrt-std 3 0 3 1.0e-6 100000 1.0 1 -5 5 >/dev/null
-	@./spiral-sqrt-std 3 0 3 30 100 0 -5 5 >/dev/null
-	@./whale-sqrt-std 3 0 3 30 100 0 -5 5 >/dev/null
+	@./nm-sqrt-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
+	@./mds-sqrt-std 3 0 3 1.0e-6 100000 5.0 1 -10 10 >/dev/null
+	@./spiral-sqrt-std 3 0 3 30 100 0 -10 10 >/dev/null
+	@./whale-sqrt-std 3 0 3 30 100 0 -10 10 >/dev/null
 	@echo ""
 	@./nm-schwefel-std 3 0 3 1.0e-6 100000 100.0 0 1 -500 500 >/dev/null
 	@./mds-schwefel-std 3 0 3 1.0e-6 100000 100.0 1 -500 500 >/dev/null
