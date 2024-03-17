@@ -78,7 +78,7 @@ void Animate () {
     }
 
     for (int i = 0; i < c.m; i++) {
-        ball(v[i], s->p[i] == s->centre ? get_colour(DARK_RED) : (s->restart ? get_colour(DARK_CYAN) : get_colour(DARK_GREEN)));
+        ball(v[i], s->p[i] == s->centre ? get_colour(DARK_RED) : get_colour(DARK_GREEN));
     }
 
     if (osd_active) {
@@ -93,7 +93,7 @@ void Animate () {
 
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc == 9);
+    CHECK(argc == 10);
 
     // options
     c = get_config(argv, true);

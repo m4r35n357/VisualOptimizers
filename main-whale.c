@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
             .fmt = o.fmt,
             .n = o.dim,
             .tolerance = 1.0e-6L,
-            .max_iterations = 10000,
+            .max_iterations = 1000000,
             .size = (o.upper - o.lower) / 1000.0L,
             .adaptive = o.dim >= 8,
             .step_mode = false

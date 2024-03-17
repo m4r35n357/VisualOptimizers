@@ -177,9 +177,7 @@ Examples
 ## Spiral Optimization
 
 Based on the algorithm described [here](https://en.wikipedia.org/wiki/Spiral_optimization_algorithm).
-
-There is experimental code for repeatedly restarting the algorithm until the result stops changing.
-Un-comment the commented line in spiral.c and rebuild to try it.
+The code supports both modes in that link: "Periodic Descent Direction Setting" and "Convergence Setting".
 
 Parameter | Meaning
 ----------|-----------
@@ -188,15 +186,16 @@ Parameter | Meaning
 3 | Number of dimensions
 4 | Number of search agents
 5 | Number of iterations
-6 | Spiral "rule" (0 for "periodic descent", 1 for "convergence")
-7 | Lower limit
-8 | Upper limit
+6 | Algorithm mode (0 for "periodic descent", 1 for "convergence")
+7 | Optional Nelder-Mead convergence step (0 for no, 1 for yes) - ignored for GL
+8 | Lower limit
+9 | Upper limit
 
 Examples
 ```
-./spiral-ackley-std 3 0 3 50 100 0 -5 5
-./spiral-ackley-std 3 0 3 50 100 1 -5 5
-./spiral-ackley-gl 3 0 3 50 100 0 -5 5
+./spiral-ackley-std 3 0 3 50 100 0 0 -5 5
+./spiral-ackley-std 3 0 3 50 100 1 0 -5 5
+./spiral-ackley-gl 3 0 3 50 100 0 0 -5 5
 ```
 
 ## "stats" script
@@ -213,8 +212,9 @@ Parameter | Meaning
 Examples
 ```
 ./stats 100 0.001 ./whale-dixon-price-std 3 0 6 100 100 0 -5 5
-./stats 100 -117 ./spiral-st-std 3 0 3 30 100 1 -5 5
+./stats 100 -117 ./spiral-st-std 3 0 3 30 100 1 0 -5 5
 ```
+For 8D or higher, one of the "CCC=" make options above is recommended.
 
 ## "Global" Optimization
 
