@@ -25,42 +25,42 @@ nogl: nm-std mds-std whale-std spiral-std ctags
 nm-%-std: %.o nelder_mead.o simplex.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-nm-std: nm-easom-std nm-michalewicz-std nm-rastrigin-std nm-sqrt-std nm-ackley-std nm-rosenbrock-std nm-dixon-price-std nm-st-std nm-box-std nm-schwefel-std nm-trid-std
+nm-std: nm-levy-std nm-easom-std nm-michalewicz-std nm-rastrigin-std nm-sqrt-std nm-ackley-std nm-rosenbrock-std nm-dixon-price-std nm-st-std nm-box-std nm-schwefel-std nm-trid-std
 
 nm-%-gl: %.o nelder_mead.o simplex.o opengl.o simplex-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-nm-gl: nm-easom-gl nm-michalewicz-gl nm-rastrigin-gl nm-sqrt-gl nm-ackley-gl nm-rosenbrock-gl nm-dixon-price-gl nm-st-gl nm-schwefel-gl nm-trid-gl
+nm-gl: nm-levy-gl nm-easom-gl nm-michalewicz-gl nm-rastrigin-gl nm-sqrt-gl nm-ackley-gl nm-rosenbrock-gl nm-dixon-price-gl nm-st-gl nm-schwefel-gl nm-trid-gl
 
 mds-%-std: %.o multidirectional.o simplex.o main-mds.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-mds-std: mds-easom-std mds-michalewicz-std mds-rastrigin-std mds-sqrt-std mds-ackley-std mds-rosenbrock-std mds-dixon-price-std mds-st-std mds-box-std mds-schwefel-std mds-trid-std
+mds-std: mds-levy-std mds-easom-std mds-michalewicz-std mds-rastrigin-std mds-sqrt-std mds-ackley-std mds-rosenbrock-std mds-dixon-price-std mds-st-std mds-box-std mds-schwefel-std mds-trid-std
 
 mds-%-gl: %.o multidirectional.o simplex.o opengl.o multi-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-mds-gl: mds-easom-gl mds-michalewicz-gl mds-rastrigin-gl mds-sqrt-gl mds-ackley-gl mds-rosenbrock-gl mds-dixon-price-gl mds-st-gl mds-schwefel-gl mds-trid-gl
+mds-gl: mds-levy-gl mds-easom-gl mds-michalewicz-gl mds-rastrigin-gl mds-sqrt-gl mds-ackley-gl mds-rosenbrock-gl mds-dixon-price-gl mds-st-gl mds-schwefel-gl mds-trid-gl
 
 whale-%-std: %.o whale.o nelder_mead.o simplex.o main-whale.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-whale-std: whale-easom-std whale-michalewicz-std whale-sqrt-std whale-rosenbrock-std whale-box-std whale-rastrigin-std whale-ackley-std whale-dixon-price-std whale-st-std whale-schwefel-std whale-trid-std
+whale-std: whale-levy-std whale-easom-std whale-michalewicz-std whale-sqrt-std whale-rosenbrock-std whale-box-std whale-rastrigin-std whale-ackley-std whale-dixon-price-std whale-st-std whale-schwefel-std whale-trid-std
 
 whale-%-gl: %.o whale.o opengl.o woa-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-whale-gl: whale-easom-gl whale-michalewicz-gl whale-sqrt-gl whale-rosenbrock-gl whale-rastrigin-gl whale-ackley-gl whale-dixon-price-gl whale-st-gl whale-schwefel-gl whale-trid-gl
+whale-gl: whale-levy-gl whale-easom-gl whale-michalewicz-gl whale-sqrt-gl whale-rosenbrock-gl whale-rastrigin-gl whale-ackley-gl whale-dixon-price-gl whale-st-gl whale-schwefel-gl whale-trid-gl
 
 spiral-%-std: %.o spiral.o main-spiral.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-spiral-std: spiral-easom-std spiral-michalewicz-std spiral-sqrt-std spiral-rosenbrock-std spiral-box-std spiral-rastrigin-std spiral-ackley-std spiral-dixon-price-std spiral-st-std spiral-schwefel-std spiral-trid-std
+spiral-std: spiral-levy-std spiral-easom-std spiral-michalewicz-std spiral-sqrt-std spiral-rosenbrock-std spiral-box-std spiral-rastrigin-std spiral-ackley-std spiral-dixon-price-std spiral-st-std spiral-schwefel-std spiral-trid-std
 
 spiral-%-gl: %.o spiral.o opengl.o soa-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-spiral-gl: spiral-easom-gl spiral-michalewicz-gl spiral-sqrt-gl spiral-rosenbrock-gl spiral-rastrigin-gl spiral-ackley-gl spiral-dixon-price-gl spiral-st-gl spiral-schwefel-gl spiral-trid-gl
+spiral-gl: spiral-levy-gl spiral-easom-gl spiral-michalewicz-gl spiral-sqrt-gl spiral-rosenbrock-gl spiral-rastrigin-gl spiral-ackley-gl spiral-dixon-price-gl spiral-st-gl spiral-schwefel-gl spiral-trid-gl
 
 .PHONY: test test-16d test-8d test-3d test-2d test-1d ctags clean depclean
 
@@ -78,6 +78,10 @@ test-16d: nogl
 	@./nm-dixon-price-std 3 0 16 1.0e-6 1000000 1.0 1 1 -10 10 >/dev/null
 	@./spiral-dixon-price-std 3 0 16 500 500 1 -10 10 >/dev/null
 	@./whale-dixon-price-std 3 0 16 500 500 0 -10 10 >/dev/null
+	@echo ""
+	@./nm-levy-std 3 0 16 1.0e-6 1000000 1.0 1 1 -10 10 >/dev/null
+	@./spiral-levy-std 3 0 16 500 500 1 -10 10 >/dev/null
+	@./whale-levy-std 3 0 16 500 500 0 -10 10 >/dev/null
 	@echo ""
 	@./nm-rosenbrock-std 3 0 16 1.0e-6 1000000 1.0 1 1 -5 5 >/dev/null
 	@./spiral-rosenbrock-std 3 0 16 500 500 1 -5 5 >/dev/null
@@ -119,6 +123,11 @@ test-8d: nogl
 	@./spiral-dixon-price-std 3 0 8 200 200 0 -10 10 >/dev/null
 	@./spiral-dixon-price-std 3 0 8 200 200 1 -10 10 >/dev/null
 	@./whale-dixon-price-std 3 0 8 200 200 1 -10 10 >/dev/null
+	@echo ""
+	@./nm-levy-std 3 0 8 1.0e-6 100000 1.0 1 1 -10 10 >/dev/null
+	@./spiral-levy-std 3 0 8 200 200 0 -10 10 >/dev/null
+	@./spiral-levy-std 3 0 8 200 200 1 -10 10 >/dev/null
+	@./whale-levy-std 3 0 8 200 200 0 -10 10 >/dev/null
 	@echo ""
 	@./nm-rosenbrock-std 3 0 8 1.0e-6 100000 1.0 1 10 -5 5 >/dev/null
 	@./spiral-rosenbrock-std 3 0 8 200 200 0 -10 10 >/dev/null
@@ -169,6 +178,12 @@ test-3d: nogl
 	@./spiral-dixon-price-std 3 0 3 30 100 0 -10 10 >/dev/null
 	@./spiral-dixon-price-std 3 0 3 30 100 1 -10 10 >/dev/null
 	@./whale-dixon-price-std 3 0 3 30 100 0 -10 10 >/dev/null
+	@echo ""
+	@./nm-levy-std 3 0 3 1.0e-6 100000 1.0 0 1 -10 10 >/dev/null
+	@./mds-levy-std 3 0 3 1.0e-6 100000 1.0 1 -10 10 >/dev/null
+	@./spiral-levy-std 3 0 3 30 100 0 -10 10 >/dev/null
+	@./spiral-levy-std 3 0 3 30 100 1 -10 10 >/dev/null
+	@./whale-levy-std 3 0 3 30 100 0 -10 10 >/dev/null
 	@echo ""
 	@./nm-rosenbrock-std 3 0 3 1.0e-6 100000 1.0 0 1 -5 5 >/dev/null
 	@./mds-rosenbrock-std 3 0 3 1.0e-6 100000 1.0 1 -5 5 >/dev/null
