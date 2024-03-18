@@ -21,9 +21,9 @@ minima *get_known_minima () {
     m->n_minima = 1;
     m->min = malloc((size_t)m->n_minima * sizeof (point)); CHECK(m->min);
     m->min[0].x = malloc((size_t)3 * sizeof (real)); CHECK(m->min->x);
-    m->min[0].x[0] = 0.0L;
-    m->min[0].x[1] = 1.0L;
-    m->min[0].x[2] = 2.0L;
+    m->min[0].x[0] = 1.0L;
+    m->min[0].x[1] = 2.0L;
+    m->min[0].x[2] = 3.0L;
     m->min[0].f = 0.0L;
     return m;
 }
@@ -32,8 +32,9 @@ void cost (int n, point *p, const model *m) {
     real sum_sqr = 0.0L;
     real sum_cos = 0.0L;
     for (int i = 0; i < n; i++) {
-        sum_sqr += SQR(p->x[i] - (real)i);
-        sum_cos += cosl(m->c * (p->x[i] - (real)i));
+    	real xi = p->x[i] - (real)(i + 1);
+        sum_sqr += SQR(xi);
+        sum_cos += cosl(m->c * xi);
     }
     p->f = -m->a * expl(-m->b * sqrtl(sum_sqr / n)) - expl(sum_cos / n) + m->a + expl(1.0L);
 }
