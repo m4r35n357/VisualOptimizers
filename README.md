@@ -69,7 +69,7 @@ shows basic program output (with stdout suppressed!) and can be used to get Open
 ```
 make test-8d
 ```
-shows expanded output - multiple Nelder-Mead and multi-directional search runs, and whale with additional NM convergence step (again with stdout suppressed).
+shows expanded output - multiple Nelder-Mead, and spiral x 2 with additional NM convergence step (again with stdout suppressed).
 
 # Usage
 
@@ -144,36 +144,6 @@ Examples
 ./mds-ackley-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
 ```
 
-## Whale Optimization
-
-Mirjalili, Seyedali, and Andrew Lewis. "The whale optimization algorithm." Advances in Engineering Software 95 (2016): 51-67.
-
-There is a Matlab implementation available from [here](https://mathworks.com/matlabcentral/fileexchange/55667-the-whale-optimization-algorithm)
-
-This is a _tweaked_ version of the algorithm as published:
-* "Prey" is explicitly excluded from the update code
-* Updated "prey" is calculated and used immediately rather than waiting for each iteration to complete
-* Out-of-range agents are randomly "teleported" instead of "clipping" them at the limit
-* I have attempted to set the algorithm variable "b" to something useful
-
-Parameter | Meaning
-----------|-----------
-1 | Display precision (3..36)
-2 | Floating point format (0 for fixed, 1 for exponential)
-3 | Number of dimensions
-4 | Number of search agents
-5 | Number of iterations
-6 | Optional Nelder-Mead convergence step (0 for no, 1 for yes) - ignored for GL
-7 | Lower limit
-8 | Upper limit
-
-Examples
-```
-./whale-ackley-std 3 0 3 50 100 0 -5 5
-./whale-ackley-std 3 0 3 50 100 1 -5 5
-./whale-ackley-gl 3 0 3 50 100 0 -5 5
-```
-
 ## Spiral Optimization
 
 Based on the algorithm described [here](https://en.wikipedia.org/wiki/Spiral_optimization_algorithm).
@@ -200,29 +170,27 @@ Examples
 
 ## "stats" script
 
-Runs either spiral or whale algorithms multiple times agains a target value.
+Runs spiral algorithm multiple times agains a target value.
 For each run, the output is green if the result is below the threshold, and red otherwise.
 
 Parameter | Meaning
 ----------|-----------
 1 | Number of runs
 2 | Threshold
-3+ | whale or spiral "std" command
+3+ | spiral "std" command
 
 Examples
 ```
-./stats 100 0.001 ./whale-dixon-price-std 3 0 6 100 100 0 -5 5
 ./stats 100 -117 ./spiral-st-std 3 0 3 30 100 1 0 -5 5
 ```
 For 8D or higher, one of the "CCC=" make options above is recommended.
 
 ## "Global" Optimization
 
-Whale and spiral are widely recognized as "global" optimizers.
-A common feature of these "meta-heuristic" methods is an _exploration_ phase followed by a _refinement_ phase (in practice the transition is a gradual process).
-Refinement is not the same as convergence, you get what you are given after a specified number of iterations!
-Perhaps "settling" is a better description.
-The refinement makes it harder to jump out of a stubborn local minimum.
+A common feature of "global" methods is an _exploration_ phase followed by a _refinement_ phase (in practice the transition is a gradual process).
+Refinement is not the same as convergence; you get what you are given after a specified number of iterations!
+Perhaps "settling" would be a better description.
+This refinement makes it harder to jump out of a stubborn local minimum.
 
 I have adapted the Nelder-Mead method to do a series of random runs, while keeping the best result. and accounting for total number of iterations and function evaluations.
 The randomness is not reduced by refinement so global minima are always accessible, even if not actually reached within the set limits.
@@ -230,25 +198,21 @@ The randomness is not reduced by refinement so global minima are always accessib
 The [Dixon-Price function](https://www.sfu.ca/~ssurjano/dixonpr.html) is a very good example of a function with a stubborn local minimum (and _all_ minima at non-zero coordinates) that gets harder to escape as dimension increases.
 To see the problem, try these commands, and then experiment with changing the number of agents, iterations etc.:
 ```
-./stats 100 0.001 ./whale-dixon-price-std 3 0 8 1000 1000 0 -10 10
 ./stats 100 0.001 ./spiral-dixon-price-std 3 0 8 1000 1000 0 -10 10
 ./stats 100 0.001 ./spiral-dixon-price-std 3 0 8 1000 1000 1 -10 10
 ./nm-dixon-price-std 3 0 8 1.0e-6 100000 20.0 1 100 -10 10 >/dev/null
 ```
 The [Styblinski-Tang function](https://www.sfu.ca/~ssurjano/stybtang.html) is also troublesome, but less "pathlogical".
 ```
-./stats 100 -313.0 ./whale-st-std 3 0 8 100 200 0 -5 5
 ./stats 100 -313.0 ./spiral-st-std 3 0 8 100 1000 0 -5 5
 ./stats 100 -313.0 ./spiral-st-std 3 0 8 100 1000 1 -5 5
 ./nm-st-std 3 0 8 1.0e-6 100000 10.0 1 100 -5 5 >/dev/null
 ```
 Here are some 16-D starting points:
 ```
-./stats 100 0.001 ./whale-dixon-price-std 3 0 16 1000 1000 0 -10 10
 ./nm-dixon-price-std 3 0 16 1.0e-6 1000000 10.0 1 1000 -10 10 >/dev/null
 ```
 ```
-./stats 100 -626.0 ./whale-st-std 3 0 16 200 200 0 -5 5
 ./nm-st-std 3 0 16 1.0e-6 1000000 10.0 1 1000 -5 5 >/dev/null
 ```
 Of course this is comparing apples to oranges, with just two functions, and the results are not always clear-cut (and vary with each run), but total iterations and function evaluations are shown explicitly in each case.
