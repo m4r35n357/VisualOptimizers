@@ -82,10 +82,10 @@ bool soa (spiral *s, model *m, config c) {
                 for (int k = 0; k < c.n; k++) {
                     if (i % 2) {
                         s->update->x[k] = s->centre->x[k] +
-                        	s->r * (k == 0 ? s->centre->x[c.n - 1] - s->p[i]->x[c.n - 1] : s->p[i]->x[k - 1] - s->centre->x[k - 1]);
+                            s->r * (k == 0 ? s->centre->x[c.n - 1] - s->p[i]->x[c.n - 1] : s->p[i]->x[k - 1] - s->centre->x[k - 1]);
                     } else {
                         s->update->x[k] = s->centre->x[k] +
-                        	s->r * (k == c.n - 1 ? s->centre->x[0] - s->p[i]->x[0] : s->p[i]->x[k + 1] - s->centre->x[k + 1]);
+                            s->r * (k == c.n - 1 ? s->centre->x[0] - s->p[i]->x[0] : s->p[i]->x[k + 1] - s->centre->x[k + 1]);
                     }
                     if (s->update->x[k] > c.upper || s->update->x[k] < c.lower) {
                         oor = true;

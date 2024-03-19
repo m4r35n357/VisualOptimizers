@@ -15,7 +15,7 @@ model *model_init () {
 }
 
 minima *get_known_minima () {
-	real PI = acosl(-1.0L);
+    real PI = acosl(-1.0L);
     minima *m = malloc(sizeof (minima)); CHECK(m);
     m->n_minima = 1;
     m->min = malloc((size_t)m->n_minima * sizeof (point)); CHECK(m->min);
@@ -28,7 +28,6 @@ minima *get_known_minima () {
 }
 
 void cost (int n, point *p, const model *m) {
-    CHECK(n % 2 == 0);
     real prod = 1.0L;
     real sum = 0.0L;
     for (int i = 0; i < n; i++) {

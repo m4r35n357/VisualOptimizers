@@ -29,14 +29,14 @@ minima *get_known_minima () {
 }
 
 static real omega (real x) {
-	return 1.0L + (x - 1.0L) / 4.0L;
+    return 1.0L + (x - 1.0L) / 4.0L;
 }
 
 void cost (int n, point *p, const model *m) {
-	real omega_n_1 = omega(p->x[n - 1]);
+    real omega_n_1 = omega(p->x[n - 1]);
     p->f = SQR(sinl(m->PI * omega(p->x[0]))) + SQR(omega_n_1 - 1.0L) * (1.0L + SQR(sinl(2.0L * m->PI * omega_n_1)));
     for (int i = 0; i < n - 1; i++) {
-    	real omega_i = omega(p->x[i]);
+        real omega_i = omega(p->x[i]);
         p->f += SQR(omega_i - 1.0L) * (1.0L + 10.0L * SQR(sinl(m->PI * omega_i + 1.0L)));
     }
 }

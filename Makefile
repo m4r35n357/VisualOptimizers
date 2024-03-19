@@ -119,7 +119,7 @@ test-8d: nogl
 	@./spiral-trid-std 3 0 8 200 500 1 1 -10 10 >/dev/null
 	@./whale-trid-std 3 0 8 200 500 1 -25 25 >/dev/null
 	@echo ""
-	@./nm-ackley-std 3 0 8 1.0e-6 100000 3.0 1 20 -10 10 >/dev/null
+	@./nm-ackley-std 3 0 8 1.0e-6 100000 5.0 1 20 -10 10 >/dev/null
 	@./spiral-ackley-std 3 0 8 200 500 0 1 -10 10 >/dev/null
 	@./spiral-ackley-std 3 0 8 200 500 1 1 -10 10 >/dev/null
 	@./whale-ackley-std 3 0 8 200 500 1 -10 10 >/dev/null
@@ -167,8 +167,8 @@ test-3d: nogl
 	@./spiral-trid-std 3 0 3 30 100 1 0 -5 5 >/dev/null
 	@./whale-trid-std 3 0 3 30 100 0 -5 5 >/dev/null
 	@echo ""
-	@./nm-ackley-std 3 0 3 1.0e-6 100000 1.0 0 1 -10 10 >/dev/null
-	@./mds-ackley-std 3 0 3 1.0e-6 100000 1.0 1 -10 10 >/dev/null
+	@./nm-ackley-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
+	@./mds-ackley-std 3 0 3 1.0e-6 100000 5.0 1 -10 10 >/dev/null
 	@./spiral-ackley-std 3 0 3 30 100 0 0 -10 10 >/dev/null
 	@./spiral-ackley-std 3 0 3 30 100 1 0 -10 10 >/dev/null
 	@./whale-ackley-std 3 0 3 30 100 0 -10 10 >/dev/null
@@ -197,8 +197,8 @@ test-3d: nogl
 	@./spiral-rastrigin-std 3 0 3 30 100 1 0 -32.768 32.768 >/dev/null
 	@./whale-rastrigin-std 3 0 3 30 100 0 -32.768 32.768 >/dev/null
 	@echo ""
-	@./nm-levy-std 3 0 3 1.0e-6 100000 10.0 0 1 -10 10 >/dev/null
-	@./mds-levy-std 3 0 3 1.0e-6 100000 10.0 1 -10 10 >/dev/null
+	@./nm-levy-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
+	@./mds-levy-std 3 0 3 1.0e-6 100000 5.0 1 -10 10 >/dev/null
 	@./spiral-levy-std 3 0 3 30 100 0 0 -10 10 >/dev/null
 	@./spiral-levy-std 3 0 3 30 100 1 0 -10 10 >/dev/null
 	@./whale-levy-std 3 0 3 30 100 0 -10 10 >/dev/null
@@ -221,22 +221,26 @@ test-3d: nogl
 	@./spiral-michalewicz-std 3 0 3 30 100 1 0 -3.14 3.14 >/dev/null
 	@./whale-michalewicz-std 3 0 3 30 100 0 -3.14 3.14 >/dev/null
 	@echo ""
-	@./nm-easom-std 3 0 4 1.0e-6 100000 1.0 0 1 -6.28 6.28 >/dev/null
-	@./mds-easom-std 3 0 4 1.0e-6 100000 1.0 1 -6.28 6.28 >/dev/null
-	@./spiral-easom-std 3 0 4 30 100 0 0 -6.28 6.28 >/dev/null
-	@./spiral-easom-std 3 0 4 30 100 1 0 -6.28 6.28 >/dev/null
-	@./whale-easom-std 3 0 4 30 100 0 -6.28 6.28 >/dev/null
+	@./nm-easom-std 3 0 3 1.0e-6 100000 1.0 0 1 -6.28 6.28 >/dev/null
+	@./mds-easom-std 3 0 3 1.0e-6 100000 1.0 1 -6.28 6.28 >/dev/null
+	@./spiral-easom-std 3 0 3 30 100 0 0 -6.28 6.28 >/dev/null
+	@./spiral-easom-std 3 0 3 30 100 1 0 -6.28 6.28 >/dev/null
+	@./whale-easom-std 3 0 3 30 100 0 -6.28 6.28 >/dev/null
 	@echo ""
 
 test-2d: nogl
+	@./nm-trid-std 3 0 2 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
 	@./nm-ackley-std 3 0 2 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
 	@./nm-st-std 3 0 2 1.0e-6 10000 10.0 0 1 -5 5 >/dev/null
 	@./nm-dixon-price-std 3 0 2 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
 	@./nm-rosenbrock-std 3 0 2 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
-	@./nm-trid-std 3 0 2 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
-	@./nm-box-std 3 0 2 1.0e-6 10000 1.0 0 1 0 4 >/dev/null
+	@./nm-rastrigin-std 3 0 2 1.0e-6 10000 10.0 0 1 -32.768 32.768 >/dev/null
+	@./nm-levy-std 3 0 2 1.0e-6 10000 10.0 0 1 -10 10 >/dev/null
+	@./nm-sqrt-std 3 0 2 1.0e-6 10000 5.0 0 1 -10 10 >/dev/null
 	@./nm-schwefel-std 3 0 2 1.0e-6 10000 1.0 0 1 -500 500 >/dev/null
 	@./nm-michalewicz-std 3 0 2 1.0e-6 10000 1.0 0 1 -3.14 3.14 >/dev/null
+	@./nm-easom-std 3 0 2 1.0e-6 10000 1.0 0 1 -6.28 6.28 >/dev/null
+	@./nm-box-std 3 0 2 1.0e-6 10000 1.0 0 1 0 4 >/dev/null
 	@echo ""
 
 test-1d: nogl

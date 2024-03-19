@@ -32,7 +32,7 @@ void cost (int n, point *p, const model *m) {
     real sum_sqr = 0.0L;
     real sum_cos = 0.0L;
     for (int i = 0; i < n; i++) {
-    	real xi = p->x[i] - (real)(i + 1);
+        real xi = p->x[i] - (real)(i + 1);
         sum_sqr += SQR(xi);
         sum_cos += cosl(m->c * xi);
     }
