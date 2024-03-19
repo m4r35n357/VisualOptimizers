@@ -20,18 +20,19 @@ minima *get_known_minima () {
     m->n_minima = 1;
     m->min = malloc((size_t)m->n_minima * sizeof (point)); CHECK(m->min);
     m->min[0].x = malloc((size_t)3 * sizeof (real)); CHECK(m->min[0].x);
-    m->min[0].x[0] = -2.903534L;
-    m->min[0].x[1] = -2.903534L;
-    m->min[0].x[2] = -2.903534L;
-    m->min[0].f = -39.16599L * 3.0L;
+    m->min[0].x[0] = -1.903534L;
+    m->min[0].x[1] = -0.903534L;
+    m->min[0].x[2] = 0.096466L;
+    m->min[0].f = -117.498497L;
     return m;
 }
 
 void cost (int n, point *p, const model *m) { (void)m;
     real sum = 0.0L;
     for (int i = 0; i < n; i++) {
-        real sqr = SQR(p->x[i]);
-        sum += SQR(sqr) - m->a * sqr + m->b * p->x[i];
+        real xi = p->x[i] - (real)(i + 1);
+        real sqr = SQR(xi);
+        sum += SQR(sqr) - m->a * sqr + m->b * xi;
     }
     p->f = 0.5L * sum;
 }
