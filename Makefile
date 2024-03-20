@@ -82,7 +82,7 @@ test-16d: nogl
 	@./spiral-rosenbrock-std 3 0 16 500 500 1 1 -20 20 >/dev/null
 	@./whale-rosenbrock-std 3 0 16 500 500 1 -20 20 >/dev/null
 	@echo ""
-	@./nm-st-std 3 0 16 1.0e-6 1000000 10.0 1 50 -20 20 >/dev/null
+	@./nm-st-std 3 0 16 1.0e-6 1000000 20.0 1 50 -20 20 >/dev/null
 	@./spiral-st-std 3 0 16 500 500 0 1 -20 20 >/dev/null
 	@./spiral-st-std 3 0 16 500 500 1 1 -20 20 >/dev/null
 	@./whale-st-std 3 0 16 500 500 1 -20 20 >/dev/null
@@ -102,7 +102,7 @@ test-16d: nogl
 	@./spiral-sqrt-std 3 0 16 500 500 1 1 -20 20 >/dev/null
 	@./whale-sqrt-std 3 0 16 500 500 1 -20 20 >/dev/null
 	@echo ""
-	@./nm-michalewicz-std 3 0 16 1.0e-6 1000000 1.0 1 50 -3.14 3.14 >/dev/null
+	@./nm-michalewicz-std 3 0 16 1.0e-6 1000000 3.0 1 50 -3.14 3.14 >/dev/null
 	@./spiral-michalewicz-std 3 0 16 500 500 0 1 -3.14 3.14 >/dev/null
 	@./spiral-michalewicz-std 3 0 16 500 500 1 1 -3.14 3.14 >/dev/null
 	@./whale-michalewicz-std 3 0 16 500 500 1 -3.14 3.14 >/dev/null
@@ -149,7 +149,7 @@ test-8d: nogl
 	@./spiral-sqrt-std 3 0 8 200 500 1 1 -10 10 >/dev/null
 	@./whale-sqrt-std 3 0 8 200 500 1 -10 10 >/dev/null
 	@echo ""
-	@./nm-michalewicz-std 3 0 8 1.0e-6 100000 1.0 1 20 -3.14 3.14 >/dev/null
+	@./nm-michalewicz-std 3 0 8 1.0e-6 100000 3.0 1 20 -3.14 3.14 >/dev/null
 	@./spiral-michalewicz-std 3 0 8 200 500 0 1 -3.14 3.14 >/dev/null
 	@./spiral-michalewicz-std 3 0 8 200 500 1 1 -3.14 3.14 >/dev/null
 	@./whale-michalewicz-std 3 0 8 200 500 1 -3.14 3.14 >/dev/null
@@ -179,8 +179,8 @@ test-3d: nogl
 	@./spiral-rosenbrock-std 3 0 3 30 100 1 0 -5 5 >/dev/null
 	@./whale-rosenbrock-std 3 0 3 30 100 0 -5 5 >/dev/null
 	@echo ""
-	@./nm-st-std 3 0 3 1.0e-6 100000 1.0 0 1 -5 5 >/dev/null
-	@./mds-st-std 3 0 3 1.0e-6 100000 1.0 1 -5 5 >/dev/null
+	@./nm-st-std 3 0 3 1.0e-6 100000 5.0 0 1 -5 5 >/dev/null
+	@./mds-st-std 3 0 3 1.0e-6 100000 5.0 1 -5 5 >/dev/null
 	@./spiral-st-std 3 0 3 30 100 0 0 -5 5 >/dev/null
 	@./spiral-st-std 3 0 3 30 100 1 0 -5 5 >/dev/null
 	@./whale-st-std 3 0 3 30 100 0 -5 5 >/dev/null
@@ -215,8 +215,8 @@ test-3d: nogl
 	@./spiral-schwefel-std 3 0 3 30 100 1 0 -500.0 500.0 >/dev/null
 	@./whale-schwefel-std 3 0 3 30 100 0 -500.0 500.0 >/dev/null
 	@echo ""
-	@./nm-michalewicz-std 3 0 3 1.0e-6 100000 1.0 0 1 -3.14 3.14 >/dev/null
-	@./mds-michalewicz-std 3 0 3 1.0e-6 100000 1.0 1 -3.14 3.14 >/dev/null
+	@./nm-michalewicz-std 3 0 3 1.0e-6 100000 3.0 0 1 -3.14 3.14 >/dev/null
+	@./mds-michalewicz-std 3 0 3 1.0e-6 100000 3.0 1 -3.14 3.14 >/dev/null
 	@./spiral-michalewicz-std 3 0 3 30 100 0 0 -3.14 3.14 >/dev/null
 	@./spiral-michalewicz-std 3 0 3 30 100 1 0 -3.14 3.14 >/dev/null
 	@./whale-michalewicz-std 3 0 3 30 100 0 -3.14 3.14 >/dev/null
