@@ -22,7 +22,7 @@ typedef enum ColourCode {
  */
 extern char hud1[], hud2[];
 
-extern bool initial, finished1, finished2, paused, stepping, running, osd_active, centroid;
+extern bool initial, finished1, finished2, paused, stepping, running, osd_active, centroid, minimum;
 
 extern float radius, ball_size;
 

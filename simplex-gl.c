@@ -82,7 +82,7 @@ void Animate () {
         }
     }
 
-    if (targets) {
+    if (targets && minimum) {
         for (int i = 0; i < targets->n_minima; i++) {
             ball(get_gl_point(targets->min[i].x), get_colour(LIGHT_YELLOW));
         }

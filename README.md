@@ -229,7 +229,8 @@ HOME | zoom in (fine)
 END | zoom out (fine)
 PAGE UP | zoom in (coarse)
 PAGE DOWN | zoom out (coarse)
-'C' 'c' | show centroid for Nelder-Mead
+'C' 'c' | show centroid (for Nelder-Mead only)
+'M' 'm' | show global minimum
 'G' 'g' | increase ball size
 'B' 'b' | decrease ball size
 'S' 's' | iterate

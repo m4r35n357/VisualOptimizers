@@ -75,7 +75,7 @@ void Animate () {
     line((gl_point){fmin, 0.0F, fmin}, (gl_point){fmax, 0.0F, fmin}, axis_colour);
     line((gl_point){0.0F, fmin, fmin}, (gl_point){0.0F, fmax, fmin}, axis_colour);
 
-    if (targets) {
+    if (targets && minimum) {
         for (int i = 0; i < targets->n_minima; i++) {
             ball(get_gl_point(targets->min[i].x), get_colour(LIGHT_YELLOW));
         }
