@@ -61,7 +61,7 @@ test-16d: nogl
 	@./spiral-trid-std 3 0 16 500 500 0 1 -100 100 >/dev/null
 	@./spiral-trid-std 3 0 16 500 500 1 1 -100 100 >/dev/null
 	@echo ""
-	@./nm-ackley-std 3 0 16 1.0e-6 1000000 5.0 1 50 -20 20 >/dev/null
+	@./nm-ackley-std 3 0 16 1.0e-6 1000000 20.0 1 50 -20 20 >/dev/null
 	@./spiral-ackley-std 3 0 16 500 500 0 1 -20 20 >/dev/null
 	@./spiral-ackley-std 3 0 16 500 500 1 1 -20 20 >/dev/null
 	@echo ""
@@ -73,7 +73,7 @@ test-16d: nogl
 	@./spiral-st-std 3 0 16 500 500 0 1 -20 20 >/dev/null
 	@./spiral-st-std 3 0 16 500 500 1 1 -20 20 >/dev/null
 	@echo ""
-	@./nm-dixon-price-std 3 0 16 1.0e-6 1000000 1.0 1 50 -5 5 >/dev/null
+	@./nm-dixon-price-std 3 0 16 1.0e-6 1000000 5.0 1 50 -5 5 >/dev/null
 	@./spiral-dixon-price-std 3 0 16 500 500 0 1 -5 5 >/dev/null
 	@./spiral-dixon-price-std 3 0 16 500 500 1 1 -5 5 >/dev/null
 	@echo ""
@@ -89,7 +89,7 @@ test-16d: nogl
 	@./spiral-michalewicz-std 3 0 16 500 500 0 1 -3.14 3.14 >/dev/null
 	@./spiral-michalewicz-std 3 0 16 500 500 1 1 -3.14 3.14 >/dev/null
 	@echo ""
-	@./nm-easom-std 3 0 16 1.0e-6 100000 1.0 1 50 -25 25 >/dev/null
+	@./nm-easom-std 3 0 16 1.0e-6 100000 5.0 1 50 -25 25 >/dev/null
 	@./spiral-easom-std 3 0 16 500 500 0 1 -25 25 >/dev/null
 	@./spiral-easom-std 3 0 16 500 500 1 1 -25 25 >/dev/null
 	@echo ""

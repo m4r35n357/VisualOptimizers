@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include <GL/freeglut.h>
 #include "opengl.h"
 #include "simplex.h"
@@ -141,9 +142,13 @@ int main (int argc, char **argv) {
         set_random_coordinates(start, o.n, o.lower, o.upper);
     } else {  // set initial point from command arguments
         CHECK(argc == 9 + o.n);
+        real max = 0.0L;
         for (int j = 0; j < o.n; j++) {
             start->x[j] = strtold(argv[9 + j], NULL);
+            if (fabsl(start->x[j]) > max) max = fabsl(start->x[j]);
         }
+        o.upper = 2.0L * max;
+        o.lower = -o.upper;
     }
     cost(o.n, start, m);
 

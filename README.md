@@ -219,6 +219,10 @@ Of course this is comparing apples to oranges, with just two functions, and the 
 Do your own experiments!
 
 ## OpenGL Keyboard Controls
+
+The global minimum is no longer displayed by default, use the 'm' key to show it at any time.
+For a more immersive "black-box" exerience, leave it until the end!
+
 Key | Action
 ----------|-----------
 UP arrow | increase view elevation

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include <GL/freeglut.h>
 #include "opengl.h"
 #include "simplex.h"
@@ -91,10 +92,10 @@ void Animate () {
     }
 
     if (osd_active) {
-        sprintf(hud1, o.fmt ? "%.3d %.3d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.3d %.3d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
+        sprintf(hud1, o.fmt ? "%3d %3d [ % .*Le % .*Le % .*Le ] % .*Le" : "%3d %3d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
                 s1->iterations, s1->evaluations,
                 o.places, s1->p[0].x[0], o.places, s1->p[0].x[1], o.places, s1->p[0].x[2], o.places, s1->p[0].f);
-        sprintf(hud2, o.fmt ? "%.3d %.3d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.3d %.3d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
+        sprintf(hud2, o.fmt ? "%3d %3d [ % .*Le % .*Le % .*Le ] % .*Le" : "%3d %3d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
                 s2->iterations, s2->evaluations,
                 o.places, s2->p[0].x[0], o.places, s2->p[0].x[1], o.places, s2->p[0].x[2], o.places, s2->p[0].f);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_CYAN), hud1);
@@ -134,9 +135,13 @@ int main (int argc, char **argv) {
         set_random_coordinates(start, o.n, o.lower, o.upper);
     } else {  // set initial point from command arguments
         CHECK(argc == 8 + o.n);
+        real max = 0.0L;
         for (int j = 0; j < o.n; j++) {
             start->x[j] = strtold(argv[8 + j], NULL);
+            if (fabsl(start->x[j]) > max) max = fabsl(start->x[j]);
         }
+        o.upper = 2.0L * max;
+        o.lower = -o.upper;
     }
     cost(o.n, start, m);
 
