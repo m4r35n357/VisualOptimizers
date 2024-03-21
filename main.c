@@ -33,14 +33,14 @@ int main (int argc, char **argv) {
     simplex *s1 = nm_simplex(o.n, o.size, start, o.adaptive);
     simplex *s2 = nm_simplex(o.n, o.size, start, o.adaptive);
     fprintf(stderr, o.fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter%s    % .*Lf\n",
-            GRY, NRM, o.places, distance(s1->n, s1->p, s1->p + s1->n));
+            GRY, NRM, o.places, distance(o.n, s1->p, s1->p + o.n));
 
     int runs = 1, iterations = 0, evaluations = 0;
     point *boat = get_point(o.n);
     copy_point(o.n, start, boat);
     do {
         for (int i = 0; i < o.n + 1; i++) {
-            cost(s1->n, s1->p + i, m);
+            cost(o.n, s1->p + i, m);
             s1->evaluations++;
             project(s2->p + i, s2, m, 1.0L, s2->p + i, start);
         }

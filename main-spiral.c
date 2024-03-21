@@ -19,13 +19,8 @@ int main(int argc, char *argv[]) {
     soa(sp, m, c);
 
     // print spiral solution
-    fprintf(stderr, "  %5d %6d ", sp->k, sp->evaluations);
-    fprintf(stderr, " %s[%s ", GRY, NRM);
-    for (int k = 0; k < c.n; k++) {
-        fprintf(stderr, c.fmt ? "% .*Le " : "% .*Lf ", c.places, sp->centre->x[k]);
-    }
-    fprintf(stderr, "%s]%s", GRY, NRM);
-    fprintf(stderr, c.fmt ? " % .*Le\n" : " % .*Lf\n", c.places, sp->centre->f);
+    fprintf(stderr, "  %5d %6d  ", sp->k, sp->evaluations);
+    print_result(c.n, sp->centre, c.places, c.fmt);
 
     if (c.nelder_mead) {
         // Nelder-Mead options
@@ -42,8 +37,8 @@ int main(int argc, char *argv[]) {
 
         // single simplex . . .
         simplex *si = nm_simplex(opt.n, opt.size, sp->centre, opt.adaptive);
-        for (int i = 0; i < si->n + 1; i++) {  // initial cost at simplex vertices
-            cost(si->n, si->p + i, m);
+        for (int i = 0; i < opt.n + 1; i++) {  // initial cost at simplex vertices
+            cost(opt.n, si->p + i, m);
             si->evaluations++;
         }
         sort(si);
@@ -53,11 +48,11 @@ int main(int argc, char *argv[]) {
 
         // print Nelder-Mead solution
         fprintf(stderr, "   %4d   %4d  ", si->iterations, si->evaluations);
-        print_result(si->n, si->p, opt.places, opt.fmt);
+        print_result(opt.n, si->p, opt.places, opt.fmt);
 
         // print best solution
         fprintf(stderr, "        %6d  ",sp->evaluations + si->evaluations);
-        print_result(si->n, si->p->f < sp->centre->f ? si->p : sp->centre, c.places, c.fmt);
+        print_result(opt.n, si->p->f < sp->centre->f ? si->p : sp->centre, opt.places, opt.fmt);
     }
 
     return 0;
