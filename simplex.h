@@ -50,13 +50,9 @@ point *get_point (int);
 
 void set_random_coordinates (point *p, int n, real lower, real upper);
 
-simplex *basic_simplex (int);
-
 void regular_simplex (simplex *, real, const point *);
 
 simplex *nm_simplex (int, real, const point *, bool);
-
-simplex *mds_simplex (int, real, const point *);
 
 real distance (int, const point *, const point *);
 
@@ -65,8 +61,6 @@ int compare (const void *, const void *);
 void sort (simplex *);
 
 void project (point *, simplex *, const model *, real, const point *, const point *);
-
-void multi_project (point *, simplex *, const model *, real);
 
 void copy_point (int, const point *, point *);
 

@@ -1,4 +1,11 @@
-# Various Gradient-free optimizers
+# Simple Gradient-free optimizers
+
+Currently just two candidates:
+
+* Nelder-Mead
+* Spiral Optimization
+
+Presented for application in local or global optimization in up to 8 dimensions.
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
 
@@ -112,42 +119,10 @@ Examples
 ./nm-ackley-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
 ```
 
-## Multi-directional Search
-
-See https://www.osti.gov/biblio/5827867 (incidentally, osti.gov have got their pronouns in a twist in a rather surprising way, see https://en.wikipedia.org/wiki/Virginia_Torczon)
-
-Parameter | Meaning
-----------|-----------
-1 | Display precision (3..36)
-2 | Floating point format (0 for fixed, 1 for exponential)
-3 | Number of dimensions
-4 | Maximum error for convergence
-5 | Maximum number of iterations
-6 | Initial simplex scale
-7 | Initialization (0 for explicit coordinates, 1 or more for number of random "runs") - ignored for GL
-
-If Initialization = 0
-Parameter | Meaning
-----------|-----------
-8+ | Coordinate list
-
-If Initialization = 1
-Parameter | Meaning
-----------|-----------
-8 | Lower limit
-9 | Upper limit
-
-Examples
-```
-./mds-ackley-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
-./mds-ackley-std 3 0 3 1.0e-6 10000 1.0 0 100 -10 10 >/dev/null
-./mds-ackley-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
-```
-
 ## Spiral Optimization
 
 Based on the algorithm described [here](https://en.wikipedia.org/wiki/Spiral_optimization_algorithm).
-The code supports both modes in that link: "Periodic Descent Direction Setting" and "Convergence Setting".
+The code supports both modes of operation described in that link: "Periodic Descent Direction Setting" and "Convergence Setting".
 
 Parameter | Meaning
 ----------|-----------
@@ -193,7 +168,8 @@ Perhaps "settling" would be a better description.
 This refinement makes it harder to jump out of a stubborn local minimum.
 
 I have adapted the Nelder-Mead method to do a series of random runs, while keeping the best result. and accounting for total number of iterations and function evaluations.
-The randomness is not reduced by refinement so global minima are always accessible, even if not actually reached within the set limits.
+This works surprisingly well!
+The randomness is not reduced by any refinement process so global minima are always accessible, even if not actually reached within the set limits.
 
 The [Dixon-Price function](https://www.sfu.ca/~ssurjano/dixonpr.html) is a very good example of a function with a stubborn local minimum (and _all_ minima at non-zero coordinates) that gets harder to escape as dimension increases.
 To see the problem, try these commands, and then experiment with changing the number of agents, iterations etc.:

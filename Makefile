@@ -18,31 +18,21 @@ endif
 %.o: %.c
 	$(CC) $(CFLAGS) -MT $@ -MMD -MP -c -o $@ $< $(WARNINGS)
 
-all: nogl nm-gl mds-gl spiral-gl
+all: nogl nm-gl spiral-gl
 
-nogl: nm-std mds-std spiral-std ctags
+nogl: nm-std spiral-std ctags
 
-nm-%-std: %.o nelder_mead.o simplex.o main.o
+nm-%-std: %.o nelder_mead.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 nm-std: nm-levy-std nm-easom-std nm-michalewicz-std nm-rastrigin-std nm-sqrt-std nm-ackley-std nm-rosenbrock-std nm-dixon-price-std nm-st-std nm-box-std nm-schwefel-std nm-trid-std
 
-nm-%-gl: %.o nelder_mead.o simplex.o opengl.o simplex-gl.o
+nm-%-gl: %.o nelder_mead.o opengl.o simplex-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
 nm-gl: nm-levy-gl nm-easom-gl nm-michalewicz-gl nm-rastrigin-gl nm-sqrt-gl nm-ackley-gl nm-rosenbrock-gl nm-dixon-price-gl nm-st-gl nm-schwefel-gl nm-trid-gl
 
-mds-%-std: %.o multidirectional.o simplex.o main-mds.o
-	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
-
-mds-std: mds-levy-std mds-easom-std mds-michalewicz-std mds-rastrigin-std mds-sqrt-std mds-ackley-std mds-rosenbrock-std mds-dixon-price-std mds-st-std mds-box-std mds-schwefel-std mds-trid-std
-
-mds-%-gl: %.o multidirectional.o simplex.o opengl.o multi-gl.o
-	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
-
-mds-gl: mds-levy-gl mds-easom-gl mds-michalewicz-gl mds-rastrigin-gl mds-sqrt-gl mds-ackley-gl mds-rosenbrock-gl mds-dixon-price-gl mds-st-gl mds-schwefel-gl mds-trid-gl
-
-spiral-%-std: %.o spiral.o nelder_mead.o simplex.o main-spiral.o
+spiral-%-std: %.o spiral.o nelder_mead.o main-spiral.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 spiral-std: spiral-levy-std spiral-easom-std spiral-michalewicz-std spiral-sqrt-std spiral-rosenbrock-std spiral-box-std spiral-rastrigin-std spiral-ackley-std spiral-dixon-price-std spiral-st-std spiral-schwefel-std spiral-trid-std
@@ -134,57 +124,46 @@ test-8d: nogl
 
 test-3d: nogl
 	@./nm-trid-std 3 0 3 1.0e-6 100000 1.0 1 1 -5 5 >/dev/null
-	@./mds-trid-std 3 0 3 1.0e-6 100000 1.0 1 -5 5 >/dev/null
 	@./spiral-trid-std 3 0 3 30 100 0 0 -5 5 >/dev/null
 	@./spiral-trid-std 3 0 3 30 100 1 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-ackley-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
-	@./mds-ackley-std 3 0 3 1.0e-6 100000 5.0 1 -10 10 >/dev/null
 	@./spiral-ackley-std 3 0 3 30 100 0 0 -10 10 >/dev/null
 	@./spiral-ackley-std 3 0 3 30 100 1 0 -10 10 >/dev/null
 	@echo ""
 	@./nm-rosenbrock-std 3 0 3 1.0e-6 100000 1.0 0 1 -5 5 >/dev/null
-	@./mds-rosenbrock-std 3 0 3 1.0e-6 100000 1.0 1 -5 5 >/dev/null
 	@./spiral-rosenbrock-std 3 0 3 30 100 0 0 -5 5 >/dev/null
 	@./spiral-rosenbrock-std 3 0 3 30 100 1 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-st-std 3 0 3 1.0e-6 100000 5.0 0 1 -5 5 >/dev/null
-	@./mds-st-std 3 0 3 1.0e-6 100000 5.0 1 -5 5 >/dev/null
 	@./spiral-st-std 3 0 3 30 100 0 0 -5 5 >/dev/null
 	@./spiral-st-std 3 0 3 30 100 1 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-dixon-price-std 3 0 3 1.0e-6 100000 1.0 0 1 -5 5 >/dev/null
-	@./mds-dixon-price-std 3 0 3 1.0e-6 100000 1.0 1 -5 5 >/dev/null
 	@./spiral-dixon-price-std 3 0 3 30 100 0 0 -5 5 >/dev/null
 	@./spiral-dixon-price-std 3 0 3 30 100 1 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-levy-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
-	@./mds-levy-std 3 0 3 1.0e-6 100000 5.0 1 -10 10 >/dev/null
 	@./spiral-levy-std 3 0 3 30 100 0 0 -10 10 >/dev/null
 	@./spiral-levy-std 3 0 3 30 100 1 0 -10 10 >/dev/null
 	@echo ""
 	@./nm-sqrt-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
-	@./mds-sqrt-std 3 0 3 1.0e-6 100000 5.0 1 -10 10 >/dev/null
 	@./spiral-sqrt-std 3 0 3 30 100 0 0 -10 10 >/dev/null
 	@./spiral-sqrt-std 3 0 3 30 100 1 0 -10 10 >/dev/null
 	@echo ""
 	@./nm-rastrigin-std 3 0 3 1.0e-6 1000000 5.0 0 1 -5 5 >/dev/null
-	@./mds-rastrigin-std 3 0 3 1.0e-6 1000000 5.0 1 -5 5 >/dev/null
 	@./spiral-rastrigin-std 3 0 3 30 100 0 0 -5 5 >/dev/null
 	@./spiral-rastrigin-std 3 0 3 30 100 1 0 -5 5 >/dev/null
 	@echo ""
 	@./nm-schwefel-std 3 0 3 1.0e-6 100000 100.0 0 1 -500 500 >/dev/null
-	@./mds-schwefel-std 3 0 3 1.0e-6 100000 100.0 1 -500 500 >/dev/null
 	@./spiral-schwefel-std 3 0 3 30 100 0 0 -500.0 500.0 >/dev/null
 	@./spiral-schwefel-std 3 0 3 30 100 1 0 -500.0 500.0 >/dev/null
 	@echo ""
 	@./nm-michalewicz-std 3 0 3 1.0e-6 100000 3.0 0 1 -3.14 3.14 >/dev/null
-	@./mds-michalewicz-std 3 0 3 1.0e-6 100000 3.0 1 -3.14 3.14 >/dev/null
 	@./spiral-michalewicz-std 3 0 3 30 100 0 0 -3.14 3.14 >/dev/null
 	@./spiral-michalewicz-std 3 0 3 30 100 1 0 -3.14 3.14 >/dev/null
 	@echo ""
 	@./nm-easom-std 3 0 3 1.0e-6 100000 1.0 0 1 -10 10 >/dev/null
-	@./mds-easom-std 3 0 3 1.0e-6 100000 1.0 1 -10 10 >/dev/null
 	@./spiral-easom-std 3 0 3 30 100 0 0 -10 10 >/dev/null
 	@./spiral-easom-std 3 0 3 30 100 1 0 -10 10 >/dev/null
 	@echo ""
