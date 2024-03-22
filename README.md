@@ -165,11 +165,11 @@ For 8D or higher, one of the "CCC=" make options above is recommended.
 A common feature of "global" methods is an _exploration_ phase followed by a _refinement_ phase (in practice the transition is a gradual process).
 Refinement is not the same as convergence; you get what you are given after a specified number of iterations!
 Perhaps "settling" would be a better description.
-This refinement makes it harder to jump out of a stubborn local minimum.
+In any case, this refinement stage makes it harder to jump out of a stubborn local minimum.
 
 I have adapted the Nelder-Mead method to do a series of random runs, while keeping the best result. and accounting for total number of iterations and function evaluations.
 This works surprisingly well!
-The randomness is not reduced by any refinement process so global minima are always accessible, even if not actually reached within the set limits.
+The random exploration is not limited by any refinement process so global minima are always accessible, even if not actually reached within the set limits.
 
 The [Dixon-Price function](https://www.sfu.ca/~ssurjano/dixonpr.html) is a very good example of a function with a stubborn local minimum (and _all_ minima at non-zero coordinates) that gets harder to escape as dimension increases.
 To see the problem, try these commands, and then experiment with changing the number of agents, iterations etc.:
@@ -209,8 +209,8 @@ HOME | zoom in (fine)
 END | zoom out (fine)
 PAGE UP | zoom in (coarse)
 PAGE DOWN | zoom out (coarse)
-'C' 'c' | show centroid (for Nelder-Mead only)
-'M' 'm' | show global minimum
+'C' 'c' | show/hide centroid (for Nelder-Mead only)
+'M' 'm' | show/hide global minimum
 'G' 'g' | increase ball size
 'B' 'b' | decrease ball size
 'S' 's' | iterate
