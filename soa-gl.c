@@ -3,11 +3,11 @@
 #include "opengl.h"
 #include "spiral.h"
 
-static spiral *s;
+static spiral *s1, *s2;
 static model *m;
 static minima *targets;
 static config c;
-static gl_point *v;
+static gl_point *v1, *v2;
 
 static gl_point get_gl_point (real *p) {
     return (gl_point){(float)p[0], (float)p[1], (float)p[2]};
@@ -26,8 +26,10 @@ void Animate () {
         if (initial) {
             initial = false;
         } else {
-            soa(s, m, c);
-            get_vertices(v, s->p);
+            soa(s1, m, c);
+            soa(s2, m, c);
+            get_vertices(v1, s1->p);
+            get_vertices(v2, s2->p);
         }
         if (stepping) paused = true;
     }
@@ -76,14 +78,19 @@ void Animate () {
     }
 
     for (int i = 0; i < c.m; i++) {
-        ball(v[i], s->p[i] == s->centre ? get_colour(DARK_RED) : get_colour(DARK_GREEN));
+        ball(v1[i], s1->p[i] == s1->centre ? get_colour(DARK_RED) : get_colour(DARK_GREEN));
+        ball(v2[i], s2->p[i] == s2->centre ? get_colour(DARK_MAGENTA) : get_colour(DARK_CYAN));
     }
 
     if (osd_active) {
         sprintf(hud1, c.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
-                s->k, s->evaluations,
-                c.places, s->centre->x[0], c.places, s->centre->x[1], c.places, s->centre->x[2], c.places, s->centre->f);
-        osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_YELLOW), hud1);
+                s1->k, s1->evaluations,
+                c.places, s1->centre->x[0], c.places, s1->centre->x[1], c.places, s1->centre->x[2], c.places, s1->centre->f);
+        sprintf(hud2, c.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
+                s2->k, s2->evaluations,
+                c.places, s2->centre->x[0], c.places, s2->centre->x[1], c.places, s2->centre->x[2], c.places, s2->centre->f);
+        osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_GREEN), hud1);
+        osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 40, get_colour(DARK_CYAN), hud2);
     }
 
     ReDraw();
@@ -99,18 +106,30 @@ int main (int argc, char **argv) {
     // model parameters
     m = model_init();
 
-    s = get_spiral(m, c);
+    s1 = get_spiral(m, c);
+    s2 = get_spiral(m, c);
+    for (int i = 0; i < c.m; i++) {
+        for (int k = 0; k < c.n; k++) {
+        	s2->p[i]->x[k] = s1->p[i]->x[k];
+        }
+    }
+    s2->best = s1->best;
+    s2->centre = s1->centre;
+    s2->dual_mode = true;
 
     // get minima for targets if known
     targets = get_known_minima();
 
-    v = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v);
-    get_vertices(v, s->p);
+    v1 = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v1);
+    get_vertices(v1, s1->p);
+    v2 = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v2);
+    get_vertices(v2, s2->p);
 
     radius = 1.5F * ((float)c.upper - (float)c.lower);
     ball_size = 0.005F * ((float)c.upper - (float)c.lower);
 
     ApplicationInit(argc, argv, "Spiral Optimization Visualizer");
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.
+
     return 0 ;          // Compiler requires this to be here. (Never reached)
 }

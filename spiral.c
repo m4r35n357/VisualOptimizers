@@ -61,7 +61,7 @@ spiral *get_spiral (model *m, config c) {
         if (s->p[i]->f < s->best->f) s->best = s->p[i];
     }
     s->centre = s->best;
-    s->looping = false;
+    s->looping = s->dual_mode = false;
     s->r = powl(0.1L / c.k_max, 1.0L / c.k_max);
     return s;
 }
@@ -74,8 +74,13 @@ bool soa (spiral *s, model *m, config c) {
             if (s->p[i] != s->centre) {
                 bool oor = false;
                 for (int k = 0; k < c.n; k++) {
-                    s->update->x[k] = s->centre->x[k] +
-                        s->r * (k ? s->p[i]->x[k - 1] - s->centre->x[k - 1] : s->centre->x[c.n - 1] - s->p[i]->x[c.n - 1]);
+                    if (s->dual_mode) {
+                        s->update->x[k] = s->centre->x[k] +
+                            s->r * (k == c.n - 1 ? s->centre->x[0] - s->p[i]->x[0] : s->p[i]->x[k + 1] - s->centre->x[k + 1]);
+                    } else {
+                        s->update->x[k] = s->centre->x[k] +
+                            s->r * (k == 0 ? s->centre->x[c.n - 1] - s->p[i]->x[c.n - 1] : s->p[i]->x[k - 1] - s->centre->x[k - 1]);
+                    }
                     if (s->update->x[k] > c.upper || s->update->x[k] < c.lower) {
                         oor = true;
                         break;
