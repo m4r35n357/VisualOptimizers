@@ -22,7 +22,7 @@ config get_config (char **, bool);
 
 typedef struct Spiral {
     point **p;
-    point *centre, *best, *update;
+    point *x_star, *best, *update;
     int k, k_star, evaluations;
     real r;
     bool looping, dual_mode;

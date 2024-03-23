@@ -17,11 +17,11 @@ int main(int argc, char *argv[]) {
     spiral *sp2 = get_spiral(m, c);
     for (int i = 0; i < c.m; i++) {
         for (int k = 0; k < c.n; k++) {
-        	sp2->p[i]->x[k] = sp1->p[i]->x[k];
+            sp2->p[i]->x[k] = sp1->p[i]->x[k];
         }
     }
     sp2->best = sp1->best;
-    sp2->centre = sp1->centre;
+    sp2->x_star = sp1->x_star;
     sp2->dual_mode = true;
 
     // run spiral optimizations
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
     soa(sp2, m, c);
 
     // print best spiral solution
-    point *best = sp1->centre->f <= sp2->centre->f ? sp1->centre : sp2->centre;
+    point *best = sp1->x_star->f <= sp2->x_star->f ? sp1->x_star : sp2->x_star;
     fprintf(stderr, "  %5d %6d  ", sp1->k + sp2->k, sp1->evaluations + sp2->evaluations);
     print_result(c.n, best, c.places, c.fmt);
 

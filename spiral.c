@@ -60,7 +60,7 @@ spiral *get_spiral (model *m, config c) {
     for (int i = 1; i < c.m; i++) {
         if (s->p[i]->f < s->best->f) s->best = s->p[i];
     }
-    s->centre = s->best;
+    s->x_star = s->best;
     s->looping = s->dual_mode = false;
     s->r = powl(0.1L / c.k_max, 1.0L / c.k_max);
     return s;
@@ -71,16 +71,16 @@ bool soa (spiral *s, model *m, config c) {
     while (s->k < c.k_max) {
         if (c.convergence) s->r = (s->k >= s->k_star + 2 * c.n) ? powl(0.1L, 0.5L / c.n) : 1.0L;
         for (int i = 0; i < c.m; i++) {
-            if (s->p[i] != s->centre) {
+            if (s->p[i] != s->x_star) {
                 bool oor = false;
                 for (int k = 0; k < c.n; k++) {
+                    real rot_k;
                     if (s->dual_mode) {
-                        s->update->x[k] = s->centre->x[k] +
-                            s->r * (k == c.n - 1 ? s->centre->x[0] - s->p[i]->x[0] : s->p[i]->x[k + 1] - s->centre->x[k + 1]);
+                        rot_k = k == c.n - 1 ? s->x_star->x[0] - s->p[i]->x[0] : s->p[i]->x[k + 1] - s->x_star->x[k + 1];
                     } else {
-                        s->update->x[k] = s->centre->x[k] +
-                            s->r * (k == 0 ? s->centre->x[c.n - 1] - s->p[i]->x[c.n - 1] : s->p[i]->x[k - 1] - s->centre->x[k - 1]);
+                        rot_k = k == 0 ? s->x_star->x[c.n - 1] - s->p[i]->x[c.n - 1] : s->p[i]->x[k - 1] - s->x_star->x[k - 1];
                     }
+                    s->update->x[k] = s->x_star->x[k] + s->r * rot_k;
                     if (s->update->x[k] > c.upper || s->update->x[k] < c.lower) {
                         oor = true;
                         break;
@@ -94,16 +94,16 @@ bool soa (spiral *s, model *m, config c) {
                 if (s->p[i]->f < s->best->f) s->best = s->p[i];
             }
         }
-        if (s->best->f < s->centre->f) {
-            s->centre = s->best;
+        if (s->best->f < s->x_star->f) {
+            s->x_star = s->best;
             s->k_star = s->k + 1;
         }
         if (++s->k % 10 == 0) {
             printf("  %5d %6d  [ ", s->k, s->evaluations);
             for (int k = 0; k < c.n; k++) {
-                printf(c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->centre->x[k]);
+                printf(c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->x_star->x[k]);
             }
-            printf(c.fmt ? "] % .*Le\n" : "] % .*Lf\n", c.places, s->centre->f);
+            printf(c.fmt ? "] % .*Le\n" : "] % .*Lf\n", c.places, s->x_star->f);
         }
         if (c.step_mode) return true;
         resume: ;

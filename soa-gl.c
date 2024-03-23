@@ -78,17 +78,17 @@ void Animate () {
     }
 
     for (int i = 0; i < c.m; i++) {
-        ball(v1[i], s1->p[i] == s1->centre ? get_colour(DARK_RED) : get_colour(DARK_GREEN));
-        ball(v2[i], s2->p[i] == s2->centre ? get_colour(DARK_MAGENTA) : get_colour(DARK_CYAN));
+        ball(v1[i], s1->p[i] == s1->x_star ? get_colour(DARK_RED) : get_colour(DARK_GREEN));
+        ball(v2[i], s2->p[i] == s2->x_star ? get_colour(DARK_MAGENTA) : get_colour(DARK_CYAN));
     }
 
     if (osd_active) {
         sprintf(hud1, c.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
                 s1->k, s1->evaluations,
-                c.places, s1->centre->x[0], c.places, s1->centre->x[1], c.places, s1->centre->x[2], c.places, s1->centre->f);
+                c.places, s1->x_star->x[0], c.places, s1->x_star->x[1], c.places, s1->x_star->x[2], c.places, s1->x_star->f);
         sprintf(hud2, c.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
                 s2->k, s2->evaluations,
-                c.places, s2->centre->x[0], c.places, s2->centre->x[1], c.places, s2->centre->x[2], c.places, s2->centre->f);
+                c.places, s2->x_star->x[0], c.places, s2->x_star->x[1], c.places, s2->x_star->x[2], c.places, s2->x_star->f);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_GREEN), hud1);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 40, get_colour(DARK_CYAN), hud2);
     }
@@ -110,11 +110,11 @@ int main (int argc, char **argv) {
     s2 = get_spiral(m, c);
     for (int i = 0; i < c.m; i++) {
         for (int k = 0; k < c.n; k++) {
-        	s2->p[i]->x[k] = s1->p[i]->x[k];
+            s2->p[i]->x[k] = s1->p[i]->x[k];
         }
     }
     s2->best = s1->best;
-    s2->centre = s1->centre;
+    s2->x_star = s1->x_star;
     s2->dual_mode = true;
 
     // get minima for targets if known
