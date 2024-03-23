@@ -21,7 +21,7 @@ count=1
 while [ $count -le $samples ]
 do
     echo -n "${GRY}$count ${NRM}"
-    set -- $($args 2>/dev/null | tail -1)
+    set -- $($args 2>&1 >/dev/null | tail -1)
     result=$*
     shift $(($# - 1))
     if [ $(echo "scale=9; $1 > $threshold;" | /usr/bin/bc)  -eq 1 ]

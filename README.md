@@ -86,7 +86,8 @@ Nelder, John A.; R. Mead (1965). "A simplex method for function minimization". C
 
 This code was originally based on a [project](https://github.com/matteotiziano/nelder-mead) by Matteo Maggioni in 2023.
 
-This implementation is a little different from those in most popular/common solvers in that it uses a pair of _regular_ (dual) simplexes, and the user must specify an initial "scale".
+The implementation in this project is a little different from those in most popular/common solvers in that it uses a pair of _regular_ (dual) simplexes (the best answer is selected), and the user must specify an initial "scale".
+Use the OpenGL visualizations to see how this works.
 The vertex coordinates are generated using an algorithm which is described (open access) [here](https://link.springer.com/article/10.1007/s11590-022-01953-y).
 The adaptive algorithm is described (open access) [here](https://www.researchgate.net/publication/225691623_Implementing_the_Nelder-Mead_simplex_algorithm_with_adaptive_parameters).
 
@@ -122,7 +123,11 @@ Examples
 ## Spiral Optimization
 
 Based on the algorithm described [here](https://en.wikipedia.org/wiki/Spiral_optimization_algorithm).
+Note that current versions of the algorithm use a fixed rotation angle of PI/2; versions using variable theta are now obsolete.
 The code supports both modes of operation described in that link: "Periodic Descent Direction Setting" and "Convergence Setting".
+
+The implementation in this project uses a "dual" mode in which both "directions of rotation" of the spiral are used, and the best answer selected.
+Use the OpenGL visualizations to see how this works.
 
 Parameter | Meaning
 ----------|-----------
@@ -132,7 +137,7 @@ Parameter | Meaning
 4 | Number of search agents
 5 | Number of iterations
 6 | Algorithm mode (0 for "periodic descent", 1 for "convergence")
-7 | Optional Nelder-Mead convergence step (0 for no, 1 for yes) - ignored for GL
+7 | Optional (non-dual) Nelder-Mead convergence step (0 for no, 1 for yes) - ignored for GL
 8 | Lower limit
 9 | Upper limit
 
