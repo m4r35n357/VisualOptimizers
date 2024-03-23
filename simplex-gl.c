@@ -27,14 +27,10 @@ void Animate () {
         if (initial) {
             initial = false;
         } else {
-            if (!finished1) {
-                nelder_mead(s1, m, &o);
-                get_vertices(v1, s1->p);
-            }
-            if (!finished2) {
-                nelder_mead(s2, m, &o);
-                get_vertices(v2, s2->p);
-            }
+            nelder_mead(s1, m, &o);
+            nelder_mead(s2, m, &o);
+            get_vertices(v1, s1->p);
+            get_vertices(v2, s2->p);
         }
         if (stepping) paused = true;
     }

@@ -26,10 +26,8 @@ void Animate () {
         if (initial) {
             initial = false;
         } else {
-            if (!finished1) {
-                soa(s, m, c);
-                get_vertices(v, s->p);
-            }
+            soa(s, m, c);
+            get_vertices(v, s->p);
         }
         if (stepping) paused = true;
     }
