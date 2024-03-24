@@ -67,8 +67,7 @@ int main (int argc, char **argv) {
     } while (++runs < o.init_mode);
 
     if (o.init_mode > 1) {
-        fprintf(stderr, "\r%5d %8d %8d ", runs, iterations, evaluations);
-        print_result(o.n, boat, o.places, o.fmt);
+        fprintf(stderr, "\r%5d %8d %8d\n", runs, iterations, evaluations);
     }
 
     return 0;
