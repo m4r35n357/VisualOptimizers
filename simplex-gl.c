@@ -35,42 +35,41 @@ void Animate () {
         if (stepping) paused = true;
     }
 
-    float fmin = (float)o.lower, fmax = (float)o.upper;
     rgb box_colour = get_colour(LIGHT_BLUE);
-    line((gl_point){fmin, fmin, fmin}, (gl_point){fmax, fmin, fmin}, box_colour);
-    line((gl_point){fmin, fmin, fmax}, (gl_point){fmax, fmin, fmax}, box_colour);
-    line((gl_point){fmin, fmax, fmin}, (gl_point){fmax, fmax, fmin}, box_colour);
-    line((gl_point){fmin, fmax, fmax}, (gl_point){fmax, fmax, fmax}, box_colour);
+    line((gl_point){lower, lower, lower}, (gl_point){upper, lower, lower}, box_colour);
+    line((gl_point){lower, lower, upper}, (gl_point){upper, lower, upper}, box_colour);
+    line((gl_point){lower, upper, lower}, (gl_point){upper, upper, lower}, box_colour);
+    line((gl_point){lower, upper, upper}, (gl_point){upper, upper, upper}, box_colour);
 
-    line((gl_point){fmin, fmin, fmin}, (gl_point){fmin, fmax, fmin}, box_colour);
-    line((gl_point){fmin, fmin, fmax}, (gl_point){fmin, fmax, fmax}, box_colour);
-    line((gl_point){fmax, fmin, fmin}, (gl_point){fmax, fmax, fmin}, box_colour);
-    line((gl_point){fmax, fmin, fmax}, (gl_point){fmax, fmax, fmax}, box_colour);
+    line((gl_point){lower, lower, lower}, (gl_point){lower, upper, lower}, box_colour);
+    line((gl_point){lower, lower, upper}, (gl_point){lower, upper, upper}, box_colour);
+    line((gl_point){upper, lower, lower}, (gl_point){upper, upper, lower}, box_colour);
+    line((gl_point){upper, lower, upper}, (gl_point){upper, upper, upper}, box_colour);
 
-    line((gl_point){fmin, fmin, fmin}, (gl_point){fmin, fmin, fmax}, box_colour);
-    line((gl_point){fmin, fmax, fmin}, (gl_point){fmin, fmax, fmax}, box_colour);
-    line((gl_point){fmax, fmin, fmin}, (gl_point){fmax, fmin, fmax}, box_colour);
-    line((gl_point){fmax, fmax, fmin}, (gl_point){fmax, fmax, fmax}, box_colour);
+    line((gl_point){lower, lower, lower}, (gl_point){lower, lower, upper}, box_colour);
+    line((gl_point){lower, upper, lower}, (gl_point){lower, upper, upper}, box_colour);
+    line((gl_point){upper, lower, lower}, (gl_point){upper, lower, upper}, box_colour);
+    line((gl_point){upper, upper, lower}, (gl_point){upper, upper, upper}, box_colour);
 
     rgb axis_colour = get_colour(DARK_BLUE);
-    line((gl_point){fmin, 0.0F, 0.0F}, (gl_point){fmax, 0.0F, 0.0F}, axis_colour);
-    line((gl_point){0.0F, fmin, 0.0F}, (gl_point){0.0F, fmax, 0.0F}, axis_colour);
-    line((gl_point){0.0F, 0.0F, fmin}, (gl_point){0.0F, 0.0F, fmax}, axis_colour);
+    line((gl_point){lower, centre, centre}, (gl_point){upper, centre, centre}, axis_colour);
+    line((gl_point){centre, lower, centre}, (gl_point){centre, upper, centre}, axis_colour);
+    line((gl_point){centre, centre, lower}, (gl_point){centre, centre, upper}, axis_colour);
 
-    line((gl_point){fmax, fmin, 0.0F}, (gl_point){fmax, fmax, 0.0F}, axis_colour);
-    line((gl_point){fmax, 0.0F, fmin}, (gl_point){fmax, 0.0F, fmax}, axis_colour);
-    line((gl_point){fmin, fmin, 0.0F}, (gl_point){fmin, fmax, 0.0F}, axis_colour);
-    line((gl_point){fmin, 0.0F, fmin}, (gl_point){fmin, 0.0F, fmax}, axis_colour);
+    line((gl_point){upper, lower, centre}, (gl_point){upper, upper, centre}, axis_colour);
+    line((gl_point){upper, centre, lower}, (gl_point){upper, centre, upper}, axis_colour);
+    line((gl_point){lower, lower, centre}, (gl_point){lower, upper, centre}, axis_colour);
+    line((gl_point){lower, centre, lower}, (gl_point){lower, centre, upper}, axis_colour);
 
-    line((gl_point){fmin, fmax, 0.0F}, (gl_point){fmax, fmax, 0.0F}, axis_colour);
-    line((gl_point){0.0F, fmax, fmin}, (gl_point){0.0F, fmax, fmax}, axis_colour);
-    line((gl_point){fmin, fmin, 0.0F}, (gl_point){fmax, fmin, 0.0F}, axis_colour);
-    line((gl_point){0.0F, fmin, fmin}, (gl_point){0.0F, fmin, fmax}, axis_colour);
+    line((gl_point){lower, upper, centre}, (gl_point){upper, upper, centre}, axis_colour);
+    line((gl_point){centre, upper, lower}, (gl_point){centre, upper, upper}, axis_colour);
+    line((gl_point){lower, lower, centre}, (gl_point){upper, lower, centre}, axis_colour);
+    line((gl_point){centre, lower, lower}, (gl_point){centre, lower, upper}, axis_colour);
 
-    line((gl_point){fmin, 0.0F, fmax}, (gl_point){fmax, 0.0F, fmax}, axis_colour);
-    line((gl_point){0.0F, fmin, fmax}, (gl_point){0.0F, fmax, fmax}, axis_colour);
-    line((gl_point){fmin, 0.0F, fmin}, (gl_point){fmax, 0.0F, fmin}, axis_colour);
-    line((gl_point){0.0F, fmin, fmin}, (gl_point){0.0F, fmax, fmin}, axis_colour);
+    line((gl_point){lower, centre, upper}, (gl_point){upper, centre, upper}, axis_colour);
+    line((gl_point){centre, lower, upper}, (gl_point){centre, upper, upper}, axis_colour);
+    line((gl_point){lower, centre, lower}, (gl_point){upper, centre, lower}, axis_colour);
+    line((gl_point){centre, lower, lower}, (gl_point){centre, upper, lower}, axis_colour);
 
     if (centroid) {
         for (int i = 0; i < 3; i++) {
@@ -177,6 +176,9 @@ int main (int argc, char **argv) {
     v2 = malloc(4 * sizeof (gl_point)); CHECK(v2);
     get_vertices(v2, s2->p);
 
+    lower = (float)o.lower;
+    upper = (float)o.upper;
+    centre = (float)(0.5L * (o.lower + o.upper));
     radius = 1.5F * ((float)o.upper - (float)o.lower);
     ball_size = 0.002F * ((float)o.upper - (float)o.lower);
 

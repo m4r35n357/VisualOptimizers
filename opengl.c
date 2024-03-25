@@ -7,7 +7,7 @@ char hud1[128], hud2[128];
 
 bool initial = true, paused = false, stepping = true, running = true, osd_active = true, centroid = false, minimum = false;
 
-float radius = 10.0F, elevation = 90.0F, azimuth = 0.0F, ball_size = 0.01F;
+float upper, lower, centre, radius = 10.0F, elevation = 90.0F, azimuth = 0.0F, ball_size = 0.01F;
 
 void SpecialKeyFunc (int Key, int x, int y) { (void)x; (void)y;
     switch (Key) {
@@ -81,6 +81,7 @@ void SetupView () {
     glTranslatef(0.0F, 0.0F, - radius);
     glRotatef(elevation, 1.0F, 0.0F, 0.0F);
     glRotatef(azimuth, 0.0F, 0.0F, 1.0F);
+    glTranslatef(- centre, - centre, - centre);
     glLightfv(GL_LIGHT0, GL_AMBIENT, (float[]){0.0F, 0.0F, 0.0F, 1.0F});
     glLightfv(GL_LIGHT0, GL_DIFFUSE, (float[]){1.0F, 1.0F, 1.0F, 1.0F});
     glLightfv(GL_LIGHT0, GL_SPECULAR, (float[]){1.0F, 1.0F, 1.0F, 1.0F});
