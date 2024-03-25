@@ -12,7 +12,7 @@ model *model_init () {
     model *m = malloc(sizeof (model));
     m->m = 1.0L;
     m->PI = acosl(-1.0L);
-    m->min_edge = -m->PI;  // inequality constraint
+    m->min_edge = 0.0L;  // inequality constraint
     m->max_edge = m->PI;  // inequality constraint
     return m;
 }
