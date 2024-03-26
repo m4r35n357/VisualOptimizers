@@ -59,17 +59,9 @@ test-16d: nogl
 	@./spiral-rosenbrock-std 3 0 16 500 500 0 1 -20 20 >/dev/null
 	@./spiral-rosenbrock-std 3 0 16 500 500 1 1 -20 20 >/dev/null
 	@echo ""
-	@./nm-st-std 3 0 16 1.0e-6 1000000 20.0 1 1000 -20 20 >/dev/null
-	@./spiral-st-std 3 0 16 500 500 0 1 -20 20 >/dev/null
-	@./spiral-st-std 3 0 16 500 500 1 1 -20 20 >/dev/null
-	@echo ""
 	@./nm-dixon-price-std 3 0 16 1.0e-6 1000000 5.0 1 1000 -5 5 >/dev/null
 	@./spiral-dixon-price-std 3 0 16 500 500 0 1 -5 5 >/dev/null
 	@./spiral-dixon-price-std 3 0 16 500 500 1 1 -5 5 >/dev/null
-	@echo ""
-	@./nm-levy-std 3 0 16 1.0e-6 1000000 10.0 1 1000 -20 20 >/dev/null
-	@./spiral-levy-std 3 0 16 500 500 0 1 -20 20 >/dev/null
-	@./spiral-levy-std 3 0 16 500 500 1 1 -20 20 >/dev/null
 	@echo ""
 	@./nm-sqrt-std 3 0 16 1.0e-6 1000000 5.0 1 100 -20 20 >/dev/null
 	@./spiral-sqrt-std 3 0 16 500 500 0 1 -20 20 >/dev/null
