@@ -25,27 +25,27 @@ nogl: nm-std spiral-std rnd-std ctags
 rnd-%-std: %.o nelder_mead.o main-random.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-rnd-std: rnd-levy-std rnd-easom-std rnd-michalewicz-std rnd-rastrigin-std rnd-sqrt-std rnd-ackley-std rnd-rosenbrock-std rnd-dixon-price-std rnd-st-std rnd-box-std rnd-schwefel-std rnd-trid-std
+rnd-std: rnd-levy-std rnd-easom-std rnd-michalewicz-std rnd-rastrigin-std rnd-treacle-std rnd-ackley-std rnd-rosenbrock-std rnd-dixon-price-std rnd-st-std rnd-box-std rnd-schwefel-std rnd-trid-std
 
 nm-%-std: %.o nelder_mead.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-nm-std: nm-levy-std nm-easom-std nm-michalewicz-std nm-rastrigin-std nm-sqrt-std nm-ackley-std nm-rosenbrock-std nm-dixon-price-std nm-st-std nm-box-std nm-schwefel-std nm-trid-std
+nm-std: nm-levy-std nm-easom-std nm-michalewicz-std nm-rastrigin-std nm-treacle-std nm-ackley-std nm-rosenbrock-std nm-dixon-price-std nm-st-std nm-box-std nm-schwefel-std nm-trid-std
 
 nm-%-gl: %.o nelder_mead.o opengl.o simplex-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-nm-gl: nm-levy-gl nm-easom-gl nm-michalewicz-gl nm-rastrigin-gl nm-sqrt-gl nm-ackley-gl nm-rosenbrock-gl nm-dixon-price-gl nm-st-gl nm-schwefel-gl nm-trid-gl
+nm-gl: nm-levy-gl nm-easom-gl nm-michalewicz-gl nm-rastrigin-gl nm-treacle-gl nm-ackley-gl nm-rosenbrock-gl nm-dixon-price-gl nm-st-gl nm-schwefel-gl nm-trid-gl
 
 spiral-%-std: %.o spiral.o nelder_mead.o main-spiral.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-spiral-std: spiral-levy-std spiral-easom-std spiral-michalewicz-std spiral-sqrt-std spiral-rosenbrock-std spiral-box-std spiral-rastrigin-std spiral-ackley-std spiral-dixon-price-std spiral-st-std spiral-schwefel-std spiral-trid-std
+spiral-std: spiral-levy-std spiral-easom-std spiral-michalewicz-std spiral-treacle-std spiral-rosenbrock-std spiral-box-std spiral-rastrigin-std spiral-ackley-std spiral-dixon-price-std spiral-st-std spiral-schwefel-std spiral-trid-std
 
 spiral-%-gl: %.o spiral.o opengl.o soa-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-spiral-gl: spiral-levy-gl spiral-easom-gl spiral-michalewicz-gl spiral-sqrt-gl spiral-rosenbrock-gl spiral-rastrigin-gl spiral-ackley-gl spiral-dixon-price-gl spiral-st-gl spiral-schwefel-gl spiral-trid-gl
+spiral-gl: spiral-levy-gl spiral-easom-gl spiral-michalewicz-gl spiral-treacle-gl spiral-rosenbrock-gl spiral-rastrigin-gl spiral-ackley-gl spiral-dixon-price-gl spiral-st-gl spiral-schwefel-gl spiral-trid-gl
 
 .PHONY: test test-16d test-8d test-3d test-2d test-1d ctags clean depclean
 
@@ -72,10 +72,10 @@ test-16d: nogl
 	@./spiral-dixon-price-std 3 0 16 500 500 0 0 -5 5 >/dev/null
 	@./spiral-dixon-price-std 3 0 16 500 500 1 0 -5 5 >/dev/null
 	@echo ""
-	@./rnd-sqrt-std 3 0 16 500000 -20 20 >/dev/null
-	@./nm-sqrt-std 3 0 16 1.0e-6 1000000 5.0 1 100 -20 20 >/dev/null
-	@./spiral-sqrt-std 3 0 16 500 500 0 0 -20 20 >/dev/null
-	@./spiral-sqrt-std 3 0 16 500 500 1 0 -20 20 >/dev/null
+	@./rnd-treacle-std 3 0 16 500000 -20 20 >/dev/null
+	@./nm-treacle-std 3 0 16 1.0e-6 1000000 5.0 1 100 -20 20 >/dev/null
+	@./spiral-treacle-std 3 0 16 500 500 0 0 -20 20 >/dev/null
+	@./spiral-treacle-std 3 0 16 500 500 1 0 -20 20 >/dev/null
 	@echo ""
 	@./rnd-michalewicz-std 3 0 16 500000 0 3.14 >/dev/null
 	@./nm-michalewicz-std 3 0 16 1.0e-6 1000000 1.0 1 100 0 3.14 >/dev/null
@@ -119,10 +119,10 @@ test-8d: nogl
 	@./spiral-levy-std 3 0 8 200 500 0 0 -10 10 >/dev/null
 	@./spiral-levy-std 3 0 8 200 500 1 0 -10 10 >/dev/null
 	@echo ""
-	@./rnd-sqrt-std 3 0 8 200000 -10 10 >/dev/null
-	@./nm-sqrt-std 3 0 8 1.0e-6 100000 5.0 1 50 -10 10 >/dev/null
-	@./spiral-sqrt-std 3 0 8 200 500 0 0 -10 10 >/dev/null
-	@./spiral-sqrt-std 3 0 8 200 500 1 0 -10 10 >/dev/null
+	@./rnd-treacle-std 3 0 8 200000 -10 10 >/dev/null
+	@./nm-treacle-std 3 0 8 1.0e-6 100000 5.0 1 50 -10 10 >/dev/null
+	@./spiral-treacle-std 3 0 8 200 500 0 0 -10 10 >/dev/null
+	@./spiral-treacle-std 3 0 8 200 500 1 0 -10 10 >/dev/null
 	@echo ""
 	@./rnd-michalewicz-std 3 0 8 200000 0 3.14 >/dev/null
 	@./nm-michalewicz-std 3 0 8 1.0e-6 100000 1.0 1 50 0 3.14 >/dev/null
@@ -166,10 +166,10 @@ test-3d: nogl
 	@./spiral-levy-std 3 0 3 30 100 0 0 -10 10 >/dev/null
 	@./spiral-levy-std 3 0 3 30 100 1 0 -10 10 >/dev/null
 	@echo ""
-	@./rnd-sqrt-std 3 0 3 6000 -10 10 >/dev/null
-	@./nm-sqrt-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
-	@./spiral-sqrt-std 3 0 3 30 100 0 0 -10 10 >/dev/null
-	@./spiral-sqrt-std 3 0 3 30 100 1 0 -10 10 >/dev/null
+	@./rnd-treacle-std 3 0 3 6000 -10 10 >/dev/null
+	@./nm-treacle-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
+	@./spiral-treacle-std 3 0 3 30 100 0 0 -10 10 >/dev/null
+	@./spiral-treacle-std 3 0 3 30 100 1 0 -10 10 >/dev/null
 	@echo ""
 	@./rnd-rastrigin-std 3 0 3 6000 -5 5 >/dev/null
 	@./nm-rastrigin-std 3 0 3 1.0e-6 1000000 5.0 0 1 -5 5 >/dev/null
@@ -199,7 +199,7 @@ test-2d: nogl
 	@./nm-st-std 3 0 2 1.0e-6 10000 10.0 0 1 -5 5 >/dev/null
 	@./nm-dixon-price-std 3 0 2 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
 	@./nm-levy-std 3 0 2 1.0e-6 10000 10.0 0 1 -10 10 >/dev/null
-	@./nm-sqrt-std 3 0 2 1.0e-6 10000 5.0 0 1 -10 10 >/dev/null
+	@./nm-treacle-std 3 0 2 1.0e-6 10000 5.0 0 1 -10 10 >/dev/null
 	@./nm-rastrigin-std 3 0 2 1.0e-6 10000 10.0 0 1 -32.768 32.768 >/dev/null
 	@./nm-schwefel-std 3 0 2 1.0e-6 10000 1.0 0 1 -500 500 >/dev/null
 	@./nm-michalewicz-std 3 0 2 1.0e-6 10000 1.0 0 1 -3.14 3.14 >/dev/null
