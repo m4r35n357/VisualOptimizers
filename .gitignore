@@ -3,6 +3,7 @@
 *.so
 *~
 
+rnd-*
 nm-*
 mds-*
 whale-*

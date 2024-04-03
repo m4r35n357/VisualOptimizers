@@ -51,6 +51,19 @@ spiral-gl: spiral-sphere-gl spiral-levy-gl spiral-easom-gl spiral-michalewicz-gl
 
 test: test-8d test-3d
 
+test-32d: nogl
+	@./nm-sphere-std 1 0 32 1.0e-6 1000000 1.0 1 10 -30 30 >/dev/null
+	@echo ""
+	@./nm-trid-std 1 0 32 1.0e-6 1000000 1.0 1 10 -200 200 >/dev/null
+	@echo ""
+	@./nm-rosenbrock-std 1 0 32 1.0e-6 1000000 1.0 1 10 -30 30 >/dev/null
+	@echo ""
+	@./nm-treacle-std 1 0 32 1.0e-6 1000000 30.0 1 1000 -30 30 >/dev/null
+	@echo ""
+	@./nm-dixon-price-std 1 0 32 1.0e-6 1000000 5.0 1 1000 -5 5 >/dev/null
+	@echo ""
+	@./nm-easom-std 1 0 32 1.0e-6 1000000 30.0 1 10 -30 30 >/dev/null
+
 test-16d: nogl
 	@./rnd-sphere-std 3 0 16 500000 -20 20 >/dev/null
 	@./nm-sphere-std 3 0 16 1.0e-6 1000000 1.0 1 10 -20 20 >/dev/null

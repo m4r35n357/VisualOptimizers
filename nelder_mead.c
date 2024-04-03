@@ -17,7 +17,7 @@ optimset get_settings (char **argv, bool single) {
         .init_mode = (int)strtol(argv[8], NULL, BASE),
         .step_mode = single
     };
-    CHECK(opt.places >= 3 && opt.places <= 36);
+    CHECK(opt.places >= 1 && opt.places <= 36);
     CHECK(opt.fmt == 0 || opt.fmt == 1);
     CHECK(opt.n >= 1);
     CHECK(opt.tolerance >= 1.0e-36L && opt.tolerance <= 1.0e-3L);
