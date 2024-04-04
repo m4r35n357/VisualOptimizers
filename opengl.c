@@ -3,7 +3,7 @@
 #include <GL/freeglut.h>
 #include "opengl.h"
 
-char hud1[128], hud2[128];
+char hud1[128], hud2[128], hud3[128];
 
 bool initial = true, paused = false, stepping = true, running = true, osd_active = true, centroid = false, minimum = false;
 
@@ -101,7 +101,8 @@ rgb get_colour (colour_code colour) {
         (rgb){1.0F, 0.0F, 0.0F}, (rgb){0.0F, 1.0F, 0.0F}, (rgb){0.0F, 0.0F, 1.0F},
         (rgb){0.2F, 0.2F, 0.2F}, (rgb){0.8F, 0.8F, 0.8F}, (rgb){0.5F, 0.5F, 0.5F},
         (rgb){0.5F, 0.5F, 0.0F}, (rgb){0.0F, 0.5F, 0.5F}, (rgb){0.5F, 0.0F, 0.5F},
-        (rgb){0.5F, 0.0F, 0.0F}, (rgb){0.0F, 0.5F, 0.0F}, (rgb){0.0F, 0.0F, 0.5F}
+        (rgb){0.5F, 0.0F, 0.0F}, (rgb){0.0F, 0.5F, 0.0F}, (rgb){0.0F, 0.0F, 0.5F},
+        (rgb){1.0F, 1.0F, 1.0F}
     }[colour];
 }
 

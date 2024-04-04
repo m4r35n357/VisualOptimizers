@@ -72,13 +72,13 @@ void Animate () {
 
     if (targets && minimum) {
         for (int i = 0; i < targets->n_minima; i++) {
-            ball(get_gl_point(targets->min[i].x), get_colour(LIGHT_YELLOW));
+            ball(get_gl_point(targets->min[i].x), get_colour(WHITE));
         }
     }
 
     for (int i = 0; i < c.m; i++) {
-        ball(v1[i], s1->p[i] == s1->x_star ? get_colour(DARK_RED) : get_colour(DARK_GREEN));
-        ball(v2[i], s2->p[i] == s2->x_star ? get_colour(DARK_MAGENTA) : get_colour(DARK_CYAN));
+        ball(v1[i], s1->p[i] == s1->x_star ? get_colour(LIGHT_RED) : get_colour(DARK_GREEN));
+        ball(v2[i], s2->p[i] == s2->x_star ? get_colour(LIGHT_MAGENTA) : get_colour(DARK_CYAN));
     }
 
     if (osd_active) {
@@ -90,6 +90,13 @@ void Animate () {
                 c.places, s2->x_star->x[0], c.places, s2->x_star->x[1], c.places, s2->x_star->x[2], c.places, s2->x_star->f);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_GREEN), hud1);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 40, get_colour(DARK_CYAN), hud2);
+        if (targets && minimum) {
+            sprintf(hud3, c.fmt ? "%3s %5s [ % .*Le % .*Le % .*Le ] % .*Le" : "%3s %5s [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
+                    " ", " ",
+                    c.places, targets->min[0].x[0], c.places, targets->min[0].x[1], c.places, targets->min[0].x[2],
+                    c.places, targets->min[0].f);
+            osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 60, get_colour(LIGHT_GREY), hud3);
+        }
     }
 
     ReDraw();

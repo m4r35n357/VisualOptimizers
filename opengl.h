@@ -14,13 +14,13 @@ typedef struct triple_f {
 typedef enum ColourCode {
     LIGHT_YELLOW=0, LIGHT_CYAN=1, LIGHT_MAGENTA=2, LIGHT_RED=3, LIGHT_GREEN=4, LIGHT_BLUE=5,
     DARK_GREY=6, LIGHT_GREY=7, MID_GREY=8,
-    DARK_YELLOW=9, DARK_CYAN=10, DARK_MAGENTA=11, DARK_RED=12, DARK_GREEN=13, DARK_BLUE=14
+    DARK_YELLOW=9, DARK_CYAN=10, DARK_MAGENTA=11, DARK_RED=12, DARK_GREEN=13, DARK_BLUE=14, WHITE=15
 } colour_code;
 
 /*
  * Global variables
  */
-extern char hud1[], hud2[];
+extern char hud1[], hud2[], hud3[];
 
 extern bool initial, paused, stepping, running, osd_active, centroid, minimum;
 

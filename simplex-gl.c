@@ -80,7 +80,7 @@ void Animate () {
 
     if (targets && minimum) {
         for (int i = 0; i < targets->n_minima; i++) {
-            ball(get_gl_point(targets->min[i].x), get_colour(LIGHT_YELLOW));
+            ball(get_gl_point(targets->min[i].x), get_colour(WHITE));
         }
     }
 
@@ -102,6 +102,13 @@ void Animate () {
                 o.places, s2->p[0].x[0], o.places, s2->p[0].x[1], o.places, s2->p[0].x[2], o.places, s2->p[0].f);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_CYAN), hud1);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 40, get_colour(DARK_YELLOW), hud2);
+        if (targets && minimum) {
+            sprintf(hud3, o.fmt ? "%3s %3s [ % .*Le % .*Le % .*Le ] % .*Le" : "%3s %3s [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
+                    " ", " ",
+                    o.places, targets->min[0].x[0], o.places, targets->min[0].x[1], o.places, targets->min[0].x[2],
+                    o.places, targets->min[0].f);
+            osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 60, get_colour(LIGHT_GREY), hud3);
+        }
     }
 
     ReDraw();
