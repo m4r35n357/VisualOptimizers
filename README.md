@@ -1,12 +1,13 @@
 # Simple Gradient-free optimizers
 
-Currently just two _real_ candidates:
+Currently three candidates:
 
 * Nelder-Mead (using "dual" regular initial simplexes)
 * Spiral Optimization (using "dual" rotations)
+* Optimization by Cut (NEW)
 
 Presented for application in local or global optimization in up to 16 dimensions.
-There is also a "random" optimizer (with no OpenGL visualization) to use as a base-line.
+Additionally there is a "random" optimizer (with no OpenGL visualization) to use as a base-line.
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
 
@@ -148,6 +149,29 @@ Examples
 ./spiral-ackley-std 3 0 3 50 100 0 0 -5 5
 ./spiral-ackley-std 3 0 3 50 100 1 0 -5 5
 ./spiral-ackley-gl 3 0 3 50 100 0 0 -5 5
+```
+
+##  Optimization by Cut
+
+Based on the algorithm described [here](https://arxiv.org/abs/2207.05953v1).
+
+Use the OpenGL visualizations to see how this works.
+
+Parameter | Meaning
+----------|-----------
+1 | Display precision (3..36)
+2 | Floating point format (0 for fixed, 1 for exponential)
+3 | Number of dimensions
+4 | Number of search agents
+5 | Number of iterations
+6 | Lower limit
+7 | Upper limit
+
+Examples
+```
+./cut-ackley-std 3 0 3 50 100 -5 5
+./cut-ackley-std 3 0 3 50 100 -5 5
+./cut-ackley-gl 3 0 3 50 100 -5 5
 ```
 
 ## "stats" script
