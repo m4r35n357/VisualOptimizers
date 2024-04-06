@@ -5,4 +5,4 @@ set -e
 
 make clean
 make -j 4
-make test
+make test-3d

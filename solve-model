@@ -1,0 +1,25 @@
+#!/bin/sh
+
+GRY='\e[1;30m'
+RED='\e[0;31m'
+GRN='\e[0;32m'
+MGT='\e[0;35m'
+NRM='\e[0m'
+
+args="$0 $*"
+n_args=$(($# + 1))
+echo "${GRY}args ${NRM}${n_args}${GRY} [ ${MGT}${args}${GRY} ]${NRM}" >&2
+
+model=$1
+order=$2
+agents=$3
+iterations=$4
+nm=$5
+lower=$6
+upper=$7
+
+./nm-$model-std 3 0 $order 1.0e-6 1000000 $(echo "scale=3; 0.5 * ($upper - $lower);" | /usr/bin/bc) 1 $nm $lower $upper >/dev/null
+./spiral-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null
+./spiral-$model-std 3 0 $order $agents $iterations 1 $lower $upper >/dev/null
+./cut-$model-std 3 0 $order $agents $iterations $lower $upper >/dev/null
+./rnd-$model-std 3 0 $order $((2 * agents * iterations)) $lower $upper >/dev/null

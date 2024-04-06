@@ -75,177 +75,159 @@ test-32d: nogl
 	@./nm-easom-std 1 0 32 1.0e-6 1000000 30.0 1 10 -30 30 >/dev/null
 
 test-16d: nogl
-	@./rnd-sphere-std 3 0 16 500000 -20 20 >/dev/null
 	@./nm-sphere-std 3 0 16 1.0e-6 1000000 1.0 1 10 -20 20 >/dev/null
-	@./spiral-sphere-std 3 0 16 500 500 0 -20 20 >/dev/null
-	@./spiral-sphere-std 3 0 16 500 500 1 -20 20 >/dev/null
-	@./cut-sphere-std 3 0 16 500 500 -20 20 >/dev/null
+	@./spiral-sphere-std 3 0 16 65536 100 0 -20 20 >/dev/null
+	@./spiral-sphere-std 3 0 16 65536 100 1 -20 20 >/dev/null
+	@./cut-sphere-std 3 0 16 65536 100 -20 20 >/dev/null
 	@echo ""
-	@./rnd-treacle-std 3 0 16 500000 -20 20 >/dev/null
 	@./nm-treacle-std 3 0 16 1.0e-6 1000000 5.0 1 100 -20 20 >/dev/null
-	@./spiral-treacle-std 3 0 16 500 500 0 -20 20 >/dev/null
-	@./spiral-treacle-std 3 0 16 500 500 1 -20 20 >/dev/null
-	@./cut-treacle-std 3 0 16 500 500 -20 20 >/dev/null
+	@./spiral-treacle-std 3 0 16 65536 100 0 -20 20 >/dev/null
+	@./spiral-treacle-std 3 0 16 65536 100 1 -20 20 >/dev/null
+	@./cut-treacle-std 3 0 16 65536 100 -20 20 >/dev/null
 	@echo ""
-	@./rnd-trid-std 3 0 16 500000 -100 100 >/dev/null
 	@./nm-trid-std 3 0 16 1.0e-6 1000000 1.0 1 10 -100 100 >/dev/null
-	@./spiral-trid-std 3 0 16 500 500 0 -100 100 >/dev/null
-	@./spiral-trid-std 3 0 16 500 500 1 -100 100 >/dev/null
-	@./cut-trid-std 3 0 16 500 500 -100 100 >/dev/null
+	@./spiral-trid-std 3 0 16 65536 100 0 -100 100 >/dev/null
+	@./spiral-trid-std 3 0 16 65536 100 1 -100 100 >/dev/null
+	@./cut-trid-std 3 0 16 65536 100 -100 100 >/dev/null
 	@echo ""
-	@./rnd-ackley-std 3 0 16 500000 -20 20 >/dev/null
 	@./nm-ackley-std 3 0 16 1.0e-6 1000000 20.0 1 10 -20 20 >/dev/null
-	@./spiral-ackley-std 3 0 16 500 500 0 -20 20 >/dev/null
-	@./spiral-ackley-std 3 0 16 500 500 1 -20 20 >/dev/null
-	@./cut-ackley-std 3 0 16 500 500 -20 20 >/dev/null
+	@./spiral-ackley-std 3 0 16 65536 100 0 -20 20 >/dev/null
+	@./spiral-ackley-std 3 0 16 65536 100 1 -20 20 >/dev/null
+	@./cut-ackley-std 3 0 16 65536 100 -20 20 >/dev/null
 	@echo ""
-	@./rnd-rosenbrock-std 3 0 16 500000 -20 20 >/dev/null
 	@./nm-rosenbrock-std 3 0 16 1.0e-6 1000000 1.0 1 10 -20 20 >/dev/null
-	@./spiral-rosenbrock-std 3 0 16 500 500 0 -20 20 >/dev/null
-	@./spiral-rosenbrock-std 3 0 16 500 500 1 -20 20 >/dev/null
-	@./cut-rosenbrock-std 3 0 16 500 500 -20 20 >/dev/null
+	@./spiral-rosenbrock-std 3 0 16 65536 100 0 -20 20 >/dev/null
+	@./spiral-rosenbrock-std 3 0 16 65536 100 1 -20 20 >/dev/null
+	@./cut-rosenbrock-std 3 0 16 65536 100 -20 20 >/dev/null
 	@echo ""
-	@./rnd-dixon-price-std 3 0 16 500000 -5 5 >/dev/null
 	@./nm-dixon-price-std 3 0 16 1.0e-6 1000000 5.0 1 1000 -5 5 >/dev/null
-	@./spiral-dixon-price-std 3 0 16 500 500 0 -5 5 >/dev/null
-	@./spiral-dixon-price-std 3 0 16 500 500 1 -5 5 >/dev/null
-	@./cut-dixon-price-std 3 0 16 500 500 -5 5 >/dev/null
+	@./spiral-dixon-price-std 3 0 16 65536 100 0 -5 5 >/dev/null
+	@./spiral-dixon-price-std 3 0 16 65536 100 1 -5 5 >/dev/null
+	@./cut-dixon-price-std 3 0 16 65536 100 -5 5 >/dev/null
 	@echo ""
-	@./rnd-michalewicz-std 3 0 16 500000 0 3.14 >/dev/null
 	@./nm-michalewicz-std 3 0 16 1.0e-6 1000000 1.0 1 100 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 16 500 500 0 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 16 500 500 1 0 3.14 >/dev/null
-	@./cut-michalewicz-std 3 0 16 500 500 0 3.14 >/dev/null
+	@./spiral-michalewicz-std 3 0 16 65536 100 0 0 3.14 >/dev/null
+	@./spiral-michalewicz-std 3 0 16 65536 100 1 0 3.14 >/dev/null
+	@./cut-michalewicz-std 3 0 16 65536 100 0 3.14 >/dev/null
 	@echo ""
-	@./rnd-easom-std 3 0 16 500000 -25 25 >/dev/null
 	@./nm-easom-std 3 0 16 1.0e-6 100000 5.0 1 10 -25 25 >/dev/null
-	@./spiral-easom-std 3 0 16 500 500 0 -25 25 >/dev/null
-	@./spiral-easom-std 3 0 16 500 500 1 -25 25 >/dev/null
-	@./cut-easom-std 3 0 16 500 500 -25 25 >/dev/null
+	@./spiral-easom-std 3 0 16 65536 100 0 -25 25 >/dev/null
+	@./spiral-easom-std 3 0 16 65536 100 1 -25 25 >/dev/null
+	@./cut-easom-std 3 0 16 65536 100 -25 25 >/dev/null
 	@echo ""
 
 test-8d: nogl
-	@./rnd-sphere-std 3 0 8 200000 -10 10 >/dev/null
 	@./nm-sphere-std 3 0 8 1.0e-6 100000 1.0 1 10 -10 10 >/dev/null
-	@./spiral-sphere-std 3 0 8 200 500 0 -10 10 >/dev/null
-	@./spiral-sphere-std 3 0 8 200 500 1 -10 10 >/dev/null
-	@./cut-sphere-std 3 0 8 200 500 -10 10 >/dev/null
+	@./spiral-sphere-std 3 0 8 6561 100 0 -10 10 >/dev/null
+	@./spiral-sphere-std 3 0 8 6561 100 1 -10 10 >/dev/null
+	@./cut-sphere-std 3 0 8 6561 100 -10 10 >/dev/null
 	@echo ""
-	@./rnd-treacle-std 3 0 8 200000 -10 10 >/dev/null
 	@./nm-treacle-std 3 0 8 1.0e-6 100000 5.0 1 50 -10 10 >/dev/null
-	@./spiral-treacle-std 3 0 8 200 500 0 -10 10 >/dev/null
-	@./spiral-treacle-std 3 0 8 200 500 1 -10 10 >/dev/null
-	@./cut-treacle-std 3 0 8 200 500 -10 10 >/dev/null
+	@./spiral-treacle-std 3 0 8 6561 100 0 -10 10 >/dev/null
+	@./spiral-treacle-std 3 0 8 6561 100 1 -10 10 >/dev/null
+	@./cut-treacle-std 3 0 8 6561 100 -10 10 >/dev/null
 	@echo ""
-	@./rnd-trid-std 3 0 8 200000 -25 25 >/dev/null
 	@./nm-trid-std 3 0 8 1.0e-6 100000 1.0 1 10 -25 25 >/dev/null
-	@./spiral-trid-std 3 0 8 200 500 0 -25 25 >/dev/null
-	@./spiral-trid-std 3 0 8 200 500 1 -25 25 >/dev/null
-	@./cut-trid-std 3 0 8 200 500 -25 25 >/dev/null
+	@./spiral-trid-std 3 0 8 6561 100 0 -25 25 >/dev/null
+	@./spiral-trid-std 3 0 8 6561 100 1 -25 25 >/dev/null
+	@./cut-trid-std 3 0 8 6561 100 -25 25 >/dev/null
 	@echo ""
-	@./rnd-ackley-std 3 0 8 200000 -10 10 >/dev/null
 	@./nm-ackley-std 3 0 8 1.0e-6 100000 5.0 1 10 -10 10 >/dev/null
-	@./spiral-ackley-std 3 0 8 200 500 0 -10 10 >/dev/null
-	@./spiral-ackley-std 3 0 8 200 500 1 -10 10 >/dev/null
-	@./cut-ackley-std 3 0 8 200 500 -10 10 >/dev/null
+	@./spiral-ackley-std 3 0 8 6561 100 0 -10 10 >/dev/null
+	@./spiral-ackley-std 3 0 8 6561 100 1 -10 10 >/dev/null
+	@./cut-ackley-std 3 0 8 6561 100 -10 10 >/dev/null
 	@echo ""
-	@./rnd-rosenbrock-std 3 0 8 200000 -10 10 >/dev/null
 	@./nm-rosenbrock-std 3 0 8 1.0e-6 100000 1.0 1 10 -10 10 >/dev/null
-	@./spiral-rosenbrock-std 3 0 8 200 500 0 -10 10 >/dev/null
-	@./spiral-rosenbrock-std 3 0 8 200 500 1 -10 10 >/dev/null
-	@./cut-rosenbrock-std 3 0 8 200 500 -10 10 >/dev/null
+	@./spiral-rosenbrock-std 3 0 8 6561 100 0 -10 10 >/dev/null
+	@./spiral-rosenbrock-std 3 0 8 6561 100 1 -10 10 >/dev/null
+	@./cut-rosenbrock-std 3 0 8 6561 100 -10 10 >/dev/null
 	@echo ""
-	@./rnd-st-std 3 0 8 200000 -10 10 >/dev/null
 	@./nm-st-std 3 0 8 1.0e-6 100000 10.0 1 50 -10 10 >/dev/null
-	@./spiral-st-std 3 0 8 200 500 0 -10 10 >/dev/null
-	@./spiral-st-std 3 0 8 200 500 1 -10 10 >/dev/null
-	@./cut-st-std 3 0 8 200 500 -10 10 >/dev/null
+	@./spiral-st-std 3 0 8 6561 100 0 -10 10 >/dev/null
+	@./spiral-st-std 3 0 8 6561 100 1 -10 10 >/dev/null
+	@./cut-st-std 3 0 8 6561 100 -10 10 >/dev/null
 	@echo ""
-	@./rnd-dixon-price-std 3 0 8 200000 -5 5 >/dev/null
 	@./nm-dixon-price-std 3 0 8 1.0e-6 100000 1.0 1 50 -5 5 >/dev/null
-	@./spiral-dixon-price-std 3 0 8 200 500 0 -5 5 >/dev/null
-	@./spiral-dixon-price-std 3 0 8 200 500 1 -5 5 >/dev/null
-	@./cut-dixon-price-std 3 0 8 200 500 -5 5 >/dev/null
+	@./spiral-dixon-price-std 3 0 8 6561 100 0 -5 5 >/dev/null
+	@./spiral-dixon-price-std 3 0 8 6561 100 1 -5 5 >/dev/null
+	@./cut-dixon-price-std 3 0 8 6561 100 -5 5 >/dev/null
 	@echo ""
-	@./rnd-levy-std 3 0 8 200000 -10 10 >/dev/null
 	@./nm-levy-std 3 0 8 1.0e-6 100000 10.0 1 50 -10 10 >/dev/null
-	@./spiral-levy-std 3 0 8 200 500 0 -10 10 >/dev/null
-	@./spiral-levy-std 3 0 8 200 500 1 -10 10 >/dev/null
-	@./cut-levy-std 3 0 8 200 500 -10 10 >/dev/null
+	@./spiral-levy-std 3 0 8 6561 100 0 -10 10 >/dev/null
+	@./spiral-levy-std 3 0 8 6561 100 1 -10 10 >/dev/null
+	@./cut-levy-std 3 0 8 6561 100 -10 10 >/dev/null
 	@echo ""
-	@./rnd-michalewicz-std 3 0 8 200000 0 3.14 >/dev/null
 	@./nm-michalewicz-std 3 0 8 1.0e-6 100000 1.0 1 50 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 8 200 500 0 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 8 200 500 1 0 3.14 >/dev/null
-	@./cut-michalewicz-std 3 0 8 200 500 0 3.14 >/dev/null
+	@./spiral-michalewicz-std 3 0 8 6561 100 0 0 3.14 >/dev/null
+	@./spiral-michalewicz-std 3 0 8 6561 100 1 0 3.14 >/dev/null
+	@./cut-michalewicz-std 3 0 8 6561 100 0 3.14 >/dev/null
 	@echo ""
-	@./rnd-easom-std 3 0 8 200000 -15 15 >/dev/null
 	@./nm-easom-std 3 0 8 1.0e-6 100000 1.0 1 10 -15 15 >/dev/null
-	@./spiral-easom-std 3 0 8 200 500 0 -15 15 >/dev/null
-	@./spiral-easom-std 3 0 8 200 500 1 -15 15 >/dev/null
-	@./cut-easom-std 3 0 8 200 500 -15 15 >/dev/null
+	@./spiral-easom-std 3 0 8 6561 100 0 -15 15 >/dev/null
+	@./spiral-easom-std 3 0 8 6561 100 1 -15 15 >/dev/null
+	@./cut-easom-std 3 0 8 6561 100 -15 15 >/dev/null
 	@echo ""
 
 test-3d: nogl
 	@./nm-sphere-std 3 0 3 1.0e-6 100000 1.0 1 1 -10 10 >/dev/null
-	@./spiral-sphere-std 3 0 3 30 100 0 -10 10 >/dev/null
-	@./spiral-sphere-std 3 0 3 30 100 1 -10 10 >/dev/null
-	@./cut-sphere-std 3 0 3 30 100 -10 10 >/dev/null
+	@./spiral-sphere-std 3 0 3 64 100 0 -10 10 >/dev/null
+	@./spiral-sphere-std 3 0 3 64 100 1 -10 10 >/dev/null
+	@./cut-sphere-std 3 0 3 64 100 -10 10 >/dev/null
 	@echo ""
 	@./nm-treacle-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
-	@./spiral-treacle-std 3 0 3 30 100 0 -10 10 >/dev/null
-	@./spiral-treacle-std 3 0 3 30 100 1 -10 10 >/dev/null
-	@./cut-treacle-std 3 0 3 30 100 -10 10 >/dev/null
+	@./spiral-treacle-std 3 0 3 64 100 0 -10 10 >/dev/null
+	@./spiral-treacle-std 3 0 3 64 100 1 -10 10 >/dev/null
+	@./cut-treacle-std 3 0 3 64 100 -10 10 >/dev/null
 	@echo ""
 	@./nm-trid-std 3 0 3 1.0e-6 100000 1.0 1 1 -5 5 >/dev/null
-	@./spiral-trid-std 3 0 3 30 100 0 -5 5 >/dev/null
-	@./spiral-trid-std 3 0 3 30 100 1 -5 5 >/dev/null
-	@./cut-trid-std 3 0 3 30 100 -5 5 >/dev/null
+	@./spiral-trid-std 3 0 3 64 100 0 -5 5 >/dev/null
+	@./spiral-trid-std 3 0 3 64 100 1 -5 5 >/dev/null
+	@./cut-trid-std 3 0 3 64 100 -5 5 >/dev/null
 	@echo ""
 	@./nm-ackley-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
-	@./spiral-ackley-std 3 0 3 30 100 0 -10 10 >/dev/null
-	@./spiral-ackley-std 3 0 3 30 100 1 -10 10 >/dev/null
-	@./cut-ackley-std 3 0 3 30 100 -10 10 >/dev/null
+	@./spiral-ackley-std 3 0 3 64 100 0 -10 10 >/dev/null
+	@./spiral-ackley-std 3 0 3 64 100 1 -10 10 >/dev/null
+	@./cut-ackley-std 3 0 3 64 100 -10 10 >/dev/null
 	@echo ""
 	@./nm-rosenbrock-std 3 0 3 1.0e-6 100000 1.0 0 1 -5 5 >/dev/null
-	@./spiral-rosenbrock-std 3 0 3 30 100 0 -5 5 >/dev/null
-	@./spiral-rosenbrock-std 3 0 3 30 100 1 -5 5 >/dev/null
-	@./cut-rosenbrock-std 3 0 3 30 100 -5 5 >/dev/null
+	@./spiral-rosenbrock-std 3 0 3 64 100 0 -5 5 >/dev/null
+	@./spiral-rosenbrock-std 3 0 3 64 100 1 -5 5 >/dev/null
+	@./cut-rosenbrock-std 3 0 3 64 100 -5 5 >/dev/null
 	@echo ""
 	@./nm-st-std 3 0 3 1.0e-6 100000 5.0 0 1 -5 5 >/dev/null
-	@./spiral-st-std 3 0 3 30 100 0 -5 5 >/dev/null
-	@./spiral-st-std 3 0 3 30 100 1 -5 5 >/dev/null
-	@./cut-st-std 3 0 3 30 100 -5 5 >/dev/null
+	@./spiral-st-std 3 0 3 64 100 0 -5 5 >/dev/null
+	@./spiral-st-std 3 0 3 64 100 1 -5 5 >/dev/null
+	@./cut-st-std 3 0 3 64 100 -5 5 >/dev/null
 	@echo ""
 	@./nm-dixon-price-std 3 0 3 1.0e-6 100000 1.0 0 1 -5 5 >/dev/null
-	@./spiral-dixon-price-std 3 0 3 30 100 0 -5 5 >/dev/null
-	@./spiral-dixon-price-std 3 0 3 30 100 1 -5 5 >/dev/null
-	@./cut-dixon-price-std 3 0 3 30 100 -5 5 >/dev/null
+	@./spiral-dixon-price-std 3 0 3 64 100 0 -5 5 >/dev/null
+	@./spiral-dixon-price-std 3 0 3 64 100 1 -5 5 >/dev/null
+	@./cut-dixon-price-std 3 0 3 64 100 -5 5 >/dev/null
 	@echo ""
 	@./nm-levy-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
-	@./spiral-levy-std 3 0 3 30 100 0 -10 10 >/dev/null
-	@./spiral-levy-std 3 0 3 30 100 1 -10 10 >/dev/null
-	@./cut-levy-std 3 0 3 30 100 -10 10 >/dev/null
+	@./spiral-levy-std 3 0 3 64 100 0 -10 10 >/dev/null
+	@./spiral-levy-std 3 0 3 64 100 1 -10 10 >/dev/null
+	@./cut-levy-std 3 0 3 64 100 -10 10 >/dev/null
 	@echo ""
 	@./nm-rastrigin-std 3 0 3 1.0e-6 1000000 5.0 0 1 -5 5 >/dev/null
-	@./spiral-rastrigin-std 3 0 3 30 100 0 -5 5 >/dev/null
-	@./spiral-rastrigin-std 3 0 3 30 100 1 -5 5 >/dev/null
-	@./cut-rastrigin-std 3 0 3 30 100 -5 5 >/dev/null
+	@./spiral-rastrigin-std 3 0 3 64 100 0 -5 5 >/dev/null
+	@./spiral-rastrigin-std 3 0 3 64 100 1 -5 5 >/dev/null
+	@./cut-rastrigin-std 3 0 3 64 100 -5 5 >/dev/null
 	@echo ""
 	@./nm-schwefel-std 3 0 3 1.0e-6 100000 100.0 0 1 -500 500 >/dev/null
-	@./spiral-schwefel-std 3 0 3 30 100 0 -500.0 500.0 >/dev/null
-	@./spiral-schwefel-std 3 0 3 30 100 1 -500.0 500.0 >/dev/null
-	@./cut-schwefel-std 3 0 3 30 100 -500.0 500.0 >/dev/null
+	@./spiral-schwefel-std 3 0 3 64 100 0 -500.0 500.0 >/dev/null
+	@./spiral-schwefel-std 3 0 3 64 100 1 -500.0 500.0 >/dev/null
+	@./cut-schwefel-std 3 0 3 64 100 -500.0 500.0 >/dev/null
 	@echo ""
 	@./nm-michalewicz-std 3 0 3 1.0e-6 100000 1.0 0 1 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 3 30 100 0 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 3 30 100 1 0 3.14 >/dev/null
-	@./cut-michalewicz-std 3 0 3 30 100 0 3.14 >/dev/null
+	@./spiral-michalewicz-std 3 0 3 64 100 0 0 3.14 >/dev/null
+	@./spiral-michalewicz-std 3 0 3 64 100 1 0 3.14 >/dev/null
+	@./cut-michalewicz-std 3 0 3 64 100 0 3.14 >/dev/null
 	@echo ""
 	@./nm-easom-std 3 0 3 1.0e-6 100000 1.0 0 1 -10 10 >/dev/null
-	@./spiral-easom-std 3 0 3 30 100 0 -10 10 >/dev/null
-	@./spiral-easom-std 3 0 3 30 100 1 -10 10 >/dev/null
-	@./cut-easom-std 3 0 3 30 100 -10 10 >/dev/null
+	@./spiral-easom-std 3 0 3 64 100 0 -10 10 >/dev/null
+	@./spiral-easom-std 3 0 3 64 100 1 -10 10 >/dev/null
+	@./cut-easom-std 3 0 3 64 100 -10 10 >/dev/null
 	@echo ""
 
 test-2d: nogl

@@ -23,9 +23,9 @@ config get_config (char **argv, bool single) {
     };
     CHECK(conf.places >= 1 && conf.places <= 36);
     CHECK(conf.fmt == 0 || conf.fmt == 1);
-    CHECK(conf.n >= 1 && conf.n <= 100);
-    CHECK(conf.m >= 1 && conf.m <= 10000);
-    CHECK(conf.k_max >= 1 && conf.k_max <= 100000);
+    CHECK(conf.n >= 1 && conf.n <= 64);
+    CHECK(conf.m >= 1 && conf.m <= 100000);
+    CHECK(conf.k_max >= 1 && conf.k_max <= 1000);
     CHECK(conf.convergence == 0 || conf.convergence == 1);
     CHECK(conf.upper > conf.lower);
     return conf;

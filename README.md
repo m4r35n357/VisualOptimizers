@@ -173,22 +173,43 @@ Examples
 ./cut-ackley-gl 3 0 3 50 100 -5 5
 ```
 
+## "solve-model" script
+
+Run a model against all integrators, including random
+
+Parameter | Meaning
+----------|-----------
+1 | Number of dimensions
+2 | Number of search agents
+3 | Number of iterations
+4 | Number of Nelder-Mead runs
+5 | Lower limit
+6 | Upper limit
+
+Example
+```
+./solve-model sphere 8 200 500 1 -10 10
+```
+
+To get a better idea of the variation in performance of spiral and cut integrators, use the "stats" script below.
+
 ## "stats" script
 
-Runs spiral algorithm multiple times agains a target value.
+Runs spiral or cut algorithm multiple times agains a target value.
 For each run, the output is green if the result is below the threshold, and red otherwise.
 
 Parameter | Meaning
 ----------|-----------
 1 | Number of runs
 2 | Threshold
-3+ | spiral "std" command
+3+ | spiral or cut "std" command
 
 Examples
 ```
-./stats 100 -117 ./spiral-st-std 3 0 3 30 100 1 0 -5 5
+./stats 100 -117 ./spiral-st-std 3 0 3 30 100 1 -5 5
+./stats 100 -117 ./cut-st-std 3 0 3 30 100 -5 5
 ```
-For 8D or higher, one of the "CCC=" make options above is recommended.
+For 8D or higher, one of the faster "CCC=" make options above is recommended.
 
 ## "Global" Optimization
 
@@ -223,6 +244,13 @@ Here are some 16-D starting points:
 ```
 Of course this is comparing apples to oranges, with just two functions, and the results are not always clear-cut (and vary with each run), but total iterations and function evaluations are shown explicitly in each case.
 Do your own experiments!
+
+## OpenGL Visualizations
+
+How to get a list of command examples:
+```
+grep -- '-std 3 0 3 ' Makefile | sed 's/^.*@//' | sed 's/-std/-gl/' | sed 's/ >.*$//' | sort
+```
 
 ## OpenGL Keyboard Controls
 
