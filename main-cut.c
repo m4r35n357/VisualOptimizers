@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
     // run cut optimizations
     coa(b, m, c);
 
-    // print best spiral solution
+    // print solution
     fprintf(stderr, "  %5d %6d  ", b->k, b->evaluations);
     fprintf(stderr, "%s[%s ", GRY, NRM);
     for (int i = 0; i < c.n; i++) {

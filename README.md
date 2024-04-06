@@ -140,15 +140,14 @@ Parameter | Meaning
 4 | Number of search agents
 5 | Number of iterations
 6 | Algorithm mode (0 for "periodic descent", 1 for "convergence")
-7 | Optional (non-dual) Nelder-Mead convergence step (0 for no, 1 for yes) - ignored for GL
-8 | Lower limit
-9 | Upper limit
+7 | Lower limit
+8 | Upper limit
 
 Examples
 ```
-./spiral-ackley-std 3 0 3 50 100 0 0 -5 5
-./spiral-ackley-std 3 0 3 50 100 1 0 -5 5
-./spiral-ackley-gl 3 0 3 50 100 0 0 -5 5
+./spiral-ackley-std 3 0 3 50 100 0 -5 5
+./spiral-ackley-std 3 0 3 50 100 1 -5 5
+./spiral-ackley-gl 3 0 3 50 100 0 -5 5
 ```
 
 ##  Optimization by Cut

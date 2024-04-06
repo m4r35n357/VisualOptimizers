@@ -17,9 +17,8 @@ config get_config (char **argv, bool single) {
         .m = (int)strtol(argv[4], NULL, BASE),
         .k_max = (int)strtol(argv[5], NULL, BASE),
         .convergence = (int)strtol(argv[6], NULL, BASE),
-        .nelder_mead = (int)strtol(argv[7], NULL, BASE),
-        .lower = strtold(argv[8], NULL),
-        .upper = strtold(argv[9], NULL),
+        .lower = strtold(argv[7], NULL),
+        .upper = strtold(argv[8], NULL),
         .step_mode = single
     };
     CHECK(conf.places >= 3 && conf.places <= 36);
@@ -28,7 +27,6 @@ config get_config (char **argv, bool single) {
     CHECK(conf.m >= 1 && conf.m <= 10000);
     CHECK(conf.k_max >= 1 && conf.k_max <= 100000);
     CHECK(conf.convergence == 0 || conf.convergence == 1);
-    CHECK(conf.nelder_mead == 0 || conf.nelder_mead == 1);
     CHECK(conf.upper > conf.lower);
     return conf;
 }

@@ -9,7 +9,6 @@ typedef struct Config {
     int m;   // number of points
     int k_max;   // maximum number of allowed iterations
     int convergence;  // strategy
-    int nelder_mead;   // add an NM convergence step
     real lower;   // bottom of coordinate range
     real upper;   // top of coordinate range
     bool step_mode; // free-running or single-step algorithm
