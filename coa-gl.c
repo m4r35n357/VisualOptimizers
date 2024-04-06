@@ -35,9 +35,9 @@ void Animate () {
     draw_grid();
 
     rgb cut_colour = get_colour(DARK_YELLOW);
-    float x_lower = (float)b->x_l[0], x_upper = (float)b->x_u[0];
-    float y_lower = (float)b->x_l[1], y_upper = (float)b->x_u[1];
-    float z_lower = (float)b->x_l[2], z_upper = (float)b->x_u[2];
+    float x_lower = (float)b->lower[0], x_upper = (float)b->upper[0];
+    float y_lower = (float)b->lower[1], y_upper = (float)b->upper[1];
+    float z_lower = (float)b->lower[2], z_upper = (float)b->upper[2];
     line((gl_point){x_lower, y_lower, z_lower}, (gl_point){x_upper, y_lower, z_lower}, cut_colour);
     line((gl_point){x_lower, y_lower, z_upper}, (gl_point){x_upper, y_lower, z_upper}, cut_colour);
     line((gl_point){x_lower, y_upper, z_lower}, (gl_point){x_upper, y_upper, z_lower}, cut_colour);
@@ -65,7 +65,7 @@ void Animate () {
 
     if (osd_active) {
         sprintf(hud1, c.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
-                b->k, b->evaluations,
+                b->iterations, b->evaluations,
                 c.places, b->best->x[0], c.places, b->best->x[1], c.places, b->best->x[2], c.places, b->best->f);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_GREEN), hud1);
         if (targets && minimum) {

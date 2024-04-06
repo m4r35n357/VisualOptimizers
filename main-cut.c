@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
     coa(b, m, c);
 
     // print solution
-    fprintf(stderr, "  %5d %6d  ", b->k, b->evaluations);
+    fprintf(stderr, "  %5d %6d  ", b->iterations, b->evaluations);
     fprintf(stderr, "%s[%s ", GRY, NRM);
     for (int i = 0; i < c.n; i++) {
         fprintf(stderr, c.fmt ? "% .*Le " : "% .*Lf ", c.places, b->best->x[i]);
