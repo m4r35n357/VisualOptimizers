@@ -20,7 +20,7 @@ config get_config (char **argv, bool single) {
         .upper = strtold(argv[7], NULL),
         .step_mode = single
     };
-    CHECK(conf.places >= 3 && conf.places <= 36);
+    CHECK(conf.places >= 1 && conf.places <= 36);
     CHECK(conf.fmt == 0 || conf.fmt == 1);
     CHECK(conf.n >= 1 && conf.n <= 100);
     CHECK(conf.m >= 1 && conf.m <= 10000);

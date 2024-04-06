@@ -77,32 +77,32 @@ test-32d: nogl
 test-16d: nogl
 	@./rnd-sphere-std 3 0 16 500000 -20 20 >/dev/null
 	@./nm-sphere-std 3 0 16 1.0e-6 1000000 1.0 1 10 -20 20 >/dev/null
-	@./spiral-sphere-std 3 0 16 500 500 0 20 20 >/dev/null
-	@./spiral-sphere-std 3 0 16 500 500 1 20 20 >/dev/null
+	@./spiral-sphere-std 3 0 16 500 500 0 -20 20 >/dev/null
+	@./spiral-sphere-std 3 0 16 500 500 1 -20 20 >/dev/null
 	@./cut-sphere-std 3 0 16 500 500 -20 20 >/dev/null
 	@echo ""
 	@./rnd-treacle-std 3 0 16 500000 -20 20 >/dev/null
 	@./nm-treacle-std 3 0 16 1.0e-6 1000000 5.0 1 100 -20 20 >/dev/null
-	@./spiral-treacle-std 3 0 16 500 500 0 20 20 >/dev/null
-	@./spiral-treacle-std 3 0 16 500 500 1 20 20 >/dev/null
+	@./spiral-treacle-std 3 0 16 500 500 0 -20 20 >/dev/null
+	@./spiral-treacle-std 3 0 16 500 500 1 -20 20 >/dev/null
 	@./cut-treacle-std 3 0 16 500 500 -20 20 >/dev/null
 	@echo ""
 	@./rnd-trid-std 3 0 16 500000 -100 100 >/dev/null
 	@./nm-trid-std 3 0 16 1.0e-6 1000000 1.0 1 10 -100 100 >/dev/null
-	@./spiral-trid-std 3 0 16 500 500 0 100 100 >/dev/null
-	@./spiral-trid-std 3 0 16 500 500 1 100 100 >/dev/null
+	@./spiral-trid-std 3 0 16 500 500 0 -100 100 >/dev/null
+	@./spiral-trid-std 3 0 16 500 500 1 -100 100 >/dev/null
 	@./cut-trid-std 3 0 16 500 500 -100 100 >/dev/null
 	@echo ""
 	@./rnd-ackley-std 3 0 16 500000 -20 20 >/dev/null
 	@./nm-ackley-std 3 0 16 1.0e-6 1000000 20.0 1 10 -20 20 >/dev/null
-	@./spiral-ackley-std 3 0 16 500 500 0 20 20 >/dev/null
-	@./spiral-ackley-std 3 0 16 500 500 1 20 20 >/dev/null
+	@./spiral-ackley-std 3 0 16 500 500 0 -20 20 >/dev/null
+	@./spiral-ackley-std 3 0 16 500 500 1 -20 20 >/dev/null
 	@./cut-ackley-std 3 0 16 500 500 -20 20 >/dev/null
 	@echo ""
 	@./rnd-rosenbrock-std 3 0 16 500000 -20 20 >/dev/null
 	@./nm-rosenbrock-std 3 0 16 1.0e-6 1000000 1.0 1 10 -20 20 >/dev/null
-	@./spiral-rosenbrock-std 3 0 16 500 500 0 20 20 >/dev/null
-	@./spiral-rosenbrock-std 3 0 16 500 500 1 20 20 >/dev/null
+	@./spiral-rosenbrock-std 3 0 16 500 500 0 -20 20 >/dev/null
+	@./spiral-rosenbrock-std 3 0 16 500 500 1 -20 20 >/dev/null
 	@./cut-rosenbrock-std 3 0 16 500 500 -20 20 >/dev/null
 	@echo ""
 	@./rnd-dixon-price-std 3 0 16 500000 -5 5 >/dev/null

@@ -16,7 +16,7 @@ int main (int argc, char **argv) {
         .init_mode = (int)strtol(argv[4], NULL, BASE),
         .step_mode = false
     };
-    CHECK(o.places >= 3 && o.places <= 36);
+    CHECK(o.places >= 1 && o.places <= 36);
     CHECK(o.fmt == 0 || o.fmt == 1);
     CHECK(o.n >= 1);
     CHECK(o.init_mode >= 0 && o.init_mode <= 100000000);
