@@ -78,7 +78,7 @@ shows basic program output (with stdout suppressed!) and can be used to get Open
 ```
 make test-8d
 ```
-shows expanded output - multiple Nelder-Mead, and spiral x 2 with additional NM convergence step (again with stdout suppressed).
+shows more output - random, multiple-run Nelder-Mead, spiral (both strategies), cut
 
 # Usage
 
@@ -153,7 +153,7 @@ Examples
 
 ##  Optimization by Cut
 
-Based on the algorithm described [here](https://arxiv.org/abs/2207.05953v1).
+Algorithm described [here](https://arxiv.org/abs/2207.05953v1).
 
 Use the OpenGL visualizations to see how this works.
 

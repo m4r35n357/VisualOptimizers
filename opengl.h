@@ -57,6 +57,11 @@ void SetupView (void);
 rgb get_colour (colour_code colour);
 
 /*
+ * Grid
+ */
+void draw_grid (void);
+
+/*
  * Lines & balls
  */
 void line (gl_point a, gl_point b, rgb colour);

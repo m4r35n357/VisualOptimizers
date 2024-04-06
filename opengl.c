@@ -106,6 +106,44 @@ rgb get_colour (colour_code colour) {
     }[colour];
 }
 
+void draw_grid () {
+    rgb box_colour = get_colour(LIGHT_BLUE);
+    line((gl_point){lower, lower, lower}, (gl_point){upper, lower, lower}, box_colour);
+    line((gl_point){lower, lower, upper}, (gl_point){upper, lower, upper}, box_colour);
+    line((gl_point){lower, upper, lower}, (gl_point){upper, upper, lower}, box_colour);
+    line((gl_point){lower, upper, upper}, (gl_point){upper, upper, upper}, box_colour);
+
+    line((gl_point){lower, lower, lower}, (gl_point){lower, upper, lower}, box_colour);
+    line((gl_point){lower, lower, upper}, (gl_point){lower, upper, upper}, box_colour);
+    line((gl_point){upper, lower, lower}, (gl_point){upper, upper, lower}, box_colour);
+    line((gl_point){upper, lower, upper}, (gl_point){upper, upper, upper}, box_colour);
+
+    line((gl_point){lower, lower, lower}, (gl_point){lower, lower, upper}, box_colour);
+    line((gl_point){lower, upper, lower}, (gl_point){lower, upper, upper}, box_colour);
+    line((gl_point){upper, lower, lower}, (gl_point){upper, lower, upper}, box_colour);
+    line((gl_point){upper, upper, lower}, (gl_point){upper, upper, upper}, box_colour);
+
+    rgb axis_colour = get_colour(DARK_BLUE);
+    line((gl_point){lower, centre, centre}, (gl_point){upper, centre, centre}, axis_colour);
+    line((gl_point){centre, lower, centre}, (gl_point){centre, upper, centre}, axis_colour);
+    line((gl_point){centre, centre, lower}, (gl_point){centre, centre, upper}, axis_colour);
+
+    line((gl_point){upper, lower, centre}, (gl_point){upper, upper, centre}, axis_colour);
+    line((gl_point){upper, centre, lower}, (gl_point){upper, centre, upper}, axis_colour);
+    line((gl_point){lower, lower, centre}, (gl_point){lower, upper, centre}, axis_colour);
+    line((gl_point){lower, centre, lower}, (gl_point){lower, centre, upper}, axis_colour);
+
+    line((gl_point){lower, upper, centre}, (gl_point){upper, upper, centre}, axis_colour);
+    line((gl_point){centre, upper, lower}, (gl_point){centre, upper, upper}, axis_colour);
+    line((gl_point){lower, lower, centre}, (gl_point){upper, lower, centre}, axis_colour);
+    line((gl_point){centre, lower, lower}, (gl_point){centre, lower, upper}, axis_colour);
+
+    line((gl_point){lower, centre, upper}, (gl_point){upper, centre, upper}, axis_colour);
+    line((gl_point){centre, lower, upper}, (gl_point){centre, upper, upper}, axis_colour);
+    line((gl_point){lower, centre, lower}, (gl_point){upper, centre, lower}, axis_colour);
+    line((gl_point){centre, lower, lower}, (gl_point){centre, upper, lower}, axis_colour);
+}
+
 void line (gl_point from, gl_point to, rgb colour) {
     glDisable(GL_LIGHTING);
     glColor3f(colour.a, colour.b, colour.c);
