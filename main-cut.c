@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
 
     box *b = get_box(m, c);
 
-    // run cut optimizations
+    // run optimization
     coa(b, m, c);
 
     // print solution

@@ -101,7 +101,7 @@ int main (int argc, char **argv) {
     upper = (float)c.upper;
     centre = (float)(0.5L * (c.lower + c.upper));
     radius = 1.5F * ((float)c.upper - (float)c.lower);
-    ball_size = 0.005F * ((float)c.upper - (float)c.lower);
+    ball_size = 0.004F * ((float)c.upper - (float)c.lower);
 
     ApplicationInit(argc, argv, "Spiral Optimization Visualizer");
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.
