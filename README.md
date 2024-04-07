@@ -96,7 +96,7 @@ The adaptive algorithm is described (open access) [here](https://www.researchgat
 
 Parameter | Meaning
 ----------|-----------
-1 | Display precision (3..36)
+1 | Display precision (1..36)
 2 | Floating point format (0 for fixed, 1 for exponential)
 3 | Number of dimensions
 4 | Maximum error for convergence
@@ -134,7 +134,7 @@ Use the OpenGL visualizations to see how this works.
 
 Parameter | Meaning
 ----------|-----------
-1 | Display precision (3..36)
+1 | Display precision (1..36)
 2 | Floating point format (0 for fixed, 1 for exponential)
 3 | Number of dimensions
 4 | Number of search agents
@@ -158,7 +158,7 @@ Use the OpenGL visualizations to see how this works.
 
 Parameter | Meaning
 ----------|-----------
-1 | Display precision (3..36)
+1 | Display precision (1..36)
 2 | Floating point format (0 for fixed, 1 for exponential)
 3 | Number of dimensions
 4 | Number of search agents
