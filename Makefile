@@ -15,6 +15,7 @@ else  # default for IDEs and git commits
   CFLAGS=-std=c99 -O0 -g
 endif
 
+# Automatic dependency generation
 %.o: %.c
 	$(CC) $(CFLAGS) -MT $@ -MMD -MP -c -o $@ $< $(WARNINGS)
 
@@ -22,11 +23,13 @@ all: nogl nm-gl spiral-gl cut-gl
 
 nogl: nm-std spiral-std cut-std rnd-std ctags
 
+# Random optimizarion
 rnd-%-std: %.o nelder_mead.o main-random.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 rnd-std: rnd-sphere-std rnd-levy-std rnd-easom-std rnd-michalewicz-std rnd-rastrigin-std rnd-treacle-std rnd-ackley-std rnd-rosenbrock-std rnd-dixon-price-std rnd-st-std rnd-box-std rnd-schwefel-std rnd-trid-std
 
+# Nelder-Mead optimizarion
 nm-%-std: %.o nelder_mead.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
@@ -37,6 +40,7 @@ nm-%-gl: %.o nelder_mead.o opengl.o simplex-gl.o
 
 nm-gl: nm-sphere-gl nm-levy-gl nm-easom-gl nm-michalewicz-gl nm-rastrigin-gl nm-treacle-gl nm-ackley-gl nm-rosenbrock-gl nm-dixon-price-gl nm-st-gl nm-schwefel-gl nm-trid-gl
 
+# Spiral optimizarion
 spiral-%-std: %.o spiral.o main-spiral.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
@@ -47,6 +51,7 @@ spiral-%-gl: %.o spiral.o opengl.o soa-gl.o
 
 spiral-gl: spiral-sphere-gl spiral-levy-gl spiral-easom-gl spiral-michalewicz-gl spiral-treacle-gl spiral-rosenbrock-gl spiral-rastrigin-gl spiral-ackley-gl spiral-dixon-price-gl spiral-st-gl spiral-schwefel-gl spiral-trid-gl
 
+# Optimizarion by cut
 cut-%-std: %.o cut.o main-cut.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
@@ -70,35 +75,36 @@ test-32d: nogl
 	@echo ""
 	@./nm-treacle-std 1 0 32 1.0e-6 1000000 30.0 1 1000 -30 30 >/dev/null
 	@echo ""
-	@./nm-dixon-price-std 1 0 32 1.0e-6 1000000 5.0 1 1000 -5 5 >/dev/null
-	@echo ""
 	@./nm-easom-std 1 0 32 1.0e-6 1000000 30.0 1 10 -30 30 >/dev/null
+	@echo ""
+	@./nm-dixon-price-std 1 0 32 1.0e-6 1000000 5.0 1 1000 -5 5 >/dev/null
 
+# 2^16 search agents
 test-16d: nogl
 	@./nm-sphere-std 3 0 16 1.0e-6 1000000 1.0 1 10 -20 20 >/dev/null
 	@./spiral-sphere-std 3 0 16 65536 100 0 -20 20 >/dev/null
 	@./spiral-sphere-std 3 0 16 65536 100 1 -20 20 >/dev/null
 	@./cut-sphere-std 3 0 16 65536 100 -20 20 >/dev/null
 	@echo ""
-	@./nm-treacle-std 3 0 16 1.0e-6 1000000 5.0 1 100 -20 20 >/dev/null
-	@./spiral-treacle-std 3 0 16 65536 100 0 -20 20 >/dev/null
-	@./spiral-treacle-std 3 0 16 65536 100 1 -20 20 >/dev/null
-	@./cut-treacle-std 3 0 16 65536 100 -20 20 >/dev/null
-	@echo ""
 	@./nm-trid-std 3 0 16 1.0e-6 1000000 1.0 1 10 -100 100 >/dev/null
 	@./spiral-trid-std 3 0 16 65536 100 0 -100 100 >/dev/null
 	@./spiral-trid-std 3 0 16 65536 100 1 -100 100 >/dev/null
 	@./cut-trid-std 3 0 16 65536 100 -100 100 >/dev/null
 	@echo ""
-	@./nm-ackley-std 3 0 16 1.0e-6 1000000 20.0 1 10 -20 20 >/dev/null
-	@./spiral-ackley-std 3 0 16 65536 100 0 -20 20 >/dev/null
-	@./spiral-ackley-std 3 0 16 65536 100 1 -20 20 >/dev/null
-	@./cut-ackley-std 3 0 16 65536 100 -20 20 >/dev/null
-	@echo ""
 	@./nm-rosenbrock-std 3 0 16 1.0e-6 1000000 1.0 1 10 -20 20 >/dev/null
 	@./spiral-rosenbrock-std 3 0 16 65536 100 0 -20 20 >/dev/null
 	@./spiral-rosenbrock-std 3 0 16 65536 100 1 -20 20 >/dev/null
 	@./cut-rosenbrock-std 3 0 16 65536 100 -20 20 >/dev/null
+	@echo ""
+	@./nm-treacle-std 3 0 16 1.0e-6 1000000 5.0 1 100 -20 20 >/dev/null
+	@./spiral-treacle-std 3 0 16 65536 100 0 -20 20 >/dev/null
+	@./spiral-treacle-std 3 0 16 65536 100 1 -20 20 >/dev/null
+	@./cut-treacle-std 3 0 16 65536 100 -20 20 >/dev/null
+	@echo ""
+	@./nm-easom-std 3 0 16 1.0e-6 100000 5.0 1 10 -25 25 >/dev/null
+	@./spiral-easom-std 3 0 16 65536 100 0 -25 25 >/dev/null
+	@./spiral-easom-std 3 0 16 65536 100 1 -25 25 >/dev/null
+	@./cut-easom-std 3 0 16 65536 100 -25 25 >/dev/null
 	@echo ""
 	@./nm-dixon-price-std 3 0 16 1.0e-6 1000000 5.0 1 1000 -5 5 >/dev/null
 	@./spiral-dixon-price-std 3 0 16 65536 100 0 -5 5 >/dev/null
@@ -110,37 +116,33 @@ test-16d: nogl
 	@./spiral-michalewicz-std 3 0 16 65536 100 1 0 3.14 >/dev/null
 	@./cut-michalewicz-std 3 0 16 65536 100 0 3.14 >/dev/null
 	@echo ""
-	@./nm-easom-std 3 0 16 1.0e-6 100000 5.0 1 10 -25 25 >/dev/null
-	@./spiral-easom-std 3 0 16 65536 100 0 -25 25 >/dev/null
-	@./spiral-easom-std 3 0 16 65536 100 1 -25 25 >/dev/null
-	@./cut-easom-std 3 0 16 65536 100 -25 25 >/dev/null
-	@echo ""
 
+# 3^8 search agents
 test-8d: nogl
 	@./nm-sphere-std 3 0 8 1.0e-6 100000 1.0 1 10 -10 10 >/dev/null
 	@./spiral-sphere-std 3 0 8 6561 100 0 -10 10 >/dev/null
 	@./spiral-sphere-std 3 0 8 6561 100 1 -10 10 >/dev/null
 	@./cut-sphere-std 3 0 8 6561 100 -10 10 >/dev/null
 	@echo ""
-	@./nm-treacle-std 3 0 8 1.0e-6 100000 5.0 1 50 -10 10 >/dev/null
-	@./spiral-treacle-std 3 0 8 6561 100 0 -10 10 >/dev/null
-	@./spiral-treacle-std 3 0 8 6561 100 1 -10 10 >/dev/null
-	@./cut-treacle-std 3 0 8 6561 100 -10 10 >/dev/null
-	@echo ""
 	@./nm-trid-std 3 0 8 1.0e-6 100000 1.0 1 10 -25 25 >/dev/null
 	@./spiral-trid-std 3 0 8 6561 100 0 -25 25 >/dev/null
 	@./spiral-trid-std 3 0 8 6561 100 1 -25 25 >/dev/null
 	@./cut-trid-std 3 0 8 6561 100 -25 25 >/dev/null
 	@echo ""
-	@./nm-ackley-std 3 0 8 1.0e-6 100000 5.0 1 10 -10 10 >/dev/null
-	@./spiral-ackley-std 3 0 8 6561 100 0 -10 10 >/dev/null
-	@./spiral-ackley-std 3 0 8 6561 100 1 -10 10 >/dev/null
-	@./cut-ackley-std 3 0 8 6561 100 -10 10 >/dev/null
-	@echo ""
 	@./nm-rosenbrock-std 3 0 8 1.0e-6 100000 1.0 1 10 -10 10 >/dev/null
 	@./spiral-rosenbrock-std 3 0 8 6561 100 0 -10 10 >/dev/null
 	@./spiral-rosenbrock-std 3 0 8 6561 100 1 -10 10 >/dev/null
 	@./cut-rosenbrock-std 3 0 8 6561 100 -10 10 >/dev/null
+	@echo ""
+	@./nm-treacle-std 3 0 8 1.0e-6 100000 5.0 1 50 -10 10 >/dev/null
+	@./spiral-treacle-std 3 0 8 6561 100 0 -10 10 >/dev/null
+	@./spiral-treacle-std 3 0 8 6561 100 1 -10 10 >/dev/null
+	@./cut-treacle-std 3 0 8 6561 100 -10 10 >/dev/null
+	@echo ""
+	@./nm-easom-std 3 0 8 1.0e-6 100000 1.0 1 10 -15 15 >/dev/null
+	@./spiral-easom-std 3 0 8 6561 100 0 -15 15 >/dev/null
+	@./spiral-easom-std 3 0 8 6561 100 1 -15 15 >/dev/null
+	@./cut-easom-std 3 0 8 6561 100 -15 15 >/dev/null
 	@echo ""
 	@./nm-st-std 3 0 8 1.0e-6 100000 10.0 1 50 -10 10 >/dev/null
 	@./spiral-st-std 3 0 8 6561 100 0 -10 10 >/dev/null
@@ -162,37 +164,33 @@ test-8d: nogl
 	@./spiral-michalewicz-std 3 0 8 6561 100 1 0 3.14 >/dev/null
 	@./cut-michalewicz-std 3 0 8 6561 100 0 3.14 >/dev/null
 	@echo ""
-	@./nm-easom-std 3 0 8 1.0e-6 100000 1.0 1 10 -15 15 >/dev/null
-	@./spiral-easom-std 3 0 8 6561 100 0 -15 15 >/dev/null
-	@./spiral-easom-std 3 0 8 6561 100 1 -15 15 >/dev/null
-	@./cut-easom-std 3 0 8 6561 100 -15 15 >/dev/null
-	@echo ""
 
+# 4^3 search agents
 test-3d: nogl
 	@./nm-sphere-std 3 0 3 1.0e-6 100000 1.0 1 1 -10 10 >/dev/null
 	@./spiral-sphere-std 3 0 3 64 100 0 -10 10 >/dev/null
 	@./spiral-sphere-std 3 0 3 64 100 1 -10 10 >/dev/null
 	@./cut-sphere-std 3 0 3 64 100 -10 10 >/dev/null
 	@echo ""
-	@./nm-treacle-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
-	@./spiral-treacle-std 3 0 3 64 100 0 -10 10 >/dev/null
-	@./spiral-treacle-std 3 0 3 64 100 1 -10 10 >/dev/null
-	@./cut-treacle-std 3 0 3 64 100 -10 10 >/dev/null
-	@echo ""
 	@./nm-trid-std 3 0 3 1.0e-6 100000 1.0 1 1 -5 5 >/dev/null
 	@./spiral-trid-std 3 0 3 64 100 0 -5 5 >/dev/null
 	@./spiral-trid-std 3 0 3 64 100 1 -5 5 >/dev/null
 	@./cut-trid-std 3 0 3 64 100 -5 5 >/dev/null
 	@echo ""
-	@./nm-ackley-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
-	@./spiral-ackley-std 3 0 3 64 100 0 -10 10 >/dev/null
-	@./spiral-ackley-std 3 0 3 64 100 1 -10 10 >/dev/null
-	@./cut-ackley-std 3 0 3 64 100 -10 10 >/dev/null
-	@echo ""
 	@./nm-rosenbrock-std 3 0 3 1.0e-6 100000 1.0 0 1 -5 5 >/dev/null
 	@./spiral-rosenbrock-std 3 0 3 64 100 0 -5 5 >/dev/null
 	@./spiral-rosenbrock-std 3 0 3 64 100 1 -5 5 >/dev/null
 	@./cut-rosenbrock-std 3 0 3 64 100 -5 5 >/dev/null
+	@echo ""
+	@./nm-treacle-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
+	@./spiral-treacle-std 3 0 3 64 100 0 -10 10 >/dev/null
+	@./spiral-treacle-std 3 0 3 64 100 1 -10 10 >/dev/null
+	@./cut-treacle-std 3 0 3 64 100 -10 10 >/dev/null
+	@echo ""
+	@./nm-easom-std 3 0 3 1.0e-6 100000 1.0 0 1 -10 10 >/dev/null
+	@./spiral-easom-std 3 0 3 64 100 0 -10 10 >/dev/null
+	@./spiral-easom-std 3 0 3 64 100 1 -10 10 >/dev/null
+	@./cut-easom-std 3 0 3 64 100 -10 10 >/dev/null
 	@echo ""
 	@./nm-st-std 3 0 3 1.0e-6 100000 5.0 0 1 -5 5 >/dev/null
 	@./spiral-st-std 3 0 3 64 100 0 -5 5 >/dev/null
@@ -223,11 +221,6 @@ test-3d: nogl
 	@./spiral-michalewicz-std 3 0 3 64 100 0 0 3.14 >/dev/null
 	@./spiral-michalewicz-std 3 0 3 64 100 1 0 3.14 >/dev/null
 	@./cut-michalewicz-std 3 0 3 64 100 0 3.14 >/dev/null
-	@echo ""
-	@./nm-easom-std 3 0 3 1.0e-6 100000 1.0 0 1 -10 10 >/dev/null
-	@./spiral-easom-std 3 0 3 64 100 0 -10 10 >/dev/null
-	@./spiral-easom-std 3 0 3 64 100 1 -10 10 >/dev/null
-	@./cut-easom-std 3 0 3 64 100 -10 10 >/dev/null
 	@echo ""
 
 test-2d: nogl

@@ -248,9 +248,12 @@ Do your own experiments!
 
 ## OpenGL Visualizations
 
-How to get a list of command examples:
+To get a list of OpenGL command examples, use one of the commands below:
 ```
 grep -- '-std 3 0 3 ' Makefile | sed 's/^.*@//' | sed 's/-std/-gl/' | sed 's/ >.*$//' | sort
+grep -- '-std 3 0 3 ' Makefile | sed 's/^.*@//' | sed 's/-std/-gl/' | sed 's/ >.*$//' | grep nm
+grep -- '-std 3 0 3 ' Makefile | sed 's/^.*@//' | sed 's/-std/-gl/' | sed 's/ >.*$//' | grep spiral
+grep -- '-std 3 0 3 ' Makefile | sed 's/^.*@//' | sed 's/-std/-gl/' | sed 's/ >.*$//' | grep cut
 ```
 
 ## OpenGL Keyboard Controls

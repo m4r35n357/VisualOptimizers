@@ -22,4 +22,4 @@ upper=$7
 ./spiral-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null
 ./spiral-$model-std 3 0 $order $agents $iterations 1 $lower $upper >/dev/null
 ./cut-$model-std 3 0 $order $agents $iterations $lower $upper >/dev/null
-./rnd-$model-std 3 0 $order $((2 * agents * iterations)) $lower $upper >/dev/null
+./rnd-$model-std 3 0 $order $((agents * iterations)) $lower $upper >/dev/null
