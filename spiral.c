@@ -95,14 +95,13 @@ bool soa (spiral *s, model *m, config c) {
         if (s->best->f < s->x_star->f) {
             s->x_star = s->best;
             s->k_star = s->k + 1;
-        }
-        if (++s->k % 10 == 0) {
-            printf("  %5d %6d  [ ", s->k, s->evaluations);
+            printf("  %5d %6d  [ ", s->k + 1, s->evaluations);
             for (int k = 0; k < c.n; k++) {
                 printf(c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->x_star->x[k]);
             }
             printf(c.fmt ? "] % .*Le\n" : "] % .*Lf\n", c.places, s->x_star->f);
         }
+        s->k++;
         if (c.step_mode) return true;
         resume: ;
     }

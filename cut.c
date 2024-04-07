@@ -85,16 +85,17 @@ bool coa (box *b, model *m, config c) {
                 }
                 cost(c.n, b->p[i], m);
                 b->evaluations++;
-                if (b->p[i]->f < b->best->f) b->best = b->p[i];
+                if (b->p[i]->f < b->best->f) {
+                	b->best = b->p[i];
+                    printf("  %5d %6d  [ ", b->iterations + 1, b->evaluations);
+                    for (int k = 0; k < c.n; k++) {
+                        printf(c.fmt ? "% .*Le " : "% .*Lf ", c.places, b->best->x[k]);
+                    }
+                    printf(c.fmt ? "] % .*Le\n" : "] % .*Lf\n", c.places, b->best->f);
+                }
             }
         }
-        if (++b->iterations % 10 == 0) {
-            printf("  %5d %6d  [ ", b->iterations, b->evaluations);
-            for (int k = 0; k < c.n; k++) {
-                printf(c.fmt ? "% .*Le " : "% .*Lf ", c.places, b->best->x[k]);
-            }
-            printf(c.fmt ? "] % .*Le\n" : "] % .*Lf\n", c.places, b->best->f);
-        }
+        b->iterations++;
         if (c.step_mode) return true;
         resume: ;
     }
