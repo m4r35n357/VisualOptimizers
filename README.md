@@ -179,12 +179,13 @@ Run a model against all integrators, including random
 
 Parameter | Meaning
 ----------|-----------
-1 | Number of dimensions
-2 | Number of search agents
-3 | Number of iterations
-4 | Number of Nelder-Mead runs
-5 | Lower limit
-6 | Upper limit
+1 | Model name
+2 | Number of dimensions
+3 | Number of search agents
+4 | Number of iterations
+5 | Number of Nelder-Mead runs
+6 | Lower limit
+7 | Upper limit
 
 Example
 ```
