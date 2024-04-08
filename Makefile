@@ -62,9 +62,15 @@ cut-%-gl: %.o cut.o opengl.o coa-gl.o
 
 cut-gl: cut-sphere-gl cut-levy-gl cut-easom-gl cut-michalewicz-gl cut-treacle-gl cut-rosenbrock-gl cut-rastrigin-gl cut-ackley-gl cut-dixon-price-gl cut-st-gl cut-schwefel-gl cut-trid-gl
 
-.PHONY: test test-16d test-8d test-3d test-2d test-1d ctags clean depclean
+.PHONY: test-64d test-32d test-16d test-8d test-3d test-2d test-1d ctags clean depclean
 
-test: test-8d test-3d
+test-64d: nogl
+	@./nm-sphere-std 1 0 64 1.0e-6 1000000 1.0 1 1 0 80 >/dev/null
+	@echo ""
+	@./nm-trid-std 1 0 64 1.0e-6 1000000 1.0 1 1 0 1056 >/dev/null
+	@echo ""
+	@./nm-rosenbrock-std 1 0 64 1.0e-6 10000000 40.0 1 1 0 80 >/dev/null
+	@echo ""
 
 test-32d: nogl
 	@./nm-sphere-std 1 0 32 1.0e-6 1000000 1.0 1 10 -30 30 >/dev/null
@@ -73,9 +79,9 @@ test-32d: nogl
 	@echo ""
 	@./nm-rosenbrock-std 1 0 32 1.0e-6 1000000 1.0 1 10 -30 30 >/dev/null
 	@echo ""
-	@./nm-treacle-std 1 0 32 1.0e-6 1000000 30.0 1 1000 -30 30 >/dev/null
+	@./nm-treacle-std 1 0 32 1.0e-6 1000000 30.0 1 100 -30 30 >/dev/null
 	@echo ""
-	@./nm-easom-std 1 0 32 1.0e-6 1000000 30.0 1 10 -30 30 >/dev/null
+	@./nm-easom-std 1 0 32 1.0e-6 1000000 25.0 1 10 -10 40 >/dev/null
 	@echo ""
 	@./nm-dixon-price-std 1 0 32 1.0e-6 1000000 5.0 1 1000 -5 5 >/dev/null
 

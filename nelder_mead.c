@@ -19,9 +19,9 @@ optimset get_settings (char **argv, bool single) {
     };
     CHECK(opt.places >= 1 && opt.places <= 36);
     CHECK(opt.fmt == 0 || opt.fmt == 1);
-    CHECK(opt.n >= 1);
+    CHECK(opt.n >= 1 && opt.n <= 64);
     CHECK(opt.tolerance >= 1.0e-36L && opt.tolerance <= 1.0e-3L);
-    CHECK(opt.max_iterations >= 1 && opt.max_iterations <= 1000000);
+    CHECK(opt.max_iterations >= 1 && opt.max_iterations <= 10000000);
     CHECK(opt.size >= 1.0e-12L && opt.size <= 1.0e3L);
     CHECK(opt.adaptive == 0 || opt.adaptive == 1);
     CHECK(opt.init_mode >= 0 && opt.init_mode <= 10000);
@@ -79,12 +79,9 @@ simplex *nm_simplex (int n, real size, const point *start, bool adaptive) {
  * Nelder-Mead Optimizer
  */
 bool nelder_mead (simplex *s, const model *m, const optimset *o) {
-    point *best = s->p;
-    point *worst = s->p + s->n;
-    point *second_worst = worst - 1;
+    point *best = s->p, *worst = s->p + s->n, *second_worst = worst - 1;
     if (o->step_mode && s->looping) goto resume; else s->looping = true;
-    while (s->delta_x > o->tolerance || s->delta_f > o->tolerance) {
-        CHECK(s->iterations <= o->max_iterations);
+    while ((s->delta_x > o->tolerance || s->delta_f > o->tolerance) && s->iterations <= o->max_iterations) {
         int shrink = 0;
         project(s->reflect, s, m, s->ALPHA, worst, s->centroid);
         if (best->f <= s->reflect->f && s->reflect->f < second_worst->f) {

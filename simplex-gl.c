@@ -138,7 +138,7 @@ int main (int argc, char **argv) {
     // print starting point
     fprintf(stderr, "%s       Initial  ", GRY);
     print_result(o.n, start, o.places, o.fmt);
-    fprintf(stderr, o.fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter%s    % .*Lf\n",
+    fprintf(stderr, o.fmt ? "      %sDiameter%s% .*Le\n" : "      %sDiameter%s% .*Lf\n",
             GRY, NRM, o.places, distance(s1->n, s1->p, s1->p + s1->n));
 
     // get minima for targets if known

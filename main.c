@@ -27,7 +27,7 @@ int main (int argc, char **argv) {
     cost(o.n, start, m);
 
     simplex *s = nm_simplex(o.n, o.size, start, o.adaptive);
-    fprintf(stderr, o.fmt ? "      %sDiameter %s% .*Le\n" : "      %sDiameter%s    % .*Lf\n",
+    fprintf(stderr, o.fmt ? "      %sDiameter%s% .*Le\n" : "      %sDiameter%s% .*Lf\n",
             GRY, NRM, o.places, distance(o.n, s->p, s->p + o.n));
 
     int runs = 1, iterations = 0, evaluations = 1;
