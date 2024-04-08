@@ -65,9 +65,9 @@ bool coa (box *b, model *m, config c) {
     if (c.step_mode && b->looping) goto resume; else b->looping = true;
     while (b->iterations < c.max_iterations) {
         for (int k = 0; k < c.n; k++) {
-            real lower, upper, side = 0.5L * b->lambda * (b->upper[k] - b->lower[k]);
-            upper = b->best->x[k] + side;
-            lower = b->best->x[k] - side;
+            real side = 0.5L * b->lambda * (b->upper[k] - b->lower[k]);
+            real upper = b->best->x[k] + side;
+            real lower = b->best->x[k] - side;
             if (lower < b->lower[k]) {
                 upper += b->lower[k] - lower;
                 lower = b->lower[k];
@@ -86,7 +86,7 @@ bool coa (box *b, model *m, config c) {
                 cost(c.n, b->p[i], m);
                 b->evaluations++;
                 if (b->p[i]->f < b->best->f) {
-                	b->best = b->p[i];
+                    b->best = b->p[i];
                     printf("  %5d %6d  [ ", b->iterations + 1, b->evaluations);
                     for (int k = 0; k < c.n; k++) {
                         printf(c.fmt ? "% .*Le " : "% .*Lf ", c.places, b->best->x[k]);

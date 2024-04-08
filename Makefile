@@ -96,7 +96,7 @@ test-16d: nogl
 	@./nm-rosenbrock-std 3 0 16 1.0e-6 1000000 1.0 1 10 -20 20 >/dev/null
 	@./cut-rosenbrock-std 3 0 16 65536 100 -20 20 >/dev/null
 	@echo ""
-	@./nm-treacle-std 3 0 16 1.0e-6 1000000 5.0 1 100 -20 20 >/dev/null
+	@./nm-treacle-std 3 0 16 1.0e-6 1000000 20.0 1 1000 -20 20 >/dev/null
 	@./cut-treacle-std 3 0 16 65536 100 -20 20 >/dev/null
 	@echo ""
 	@./nm-easom-std 3 0 16 1.0e-6 100000 5.0 1 10 -25 25 >/dev/null
@@ -105,7 +105,7 @@ test-16d: nogl
 	@./nm-dixon-price-std 3 0 16 1.0e-6 1000000 5.0 1 1000 -5 5 >/dev/null
 	@./cut-dixon-price-std 3 0 16 65536 100 -5 5 >/dev/null
 	@echo ""
-	@./nm-michalewicz-std 3 0 16 1.0e-6 1000000 1.0 1 100 0 3.14 >/dev/null
+	@./nm-michalewicz-std 3 0 16 1.0e-6 1000000 1.0 1 1000 0 3.14 >/dev/null
 	@./cut-michalewicz-std 3 0 16 65536 100 0 3.14 >/dev/null
 	@echo ""
 
