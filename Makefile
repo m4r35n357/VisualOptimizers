@@ -82,38 +82,24 @@ test-32d: nogl
 # 2^16 search agents
 test-16d: nogl
 	@./nm-sphere-std 3 0 16 1.0e-6 1000000 1.0 1 10 -20 20 >/dev/null
-	@./spiral-sphere-std 3 0 16 65536 100 0 -20 20 >/dev/null
-	@./spiral-sphere-std 3 0 16 65536 100 1 -20 20 >/dev/null
 	@./cut-sphere-std 3 0 16 65536 100 -20 20 >/dev/null
 	@echo ""
 	@./nm-trid-std 3 0 16 1.0e-6 1000000 1.0 1 10 -100 100 >/dev/null
-	@./spiral-trid-std 3 0 16 65536 100 0 -100 100 >/dev/null
-	@./spiral-trid-std 3 0 16 65536 100 1 -100 100 >/dev/null
 	@./cut-trid-std 3 0 16 65536 100 -100 100 >/dev/null
 	@echo ""
 	@./nm-rosenbrock-std 3 0 16 1.0e-6 1000000 1.0 1 10 -20 20 >/dev/null
-	@./spiral-rosenbrock-std 3 0 16 65536 100 0 -20 20 >/dev/null
-	@./spiral-rosenbrock-std 3 0 16 65536 100 1 -20 20 >/dev/null
 	@./cut-rosenbrock-std 3 0 16 65536 100 -20 20 >/dev/null
 	@echo ""
 	@./nm-treacle-std 3 0 16 1.0e-6 1000000 5.0 1 100 -20 20 >/dev/null
-	@./spiral-treacle-std 3 0 16 65536 100 0 -20 20 >/dev/null
-	@./spiral-treacle-std 3 0 16 65536 100 1 -20 20 >/dev/null
 	@./cut-treacle-std 3 0 16 65536 100 -20 20 >/dev/null
 	@echo ""
 	@./nm-easom-std 3 0 16 1.0e-6 100000 5.0 1 10 -25 25 >/dev/null
-	@./spiral-easom-std 3 0 16 65536 100 0 -25 25 >/dev/null
-	@./spiral-easom-std 3 0 16 65536 100 1 -25 25 >/dev/null
 	@./cut-easom-std 3 0 16 65536 100 -25 25 >/dev/null
 	@echo ""
 	@./nm-dixon-price-std 3 0 16 1.0e-6 1000000 5.0 1 1000 -5 5 >/dev/null
-	@./spiral-dixon-price-std 3 0 16 65536 100 0 -5 5 >/dev/null
-	@./spiral-dixon-price-std 3 0 16 65536 100 1 -5 5 >/dev/null
 	@./cut-dixon-price-std 3 0 16 65536 100 -5 5 >/dev/null
 	@echo ""
 	@./nm-michalewicz-std 3 0 16 1.0e-6 1000000 1.0 1 100 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 16 65536 100 0 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 16 65536 100 1 0 3.14 >/dev/null
 	@./cut-michalewicz-std 3 0 16 65536 100 0 3.14 >/dev/null
 	@echo ""
 
