@@ -5,7 +5,7 @@
 
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc == 7);
+    CHECK(argc == 8);
 
     // optimizer settings
     srand((unsigned int)time(NULL));
@@ -14,6 +14,7 @@ int main (int argc, char **argv) {
         .fmt = (int)strtol(argv[2], NULL, BASE),
         .n = (int)strtol(argv[3], NULL, BASE),
         .init_mode = (int)strtol(argv[4], NULL, BASE),
+        .adaptive = (int)strtol(argv[5], NULL, BASE),  // used as progress flag
         .step_mode = false
     };
     CHECK(o.places >= 1 && o.places <= 36);
@@ -25,8 +26,8 @@ int main (int argc, char **argv) {
     model *m = model_init();
 
     point *start = get_point(o.n);
-    o.lower = strtold(argv[5], NULL);
-    o.upper = strtold(argv[6], NULL);  CHECK(o.upper > o.lower);
+    o.lower = strtold(argv[6], NULL);
+    o.upper = strtold(argv[7], NULL);  CHECK(o.upper > o.lower);
     set_random_coordinates(start, o.n, o.lower, o.upper);
     cost(o.n, start, m);
 
@@ -37,13 +38,26 @@ int main (int argc, char **argv) {
         cost(o.n, start, m);
         evaluations++;
 
-        if (start->f < boat->f) copy_point(o.n, start, boat);
+        if (o.adaptive) {
+            fprintf(stderr, "\r                         \r%8d %8d  ", runs, evaluations);
+            if (start->f < boat->f) {
+                copy_point(o.n, start, boat);
+                fprintf(stderr, "\r%8d %8d  ", runs, evaluations);
+                print_result(o.n, boat, o.places, o.fmt);
+            }
+        } else {
+        	if (start->f < boat->f) copy_point(o.n, start, boat);
+        }
 
         set_random_coordinates(start, o.n, o.lower, o.upper);
     } while (runs++ < o.init_mode);
 
-    fprintf(stderr, "\r%7d %6d  ", runs - 1, evaluations);
-    print_result(o.n, boat, o.places, o.fmt);
+    if (! o.adaptive) {
+        fprintf(stderr, "\r%8d %8d  ", runs - 1, evaluations);
+        print_result(o.n, boat, o.places, o.fmt);
+    } else {
+        fprintf(stderr, "\r%8d %8d\n", runs - 1, evaluations);
+    }
 
     return 0;
 }

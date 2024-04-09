@@ -146,9 +146,9 @@ Parameter | Meaning
 
 Examples
 ```
-./spiral-ackley-std 3 0 3 50 100 0 -5 5
-./spiral-ackley-std 3 0 3 50 100 1 -5 5
-./spiral-ackley-gl 3 0 3 50 100 0 -5 5
+./spiral-ackley-std 3 0 3 64 100 0 -5 5
+./spiral-ackley-std 3 0 3 64 100 1 -5 5
+./spiral-ackley-gl 3 0 3 64 100 0 -5 5
 ```
 The OpenGL visualization shows the two alternative senses of rotation.
 
@@ -171,9 +171,30 @@ Parameter | Meaning
 
 Examples
 ```
-./cut-ackley-std 3 0 3 50 100 -5 5
-./cut-ackley-std 3 0 3 50 100 -5 5
-./cut-ackley-gl 3 0 3 50 100 -5 5
+./cut-ackley-std 3 0 3 64 100 0 -5 5
+./cut-ackley-std 3 0 3 64 100 1 -5 5
+./cut-ackley-gl 3 0 3 64 100 0 -5 5
+```
+The OpenGL visualization shows both clamped and un-clamped variants regardless of parameter 6.
+
+##  Random Optimization
+
+No OpenGL visualization provided
+
+Parameter | Meaning
+----------|-----------
+1 | Display precision (1..36)
+2 | Floating point format (0 for fixed, 1 for exponential)
+3 | Number of dimensions
+4 | Number of iterations
+5 | Show progress (0 for no, 1 for yes)
+6 | Lower limit
+7 | Upper limit
+
+Examples
+```
+./rnd-ackley-std 3 0 3 64000 0 -5 5
+./rnd-ackley-std 3 0 3 64000 1 -5 5
 ```
 The OpenGL visualization shows both clamped and un-clamped variants regardless of parameter 6.
 
@@ -196,7 +217,7 @@ Example
 ./solve-model sphere 8 200 500 1 -10 10
 ```
 
-To get a better idea of the variation in performance of spiral and cut integrators, use the "stats" script below.
+To get a better idea of the run-by-run variation in performance of spiral and cut integrators, use the "stats" script below.
 
 ## "stats" script
 
