@@ -2,9 +2,9 @@
 
 Currently three candidates:
 
-* Nelder-Mead (using "dual" regular initial simplexes)
-* Spiral Optimization (using "dual" rotations)
-* Optimization by Cut (NEW)
+* Nelder-Mead - multi-run mode for global optimization
+* Spiral Optimization (using "dual" rotations in OpenGL) - two algorithm strategies
+* Optimization by Cut (both strategies in OpenGL) - two algorithm strategies
 
 Presented for application in local or global optimization in up to 16 dimensions.
 Additionally there is a "random" optimizer (with no OpenGL visualization) to use as a base-line.
@@ -122,6 +122,7 @@ Examples
 ./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 100 -10 10 >/dev/null
 ./nm-ackley-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
 ```
+The OpenGL visualization shows "dual" regular initial simplexes.
 
 ## Spiral Optimization
 
@@ -149,6 +150,7 @@ Examples
 ./spiral-ackley-std 3 0 3 50 100 1 -5 5
 ./spiral-ackley-gl 3 0 3 50 100 0 -5 5
 ```
+The OpenGL visualization shows the two alternative senses of rotation.
 
 ##  Optimization by Cut
 
@@ -163,8 +165,9 @@ Parameter | Meaning
 3 | Number of dimensions
 4 | Number of search agents
 5 | Number of iterations
-6 | Lower limit
-7 | Upper limit
+6 | Algorithm mode (0 for "un-clamped", 1 for "clamped"), ignored in OpenGL
+7 | Lower limit
+8 | Upper limit
 
 Examples
 ```
@@ -172,6 +175,7 @@ Examples
 ./cut-ackley-std 3 0 3 50 100 -5 5
 ./cut-ackley-gl 3 0 3 50 100 -5 5
 ```
+The OpenGL visualization shows both clamped and un-clamped variants regardless of parameter 6.
 
 ## "solve-model" script
 

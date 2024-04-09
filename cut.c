@@ -16,8 +16,9 @@ config get_config (char **argv, bool single) {
         .n = (int)strtol(argv[3], NULL, BASE),
         .m = (int)strtol(argv[4], NULL, BASE),
         .max_iterations = (int)strtol(argv[5], NULL, BASE),
-        .lower = strtold(argv[6], NULL),
-        .upper = strtold(argv[7], NULL),
+        .clamp = (int)strtol(argv[6], NULL, BASE),
+        .lower = strtold(argv[7], NULL),
+        .upper = strtold(argv[8], NULL),
         .step_mode = single
     };
     CHECK(conf.places >= 1 && conf.places <= 36);
@@ -25,6 +26,7 @@ config get_config (char **argv, bool single) {
     CHECK(conf.n >= 1 && conf.n <= 64);
     CHECK(conf.m >= 1 && conf.m <= 100000);
     CHECK(conf.max_iterations >= 1 && conf.max_iterations <= 1000);
+    CHECK(conf.clamp == 0 || conf.clamp == 1);
     CHECK(conf.upper > conf.lower);
     return conf;
 }
@@ -68,12 +70,14 @@ bool coa (box *b, model *m, config c) {
             real side = 0.5L * b->lambda * (b->upper[k] - b->lower[k]);
             real upper = b->best->x[k] + side;
             real lower = b->best->x[k] - side;
-            if (lower < b->lower[k]) {
-                upper += b->lower[k] - lower;
-                lower = b->lower[k];
-            } else if (upper > b->upper[k]) {
-                lower += b->upper[k] - upper;
-                upper = b->upper[k];
+            if (c.clamp) {
+                if (lower < b->lower[k]) {
+                    upper += b->lower[k] - lower;
+                    lower = b->lower[k];
+                } else if (upper > b->upper[k]) {
+                    lower += b->upper[k] - upper;
+                    upper = b->upper[k];
+                }
             }
             b->upper[k] = upper;
             b->lower[k] = lower;

@@ -8,6 +8,7 @@ typedef struct Config {
     int n;   // number of dimensions
     int m;   // number of points
     int max_iterations;   // maximum number of allowed iterations
+    int clamp;  // strategy
     real lower;   // bottom of coordinate range
     real upper;   // top of coordinate range
     bool step_mode; // free-running or single-step algorithm
