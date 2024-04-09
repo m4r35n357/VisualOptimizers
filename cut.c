@@ -63,6 +63,16 @@ box *get_box (model *m, config c) {
     return b;
 }
 
+static void clamp (real *l, real *u, real lower_limit, real upper_limit) {
+    if (*l < lower_limit) {
+        *u += lower_limit - *l;
+        *l = lower_limit;
+    } else if (*u > upper_limit) {
+        *l += upper_limit - *u;
+        *u = upper_limit;
+    }
+}
+
 bool coa (box *b, model *m, config c) {
     if (c.step_mode && b->looping) goto resume; else b->looping = true;
     while (b->iterations < c.max_iterations) {
@@ -71,13 +81,9 @@ bool coa (box *b, model *m, config c) {
             real upper = b->best->x[k] + side;
             real lower = b->best->x[k] - side;
             if (c.clamp) {
-                if (lower < b->lower[k]) {
-                    upper += b->lower[k] - lower;
-                    lower = b->lower[k];
-                } else if (upper > b->upper[k]) {
-                    lower += b->upper[k] - upper;
-                    upper = b->upper[k];
-                }
+                clamp(&lower, &upper, b->lower[k], b->upper[k]);
+            } else {
+                clamp(&lower, &upper, c.lower, c.upper);
             }
             b->upper[k] = upper;
             b->lower[k] = lower;
