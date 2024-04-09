@@ -116,61 +116,61 @@ test-16d: nogl
 	@./cut-michalewicz-std 3 0 16 65536 100 1 0 3.14 >/dev/null
 	@echo ""
 
-# 3^8 search agents
+# 2^8 search agents
 test-8d: nogl
 	@./nm-sphere-std 3 0 8 1.0e-6 100000 1.0 1 10 -10 10 >/dev/null
-	@./spiral-sphere-std 3 0 8 6561 100 0 -10 10 >/dev/null
-	@./spiral-sphere-std 3 0 8 6561 100 1 -10 10 >/dev/null
-	@./cut-sphere-std 3 0 8 6561 100 0 -10 10 >/dev/null
-	@./cut-sphere-std 3 0 8 6561 100 1 -10 10 >/dev/null
+	@./spiral-sphere-std 3 0 8 256 1000 0 -10 10 >/dev/null
+	@./spiral-sphere-std 3 0 8 256 1000 1 -10 10 >/dev/null
+	@./cut-sphere-std 3 0 8 256 1000 0 -10 10 >/dev/null
+	@./cut-sphere-std 3 0 8 256 1000 1 -10 10 >/dev/null
 	@echo ""
 	@./nm-trid-std 3 0 8 1.0e-6 100000 1.0 1 10 -25 25 >/dev/null
-	@./spiral-trid-std 3 0 8 6561 100 0 -25 25 >/dev/null
-	@./spiral-trid-std 3 0 8 6561 100 1 -25 25 >/dev/null
-	@./cut-trid-std 3 0 8 6561 100 0 -25 25 >/dev/null
-	@./cut-trid-std 3 0 8 6561 100 1 -25 25 >/dev/null
+	@./spiral-trid-std 3 0 8 256 1000 0 -25 25 >/dev/null
+	@./spiral-trid-std 3 0 8 256 1000 1 -25 25 >/dev/null
+	@./cut-trid-std 3 0 8 256 1000 0 -25 25 >/dev/null
+	@./cut-trid-std 3 0 8 256 1000 1 -25 25 >/dev/null
 	@echo ""
 	@./nm-rosenbrock-std 3 0 8 1.0e-6 100000 1.0 1 10 -10 10 >/dev/null
-	@./spiral-rosenbrock-std 3 0 8 6561 100 0 -10 10 >/dev/null
-	@./spiral-rosenbrock-std 3 0 8 6561 100 1 -10 10 >/dev/null
-	@./cut-rosenbrock-std 3 0 8 6561 100 0 -10 10 >/dev/null
-	@./cut-rosenbrock-std 3 0 8 6561 100 1 -10 10 >/dev/null
+	@./spiral-rosenbrock-std 3 0 8 256 1000 0 -10 10 >/dev/null
+	@./spiral-rosenbrock-std 3 0 8 256 1000 1 -10 10 >/dev/null
+	@./cut-rosenbrock-std 3 0 8 256 1000 0 -10 10 >/dev/null
+	@./cut-rosenbrock-std 3 0 8 256 1000 1 -10 10 >/dev/null
 	@echo ""
 	@./nm-treacle-std 3 0 8 1.0e-6 100000 5.0 1 50 -10 10 >/dev/null
-	@./spiral-treacle-std 3 0 8 6561 100 0 -10 10 >/dev/null
-	@./spiral-treacle-std 3 0 8 6561 100 1 -10 10 >/dev/null
-	@./cut-treacle-std 3 0 8 6561 100 0 -10 10 >/dev/null
-	@./cut-treacle-std 3 0 8 6561 100 1 -10 10 >/dev/null
+	@./spiral-treacle-std 3 0 8 256 1000 0 -10 10 >/dev/null
+	@./spiral-treacle-std 3 0 8 256 1000 1 -10 10 >/dev/null
+	@./cut-treacle-std 3 0 8 256 1000 0 -10 10 >/dev/null
+	@./cut-treacle-std 3 0 8 256 1000 1 -10 10 >/dev/null
 	@echo ""
 	@./nm-easom-std 3 0 8 1.0e-6 100000 1.0 1 10 -15 15 >/dev/null
-	@./spiral-easom-std 3 0 8 6561 100 0 -15 15 >/dev/null
-	@./spiral-easom-std 3 0 8 6561 100 1 -15 15 >/dev/null
-	@./cut-easom-std 3 0 8 6561 100 0 -15 15 >/dev/null
-	@./cut-easom-std 3 0 8 6561 100 1 -15 15 >/dev/null
+	@./spiral-easom-std 3 0 8 256 1000 0 -15 15 >/dev/null
+	@./spiral-easom-std 3 0 8 256 1000 1 -15 15 >/dev/null
+	@./cut-easom-std 3 0 8 256 1000 0 -15 15 >/dev/null
+	@./cut-easom-std 3 0 8 256 1000 1 -15 15 >/dev/null
 	@echo ""
 	@./nm-st-std 3 0 8 1.0e-6 100000 10.0 1 50 -10 10 >/dev/null
-	@./spiral-st-std 3 0 8 6561 100 0 -10 10 >/dev/null
-	@./spiral-st-std 3 0 8 6561 100 1 -10 10 >/dev/null
-	@./cut-st-std 3 0 8 6561 100 0 -10 10 >/dev/null
-	@./cut-st-std 3 0 8 6561 100 1 -10 10 >/dev/null
+	@./spiral-st-std 3 0 8 256 1000 0 -10 10 >/dev/null
+	@./spiral-st-std 3 0 8 256 1000 1 -10 10 >/dev/null
+	@./cut-st-std 3 0 8 256 1000 0 -10 10 >/dev/null
+	@./cut-st-std 3 0 8 256 1000 1 -10 10 >/dev/null
 	@echo ""
 	@./nm-dixon-price-std 3 0 8 1.0e-6 100000 1.0 1 50 -5 5 >/dev/null
-	@./spiral-dixon-price-std 3 0 8 6561 100 0 -5 5 >/dev/null
-	@./spiral-dixon-price-std 3 0 8 6561 100 1 -5 5 >/dev/null
-	@./cut-dixon-price-std 3 0 8 6561 100 0 -5 5 >/dev/null
-	@./cut-dixon-price-std 3 0 8 6561 100 1 -5 5 >/dev/null
+	@./spiral-dixon-price-std 3 0 8 256 1000 0 -5 5 >/dev/null
+	@./spiral-dixon-price-std 3 0 8 256 1000 1 -5 5 >/dev/null
+	@./cut-dixon-price-std 3 0 8 256 1000 0 -5 5 >/dev/null
+	@./cut-dixon-price-std 3 0 8 256 1000 1 -5 5 >/dev/null
 	@echo ""
 	@./nm-levy-std 3 0 8 1.0e-6 100000 10.0 1 50 -10 10 >/dev/null
-	@./spiral-levy-std 3 0 8 6561 100 0 -10 10 >/dev/null
-	@./spiral-levy-std 3 0 8 6561 100 1 -10 10 >/dev/null
-	@./cut-levy-std 3 0 8 6561 100 0 -10 10 >/dev/null
-	@./cut-levy-std 3 0 8 6561 100 1 -10 10 >/dev/null
+	@./spiral-levy-std 3 0 8 256 1000 0 -10 10 >/dev/null
+	@./spiral-levy-std 3 0 8 256 1000 1 -10 10 >/dev/null
+	@./cut-levy-std 3 0 8 256 1000 0 -10 10 >/dev/null
+	@./cut-levy-std 3 0 8 256 1000 1 -10 10 >/dev/null
 	@echo ""
 	@./nm-michalewicz-std 3 0 8 1.0e-6 100000 1.0 1 50 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 8 6561 100 0 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 8 6561 100 1 0 3.14 >/dev/null
-	@./cut-michalewicz-std 3 0 8 6561 100 0 0 3.14 >/dev/null
-	@./cut-michalewicz-std 3 0 8 6561 100 1 0 3.14 >/dev/null
+	@./spiral-michalewicz-std 3 0 8 256 100 0 0 3.14 >/dev/null
+	@./spiral-michalewicz-std 3 0 8 256 100 1 0 3.14 >/dev/null
+	@./cut-michalewicz-std 3 0 8 256 1000 0 0 3.14 >/dev/null
+	@./cut-michalewicz-std 3 0 8 256 1000 1 0 3.14 >/dev/null
 	@echo ""
 
 # 4^3 search agents
