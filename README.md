@@ -89,8 +89,6 @@ Nelder, John A.; R. Mead (1965). "A simplex method for function minimization". C
 This code was originally based on a [project](https://github.com/matteotiziano/nelder-mead) by Matteo Maggioni in 2023.
 It now uses "dual" regular simplexes (the best answer is selected), and has a "multi-run" mode for use as a global optimizer.
 
-The implementation in this project is a little different from those in most popular/common solvers in that it uses a pair of _regular_ (dual) simplexes (the best answer is selected), and the user must specify an initial "scale".
-Use the OpenGL visualizations to see how this works.
 The vertex coordinates are generated using an algorithm which is described (open access) [here](https://link.springer.com/article/10.1007/s11590-022-01953-y).
 The adaptive algorithm is described (open access) [here](https://www.researchgate.net/publication/225691623_Implementing_the_Nelder-Mead_simplex_algorithm_with_adaptive_parameters).
 
@@ -122,16 +120,13 @@ Examples
 ./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 100 -10 10 >/dev/null
 ./nm-ackley-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
 ```
-The OpenGL visualization shows "dual" regular initial simplexes.
+The OpenGL visualization shows two "dual" regular initial simplexes.
 
 ## Spiral Optimization
 
 Based on the algorithm described [here](https://en.wikipedia.org/wiki/Spiral_optimization_algorithm).
 Note that current versions of the algorithm use a fixed rotation angle of PI/2; versions using variable theta are now obsolete.
 The code supports both modes of operation described in that link: "Periodic Descent Direction Setting" and "Convergence Setting".
-
-The implementation in this project uses a "dual" mode in which both "directions of rotation" of the spiral are used, and the best answer selected.
-Use the OpenGL visualizations to see how this works.
 
 Parameter | Meaning
 ----------|-----------
@@ -175,7 +170,7 @@ Examples
 ./cut-ackley-std 3 0 3 64 100 1 -5 5
 ./cut-ackley-gl 3 0 3 64 100 0 -5 5
 ```
-The OpenGL visualization shows both clamped and un-clamped variants regardless of parameter 6.
+The OpenGL visualization shows both "clamped" and "un-clamped" variants regardless of parameter 6.
 
 ##  Random Optimization
 
@@ -196,7 +191,6 @@ Examples
 ./rnd-ackley-std 3 0 3 64000 0 -5 5
 ./rnd-ackley-std 3 0 3 64000 1 -5 5
 ```
-The OpenGL visualization shows both clamped and un-clamped variants regardless of parameter 6.
 
 ## "solve-model" script
 
