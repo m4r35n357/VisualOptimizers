@@ -60,7 +60,7 @@ spiral *get_spiral (model *m, config c) {
     }
     s->x_star = s->best;
     s->looping = s->dual_mode = false;
-    s->r = powl(0.1L / c.k_max, 1.0L / c.k_max);
+    s->r = powl(SHRINK_FACTOR, 1.0L / c.k_max);
     return s;
 }
 

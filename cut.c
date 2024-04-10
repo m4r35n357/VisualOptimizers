@@ -59,7 +59,7 @@ box *get_box (model *m, config c) {
         if (b->p[i]->f < b->best->f) b->best = b->p[i];
     }
     b->looping = false;
-    b->lambda = powl(0.1L / c.max_iterations, 1.0L / c.max_iterations);
+    b->lambda = powl(SHRINK_FACTOR, 1.0L / c.max_iterations);
     return b;
 }
 
