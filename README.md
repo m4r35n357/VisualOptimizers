@@ -87,9 +87,9 @@ shows more output - random, multiple-run Nelder-Mead, spiral (both strategies), 
 Nelder, John A.; R. Mead (1965). "A simplex method for function minimization". Computer Journal. 7 (4): 308–313. doi:10.1093/comjnl/7.4.308.
 
 This code was originally based on a [project](https://github.com/matteotiziano/nelder-mead) by Matteo Maggioni in 2023.
-It now uses "dual" regular simplexes (the best answer is selected), and has a "multi-run" mode for use as a global optimizer.
+It has been extensively rewritten, now uses regular simplexes, and has a "multi-run" mode for use as a global optimizer.
 
-The vertex coordinates are generated using an algorithm which is described (open access) [here](https://link.springer.com/article/10.1007/s11590-022-01953-y).
+The regular vertex coordinates are generated using an algorithm which is described (open access) [here](https://link.springer.com/article/10.1007/s11590-022-01953-y).
 The adaptive algorithm is described (open access) [here](https://www.researchgate.net/publication/225691623_Implementing_the_Nelder-Mead_simplex_algorithm_with_adaptive_parameters).
 
 Parameter | Meaning
