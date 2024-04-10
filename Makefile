@@ -107,7 +107,7 @@ test-16d: nogl
 	@./cut-easom-std 3 0 16 65536 100 0 -25 25 >/dev/null
 	@./cut-easom-std 3 0 16 65536 100 1 -25 25 >/dev/null
 	@echo ""
-	@./nm-dixon-price-std 3 0 16 1.0e-6 1000000 5.0 1 1000 -5 5 >/dev/null
+	@./nm-dixon-price-std 3 0 16 1.0e-6 1000000 5.0 1 2000 -5 5 >/dev/null
 	@./cut-dixon-price-std 3 0 16 65536 100 0 -5 5 >/dev/null
 	@./cut-dixon-price-std 3 0 16 65536 100 1 -5 5 >/dev/null
 	@echo ""
@@ -167,8 +167,8 @@ test-8d: nogl
 	@./cut-levy-std 3 0 8 256 1000 1 -10 10 >/dev/null
 	@echo ""
 	@./nm-michalewicz-std 3 0 8 1.0e-6 100000 1.0 1 50 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 8 256 100 0 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 8 256 100 1 0 3.14 >/dev/null
+	@./spiral-michalewicz-std 3 0 8 256 1000 0 0 3.14 >/dev/null
+	@./spiral-michalewicz-std 3 0 8 256 1000 1 0 3.14 >/dev/null
 	@./cut-michalewicz-std 3 0 8 256 1000 0 0 3.14 >/dev/null
 	@./cut-michalewicz-std 3 0 8 256 1000 1 0 3.14 >/dev/null
 	@echo ""
