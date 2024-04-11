@@ -44,9 +44,9 @@ box *get_box (model *m, config c) {
         b->lower[k] = c.lower;
     }
     b->iterations = b->evaluations = 0;
-    b->p = malloc((size_t)c.m * sizeof (point *));    CHECK(b->p);
+    b->p = malloc((size_t)c.m * sizeof (point *));        CHECK(b->p);
     for (int i = 0; i < c.m; i++) {
-        b->p[i] = malloc(sizeof (point));          CHECK(b->p[i]);
+        b->p[i] = malloc(sizeof (point));                 CHECK(b->p[i]);
         b->p[i]->x = malloc((size_t)c.n * sizeof (real)); CHECK(b->p[i]->x);
         for (int k = 0; k < c.n; k++) {
             b->p[i]->x[k] = rand_range(c.lower, c.upper);
