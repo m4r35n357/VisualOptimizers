@@ -148,25 +148,25 @@ test-8d: nogl
 	@./cut-easom-std 3 0 8 256 1000 0 -15 15 >/dev/null
 	@./cut-easom-std 3 0 8 256 1000 1 -15 15 >/dev/null
 	@echo ""
-	@./nm-st-std 3 0 8 1.0e-6 100000 10.0 1 50 -10 10 >/dev/null
+	@./nm-st-std 3 0 8 1.0e-6 100000 10.0 1 100 -10 10 >/dev/null
 	@./spiral-st-std 3 0 8 256 1000 0 -10 10 >/dev/null
 	@./spiral-st-std 3 0 8 256 1000 1 -10 10 >/dev/null
 	@./cut-st-std 3 0 8 256 1000 0 -10 10 >/dev/null
 	@./cut-st-std 3 0 8 256 1000 1 -10 10 >/dev/null
 	@echo ""
-	@./nm-dixon-price-std 3 0 8 1.0e-6 100000 1.0 1 50 -5 5 >/dev/null
+	@./nm-dixon-price-std 3 0 8 1.0e-6 100000 1.0 1 100 -5 5 >/dev/null
 	@./spiral-dixon-price-std 3 0 8 256 1000 0 -5 5 >/dev/null
 	@./spiral-dixon-price-std 3 0 8 256 1000 1 -5 5 >/dev/null
 	@./cut-dixon-price-std 3 0 8 256 1000 0 -5 5 >/dev/null
 	@./cut-dixon-price-std 3 0 8 256 1000 1 -5 5 >/dev/null
 	@echo ""
-	@./nm-levy-std 3 0 8 1.0e-6 100000 10.0 1 50 -10 10 >/dev/null
+	@./nm-levy-std 3 0 8 1.0e-6 100000 10.0 1 100 -10 10 >/dev/null
 	@./spiral-levy-std 3 0 8 256 1000 0 -10 10 >/dev/null
 	@./spiral-levy-std 3 0 8 256 1000 1 -10 10 >/dev/null
 	@./cut-levy-std 3 0 8 256 1000 0 -10 10 >/dev/null
 	@./cut-levy-std 3 0 8 256 1000 1 -10 10 >/dev/null
 	@echo ""
-	@./nm-michalewicz-std 3 0 8 1.0e-6 100000 1.0 1 50 0 3.14 >/dev/null
+	@./nm-michalewicz-std 3 0 8 1.0e-6 100000 1.0 1 100 0 3.14 >/dev/null
 	@./spiral-michalewicz-std 3 0 8 256 1000 0 0 3.14 >/dev/null
 	@./spiral-michalewicz-std 3 0 8 256 1000 1 0 3.14 >/dev/null
 	@./cut-michalewicz-std 3 0 8 256 1000 0 0 3.14 >/dev/null
