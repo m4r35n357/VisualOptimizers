@@ -36,4 +36,4 @@ do
     count=$((count + 1))
 done
 
-echo "${GRY}Passed${NRM} $passed  ${GRY}Failed${NRM} $failed"
+echo "${GRY}Passed${NRM} $passed  ${GRY}Failed${NRM} $failed" >&2
