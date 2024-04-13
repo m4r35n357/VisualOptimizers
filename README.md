@@ -74,26 +74,26 @@ In particular:
 ```
 make test-3d
 ```
-Shows basic program output (with stdout suppressed!) and can be used to get OpenGL commands by cut & paste - just change std to gl in the program names.
+shows basic program output (with stdout suppressed!) and can be used to get OpenGL commands by cut & paste - just change std to gl in the program names.
 Single-run Nelder-Mead, spiral (both strategies), cut (both strategies).
 ```
 make test-8d
 ```
-Multiple-run Nelder-Mead, spiral (both strategies), cut (both strategies).
+shows multiple-run Nelder-Mead, spiral (both strategies), and cut (both strategies).
 Fewer models.
 The spiral optimizers are clearly running out of steam at 8D.
 
 ```
 make test-16d
 ```
-Multiple-run Nelder-Mead, cut (both strategies).
+shows multiple-run Nelder-Mead, and cut (both strategies).
 Fewer models.
 The cut optimizers are still hanging on at 16D, but the "curse of dimensionality" means that they will need an eye-watering number of iterations to work at 32D.
 
 ```
 make test-32d
 ```
-Multiple-run Nelder-Mead.
+shows just multiple-run Nelder-Mead.
 Fewer models.
 
 # Usage

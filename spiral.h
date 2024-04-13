@@ -23,7 +23,7 @@ typedef struct Spiral {
     point **p;
     point *x_star, *best, *update;
     int k, k_star, evaluations;
-    real r;
+    real rd, rc;
     bool looping, dual_mode;
 } spiral;
 
