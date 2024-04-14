@@ -27,13 +27,13 @@ nogl: nm-std spiral-std cut-std rnd-std ctags
 rnd-%-std: %.o nelder_mead.o main-random.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-rnd-std: rnd-sphere-std rnd-levy-std rnd-easom-std rnd-michalewicz-std rnd-rastrigin-std rnd-treacle-std rnd-ackley-std rnd-rosenbrock-std rnd-dixon-price-std rnd-st-std rnd-box-std rnd-schwefel-std rnd-trid-std
+rnd-std: rnd-sphere-std rnd-levy-std rnd-easom-std rnd-michalewicz-std rnd-rastrigin-std rnd-treacle-std rnd-ackley-std rnd-rosenbrock-std rnd-dixon-price-std rnd-st-std rnd-schwefel-std rnd-trid-std
 
 # Nelder-Mead optimizarion
 nm-%-std: %.o nelder_mead.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-nm-std: nm-sphere-std nm-levy-std nm-easom-std nm-michalewicz-std nm-rastrigin-std nm-treacle-std nm-ackley-std nm-rosenbrock-std nm-dixon-price-std nm-st-std nm-box-std nm-schwefel-std nm-trid-std
+nm-std: nm-sphere-std nm-levy-std nm-easom-std nm-michalewicz-std nm-rastrigin-std nm-treacle-std nm-ackley-std nm-rosenbrock-std nm-dixon-price-std nm-st-std nm-schwefel-std nm-trid-std
 
 nm-%-gl: %.o nelder_mead.o opengl.o simplex-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
@@ -44,7 +44,7 @@ nm-gl: nm-sphere-gl nm-levy-gl nm-easom-gl nm-michalewicz-gl nm-rastrigin-gl nm-
 spiral-%-std: %.o spiral.o main-spiral.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-spiral-std: spiral-sphere-std spiral-levy-std spiral-easom-std spiral-michalewicz-std spiral-treacle-std spiral-rosenbrock-std spiral-box-std spiral-rastrigin-std spiral-ackley-std spiral-dixon-price-std spiral-st-std spiral-schwefel-std spiral-trid-std
+spiral-std: spiral-sphere-std spiral-levy-std spiral-easom-std spiral-michalewicz-std spiral-treacle-std spiral-rosenbrock-std spiral-rastrigin-std spiral-ackley-std spiral-dixon-price-std spiral-st-std spiral-schwefel-std spiral-trid-std
 
 spiral-%-gl: %.o spiral.o opengl.o soa-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
@@ -55,7 +55,7 @@ spiral-gl: spiral-sphere-gl spiral-levy-gl spiral-easom-gl spiral-michalewicz-gl
 cut-%-std: %.o cut.o main-cut.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-cut-std: cut-sphere-std cut-levy-std cut-easom-std cut-michalewicz-std cut-treacle-std cut-rosenbrock-std cut-box-std cut-rastrigin-std cut-ackley-std cut-dixon-price-std cut-st-std cut-schwefel-std cut-trid-std
+cut-std: cut-sphere-std cut-levy-std cut-easom-std cut-michalewicz-std cut-treacle-std cut-rosenbrock-std cut-rastrigin-std cut-ackley-std cut-dixon-price-std cut-st-std cut-schwefel-std cut-trid-std
 
 cut-%-gl: %.o cut.o opengl.o coa-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
@@ -259,7 +259,6 @@ test-2d: nogl
 	@./nm-schwefel-std 3 0 2 1.0e-6 10000 1.0 0 1 -500 500 >/dev/null
 	@./nm-michalewicz-std 3 0 2 1.0e-6 10000 1.0 0 1 -3.14 3.14 >/dev/null
 	@./nm-easom-std 3 0 2 1.0e-6 10000 1.0 0 1 -6.28 6.28 >/dev/null
-	@./nm-box-std 3 0 2 1.0e-6 10000 1.0 0 1 0 4 >/dev/null
 	@echo ""
 
 test-1d: nogl
