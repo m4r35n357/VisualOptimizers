@@ -1,0 +1,32 @@
+#!/bin/sh
+
+GRY='\e[1;30m'
+RED='\e[0;31m'
+GRN='\e[0;32m'
+MGT='\e[0;35m'
+NRM='\e[0m'
+
+args="$0 $*"
+n_args=$(($# + 1))
+echo "${GRY}args ${NRM}${n_args}${GRY} [ ${MGT}${args}${GRY} ]${NRM}" >&2
+
+runs=$1
+threshold=$2
+model=$3
+order=$4
+agents=$5
+iterations=$6
+lower=$7
+upper=$8
+
+# Periodic Descent Direction Setting
+./stats $runs $threshold ./spiral-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null
+
+# Convergence Setting
+./stats $runs $threshold ./spiral-$model-std 3 0 $order $agents $iterations 1 $lower $upper >/dev/null
+
+# Un-clamped
+./stats $runs $threshold ./cut-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null
+
+# Clamped
+./stats $runs $threshold ./cut-$model-std 3 0 $order $agents $iterations 1 $lower $upper >/dev/null

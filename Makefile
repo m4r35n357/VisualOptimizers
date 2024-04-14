@@ -62,7 +62,7 @@ cut-%-gl: %.o cut.o opengl.o coa-gl.o
 
 cut-gl: cut-sphere-gl cut-levy-gl cut-easom-gl cut-michalewicz-gl cut-treacle-gl cut-rosenbrock-gl cut-rastrigin-gl cut-ackley-gl cut-dixon-price-gl cut-st-gl cut-schwefel-gl cut-trid-gl
 
-.PHONY: test-64d test-32d test-16d test-8d test-3d test-2d test-1d ctags clean depclean
+.PHONY: test-multi-agents test-64d test-32d test-16d test-8d test-3d test-2d test-1d ctags clean depclean
 
 test-64d: nogl
 	@./nm-sphere-std 1 0 64 1.0e-6 1000000 1.0 1 1 0 80 >/dev/null
@@ -118,6 +118,27 @@ test-16d: nogl
 	@./nm-michalewicz-std 3 0 16 1.0e-6 1000000 1.0 1 1000 0 3.14 >/dev/null
 	@./cut-michalewicz-std 3 0 16 65536 100 0 0 3.14 >/dev/null
 	@./cut-michalewicz-std 3 0 16 65536 100 1 0 3.14 >/dev/null
+	@echo ""
+
+# 2^8 search agents
+test-multi-agents: nogl
+	@./multi-stats 100 0.001 sphere 8 256 1000 -10 10
+	@echo ""
+	@./multi-stats 100 0.001 trid 8 256 1000 -25 25
+	@echo ""
+	@./multi-stats 100 -0.999 easom 8 256 1000 -15 15
+	@echo ""
+	@./multi-stats 100 0.1 rosenbrock 8 256 1000 -10 10
+	@echo ""
+	@./multi-stats 100 0.1 treacle 8 256 1000 -10 10
+	@echo ""
+	@./multi-stats 100 -313.0 st 8 256 1000 -5 10
+	@echo ""
+	@./multi-stats 100 0.001 dixon-price 8 256 1000 -10 10
+	@echo ""
+	@./multi-stats 100 0.001 levy 8 256 1000 -10 10
+	@echo ""
+	@./multi-stats 100 -7.5 michalewicz 8 256 1000 0 3.14
 	@echo ""
 
 # 2^8 search agents
