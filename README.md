@@ -281,6 +281,55 @@ Here are some 16-D starting points:
 Of course this is comparing apples to oranges, with just two functions, and the results are not always clear-cut (and vary with each run), but total iterations and function evaluations are shown explicitly in each case.
 Do your own experiments!
 
+## "multi-stats" script
+
+Runs the "stats" script many times to help even out fluctuations in results from run to run.
+
+Parameter | Meaning
+----------|-----------
+1 | number of runs
+2 | threshold
+3 | model name
+4 | number of dimensions
+5 | number of search agents
+6 | number of iterations per run
+7 | range min
+8 | range max
+
+The easiest way to do this is using make, which invokes the script for the most "important" models (note: for the output below I have edited the Makefile to do 1000 runs per model instead of 100!):
+```
+make clean
+make CCC=gcc test-multi-agents
+```
+For 1000 runs expect it to take up to an hour to complete.
+This is an edited summary of the output:
+```
+                             Command                         spiral     spiral         cut         cut
+                                                             (descent)  (convergence)  (unclamped) (clamped)
+
+Unimodal
+
+     [ ./multi-stats 1000 0.001 sphere 8 256 1000 -10 10 ]     183        862           1000        1000
+
+       [ ./multi-stats 1000 0.001 trid 8 256 1000 -25 25 ]    1000       1000           1000        1000
+
+     [ ./multi-stats 1000 -0.999 easom 8 256 1000 -15 15 ]     390        903           1000         999
+
+   [ ./multi-stats 1000 0.1 rosenbrock 8 256 1000 -10 10 ]       1         31            854           0
+
+      [ ./multi-stats 1000 0.1 treacle 8 256 1000 -10 10 ]       0         31            930         768
+
+Multi-modal
+
+         [ ./multi-stats 1000 -313.0 st 8 256 1000 -5 10 ]     110         65            288         396
+
+[ ./multi-stats 1000 0.001 dixon-price 8 256 1000 -10 10 ]     194        263            239          44
+
+       [ ./multi-stats 1000 0.001 levy 8 256 1000 -10 10 ]      13         48            985         833
+
+ [ ./multi-stats 1000 -7.5 michalewicz 8 256 1000 0 3.14 ]     311        242            324         719
+```
+
 ## OpenGL Visualizations
 
 To get a list of OpenGL command examples, use one of the commands below:
