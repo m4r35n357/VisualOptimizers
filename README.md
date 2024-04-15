@@ -299,7 +299,7 @@ Parameter | Meaning
 The easiest way to do this is using make, which invokes the script for the most "important" models (note: for the output below I have edited the Makefile to do 1000 runs per model instead of 100!):
 ```
 make clean
-make CCC=gcc test-multi-agents
+make CCC=gcc test-multi-8d
 ```
 For 1000 runs expect it to take up to an hour to complete.
 This is an edited summary of the output:

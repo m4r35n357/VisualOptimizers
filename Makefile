@@ -62,7 +62,7 @@ cut-%-gl: %.o cut.o opengl.o coa-gl.o
 
 cut-gl: cut-sphere-gl cut-levy-gl cut-easom-gl cut-michalewicz-gl cut-treacle-gl cut-rosenbrock-gl cut-rastrigin-gl cut-ackley-gl cut-dixon-price-gl cut-st-gl cut-schwefel-gl cut-trid-gl
 
-.PHONY: test-multi-agents test-64d test-32d test-16d test-8d test-3d test-2d test-1d ctags clean depclean
+.PHONY: test-multi-16d test-multi-8d test-multi-3d test-64d test-32d test-16d test-8d test-3d test-2d test-1d ctags clean depclean
 
 test-64d: nogl
 	@./nm-sphere-std 1 0 64 1.0e-6 1000000 1.0 1 1 0 80 >/dev/null
@@ -84,6 +84,25 @@ test-32d: nogl
 	@./nm-easom-std 1 0 32 1.0e-6 1000000 25.0 1 10 -10 40 >/dev/null
 	@echo ""
 	@./nm-dixon-price-std 1 0 32 1.0e-6 1000000 5.0 1 1000 -10 10 >/dev/null
+
+# 2^16 search agents
+test-multi-16d: nogl
+	@./multi-stats 10 0.001 sphere 16 65536 100 -20 20
+	@echo ""
+	@./multi-stats 10 0.001 trid 16 65536 100 -100 100
+	@echo ""
+	@./multi-stats 10 -0.999 easom 16 65536 100 -25 25
+	@echo ""
+	@./multi-stats 10 0.1 rosenbrock 16 65536 100 -20 20
+	@echo ""
+	@./multi-stats 10 0.1 treacle 16 65536 100 -20 20
+	@echo ""
+	@./multi-stats 10 -626.0 st 16 65536 100 -5 20
+	@echo ""
+	@./multi-stats 10 0.001 dixon-price 16 65536 100 -10 10
+	@echo ""
+	@./multi-stats 10 -14.5 michalewicz 16 65536 100 0 3.14
+	@echo ""
 
 # 2^16 search agents
 test-16d: nogl
@@ -121,7 +140,7 @@ test-16d: nogl
 	@echo ""
 
 # 2^8 search agents
-test-multi-agents: nogl
+test-multi-8d: nogl
 	@./multi-stats 100 0.001 sphere 8 256 1000 -10 10
 	@echo ""
 	@./multi-stats 100 0.001 trid 8 256 1000 -25 25
@@ -196,6 +215,31 @@ test-8d: nogl
 	@./spiral-michalewicz-std 3 0 8 256 1000 1 0 3.14 >/dev/null
 	@./cut-michalewicz-std 3 0 8 256 1000 0 0 3.14 >/dev/null
 	@./cut-michalewicz-std 3 0 8 256 1000 1 0 3.14 >/dev/null
+	@echo ""
+
+# 3^3 search agents
+test-multi-3d: nogl
+	@./multi-stats 100 0.001 sphere 3 27 100 -10 10
+	@echo ""
+	@./multi-stats 100 0.001 trid 3 27 100 -5 5
+	@echo ""
+	@./multi-stats 100 -0.999 easom 3 27 100 -10 10
+	@echo ""
+	@./multi-stats 100 0.1 rosenbrock 3 27 100 -5 5
+	@echo ""
+	@./multi-stats 100 0.01 treacle 3 27 100 -10 10
+	@echo ""
+	@./multi-stats 100 -117.0 st 3 27 100 -5 5
+	@echo ""
+	@./multi-stats 100 0.001 dixon-price 3 27 100 -10 10
+	@echo ""
+	@./multi-stats 100 0.001 levy 3 27 100 -10 10
+	@echo ""
+	@./multi-stats 100 -2.8 michalewicz 3 27 100 0 3.14
+	@echo ""
+	@./multi-stats 100 0.001 rastrigin 3 27 100 -5 5
+	@echo ""
+	@./multi-stats 100 0.001 schwefel 3 27 100 -500 500
 	@echo ""
 
 # 4^3 search agents
