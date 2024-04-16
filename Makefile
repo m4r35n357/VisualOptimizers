@@ -89,13 +89,13 @@ test-32d: nogl
 test-multi-16d: nogl
 	@./multi-stats 10 0.001 sphere 16 65536 100 -20 20
 	@echo ""
-	@./multi-stats 10 0.001 trid 16 65536 100 -100 100
+	@./multi-stats 10 -799.0 trid 16 65536 100 -100 100
 	@echo ""
 	@./multi-stats 10 -0.999 easom 16 65536 100 -25 25
 	@echo ""
-	@./multi-stats 10 0.1 rosenbrock 16 65536 100 -20 20
+	@./multi-stats 10 0.001 rosenbrock 16 65536 100 -20 20
 	@echo ""
-	@./multi-stats 10 0.1 treacle 16 65536 100 -20 20
+	@./multi-stats 10 0.01 treacle 16 65536 100 -20 20
 	@echo ""
 	@./multi-stats 10 -626.0 st 16 65536 100 -5 20
 	@echo ""
@@ -143,13 +143,13 @@ test-16d: nogl
 test-multi-8d: nogl
 	@./multi-stats 100 0.001 sphere 8 256 1000 -10 10
 	@echo ""
-	@./multi-stats 100 0.001 trid 8 256 1000 -25 25
+	@./multi-stats 100 -111.9 trid 8 256 1000 -30 30
 	@echo ""
 	@./multi-stats 100 -0.999 easom 8 256 1000 -15 15
 	@echo ""
-	@./multi-stats 100 0.1 rosenbrock 8 256 1000 -10 10
+	@./multi-stats 100 0.001 rosenbrock 8 256 1000 -10 10
 	@echo ""
-	@./multi-stats 100 0.1 treacle 8 256 1000 -10 10
+	@./multi-stats 100 0.01 treacle 8 256 1000 -10 10
 	@echo ""
 	@./multi-stats 100 -313.0 st 8 256 1000 -5 10
 	@echo ""
@@ -168,11 +168,11 @@ test-8d: nogl
 	@./cut-sphere-std 3 0 8 256 1000 0 -10 10 >/dev/null
 	@./cut-sphere-std 3 0 8 256 1000 1 -10 10 >/dev/null
 	@echo ""
-	@./nm-trid-std 3 0 8 1.0e-6 100000 1.0 1 10 -25 25 >/dev/null
-	@./spiral-trid-std 3 0 8 256 1000 0 -25 25 >/dev/null
-	@./spiral-trid-std 3 0 8 256 1000 1 -25 25 >/dev/null
-	@./cut-trid-std 3 0 8 256 1000 0 -25 25 >/dev/null
-	@./cut-trid-std 3 0 8 256 1000 1 -25 25 >/dev/null
+	@./nm-trid-std 3 0 8 1.0e-6 100000 1.0 1 10 -30 30 >/dev/null
+	@./spiral-trid-std 3 0 8 256 1000 0 -30 30 >/dev/null
+	@./spiral-trid-std 3 0 8 256 1000 1 -30 30 >/dev/null
+	@./cut-trid-std 3 0 8 256 1000 0 -30 30 >/dev/null
+	@./cut-trid-std 3 0 8 256 1000 1 -30 30 >/dev/null
 	@echo ""
 	@./nm-easom-std 3 0 8 1.0e-6 100000 1.0 1 10 -15 15 >/dev/null
 	@./spiral-easom-std 3 0 8 256 1000 0 -15 15 >/dev/null
@@ -221,11 +221,11 @@ test-8d: nogl
 test-multi-3d: nogl
 	@./multi-stats 100 0.001 sphere 3 27 100 -10 10
 	@echo ""
-	@./multi-stats 100 0.001 trid 3 27 100 -5 5
+	@./multi-stats 100 -6.9 trid 3 27 100 -10 10
 	@echo ""
 	@./multi-stats 100 -0.999 easom 3 27 100 -10 10
 	@echo ""
-	@./multi-stats 100 0.1 rosenbrock 3 27 100 -5 5
+	@./multi-stats 100 0.001 rosenbrock 3 27 100 -5 5
 	@echo ""
 	@./multi-stats 100 0.01 treacle 3 27 100 -10 10
 	@echo ""
@@ -250,11 +250,11 @@ test-3d: nogl
 	@./cut-sphere-std 3 0 3 64 100 0 -10 10 >/dev/null
 	@./cut-sphere-std 3 0 3 64 100 1 -10 10 >/dev/null
 	@echo ""
-	@./nm-trid-std 3 0 3 1.0e-6 100000 1.0 1 1 -5 5 >/dev/null
-	@./spiral-trid-std 3 0 3 64 100 0 -5 5 >/dev/null
-	@./spiral-trid-std 3 0 3 64 100 1 -5 5 >/dev/null
-	@./cut-trid-std 3 0 3 64 100 0 -5 5 >/dev/null
-	@./cut-trid-std 3 0 3 64 100 1 -5 5 >/dev/null
+	@./nm-trid-std 3 0 3 1.0e-6 100000 1.0 1 1 -10 10 >/dev/null
+	@./spiral-trid-std 3 0 3 64 100 0 -10 10 >/dev/null
+	@./spiral-trid-std 3 0 3 64 100 1 -10 10 >/dev/null
+	@./cut-trid-std 3 0 3 64 100 0 -10 10 >/dev/null
+	@./cut-trid-std 3 0 3 64 100 1 -10 10 >/dev/null
 	@echo ""
 	@./nm-easom-std 3 0 3 1.0e-6 100000 1.0 0 1 -10 10 >/dev/null
 	@./spiral-easom-std 3 0 3 64 100 0 -10 10 >/dev/null
