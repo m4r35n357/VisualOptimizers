@@ -4,11 +4,7 @@
 #include "cut.h"
 
 config get_config (char **argv, bool single) {
-    unsigned int seed = 0;
-    FILE *devrnd = fopen("/dev/urandom","r");  CHECK(devrnd);
-    fread(&seed, 4, 1, devrnd);
-    int opened = fclose(devrnd);  CHECK(!opened);
-    srand(seed);
+    randomize();
     config conf = {
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
@@ -30,10 +26,6 @@ config get_config (char **argv, bool single) {
     return conf;
 }
 
-static real rand_range (real lower, real upper) {
-    return (upper - lower) * (real)rand() / (real)RAND_MAX + lower;
-}
-
 box *get_box (model *m, config c) {
     box *b =  malloc(sizeof(box));
     b->upper = malloc((size_t)c.n * sizeof (real)); CHECK(b->upper);
@@ -45,11 +37,8 @@ box *get_box (model *m, config c) {
     b->iterations = b->evaluations = 0;
     b->p = malloc((size_t)c.m * sizeof (point *));        CHECK(b->p);
     for (int i = 0; i < c.m; i++) {
-        b->p[i] = malloc(sizeof (point));                 CHECK(b->p[i]);
-        b->p[i]->x = malloc((size_t)c.n * sizeof (real)); CHECK(b->p[i]->x);
-        for (int k = 0; k < c.n; k++) {
-            b->p[i]->x[k] = rand_range(c.lower, c.upper);
-        }
+        b->p[i] = get_point(c.n); CHECK(b->p[i]);
+        set_random_coordinates(b->p[i], c.n, c.lower, c.upper);
         cost(c.n, b->p[i], m);
         b->evaluations++;
     }

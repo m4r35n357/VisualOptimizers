@@ -24,40 +24,40 @@ all: nogl nm-gl spiral-gl cut-gl
 nogl: nm-std spiral-std cut-std rnd-std ctags
 
 # Random optimizarion
-rnd-%-std: %.o nelder_mead.o main-random.o
+rnd-%-std: %.o nelder_mead.o base.o main-random.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 rnd-std: rnd-sphere-std rnd-levy-std rnd-easom-std rnd-michalewicz-std rnd-rastrigin-std rnd-treacle-std rnd-ackley-std rnd-rosenbrock-std rnd-dixon-price-std rnd-st-std rnd-schwefel-std rnd-trid-std
 
 # Nelder-Mead optimizarion
-nm-%-std: %.o nelder_mead.o main.o
+nm-%-std: %.o nelder_mead.o base.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 nm-std: nm-sphere-std nm-levy-std nm-easom-std nm-michalewicz-std nm-rastrigin-std nm-treacle-std nm-ackley-std nm-rosenbrock-std nm-dixon-price-std nm-st-std nm-schwefel-std nm-trid-std
 
-nm-%-gl: %.o nelder_mead.o opengl.o simplex-gl.o
+nm-%-gl: %.o nelder_mead.o opengl.o base.o simplex-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
 nm-gl: nm-sphere-gl nm-levy-gl nm-easom-gl nm-michalewicz-gl nm-rastrigin-gl nm-treacle-gl nm-ackley-gl nm-rosenbrock-gl nm-dixon-price-gl nm-st-gl nm-schwefel-gl nm-trid-gl
 
 # Spiral optimizarion
-spiral-%-std: %.o spiral.o main-spiral.o
+spiral-%-std: %.o spiral.o base.o main-spiral.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 spiral-std: spiral-sphere-std spiral-levy-std spiral-easom-std spiral-michalewicz-std spiral-treacle-std spiral-rosenbrock-std spiral-rastrigin-std spiral-ackley-std spiral-dixon-price-std spiral-st-std spiral-schwefel-std spiral-trid-std
 
-spiral-%-gl: %.o spiral.o opengl.o soa-gl.o
+spiral-%-gl: %.o spiral.o opengl.o base.o soa-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
 spiral-gl: spiral-sphere-gl spiral-levy-gl spiral-easom-gl spiral-michalewicz-gl spiral-treacle-gl spiral-rosenbrock-gl spiral-rastrigin-gl spiral-ackley-gl spiral-dixon-price-gl spiral-st-gl spiral-schwefel-gl spiral-trid-gl
 
 # Optimizarion by cut
-cut-%-std: %.o cut.o main-cut.o
+cut-%-std: %.o cut.o base.o main-cut.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 cut-std: cut-sphere-std cut-levy-std cut-easom-std cut-michalewicz-std cut-treacle-std cut-rosenbrock-std cut-rastrigin-std cut-ackley-std cut-dixon-price-std cut-st-std cut-schwefel-std cut-trid-std
 
-cut-%-gl: %.o cut.o opengl.o coa-gl.o
+cut-%-gl: %.o cut.o opengl.o base.o coa-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
 cut-gl: cut-sphere-gl cut-levy-gl cut-easom-gl cut-michalewicz-gl cut-treacle-gl cut-rosenbrock-gl cut-rastrigin-gl cut-ackley-gl cut-dixon-price-gl cut-st-gl cut-schwefel-gl cut-trid-gl

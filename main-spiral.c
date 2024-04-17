@@ -19,11 +19,7 @@ int main(int argc, char *argv[]) {
 
     // print solution
     fprintf(stderr, "  %5d %6d  ", s->k, s->evaluations);
-    fprintf(stderr, "%s[%s ", GRY, NRM);
-    for (int i = 0; i < c.n; i++) {
-        fprintf(stderr, c.fmt ? "% .*Le " : "% .*Lf ", c.places, s->x_star->x[i]);
-    }
-    fprintf(stderr, c.fmt ? "%s]%s % .*Le\n" : "%s]%s % .*Lf\n", GRY, NRM, c.places, s->x_star->f);
+    print_result(c.n, s->x_star, c.places, c.fmt);
 
     return 0;
 }

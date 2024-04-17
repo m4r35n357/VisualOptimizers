@@ -4,11 +4,7 @@
 #include "spiral.h"
 
 config get_config (char **argv, bool single) {
-    unsigned int seed = 0;
-    FILE *devrnd = fopen("/dev/urandom","r");  CHECK(devrnd);
-    fread(&seed, 4, 1, devrnd);
-    int opened = fclose(devrnd);  CHECK(!opened);
-    srand(seed);
+    randomize();
     config conf = {
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
@@ -30,16 +26,9 @@ config get_config (char **argv, bool single) {
     return conf;
 }
 
-static real rand_range (real lower, real upper) {
-    return (upper - lower) * (real)rand() / (real)RAND_MAX + lower;
-}
-
 point *get_spiral_point (spiral *s, model *m, config c) {
-    point *p = malloc(sizeof (point));          CHECK(p);
-    p->x = malloc((size_t)c.n * sizeof (real)); CHECK(p->x);
-    for (int k = 0; k < c.n; k++) {
-        p->x[k] = rand_range(c.lower, c.upper);
-    }
+    point *p = get_point(c.n); CHECK(p);
+    set_random_coordinates(p, c.n, c.lower, c.upper);
     cost(c.n, p, m);
     s->evaluations++;
     return p;

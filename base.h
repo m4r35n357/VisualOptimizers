@@ -50,3 +50,16 @@ typedef struct Point {
   real *x;
   real f;
 } point;
+
+void randomize (void);
+
+real rand_range (real lower, real upper);
+
+point *get_point (int n);
+
+void set_random_coordinates (point *p, int n, real lower, real upper);
+
+void copy_point (int n, const point *src, point *dst);
+
+void print_result (int n, const point *p, int places, int fmt);
+

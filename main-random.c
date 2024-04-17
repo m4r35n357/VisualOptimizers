@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include "simplex.h"
 
 int main (int argc, char **argv) {
@@ -8,7 +7,7 @@ int main (int argc, char **argv) {
     CHECK(argc == 8);
 
     // optimizer settings
-    srand((unsigned int)time(NULL));
+    randomize();
     optimset o = {
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),

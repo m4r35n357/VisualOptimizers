@@ -4,11 +4,7 @@
 #include "simplex.h"
 
 optimset get_settings (char **argv, bool single) {
-    unsigned int seed = 0;
-    FILE *devrnd = fopen("/dev/urandom","r");  CHECK(devrnd);
-    fread(&seed, 4, 1, devrnd);
-    int opened = fclose(devrnd);  CHECK(!opened);
-    srand(seed);
+    randomize();
     optimset opt = {
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
@@ -173,35 +169,8 @@ void project (point *new, simplex *s, const model *m, real factor, const point *
 }
 
 /*
- * Point & output utilities
+ * Progress output
  */
-point *get_point (int n) {
-    point *p = malloc(sizeof (point));        CHECK(p);
-    p->x = malloc((size_t)n * sizeof (real)); CHECK(p->x);
-    return p;
-}
-
-void set_random_coordinates (point *p, int n, real lower, real upper) {
-    for (int j = 0; j < n; j++) {
-        p->x[j] = (upper - lower) * (real)rand() / (real)RAND_MAX + lower;
-    }
-}
-
-void copy_point (int n, const point *src, point *dst) {
-    for (int i = 0; i < n; i++) {
-        dst->x[i] = src->x[i];
-    }
-    dst->f = src->f;
-}
-
-void print_result (int n, const point *p, int places, int fmt) {
-    fprintf(stderr, "%s[%s ", GRY, NRM);
-    for (int i = 0; i < n; i++) {
-        fprintf(stderr, fmt ? "% .*Le " : "% .*Lf ", places, p->x[i]);
-    }
-    fprintf(stderr, fmt ? "%s]%s % .*Le\n" : "%s]%s % .*Lf\n", GRY, NRM, places, p->f);
-}
-
 void print_progress (const simplex *s, const point *best, int places, int fmt) {
     fprintf(stdout, " %4d %4d  [ ", s->iterations, s->evaluations);
     for (int j = 0; j < s->n; j++) {
