@@ -19,6 +19,23 @@ static void get_vertices (gl_point *vertices, point **points) {
     }
 }
 
+static void cut_box (float x_l, float y_l, float z_l, float x_u, float y_u, float z_u, rgb colour) {
+    line((gl_point){x_l, y_l, z_l}, (gl_point){x_u, y_l, z_l}, colour);
+    line((gl_point){x_l, y_l, z_u}, (gl_point){x_u, y_l, z_u}, colour);
+    line((gl_point){x_l, y_u, z_l}, (gl_point){x_u, y_u, z_l}, colour);
+    line((gl_point){x_l, y_u, z_u}, (gl_point){x_u, y_u, z_u}, colour);
+
+    line((gl_point){x_l, y_l, z_l}, (gl_point){x_l, y_u, z_l}, colour);
+    line((gl_point){x_l, y_l, z_u}, (gl_point){x_l, y_u, z_u}, colour);
+    line((gl_point){x_u, y_l, z_l}, (gl_point){x_u, y_u, z_l}, colour);
+    line((gl_point){x_u, y_l, z_u}, (gl_point){x_u, y_u, z_u}, colour);
+
+    line((gl_point){x_l, y_l, z_l}, (gl_point){x_l, y_l, z_u}, colour);
+    line((gl_point){x_l, y_u, z_l}, (gl_point){x_l, y_u, z_u}, colour);
+    line((gl_point){x_u, y_l, z_l}, (gl_point){x_u, y_l, z_u}, colour);
+    line((gl_point){x_u, y_u, z_l}, (gl_point){x_u, y_u, z_u}, colour);
+}
+
 void Animate () {
     SetupView();
 
@@ -38,49 +55,16 @@ void Animate () {
 
     draw_grid();
 
-    rgb box1_colour = get_colour(DARK_RED);
-    float x_lower = (float)b1->lower[0], x_upper = (float)b1->upper[0];
-    float y_lower = (float)b1->lower[1], y_upper = (float)b1->upper[1];
-    float z_lower = (float)b1->lower[2], z_upper = (float)b1->upper[2];
-    line((gl_point){x_lower, y_lower, z_lower}, (gl_point){x_upper, y_lower, z_lower}, box1_colour);
-    line((gl_point){x_lower, y_lower, z_upper}, (gl_point){x_upper, y_lower, z_upper}, box1_colour);
-    line((gl_point){x_lower, y_upper, z_lower}, (gl_point){x_upper, y_upper, z_lower}, box1_colour);
-    line((gl_point){x_lower, y_upper, z_upper}, (gl_point){x_upper, y_upper, z_upper}, box1_colour);
-
-    line((gl_point){x_lower, y_lower, z_lower}, (gl_point){x_lower, y_upper, z_lower}, box1_colour);
-    line((gl_point){x_lower, y_lower, z_upper}, (gl_point){x_lower, y_upper, z_upper}, box1_colour);
-    line((gl_point){x_upper, y_lower, z_lower}, (gl_point){x_upper, y_upper, z_lower}, box1_colour);
-    line((gl_point){x_upper, y_lower, z_upper}, (gl_point){x_upper, y_upper, z_upper}, box1_colour);
-
-    line((gl_point){x_lower, y_lower, z_lower}, (gl_point){x_lower, y_lower, z_upper}, box1_colour);
-    line((gl_point){x_lower, y_upper, z_lower}, (gl_point){x_lower, y_upper, z_upper}, box1_colour);
-    line((gl_point){x_upper, y_lower, z_lower}, (gl_point){x_upper, y_lower, z_upper}, box1_colour);
-    line((gl_point){x_upper, y_upper, z_lower}, (gl_point){x_upper, y_upper, z_upper}, box1_colour);
-
-    rgb box2_colour = get_colour(DARK_MAGENTA);
-    x_lower = (float)b2->lower[0], x_upper = (float)b2->upper[0];
-    y_lower = (float)b2->lower[1], y_upper = (float)b2->upper[1];
-    z_lower = (float)b2->lower[2], z_upper = (float)b2->upper[2];
-    line((gl_point){x_lower, y_lower, z_lower}, (gl_point){x_upper, y_lower, z_lower}, box2_colour);
-    line((gl_point){x_lower, y_lower, z_upper}, (gl_point){x_upper, y_lower, z_upper}, box2_colour);
-    line((gl_point){x_lower, y_upper, z_lower}, (gl_point){x_upper, y_upper, z_lower}, box2_colour);
-    line((gl_point){x_lower, y_upper, z_upper}, (gl_point){x_upper, y_upper, z_upper}, box2_colour);
-
-    line((gl_point){x_lower, y_lower, z_lower}, (gl_point){x_lower, y_upper, z_lower}, box2_colour);
-    line((gl_point){x_lower, y_lower, z_upper}, (gl_point){x_lower, y_upper, z_upper}, box2_colour);
-    line((gl_point){x_upper, y_lower, z_lower}, (gl_point){x_upper, y_upper, z_lower}, box2_colour);
-    line((gl_point){x_upper, y_lower, z_upper}, (gl_point){x_upper, y_upper, z_upper}, box2_colour);
-
-    line((gl_point){x_lower, y_lower, z_lower}, (gl_point){x_lower, y_lower, z_upper}, box2_colour);
-    line((gl_point){x_lower, y_upper, z_lower}, (gl_point){x_lower, y_upper, z_upper}, box2_colour);
-    line((gl_point){x_upper, y_lower, z_lower}, (gl_point){x_upper, y_lower, z_upper}, box2_colour);
-    line((gl_point){x_upper, y_upper, z_lower}, (gl_point){x_upper, y_upper, z_upper}, box2_colour);
-
     if (targets && minimum) {
         for (int i = 0; i < targets->n_minima; i++) {
             ball(get_gl_point(targets->min[i].x), get_colour(WHITE));
         }
     }
+
+    cut_box((float)b1->lower[0], (float)b1->lower[1], (float)b1->lower[2],
+            (float)b1->upper[0], (float)b1->upper[1], (float)b1->upper[2], get_colour(DARK_RED));
+    cut_box((float)b2->lower[0], (float)b2->lower[1], (float)b2->lower[2],
+            (float)b2->upper[0], (float)b2->upper[1], (float)b2->upper[2], get_colour(DARK_MAGENTA));
 
     for (int i = 0; i < c.m; i++) {
         ball(v1[i], b1->p[i] == b1->best ? get_colour(LIGHT_RED) : get_colour(DARK_GREEN));
