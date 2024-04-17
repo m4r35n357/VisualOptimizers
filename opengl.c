@@ -162,6 +162,11 @@ void ball (gl_point p, rgb colour) {
     glPopMatrix();
 }
 
+void osd_status (char *hud, int fmt, int iterations, int evaluations, int places, point *p) {
+    sprintf(hud, fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
+            iterations, evaluations, places, p->x[0], places, p->x[1], places, p->x[2], places, p->f);
+}
+
 void osd (int x, int y, rgb colour, char *string) {
     glColor3f(colour.a, colour.b, colour.c);
     glWindowPos2i(x, y);

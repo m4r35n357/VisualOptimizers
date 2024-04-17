@@ -71,6 +71,8 @@ void ball (gl_point p, rgb colour);
 /*
  * OSD/HUD
  */
+void osd_status (char *hud, int fmt, int iterations, int evaluations, int places, point *p);
+
 void osd (int x, int y, rgb colour, char *string);
 
 /*

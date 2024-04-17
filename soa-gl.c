@@ -48,19 +48,12 @@ void Animate () {
     }
 
     if (osd_active) {
-        sprintf(hud1, c.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
-                s1->k, s1->evaluations,
-                c.places, s1->x_star->x[0], c.places, s1->x_star->x[1], c.places, s1->x_star->x[2], c.places, s1->x_star->f);
-        sprintf(hud2, c.fmt ? "%.1d %.1d [ % .*Le % .*Le % .*Le ] % .*Le" : "%.1d %.1d [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
-                s2->k, s2->evaluations,
-                c.places, s2->x_star->x[0], c.places, s2->x_star->x[1], c.places, s2->x_star->x[2], c.places, s2->x_star->f);
+        osd_status (hud1, c.fmt, s1->k, s1->evaluations, c.places, s1->x_star);
+        osd_status (hud2, c.fmt, s2->k, s2->evaluations, c.places, s2->x_star);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_GREEN), hud1);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 40, get_colour(DARK_CYAN), hud2);
         if (targets && minimum) {
-            sprintf(hud3, c.fmt ? "%3s %5s [ % .*Le % .*Le % .*Le ] % .*Le" : "%3s %5s [ % .*Lf % .*Lf % .*Lf ] % .*Lf",
-                    " ", " ",
-                    c.places, targets->min[0].x[0], c.places, targets->min[0].x[1], c.places, targets->min[0].x[2],
-                    c.places, targets->min[0].f);
+            osd_status (hud3, c.fmt, 0, 0, c.places, targets->min);
             osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 60, get_colour(LIGHT_GREY), hud3);
         }
     }
