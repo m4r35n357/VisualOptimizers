@@ -60,12 +60,12 @@ void Animate () {
     }
 
     if (osd_active) {
-        osd_status (hud1, o.fmt, s1->iterations, s1->evaluations, o.places, s1->p);
-        osd_status (hud2, o.fmt, s2->iterations, s2->evaluations, o.places, s2->p);
+        osd_status(hud1, o.fmt, s1->iterations, s1->evaluations, o.places, s1->p);
+        osd_status(hud2, o.fmt, s2->iterations, s2->evaluations, o.places, s2->p);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_CYAN), hud1);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 40, get_colour(DARK_YELLOW), hud2);
         if (targets && minimum) {
-            osd_status (hud3, o.fmt, 0, 0, o.places, targets->min);
+            osd_status(hud3, o.fmt, 0, 0, o.places, targets->min);
             osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 60, get_colour(LIGHT_GREY), hud3);
         }
     }

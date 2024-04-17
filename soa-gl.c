@@ -26,7 +26,9 @@ void Animate () {
         if (initial) {
             initial = false;
         } else {
+            c.convergence = false;
             soa(s1, m, c);
+            c.convergence = true;
             soa(s2, m, c);
             get_vertices(v1, s1->p);
             get_vertices(v2, s2->p);
@@ -48,12 +50,12 @@ void Animate () {
     }
 
     if (osd_active) {
-        osd_status (hud1, c.fmt, s1->k, s1->evaluations, c.places, s1->x_star);
-        osd_status (hud2, c.fmt, s2->k, s2->evaluations, c.places, s2->x_star);
+        osd_status(hud1, c.fmt, s1->k, s1->evaluations, c.places, s1->x_star);
+        osd_status(hud2, c.fmt, s2->k, s2->evaluations, c.places, s2->x_star);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_GREEN), hud1);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 40, get_colour(DARK_CYAN), hud2);
         if (targets && minimum) {
-            osd_status (hud3, c.fmt, 0, 0, c.places, targets->min);
+            osd_status(hud3, c.fmt, 0, 0, c.places, targets->min);
             osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 60, get_colour(LIGHT_GREY), hud3);
         }
     }
@@ -64,11 +66,11 @@ void Animate () {
 void CloseWindow () {
     point *best = s1->p[0]->f <= s2->p[0]->f ? *s1->p : *s2->p;
     // print solution 1
-    fprintf(stderr, "%s%sStandard%s ", *s1->p == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "%s%s    Descent%s ", *s1->p == best ? "* " : "  ", GRY, NRM);
     fprintf(stderr, "  %5d %6d  ", s1->k, s1->evaluations);
     print_result(c.n, *s1->p, c.places, c.fmt);
     // print solution 2
-    fprintf(stderr, "%s%sReversed%s ", *s2->p == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "%s%sConvergence%s ", *s2->p == best ? "* " : "  ", GRY, NRM);
     fprintf(stderr, "  %5d %6d  ", s2->k, s2->evaluations);
     print_result(c.n, *s2->p, c.places, c.fmt);
 }
@@ -92,7 +94,6 @@ int main (int argc, char **argv) {
     }
     s2->best = s1->best;
     s2->x_star = s1->x_star;
-    s2->dual_mode = true;
 
     // get minima for targets if known
     targets = get_known_minima();

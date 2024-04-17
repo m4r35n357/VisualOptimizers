@@ -47,7 +47,7 @@ spiral *get_spiral (model *m, config c) {
         if (s->p[i]->f < s->best->f) s->best = s->p[i];
     }
     s->x_star = s->best;
-    s->looping = s->dual_mode = false;
+    s->looping = false;
     s->rd = powl(SHRINK_FACTOR, 1.0L / c.k_max);
     s->rc = powl(0.1L, 0.5L / c.n);
     return s;
@@ -61,12 +61,7 @@ bool soa (spiral *s, model *m, config c) {
             if (s->p[i] != s->x_star) {
                 bool oor = false;
                 for (int k = 0; k < c.n; k++) {
-                    real rot;
-                    if (s->dual_mode) {
-                        rot = k == c.n - 1 ? s->x_star->x[0] - s->p[i]->x[0] : s->p[i]->x[k + 1] - s->x_star->x[k + 1];
-                    } else {
-                        rot = !k ? s->x_star->x[c.n - 1] - s->p[i]->x[c.n - 1] : s->p[i]->x[k - 1] - s->x_star->x[k - 1];
-                    }
+                    real rot = !k ? s->x_star->x[c.n - 1] - s->p[i]->x[c.n - 1] : s->p[i]->x[k - 1] - s->x_star->x[k - 1];
                     s->update->x[k] = s->x_star->x[k] + r * rot;
                     if (s->update->x[k] > c.upper || s->update->x[k] < c.lower) {
                         oor = true;

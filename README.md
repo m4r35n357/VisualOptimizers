@@ -151,9 +151,11 @@ Parameter | Meaning
 3 | Number of dimensions
 4 | Number of search agents
 5 | Number of iterations
-6 | Algorithm mode (0 for "periodic descent", 1 for "convergence")
+6 | *Algorithm mode (0 for "periodic descent", 1 for "convergence")
 7 | Lower limit
 8 | Upper limit
+
+* ignored in OpenGL, which displays BOTH options
 
 Examples
 ```
@@ -176,9 +178,11 @@ Parameter | Meaning
 3 | Number of dimensions
 4 | Number of search agents
 5 | Number of iterations
-6 | Algorithm mode (0 for "un-clamped", 1 for "clamped"), ignored in OpenGL
+6 | *Algorithm mode (0 for "un-clamped", 1 for "clamped")
 7 | Lower limit
 8 | Upper limit
+
+* ignored in OpenGL, which displays BOTH options
 
 Examples
 ```
