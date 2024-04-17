@@ -68,6 +68,18 @@ void Animate () {
     ReDraw();
 }
 
+void CloseWindow () {
+    point *best = s1->p[0]->f <= s2->p[0]->f ? *s1->p : *s2->p;
+    // print solution 1
+    fprintf(stderr, "%s%sStandard%s ", *s1->p == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "  %5d %6d  ", s1->k, s1->evaluations);
+    print_result(c.n, *s1->p, c.places, c.fmt);
+    // print solution 2
+    fprintf(stderr, "%s%sReversed%s ", *s2->p == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "  %5d %6d  ", s2->k, s2->evaluations);
+    print_result(c.n, *s2->p, c.places, c.fmt);
+}
+
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
     CHECK(argc == 9);
@@ -104,6 +116,7 @@ int main (int argc, char **argv) {
     ball_size = 0.004F * ((float)c.upper - (float)c.lower);
 
     ApplicationInit(argc, argv, "Spiral Optimization Visualizer");
+    glutCloseFunc(CloseWindow);
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.
 
     return 0 ;          // Compiler requires this to be here. (Never reached)

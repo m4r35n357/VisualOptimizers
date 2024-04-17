@@ -108,6 +108,18 @@ void Animate () {
     ReDraw();
 }
 
+void CloseWindow () {
+    point *best = b1->p[0]->f <= b2->p[0]->f ? *b1->p : *b2->p;
+    // print solution 1
+    fprintf(stderr, "%s%s  Clamped%s ", *b1->p == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "  %5d %6d  ", b1->iterations, b1->evaluations);
+    print_result(c.n, *b1->p, c.places, c.fmt);
+    // print solution 2
+    fprintf(stderr, "%s%sUnclamped%s ", *b2->p == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "  %5d %6d  ", b2->iterations, b2->evaluations);
+    print_result(c.n, *b2->p, c.places, c.fmt);
+}
+
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
     CHECK(argc == 9);
@@ -136,6 +148,7 @@ int main (int argc, char **argv) {
     ball_size = 0.004F * ((float)c.upper - (float)c.lower);
 
     ApplicationInit(argc, argv, "Optimization By Cut Visualizer");
+    glutCloseFunc(CloseWindow);
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.
 
     return 0 ;          // Compiler requires this to be here. (Never reached)

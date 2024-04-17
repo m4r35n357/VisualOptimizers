@@ -46,10 +46,6 @@ bool multidirectional_search (simplex *, const model *, const optimset *);
 /*
  * Utility functions
  */
-point *get_point (int);
-
-void set_random_coordinates (point *p, int n, real lower, real upper);
-
 void regular_simplex (simplex *, real, const point *);
 
 simplex *nm_simplex (int, real, const point *, bool);
@@ -61,9 +57,5 @@ int compare (const void *, const void *);
 void sort (simplex *);
 
 void project (point *, simplex *, const model *, real, const point *, const point *);
-
-void copy_point (int, const point *, point *);
-
-void print_result (int, const point *, int, int);
 
 void print_progress (const simplex *, const point *, int, int);

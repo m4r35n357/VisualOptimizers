@@ -83,11 +83,11 @@ void Animate () {
 void CloseWindow () {
     point *best = s1->p[0].f <= s2->p[0].f ? s1->p : s2->p;
     // print solution 1
-    fprintf(stderr, "%s%s1%s ", s1->p == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "%s%sDefault%s ", s1->p == best ? "* " : "  ", GRY, NRM);
     fprintf(stderr, " %4d %4d  ", s1->iterations, s1->evaluations);
     print_result(s1->n, s1->p, o.places, o.fmt);
     // print solution 2
-    fprintf(stderr, "%s%s2%s ", s2->p == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "%s%s   Dual%s ", s2->p == best ? "* " : "  ", GRY, NRM);
     fprintf(stderr, " %4d %4d  ", s2->iterations, s2->evaluations);
     print_result(s2->n, s2->p, o.places, o.fmt);
 }
