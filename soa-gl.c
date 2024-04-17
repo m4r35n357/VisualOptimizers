@@ -46,7 +46,7 @@ void Animate () {
 
     for (int i = 0; i < c.m; i++) {
         ball(v1[i], s1->p[i] == s1->x_star ? get_colour(LIGHT_RED) : get_colour(DARK_GREEN));
-        ball(v2[i], s2->p[i] == s2->x_star ? get_colour(LIGHT_MAGENTA) : get_colour(DARK_CYAN));
+        ball(v2[i], s2->p[i] == s2->x_star ? (s2->updated ? get_colour(LIGHT_YELLOW) : (s2->shrinking ? get_colour(LIGHT_MAGENTA) : get_colour(DARK_YELLOW))) : get_colour(DARK_CYAN));
     }
 
     if (osd_active) {

@@ -47,22 +47,22 @@ spiral *get_spiral (model *m, config c) {
         if (s->p[i]->f < s->best->f) s->best = s->p[i];
     }
     s->x_star = s->best;
-    s->looping = false;
+    s->looping = s->shrinking = false;
     s->rd = powl(SHRINK_FACTOR, 1.0L / c.k_max);
-    s->rc = powl(0.1L, 0.5L / c.n);
+    s->rc = powl(OMEGA, 0.5L / c.n);
     return s;
 }
 
 bool soa (spiral *s, model *m, config c) {
     if (c.step_mode && s->looping) goto resume; else s->looping = true;
     while (s->k < c.k_max) {
-        real r = c.convergence ? (s->k >= s->k_star + 2 * c.n ? s->rc : 1.0L) : s->rd;
+        if (c.convergence) s->shrinking = s->k >= s->k_star + 2 * c.n;
         for (int i = 0; i < c.m; i++) {
             if (s->p[i] != s->x_star) {
                 bool oor = false;
                 for (int k = 0; k < c.n; k++) {
                     real rot = !k ? s->x_star->x[c.n - 1] - s->p[i]->x[c.n - 1] : s->p[i]->x[k - 1] - s->x_star->x[k - 1];
-                    s->update->x[k] = s->x_star->x[k] + r * rot;
+                    s->update->x[k] = s->x_star->x[k] + (c.convergence ? (s->shrinking ? s->rc : 1.0L) : s->rd) * rot;
                     if (s->update->x[k] > c.upper || s->update->x[k] < c.lower) {
                         oor = true;
                         break;
@@ -76,7 +76,9 @@ bool soa (spiral *s, model *m, config c) {
                 if (s->p[i]->f < s->best->f) s->best = s->p[i];
             }
         }
+        s->updated = false;
         if (s->best->f < s->x_star->f) {
+            s->updated = true;
             s->x_star = s->best;
             s->k_star = s->k + 1;
             printf("  %5d %6d  [ ", s->k_star, s->evaluations);

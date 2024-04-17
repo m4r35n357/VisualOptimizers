@@ -2,6 +2,8 @@
 
 #include "model.h"
 
+#define OMEGA 0.1L
+
 typedef struct Config {
     int places;  // significant figures in float/exponential output
     int fmt;  // fixed or exponential floating point format
@@ -24,7 +26,7 @@ typedef struct Spiral {
     point *x_star, *best, *update;
     int k, k_star, evaluations;
     real rd, rc;
-    bool looping;
+    bool looping, updated, shrinking;
 } spiral;
 
 point *get_spiral_point (spiral *s, model *m, config c);
