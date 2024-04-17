@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <time.h>
 #include "simplex.h"
 
 optimset get_settings (char **argv, bool single) {
-    srand((unsigned int)time(NULL));
+    unsigned int seed = 0;
+    FILE *devrnd = fopen("/dev/urandom","r");  CHECK(devrnd);
+    fread(&seed, 4, 1, devrnd);
+    int opened = fclose(devrnd);  CHECK(!opened);
+    srand(seed);
     optimset opt = {
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),

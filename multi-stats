@@ -19,6 +19,9 @@ iterations=$6
 lower=$7
 upper=$8
 
+# Nelder-Mead
+./stats $runs $threshold ./nm-$model-std 3 0 $order 1.0e-6 100000 $(echo "scale=3; 0.5 * ($upper - $lower);" | /usr/bin/bc) 1 1 $lower $upper >/dev/null
+
 if [ $order -le 8 ]
 then
 # Periodic Descent Direction Setting
