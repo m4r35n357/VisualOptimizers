@@ -196,8 +196,8 @@ Examples
 ./cut-ackley-gl 3 0 3 64 100 0 -5 5
 ```
 The OpenGL visualization shows both "clamped" and "un-clamped" variants regardless of parameter 6.
-Unclamped mode is represented by green paritcles in a red box, with the best point marked in red.
-Clamped mode is represented by cyan paritcles in a magenta box, with the best point marked in magenta.
+Unclamped mode is represented by green particles in a red box, with the best point marked in red.
+Clamped mode is represented by cyan particles in a magenta box, with the best point marked in magenta.
 
 ##  Random Optimization
 
