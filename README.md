@@ -137,6 +137,8 @@ Examples
 ./nm-ackley-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
 ```
 The OpenGL visualization shows two "dual" regular initial simplexes.
+For each, the best vertex is green, and the worst is red.
+The other two vertices are either cyan (default simplex) or gold (dual simplex), correspondiing to the OSD text colour.
 
 ## Spiral Optimization
 
@@ -151,7 +153,7 @@ Parameter | Meaning
 3 | Number of dimensions
 4 | Number of search agents
 5 | Number of iterations
-6 | *Algorithm mode (0 for "periodic descent", 1 for "convergence")
+6 | *Algorithm strategy (0 for "periodic descent", 1 for "convergence")
 7 | Lower limit
 8 | Upper limit
 
@@ -163,7 +165,10 @@ Examples
 ./spiral-ackley-std 3 0 3 64 100 1 -5 5
 ./spiral-ackley-gl 3 0 3 64 100 0 -5 5
 ```
-The OpenGL visualization shows the two alternative senses of rotation.
+The OpenGL visualization shows the two algorithm strategies.
+The "Periodic Descent Direction Setting" mode is represented by green particles, with the best in red.
+The "Convergence Setting" mode is represented by cyan particles, with the best in magenta while the spiral is shrinking.
+In this setting, the particle is marked in bright yellow on update, changing to dull yellow for six "pure rotations", before reverting to magenta.
 
 ##  Optimization by Cut
 
@@ -191,6 +196,8 @@ Examples
 ./cut-ackley-gl 3 0 3 64 100 0 -5 5
 ```
 The OpenGL visualization shows both "clamped" and "un-clamped" variants regardless of parameter 6.
+Unclamped mode is represented by green paritcles in a red box, with the best point marked in red.
+Clamped mode is represented by cyan paritcles in a magenta box, with the best point marked in magenta.
 
 ##  Random Optimization
 
@@ -306,7 +313,7 @@ make clean
 make CCC=gcc test-multi-8d
 ```
 For 1000 runs expect it to take up to an hour to complete.
-This is an edited summary of the output:
+This is a _manually created_ table of the output, showing only the number of passes:
 ```
                              Command                         spiral     spiral         cut         cut
                                                              (descent)  (convergence)  (unclamped) (clamped)
