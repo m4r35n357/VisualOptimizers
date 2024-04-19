@@ -136,6 +136,9 @@ Examples
 ./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 100 -10 10 >/dev/null
 ./nm-ackley-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
 ```
+When parameter 8 is set to a non-zero value, the algorithm is run several times until the cumulative number of _evaluations_ exceeds this value.
+This enables meaningful comparisons with other methods.
+
 The OpenGL visualization shows two "dual" regular initial simplexes.
 For each, the best vertex is green, and the worst is red.
 The other two vertices are either cyan (default simplex) or gold (dual simplex), correspondiing to the OSD text colour.
@@ -229,13 +232,12 @@ Parameter | Meaning
 2 | Number of dimensions
 3 | Number of search agents
 4 | Number of iterations
-5 | Number of Nelder-Mead runs
-6 | Lower limit
-7 | Upper limit
+5 | Lower limit
+6 | Upper limit
 
 Example
 ```
-./solve-model sphere 8 200 500 1 -10 10
+./solve-model sphere 8 256 1000 -10 10
 ```
 
 To get a better idea of the run-by-run variation in performance of spiral and cut integrators, use the "stats" script below.
@@ -253,48 +255,30 @@ Parameter | Meaning
 
 Examples
 ```
-./stats 100 -117 ./spiral-st-std 3 0 3 30 100 1 -5 5
-./stats 100 -117 ./cut-st-std 3 0 3 30 100 -5 5
+./stats 100 -313.0 ./nm-st-std 3 0 8 1.0e-6 100000 10.0 1 256000 -5 10
+./stats 100 -313.0 ./spiral-st-std 3 0 8 256 1000 1 -5 10
+./stats 100 -313.0 ./cut-st-std 3 0 8 256 1000 1 -5 10
 ```
-For 8D or higher, one of the faster "CCC=" make options above is recommended.
+For 8D or higher, using one of the faster "CCC=" make options above is _highly_ recommended!
 
 ## "Global" Optimization
 
-A common feature of "global" methods is an _exploration_ phase followed by a _refinement_ phase (in practice the transition is a gradual process).
+A common feature of "swarm-based" methods is an _exploration_ phase followed by a _refinement_ phase (in practice the transition is a gradual process).
 Refinement is not the same as convergence; you get what you are given after a specified number of iterations!
 Perhaps "settling" would be a better description.
+Another way of looking at it is that the initial problem boundaries are effectively shrunk by a large factor, concentrating the search agents into a relatively small volume around a potential minimum.
 In any case, this refinement stage makes it harder to jump out of a stubborn local minimum.
 
-I have adapted the Nelder-Mead method to do a series of random runs, while keeping the best result. and accounting for total number of iterations and function evaluations.
-This works surprisingly well!
+I have adapted the Nelder-Mead method to do a series of random runs, while keeping the best result, and accounting for total number of iterations and function evaluations.
+The size of the initial simplex is set to a large value, and the "adaptive" setting is used for 8D and above; this works surprisingly well as a global optimizer!
 The random exploration is not limited by any refinement process so global minima are always accessible, even if not actually reached within the set limits.
 
-The [Dixon-Price function](https://www.sfu.ca/~ssurjano/dixonpr.html) is a very good example of a function with a stubborn local minimum (and _all_ minima at non-zero coordinates) that gets harder to escape as dimension increases.
-To see the problem, try these commands, and then experiment with changing the number of agents, iterations etc.:
-```
-./stats 100 0.001 ./spiral-dixon-price-std 3 0 8 1000 1000 0 -10 10
-./stats 100 0.001 ./spiral-dixon-price-std 3 0 8 1000 1000 1 -10 10
-./nm-dixon-price-std 3 0 8 1.0e-6 100000 20.0 1 100 -10 10 >/dev/null
-```
-The [Styblinski-Tang function](https://www.sfu.ca/~ssurjano/stybtang.html) is also troublesome, but less "pathlogical".
-```
-./stats 100 -313.0 ./spiral-st-std 3 0 8 100 1000 0 -5 5
-./stats 100 -313.0 ./spiral-st-std 3 0 8 100 1000 1 -5 5
-./nm-st-std 3 0 8 1.0e-6 100000 10.0 1 100 -5 5 >/dev/null
-```
-Here are some 16-D starting points:
-```
-./nm-dixon-price-std 3 0 16 1.0e-6 1000000 10.0 1 1000 -10 10 >/dev/null
-```
-```
-./nm-st-std 3 0 16 1.0e-6 1000000 10.0 1 1000 -5 5 >/dev/null
-```
-Of course this is comparing apples to oranges, with just two functions, and the results are not always clear-cut (and vary with each run), but total iterations and function evaluations are shown explicitly in each case.
+The comparisons are _roughly_ equivalent in that the number of Nelder-Mead evaluations is set to (agents) x (iterations), which is a good approximation to the number of evaluations used by the "swarm-based" optimizers.
 Do your own experiments!
 
 ## "multi-stats" script
 
-Runs the "stats" script many times to help even out fluctuations in results from run to run.
+Runs the "stats" script many times to help even out fluctuations in results from run to run , and get a more realistic view on comparative performance of the algorithms.
 
 Parameter | Meaning
 ----------|-----------
@@ -310,6 +294,7 @@ Parameter | Meaning
 The easiest way to do this is using make, which invokes the script for the most "important" models (note: for the output below I have edited the Makefile to do 1000 runs per model instead of 100!):
 ```
 make clean
+make CCC=gcc test-multi-3d
 make CCC=gcc test-multi-8d
 ```
 For 1000 runs expect it to take up to an hour to complete.

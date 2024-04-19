@@ -14,12 +14,19 @@ model=$1
 order=$2
 agents=$3
 iterations=$4
-runs=$5
-lower=$6
-upper=$7
+lower=$5
+upper=$6
 
-# Multiple runs
-./nm-$model-std 3 0 $order 1.0e-6 1000000 $(echo "scale=3; 0.5 * ($upper - $lower);" | /usr/bin/bc) 1 $runs $lower $upper >/dev/null
+if [ $order -ge 8 ]
+then
+    adaptive=1
+else
+    adaptive=0
+fi
+
+# Nelder-Mead
+./nm-$model-std 3 0 $order 1.0e-6 100000 $(echo "scale=3; 0.5 * ($upper - $lower);" | /usr/bin/bc) \
+    $adaptive $((agents * iterations)) $lower $upper >/dev/null
 echo ""
 
 # Periodic Descent Direction Setting

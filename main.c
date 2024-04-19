@@ -30,10 +30,11 @@ int main (int argc, char **argv) {
     fprintf(stderr, o.fmt ? "      %sDiameter%s% .*Le\n" : "      %sDiameter%s% .*Lf\n",
             GRY, NRM, o.places, distance(o.n, s->p, s->p + o.n));
 
-    int runs = 1, iterations = 0, evaluations = 1;
+    int runs = 0, iterations = 0, evaluations = 1;
     point *boat = get_point(o.n);
     copy_point(o.n, start, boat);
     do {
+        runs++;
         for (int i = 0; i < o.n + 1; i++) {
             cost(o.n, s->p + i, m);
             s->evaluations++;
@@ -43,10 +44,9 @@ int main (int argc, char **argv) {
         iterations += s->iterations;
         evaluations += s->evaluations;
 
-        fprintf(stderr, "\r                         \r%5d %8d %8d ", runs, iterations, evaluations);
         if (s->p[0].f < boat->f) {
             copy_point(o.n, s->p, boat);
-            fprintf(stderr, "\r%5d %8d %8d ", runs, iterations, evaluations);
+            fprintf(stderr, "%5d %8d %8d ", runs, iterations, evaluations);
             print_result(o.n, boat, o.places, o.fmt);
         }
 
@@ -54,11 +54,7 @@ int main (int argc, char **argv) {
             set_random_coordinates(start, o.n, o.lower, o.upper);
             regular_simplex(s, o.size, start);
         }
-    } while (runs++ < o.init_mode);
-
-    if (o.init_mode > 1) {
-        fprintf(stderr, "\r%5d %8d %8d\n", runs - 1, iterations, evaluations);
-    }
+    } while (evaluations < o.init_mode);
 
     return 0;
 }

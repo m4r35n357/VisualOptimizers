@@ -20,7 +20,6 @@ failed=0
 count=1
 while [ $count -le $samples ]
 do
-    echo -n "${GRY}$count ${NRM}"
     set -- $($args 2>&1 >/dev/null | tail -1)
     result=$*
     shift $(($# - 1))
@@ -32,7 +31,7 @@ do
         passed=$((passed + 1))
         colour=${GRN}
     fi
-    echo ${colour}${result}${NRM}
+    echo "${GRY}$count${NRM} ${colour}${result}${NRM}"
     count=$((count + 1))
 done
 

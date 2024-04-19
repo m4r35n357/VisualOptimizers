@@ -1,8 +1,6 @@
 #!/bin/sh
 
 GRY='\e[1;30m'
-RED='\e[0;31m'
-GRN='\e[0;32m'
 MGT='\e[0;35m'
 NRM='\e[0m'
 
@@ -19,16 +17,24 @@ iterations=$6
 lower=$7
 upper=$8
 
+if [ $order -ge 8 ]
+then
+    adaptive=1
+else
+    adaptive=0
+fi
+
 # Nelder-Mead
-./stats $runs $threshold ./nm-$model-std 3 0 $order 1.0e-6 100000 $(echo "scale=3; 0.5 * ($upper - $lower);" | /usr/bin/bc) 1 1 $lower $upper >/dev/null
+./stats $runs $threshold ./nm-$model-std 3 0 $order 1.0e-6 100000 $(echo "scale=3; 0.5 * ($upper - $lower);" | /usr/bin/bc) \
+    $adaptive $((agents * iterations)) $lower $upper >/dev/null
 
 if [ $order -le 8 ]
 then
-# Periodic Descent Direction Setting
-./stats $runs $threshold ./spiral-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null
+    # Periodic Descent Direction Setting
+    ./stats $runs $threshold ./spiral-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null
 
-# Convergence Setting
-./stats $runs $threshold ./spiral-$model-std 3 0 $order $agents $iterations 1 $lower $upper >/dev/null
+    # Convergence Setting
+    ./stats $runs $threshold ./spiral-$model-std 3 0 $order $agents $iterations 1 $lower $upper >/dev/null
 fi
 
 # Un-clamped

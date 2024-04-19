@@ -23,7 +23,7 @@ optimset get_settings (char **argv, bool single) {
     CHECK(opt.max_iterations >= 1 && opt.max_iterations <= 10000000);
     CHECK(opt.size >= 1.0e-12L && opt.size <= 1.0e3L);
     CHECK(opt.adaptive == 0 || opt.adaptive == 1);
-    CHECK(opt.init_mode >= 0 && opt.init_mode <= 10000);
+    CHECK(opt.init_mode >= 0 && opt.init_mode <= 10000000);
     return opt;
 }
 
