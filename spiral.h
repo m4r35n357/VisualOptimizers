@@ -2,7 +2,7 @@
 
 #include "model.h"
 
-#define OMEGA 0.1L
+#define OMEGA 0.001L
 
 typedef struct Config {
     int places;  // significant figures in float/exponential output
