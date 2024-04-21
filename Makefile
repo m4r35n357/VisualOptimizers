@@ -106,37 +106,21 @@ test-multi-16d: nogl
 
 # 2^16 search agents
 test-16d: nogl
-	@./nm-sphere-std 3 0 16 1.0e-6 1000000 1.0 1 10 -20 20 >/dev/null
-	@./cut-sphere-std 3 0 16 65536 100 0 -20 20 >/dev/null
-	@./cut-sphere-std 3 0 16 65536 100 1 -20 20 >/dev/null
+	@./solve-model sphere 16 65536 100 -20 20
 	@echo ""
-	@./nm-trid-std 3 0 16 1.0e-6 1000000 1.0 1 10 -100 100 >/dev/null
-	@./cut-trid-std 3 0 16 65536 100 0 -100 100 >/dev/null
-	@./cut-trid-std 3 0 16 65536 100 1 -100 100 >/dev/null
+	@./solve-model trid 16 65536 100 -100 100
 	@echo ""
-	@./nm-easom-std 3 0 16 1.0e-6 100000 5.0 1 10 -25 25 >/dev/null
-	@./cut-easom-std 3 0 16 65536 100 0 -25 25 >/dev/null
-	@./cut-easom-std 3 0 16 65536 100 1 -25 25 >/dev/null
+	@./solve-model easom 16 65536 100 -25 25
 	@echo ""
-	@./nm-rosenbrock-std 3 0 16 1.0e-6 1000000 1.0 1 10 -20 20 >/dev/null
-	@./cut-rosenbrock-std 3 0 16 65536 100 0 -20 20 >/dev/null
-	@./cut-rosenbrock-std 3 0 16 65536 100 1 -20 20 >/dev/null
+	@./solve-model rosenbrock 16 65536 100 -20 20
 	@echo ""
-	@./nm-treacle-std 3 0 16 1.0e-6 1000000 20.0 1 1000 -20 20 >/dev/null
-	@./cut-treacle-std 3 0 16 65536 100 0 -20 20 >/dev/null
-	@./cut-treacle-std 3 0 16 65536 100 1 -20 20 >/dev/null
+	@./solve-model treacle 16 65536 100 -20 20
 	@echo ""
-	@./nm-st-std 3 0 16 1.0e-6 100000 10.0 1 2000 -5 20 >/dev/null
-	@./cut-st-std 3 0 16 65536 100 0 -5 20 >/dev/null
-	@./cut-st-std 3 0 16 65536 100 1 -5 20 >/dev/null
+	@./solve-model st 16 65536 100 -5 20
 	@echo ""
-	@./nm-dixon-price-std 3 0 16 1.0e-6 1000000 5.0 1 2000 -10 10 >/dev/null
-	@./cut-dixon-price-std 3 0 16 65536 100 0 -10 10 >/dev/null
-	@./cut-dixon-price-std 3 0 16 65536 100 1 -10 10 >/dev/null
+	@./solve-model dixon-price 16 65536 100 -10 10
 	@echo ""
-	@./nm-michalewicz-std 3 0 16 1.0e-6 1000000 1.0 1 1000 0 3.14 >/dev/null
-	@./cut-michalewicz-std 3 0 16 65536 100 0 0 3.14 >/dev/null
-	@./cut-michalewicz-std 3 0 16 65536 100 1 0 3.14 >/dev/null
+	@./solve-model michalewicz 16 65536 100 0 3.14
 	@echo ""
 
 # 2^8 search agents
@@ -162,59 +146,23 @@ test-multi-8d: nogl
 
 # 2^8 search agents
 test-8d: nogl
-	@./nm-sphere-std 3 0 8 1.0e-6 100000 1.0 1 10 -10 10 >/dev/null
-	@./spiral-sphere-std 3 0 8 256 1000 0 -10 10 >/dev/null
-	@./spiral-sphere-std 3 0 8 256 1000 1 -10 10 >/dev/null
-	@./cut-sphere-std 3 0 8 256 1000 0 -10 10 >/dev/null
-	@./cut-sphere-std 3 0 8 256 1000 1 -10 10 >/dev/null
+	@./solve-model sphere 8 256 1000 -10 10
 	@echo ""
-	@./nm-trid-std 3 0 8 1.0e-6 100000 1.0 1 10 -30 30 >/dev/null
-	@./spiral-trid-std 3 0 8 256 1000 0 -30 30 >/dev/null
-	@./spiral-trid-std 3 0 8 256 1000 1 -30 30 >/dev/null
-	@./cut-trid-std 3 0 8 256 1000 0 -30 30 >/dev/null
-	@./cut-trid-std 3 0 8 256 1000 1 -30 30 >/dev/null
+	@./solve-model trid 8 256 1000 -30 30
 	@echo ""
-	@./nm-easom-std 3 0 8 1.0e-6 100000 1.0 1 10 -15 15 >/dev/null
-	@./spiral-easom-std 3 0 8 256 1000 0 -15 15 >/dev/null
-	@./spiral-easom-std 3 0 8 256 1000 1 -15 15 >/dev/null
-	@./cut-easom-std 3 0 8 256 1000 0 -15 15 >/dev/null
-	@./cut-easom-std 3 0 8 256 1000 1 -15 15 >/dev/null
+	@./solve-model easom 8 256 1000 -15 15
 	@echo ""
-	@./nm-rosenbrock-std 3 0 8 1.0e-6 100000 1.0 1 10 -10 10 >/dev/null
-	@./spiral-rosenbrock-std 3 0 8 256 1000 0 -10 10 >/dev/null
-	@./spiral-rosenbrock-std 3 0 8 256 1000 1 -10 10 >/dev/null
-	@./cut-rosenbrock-std 3 0 8 256 1000 0 -10 10 >/dev/null
-	@./cut-rosenbrock-std 3 0 8 256 1000 1 -10 10 >/dev/null
+	@./solve-model rosenbrock 8 256 1000 -10 10
 	@echo ""
-	@./nm-treacle-std 3 0 8 1.0e-6 100000 5.0 1 50 -10 10 >/dev/null
-	@./spiral-treacle-std 3 0 8 256 1000 0 -10 10 >/dev/null
-	@./spiral-treacle-std 3 0 8 256 1000 1 -10 10 >/dev/null
-	@./cut-treacle-std 3 0 8 256 1000 0 -10 10 >/dev/null
-	@./cut-treacle-std 3 0 8 256 1000 1 -10 10 >/dev/null
+	@./solve-model treacle 8 256 1000 -20 20
 	@echo ""
-	@./nm-st-std 3 0 8 1.0e-6 100000 10.0 1 100 -5 10 >/dev/null
-	@./spiral-st-std 3 0 8 256 1000 0 -5 10 >/dev/null
-	@./spiral-st-std 3 0 8 256 1000 1 -5 10 >/dev/null
-	@./cut-st-std 3 0 8 256 1000 0 -5 10 >/dev/null
-	@./cut-st-std 3 0 8 256 1000 1 -5 10 >/dev/null
+	@./solve-model st 8 256 1000 -5 10
 	@echo ""
-	@./nm-dixon-price-std 3 0 8 1.0e-6 100000 1.0 1 100 -10 10 >/dev/null
-	@./spiral-dixon-price-std 3 0 8 256 1000 0 -10 10 >/dev/null
-	@./spiral-dixon-price-std 3 0 8 256 1000 1 -10 10 >/dev/null
-	@./cut-dixon-price-std 3 0 8 256 1000 0 -10 10 >/dev/null
-	@./cut-dixon-price-std 3 0 8 256 1000 1 -10 10 >/dev/null
+	@./solve-model dixon-price 8 256 1000 -10 10
 	@echo ""
-	@./nm-levy-std 3 0 8 1.0e-6 100000 10.0 1 100 -10 10 >/dev/null
-	@./spiral-levy-std 3 0 8 256 1000 0 -10 10 >/dev/null
-	@./spiral-levy-std 3 0 8 256 1000 1 -10 10 >/dev/null
-	@./cut-levy-std 3 0 8 256 1000 0 -10 10 >/dev/null
-	@./cut-levy-std 3 0 8 256 1000 1 -10 10 >/dev/null
+	@./solve-model levy 8 256 1000 -10 10
 	@echo ""
-	@./nm-michalewicz-std 3 0 8 1.0e-6 100000 1.0 1 100 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 8 256 1000 0 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 8 256 1000 1 0 3.14 >/dev/null
-	@./cut-michalewicz-std 3 0 8 256 1000 0 0 3.14 >/dev/null
-	@./cut-michalewicz-std 3 0 8 256 1000 1 0 3.14 >/dev/null
+	@./solve-model michalewicz 8 256 1000 0 3.14
 	@echo ""
 
 # 3^3 search agents
