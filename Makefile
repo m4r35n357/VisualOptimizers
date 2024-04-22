@@ -62,7 +62,7 @@ cut-%-gl: %.o cut.o opengl.o base.o coa-gl.o
 
 cut-gl: cut-sphere-gl cut-levy-gl cut-easom-gl cut-michalewicz-gl cut-treacle-gl cut-rosenbrock-gl cut-rastrigin-gl cut-ackley-gl cut-dixon-price-gl cut-st-gl cut-schwefel-gl cut-trid-gl
 
-.PHONY: test-multi-16d test-multi-8d test-multi-3d test-64d test-32d test-16d test-8d test-3d test-2d ctags clean depclean
+.PHONY: test-multi-16d test-multi-8d test-multi-3d test-64d test-32d test-16d test-8d test-3d ctags clean depclean
 
 test-64d: nogl
 	@./nm-sphere-std 1 0 64 1.0e-6 1000000 1.0 1 1 0 80 >/dev/null
@@ -85,7 +85,7 @@ test-32d: nogl
 	@echo ""
 	@./nm-dixon-price-std 1 0 32 1.0e-6 1000000 5.0 1 1000 -10 10 >/dev/null
 
-# 2^16 search agents
+# 2^D search agents
 test-multi-16d: nogl
 	@./multi-stats 10 0.001 sphere 16 65536 100 -20 20
 	@echo ""
@@ -104,7 +104,7 @@ test-multi-16d: nogl
 	@./multi-stats 10 -14.5 michalewicz 16 65536 100 0 3.14
 	@echo ""
 
-# 2^16 search agents
+# 2^D search agents
 test-16d: nogl
 	@./solve-model sphere 16 65536 100 -20 20
 	@echo ""
@@ -123,7 +123,7 @@ test-16d: nogl
 	@./solve-model michalewicz 16 65536 100 0 3.14
 	@echo ""
 
-# 2^8 search agents
+# 2^D search agents
 test-multi-8d: nogl
 	@./multi-stats 100 0.001 sphere 8 256 1000 -10 10
 	@echo ""
@@ -144,7 +144,7 @@ test-multi-8d: nogl
 	@./multi-stats 100 -7.5 michalewicz 8 256 1000 0 3.14
 	@echo ""
 
-# 2^8 search agents
+# 2^D search agents
 test-8d: nogl
 	@./solve-model sphere 8 256 1000 -10 10
 	@echo ""
@@ -165,7 +165,7 @@ test-8d: nogl
 	@./solve-model michalewicz 8 256 1000 0 3.14
 	@echo ""
 
-# 3^3 search agents
+# 3^D search agents
 test-multi-3d: nogl
 	@./multi-stats 100 0.001 sphere 3 27 100 -10 10
 	@echo ""
@@ -190,7 +190,7 @@ test-multi-3d: nogl
 	@./multi-stats 100 0.001 schwefel 3 27 100 -500 500
 	@echo ""
 
-# 3^3 search agents
+# 3^D search agents
 test-3d: nogl
 	@./solve-model sphere 3 27 100 -10 10
 	@echo ""
@@ -210,36 +210,11 @@ test-3d: nogl
 	@echo ""
 	@./solve-model michalewicz 3 27 100 0 3.14
 	@echo ""
+	@./solve-model ackley 3 27 100 -5 5
+	@echo ""
 	@./solve-model rastrigin 3 27 100 -5 5
 	@echo ""
 	@./solve-model schwefel 3 27 100 -500 500
-	@echo ""
-
-# 3^2 search agents
-test-2d: nogl
-	@./solve-model sphere 2 9 100 -10 10
-	@echo ""
-	@./solve-model trid 2 9 100 -10 10
-	@echo ""
-	@./solve-model easom 2 9 100 -10 10
-	@echo ""
-	@./solve-model rosenbrock 2 9 100 -5 5
-	@echo ""
-	@./solve-model treacle 2 9 100 -10 10
-	@echo ""
-	@./solve-model st 2 9 100 -5 5
-	@echo ""
-	@./solve-model dixon-price 2 9 100 -10 10
-	@echo ""
-	@./solve-model levy 2 9 100 -10 10
-	@echo ""
-	@./solve-model michalewicz 2 9 100 0 3.14
-	@echo ""
-	@./solve-model ackley 2 9 100 -5 5
-	@echo ""
-	@./solve-model rastrigin 2 9 100 -5 5
-	@echo ""
-	@./solve-model schwefel 2 9 100 -500 500
 	@echo ""
 
 ctags:
