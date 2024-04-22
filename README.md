@@ -325,6 +325,14 @@ Multi-modal
 
  [ ./multi-stats 1000 -7.5 michalewicz 8 256 1000 0 3.14 ]     311        242            324         719
 ```
+## OpenGL Visualizations
+
+To get a list of OpenGL command examples, use one of the commands below:
+```
+make test-3d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep nm
+make test-3d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep spiral
+make test-3d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep cut
+```
 
 ## OpenGL Keyboard Controls
 
