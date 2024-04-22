@@ -326,16 +326,6 @@ Multi-modal
  [ ./multi-stats 1000 -7.5 michalewicz 8 256 1000 0 3.14 ]     311        242            324         719
 ```
 
-## OpenGL Visualizations
-
-To get a list of OpenGL command examples, use one of the commands below:
-```
-grep -- '-std 3 0 3 ' Makefile | sed 's/^.*@//' | sed 's/-std/-gl/' | sed 's/ >.*$//' | sort
-grep -- '-std 3 0 3 ' Makefile | sed 's/^.*@//' | sed 's/-std/-gl/' | sed 's/ >.*$//' | grep nm
-grep -- '-std 3 0 3 ' Makefile | sed 's/^.*@//' | sed 's/-std/-gl/' | sed 's/ >.*$//' | grep spiral
-grep -- '-std 3 0 3 ' Makefile | sed 's/^.*@//' | sed 's/-std/-gl/' | sed 's/ >.*$//' | grep cut
-```
-
 ## OpenGL Keyboard Controls
 
 The global minimum is no longer displayed by default, use the 'm' key to show it at any time.

@@ -1,8 +1,8 @@
 #!/bin/sh
+#
+# Runs a specified model against all optimizers
 
 GRY='\e[1;30m'
-RED='\e[0;31m'
-GRN='\e[0;32m'
 MGT='\e[0;35m'
 NRM='\e[0m'
 

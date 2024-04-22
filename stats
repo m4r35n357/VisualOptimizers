@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+# Runs an optimization multiple times, grades results against a threshold
 
 GRY='\e[1;30m'
 RED='\e[0;31m'

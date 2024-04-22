@@ -62,7 +62,7 @@ cut-%-gl: %.o cut.o opengl.o base.o coa-gl.o
 
 cut-gl: cut-sphere-gl cut-levy-gl cut-easom-gl cut-michalewicz-gl cut-treacle-gl cut-rosenbrock-gl cut-rastrigin-gl cut-ackley-gl cut-dixon-price-gl cut-st-gl cut-schwefel-gl cut-trid-gl
 
-.PHONY: test-multi-16d test-multi-8d test-multi-3d test-64d test-32d test-16d test-8d test-3d test-2d test-1d ctags clean depclean
+.PHONY: test-multi-16d test-multi-8d test-multi-3d test-64d test-32d test-16d test-8d test-3d test-2d ctags clean depclean
 
 test-64d: nogl
 	@./nm-sphere-std 1 0 64 1.0e-6 1000000 1.0 1 1 0 80 >/dev/null
@@ -192,92 +192,54 @@ test-multi-3d: nogl
 
 # 3^3 search agents
 test-3d: nogl
-	@./nm-sphere-std 3 0 3 1.0e-6 100000 1.0 1 1 -10 10 >/dev/null
-	@./spiral-sphere-std 3 0 3 27 100 0 -10 10 >/dev/null
-	@./spiral-sphere-std 3 0 3 27 100 1 -10 10 >/dev/null
-	@./cut-sphere-std 3 0 3 27 100 0 -10 10 >/dev/null
-	@./cut-sphere-std 3 0 3 27 100 1 -10 10 >/dev/null
+	@./solve-model sphere 3 27 100 -10 10
 	@echo ""
-	@./nm-trid-std 3 0 3 1.0e-6 100000 1.0 1 1 -10 10 >/dev/null
-	@./spiral-trid-std 3 0 3 27 100 0 -10 10 >/dev/null
-	@./spiral-trid-std 3 0 3 27 100 1 -10 10 >/dev/null
-	@./cut-trid-std 3 0 3 27 100 0 -10 10 >/dev/null
-	@./cut-trid-std 3 0 3 27 100 1 -10 10 >/dev/null
+	@./solve-model trid 3 27 100 -10 10
 	@echo ""
-	@./nm-easom-std 3 0 3 1.0e-6 100000 1.0 0 1 -10 10 >/dev/null
-	@./spiral-easom-std 3 0 3 27 100 0 -10 10 >/dev/null
-	@./spiral-easom-std 3 0 3 27 100 1 -10 10 >/dev/null
-	@./cut-easom-std 3 0 3 27 100 0 -10 10 >/dev/null
-	@./cut-easom-std 3 0 3 27 100 1 -10 10 >/dev/null
+	@./solve-model easom 3 27 100 -10 10
 	@echo ""
-	@./nm-rosenbrock-std 3 0 3 1.0e-6 100000 1.0 0 1 -5 5 >/dev/null
-	@./spiral-rosenbrock-std 3 0 3 27 100 0 -5 5 >/dev/null
-	@./spiral-rosenbrock-std 3 0 3 27 100 1 -5 5 >/dev/null
-	@./cut-rosenbrock-std 3 0 3 27 100 0 -5 5 >/dev/null
-	@./cut-rosenbrock-std 3 0 3 27 100 1 -5 5 >/dev/null
+	@./solve-model rosenbrock 3 27 100 -5 5
 	@echo ""
-	@./nm-treacle-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
-	@./spiral-treacle-std 3 0 3 27 100 0 -10 10 >/dev/null
-	@./spiral-treacle-std 3 0 3 27 100 1 -10 10 >/dev/null
-	@./cut-treacle-std 3 0 3 27 100 0 -10 10 >/dev/null
-	@./cut-treacle-std 3 0 3 27 100 1 -10 10 >/dev/null
+	@./solve-model treacle 3 27 100 -10 10
 	@echo ""
-	@./nm-st-std 3 0 3 1.0e-6 100000 5.0 0 1 -5 5 >/dev/null
-	@./spiral-st-std 3 0 3 27 100 0 -5 5 >/dev/null
-	@./spiral-st-std 3 0 3 27 100 1 -5 5 >/dev/null
-	@./cut-st-std 3 0 3 27 100 0 -5 5 >/dev/null
-	@./cut-st-std 3 0 3 27 100 1 -5 5 >/dev/null
+	@./solve-model st 3 27 100 -5 5
 	@echo ""
-	@./nm-dixon-price-std 3 0 3 1.0e-6 100000 1.0 0 1 -10 10 >/dev/null
-	@./spiral-dixon-price-std 3 0 3 27 100 0 -10 10 >/dev/null
-	@./spiral-dixon-price-std 3 0 3 27 100 1 -10 10 >/dev/null
-	@./cut-dixon-price-std 3 0 3 27 100 0 -10 10 >/dev/null
-	@./cut-dixon-price-std 3 0 3 27 100 1 -10 10 >/dev/null
+	@./solve-model dixon-price 3 27 100 -10 10
 	@echo ""
-	@./nm-levy-std 3 0 3 1.0e-6 100000 5.0 0 1 -10 10 >/dev/null
-	@./spiral-levy-std 3 0 3 27 100 0 -10 10 >/dev/null
-	@./spiral-levy-std 3 0 3 27 100 1 -10 10 >/dev/null
-	@./cut-levy-std 3 0 3 27 100 0 -10 10 >/dev/null
-	@./cut-levy-std 3 0 3 27 100 1 -10 10 >/dev/null
+	@./solve-model levy 3 27 100 -10 10
 	@echo ""
-	@./nm-michalewicz-std 3 0 3 1.0e-6 100000 1.0 0 1 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 3 27 100 0 0 3.14 >/dev/null
-	@./spiral-michalewicz-std 3 0 3 27 100 1 0 3.14 >/dev/null
-	@./cut-michalewicz-std 3 0 3 27 100 0 0 3.14 >/dev/null
-	@./cut-michalewicz-std 3 0 3 27 100 1 0 3.14 >/dev/null
+	@./solve-model michalewicz 3 27 100 0 3.14
 	@echo ""
-	@./nm-rastrigin-std 3 0 3 1.0e-6 1000000 5.0 0 1 -5 5 >/dev/null
-	@./spiral-rastrigin-std 3 0 3 27 100 0 -5 5 >/dev/null
-	@./spiral-rastrigin-std 3 0 3 27 100 1 -5 5 >/dev/null
-	@./cut-rastrigin-std 3 0 3 27 100 0 -5 5 >/dev/null
-	@./cut-rastrigin-std 3 0 3 27 100 1 -5 5 >/dev/null
+	@./solve-model rastrigin 3 27 100 -5 5
 	@echo ""
-	@./nm-schwefel-std 3 0 3 1.0e-6 100000 100.0 0 1 -500 500 >/dev/null
-	@./spiral-schwefel-std 3 0 3 27 100 0 -500.0 500.0 >/dev/null
-	@./spiral-schwefel-std 3 0 3 27 100 1 -500.0 500.0 >/dev/null
-	@./cut-schwefel-std 3 0 3 27 100 0 -500.0 500.0 >/dev/null
-	@./cut-schwefel-std 3 0 3 27 100 1 -500.0 500.0 >/dev/null
+	@./solve-model schwefel 3 27 100 -500 500
 	@echo ""
 
+# 3^2 search agents
 test-2d: nogl
-	@./nm-sphere-std 3 0 2 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
-	@./nm-treacle-std 3 0 2 1.0e-6 10000 5.0 0 1 -10 10 >/dev/null
-	@./nm-trid-std 3 0 2 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
-	@./nm-ackley-std 3 0 2 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
-	@./nm-rosenbrock-std 3 0 2 1.0e-6 10000 1.0 0 1 -5 5 >/dev/null
-	@./nm-st-std 3 0 2 1.0e-6 10000 10.0 0 1 -5 5 >/dev/null
-	@./nm-dixon-price-std 3 0 2 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
-	@./nm-levy-std 3 0 2 1.0e-6 10000 10.0 0 1 -10 10 >/dev/null
-	@./nm-rastrigin-std 3 0 2 1.0e-6 10000 10.0 0 1 -32.768 32.768 >/dev/null
-	@./nm-schwefel-std 3 0 2 1.0e-6 10000 1.0 0 1 -500 500 >/dev/null
-	@./nm-michalewicz-std 3 0 2 1.0e-6 10000 1.0 0 1 -3.14 3.14 >/dev/null
-	@./nm-easom-std 3 0 2 1.0e-6 10000 1.0 0 1 -6.28 6.28 >/dev/null
+	@./solve-model sphere 2 9 100 -10 10
 	@echo ""
-
-test-1d: nogl
-	@./nm-ackley-std 3 0 1 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
-	@./nm-st-std 3 0 1 1.0e-6 10000 10.0 0 1 -10 10 >/dev/null
-	@./nm-dixon-price-std 3 0 1 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
+	@./solve-model trid 2 9 100 -10 10
+	@echo ""
+	@./solve-model easom 2 9 100 -10 10
+	@echo ""
+	@./solve-model rosenbrock 2 9 100 -5 5
+	@echo ""
+	@./solve-model treacle 2 9 100 -10 10
+	@echo ""
+	@./solve-model st 2 9 100 -5 5
+	@echo ""
+	@./solve-model dixon-price 2 9 100 -10 10
+	@echo ""
+	@./solve-model levy 2 9 100 -10 10
+	@echo ""
+	@./solve-model michalewicz 2 9 100 0 3.14
+	@echo ""
+	@./solve-model ackley 2 9 100 -5 5
+	@echo ""
+	@./solve-model rastrigin 2 9 100 -5 5
+	@echo ""
+	@./solve-model schwefel 2 9 100 -500 500
 	@echo ""
 
 ctags:

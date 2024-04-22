@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+# Runs the stats script against all optimizers for a given model
 
 GRY='\e[1;30m'
 MGT='\e[0;35m'
