@@ -1,10 +1,10 @@
 # Simple Gradient-free optimizers
 
-Currently three candidates:
+Currently three candidates , each with an OpenGL visualizer:
 
-* Nelder-Mead - multi-run mode for global optimization
-* Spiral Optimization (using "dual" rotations in OpenGL) - two algorithm strategies
-* Optimization by Cut (both strategies in OpenGL) - two algorithm strategies
+* Nelder-Mead - "multi-run" mode for global optimization, dual simplexes in OpenGL
+* Spiral Optimization - two algorithm strategies
+* Optimization by Cut - two algorithm strategies
 
 Presented for application in local or global optimization in up to 16 dimensions.
 Additionally there is a "random" optimizer (with no OpenGL visualization) to use as a base-line.
@@ -224,7 +224,7 @@ Examples
 
 ## "solve-model" script
 
-Run a model against all integrators, including random
+Run a single model against all integrators, including random
 
 Parameter | Meaning
 ----------|-----------
@@ -237,6 +237,8 @@ Parameter | Meaning
 
 Example
 ```
+make clean
+make CCC=gcc
 ./solve-model sphere 8 256 1000 -10 10
 ```
 
@@ -244,7 +246,7 @@ To get a better idea of the run-by-run variation in performance of spiral and cu
 
 ## "stats" script
 
-Runs spiral or cut algorithm multiple times agains a target value.
+Runs a single algorithm (except random) multiple times agains a target value for a single model.
 For each run, the output is green if the result is below the threshold, and red otherwise.
 
 Parameter | Meaning
@@ -255,6 +257,8 @@ Parameter | Meaning
 
 Examples
 ```
+make clean
+make CCC=gcc
 ./stats 100 -313.0 ./nm-st-std 3 0 8 1.0e-6 100000 10.0 1 256000 -5 10
 ./stats 100 -313.0 ./spiral-st-std 3 0 8 256 1000 1 -5 10
 ./stats 100 -313.0 ./cut-st-std 3 0 8 256 1000 1 -5 10
@@ -278,7 +282,7 @@ Do your own experiments!
 
 ## "multi-stats" script
 
-Runs the "stats" script many times to help even out fluctuations in results from run to run , and get a more realistic view on comparative performance of the algorithms.
+Runs the "stats" script many times for all algorithms (except random) for a single model, to help even out fluctuations in results from run to run, and get a more realistic view on comparative performance of the algorithms.
 
 Parameter | Meaning
 ----------|-----------
@@ -291,7 +295,15 @@ Parameter | Meaning
 7 | range min
 8 | range max
 
-The easiest way to do this is using make, which invokes the script for the most "important" models (note: for the output below I have edited the Makefile to do 1000 runs per model instead of 100!):
+Examples
+```
+make clean
+make CCC=gcc
+./multi-stats 100 0.001 sphere 8 256 1000 -10 10
+./multi-stats 100 0.01 treacle 8 256 1000 -10 10
+```
+
+Another way to do this is using make, which invokes the script for the most "important" models.
 ```
 make clean
 make CCC=gcc test-multi-3d
@@ -300,31 +312,31 @@ make CCC=gcc test-multi-8d
 For 1000 runs expect it to take up to an hour to complete.
 This is a _manually created_ table of the output, showing only the number of passes:
 ```
-                             Command                         spiral     spiral         cut         cut
-                                                             (descent)  (convergence)  (unclamped) (clamped)
-
+                                                Command       NM       spiral     spiral         cut         cut
+                                                                       (descent)  (convergence)  (unclamped) (clamped)
 Unimodal
 
-     [ ./multi-stats 1000 0.001 sphere 8 256 1000 -10 10 ]     183        862           1000        1000
+     [ ./multi-stats 100 0.001 sphere 8 256 1000 -10 10 ]     100       25         100            100         100
 
-       [ ./multi-stats 1000 0.001 trid 8 256 1000 -25 25 ]    1000       1000           1000        1000
+      [ ./multi-stats 100 -111.9 trid 8 256 1000 -30 30 ]     100       35          77            100          88
 
-     [ ./multi-stats 1000 -0.999 easom 8 256 1000 -15 15 ]     390        903           1000         999
+     [ ./multi-stats 100 -0.999 easom 8 256 1000 -15 15 ]     100       35         100            100         100
 
-   [ ./multi-stats 1000 0.1 rosenbrock 8 256 1000 -10 10 ]       1         31            854           0
+ [ ./multi-stats 100 0.001 rosenbrock 8 256 1000 -10 10 ]     100        0           0              0           0
 
-      [ ./multi-stats 1000 0.1 treacle 8 256 1000 -10 10 ]       0         31            930         768
+     [ ./multi-stats 100 0.01 treacle 8 256 1000 -10 10 ]       0        0          11             84          57
 
-Multi-modal
+Multimodal
 
-         [ ./multi-stats 1000 -313.0 st 8 256 1000 -5 10 ]     110         65            288         396
+         [ ./multi-stats 100 -313.0 st 8 256 1000 -5 10 ]      89       14           8             33          47
 
-[ ./multi-stats 1000 0.001 dixon-price 8 256 1000 -10 10 ]     194        263            239          44
+[ ./multi-stats 100 0.001 dixon-price 8 256 1000 -10 10 ]     100       22          31             29           5
 
-       [ ./multi-stats 1000 0.001 levy 8 256 1000 -10 10 ]      13         48            985         833
+       [ ./multi-stats 100 0.001 levy 8 256 1000 -10 10 ]      73        0          11             99          90
 
- [ ./multi-stats 1000 -7.5 michalewicz 8 256 1000 0 3.14 ]     311        242            324         719
+ [ ./multi-stats 100 -7.5 michalewicz 8 256 1000 0 3.14 ]      93       29          27             34          75
 ```
+
 ## OpenGL Visualizations
 
 To get a list of OpenGL command examples, use one of the commands below:
@@ -333,6 +345,7 @@ make test-3d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]
 make test-3d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep spiral
 make test-3d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep cut
 ```
+The visualizations also "work" for more than three dimensions, obviously they do not tell the whole story in this case, but can still give some kind of indication of progress.
 
 ## OpenGL Keyboard Controls
 
