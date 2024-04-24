@@ -32,8 +32,10 @@ minima *get_known_minima () {
 void cost (int n, point *p, const model *m) { (void)m;
     p->f =0.0L;
     for (int i = 0; i < n; i++) {
-        //p->x[i] = p->x[i] >= m->min_edge ? p->x[i] : m->min_edge;
-        //p->x[i] = p->x[i] <= m->max_edge ? p->x[i] : m->max_edge;
+        if (p->x[i] <= m->min_edge || p->x[i] >= m->max_edge) {
+            p->f = INFINITY;
+            break;
+        }
         p->f -= sinl(p->x[i]) * powl(sinl((i + 1) * SQR(p->x[i]) / m->PI), 2.0L * m->m);
     }
 }

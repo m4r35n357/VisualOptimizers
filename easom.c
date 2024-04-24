@@ -1,5 +1,5 @@
 /*
- * Easom function - only works for n even! https://arxiv.org/abs/1008.0549
+ * Easom function https://arxiv.org/abs/1008.0549
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,8 +28,7 @@ minima *get_known_minima () {
 }
 
 void cost (int n, point *p, const model *m) {
-    real prod = 1.0L;
-    real sum = 0.0L;
+    real prod = 1.0L, sum = 0.0L;
     for (int i = 0; i < n; i++) {
         real xi = p->x[i] - (real)(i + 1);
         prod *= SQR(cosl(xi));
