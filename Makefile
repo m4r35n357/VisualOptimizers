@@ -23,13 +23,13 @@ all: nogl nm-gl spiral-gl cut-gl
 
 nogl: nm-std spiral-std cut-std rnd-std ctags
 
-# Random optimizarion
+# Random optimization
 rnd-%-std: %.o nelder_mead.o base.o main-random.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 rnd-std: rnd-sphere-std rnd-levy-std rnd-easom-std rnd-michalewicz-std rnd-rastrigin-std rnd-treacle-std rnd-ackley-std rnd-rosenbrock-std rnd-dixon-price-std rnd-st-std rnd-schwefel-std rnd-trid-std
 
-# Nelder-Mead optimizarion
+# Nelder-Mead optimization
 nm-%-std: %.o nelder_mead.o base.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
@@ -40,7 +40,7 @@ nm-%-gl: %.o nelder_mead.o opengl.o base.o simplex-gl.o
 
 nm-gl: nm-sphere-gl nm-levy-gl nm-easom-gl nm-michalewicz-gl nm-rastrigin-gl nm-treacle-gl nm-ackley-gl nm-rosenbrock-gl nm-dixon-price-gl nm-st-gl nm-schwefel-gl nm-trid-gl
 
-# Spiral optimizarion
+# Spiral optimization
 spiral-%-std: %.o spiral.o base.o main-spiral.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
@@ -51,7 +51,7 @@ spiral-%-gl: %.o spiral.o opengl.o base.o soa-gl.o
 
 spiral-gl: spiral-sphere-gl spiral-levy-gl spiral-easom-gl spiral-michalewicz-gl spiral-treacle-gl spiral-rosenbrock-gl spiral-rastrigin-gl spiral-ackley-gl spiral-dixon-price-gl spiral-st-gl spiral-schwefel-gl spiral-trid-gl
 
-# Optimizarion by cut
+# Optimization by cut
 cut-%-std: %.o cut.o base.o main-cut.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 

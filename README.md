@@ -136,8 +136,8 @@ Examples
 ./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 100 -10 10 >/dev/null
 ./nm-ackley-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
 ```
-When parameter 8 is set to a non-zero value, the algorithm is run several times until the cumulative number of _evaluations_ exceeds this value.
-This enables meaningful comparisons with other methods.
+When parameter 8 is set to a non-zero value, the algorithm is run several times until the cumulative number of _evaluations_ exceeds this value (budget).
+This enables meaningful comparisons with the other methods.
 
 The OpenGL visualization shows two "dual" regular initial simplexes.
 For each, the best vertex is green, and the worst is red.
@@ -235,6 +235,8 @@ Parameter | Meaning
 5 | Lower limit
 6 | Upper limit
 
+Parameters 3 and 4 are multiplied within the script to give a "budget" of evaluations for Nelder-Mead and random.
+
 Example
 ```
 make clean
@@ -295,6 +297,8 @@ Parameter | Meaning
 7 | range min
 8 | range max
 
+Parameters 5 and 6 are multiplied within the script to give a "budget" of evaluations for Nelder-Mead and random.
+
 Examples
 ```
 make clean
@@ -309,7 +313,6 @@ make clean
 make CCC=gcc test-multi-3d
 make CCC=gcc test-multi-8d
 ```
-For 1000 runs expect it to take up to an hour to complete.
 This is a _manually created_ table of the output, showing only the number of passes:
 ```
                                                 Command       NM       spiral     spiral         cut         cut
