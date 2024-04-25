@@ -4,7 +4,7 @@
 
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc == 8);
+    CHECK(argc == 7);
 
     // optimizer settings
     randomize();
@@ -12,8 +12,7 @@ int main (int argc, char **argv) {
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
         .n = (int)strtol(argv[3], NULL, BASE),
-        .init_mode = (int)strtol(argv[4], NULL, BASE),
-        .adaptive = (int)strtol(argv[5], NULL, BASE),  // used as progress flag
+        .init_mode = (int)strtol(argv[4], NULL, BASE),  // use for evaluations
         .step_mode = false
     };
     CHECK(o.places >= 1 && o.places <= 36);
@@ -24,39 +23,29 @@ int main (int argc, char **argv) {
     // model parameters
     model *m = model_init();
 
-    point *start = get_point(o.n);
-    o.lower = strtold(argv[6], NULL);
-    o.upper = strtold(argv[7], NULL);  CHECK(o.upper > o.lower);
-    set_random_coordinates(start, o.n, o.lower, o.upper);
-    cost(o.n, start, m);
+    point *centre = get_point(o.n);
+    o.lower = strtold(argv[5], NULL);
+    o.upper = strtold(argv[6], NULL);  CHECK(o.upper > o.lower);
+    set_random_coordinates(centre, o.n, o.lower, o.upper);
+    cost(o.n, centre, m);
 
-    int runs = 1, evaluations = 1;
+    int runs = 0, evaluations = 1;
     point *boat = get_point(o.n);
-    copy_point(o.n, start, boat);
+    copy_point(o.n, centre, boat);
     do {
-        cost(o.n, start, m);
+        runs++;
+        cost(o.n, centre, m);
         evaluations++;
 
-        if (o.adaptive) {
-            fprintf(stderr, "\r                         \r%8d %8d  ", runs, evaluations);
-            if (start->f < boat->f) {
-                copy_point(o.n, start, boat);
-                fprintf(stderr, "\r%8d %8d  ", runs, evaluations);
-                print_result(o.n, boat, o.places, o.fmt);
-            }
-        } else {
-        	if (start->f < boat->f) copy_point(o.n, start, boat);
+        if (centre->f < boat->f) {
+            copy_point(o.n, centre, boat);
         }
 
-        set_random_coordinates(start, o.n, o.lower, o.upper);
-    } while (runs++ < o.init_mode);
+        set_random_coordinates(centre, o.n, o.lower, o.upper);
+    } while (evaluations < o.init_mode);
 
-    if (! o.adaptive) {
-        fprintf(stderr, "\r%8d %8d  ", runs - 1, evaluations);
-        print_result(o.n, boat, o.places, o.fmt);
-    } else {
-        fprintf(stderr, "\r%8d %8d\n", runs - 1, evaluations);
-    }
+    fprintf(stderr, "%8d %8d  ", runs, evaluations);
+    print_result(o.n, boat, o.places, o.fmt);
 
     return 0;
 }
