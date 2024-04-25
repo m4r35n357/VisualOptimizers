@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <GL/freeglut.h>
 #include "opengl.h"
-#include "cut.h"
+#include "particles.h"
 
-static box *b1, *b2;
+static population *p1, *p2;
 static model *m;
 static minima *targets;
 static config c;
@@ -43,12 +43,12 @@ void Animate () {
         if (initial) {
             initial = false;
         } else {
-            c.clamp = true;
-            coa(b1, m, c);
-            c.clamp = false;
-            coa(b2, m, c);
-            get_vertices(v1, b1->p);
-            get_vertices(v2, b2->p);
+            c.mode = true;
+            coa(p1, m, c);
+            c.mode = false;
+            coa(p2, m, c);
+            get_vertices(v1, p1->points);
+            get_vertices(v2, p2->points);
         }
         if (stepping) paused = true;
     }
@@ -61,19 +61,19 @@ void Animate () {
         }
     }
 
-    cut_box((float)b1->lower[0], (float)b1->lower[1], (float)b1->lower[2],
-            (float)b1->upper[0], (float)b1->upper[1], (float)b1->upper[2], get_colour(DARK_RED));
-    cut_box((float)b2->lower[0], (float)b2->lower[1], (float)b2->lower[2],
-            (float)b2->upper[0], (float)b2->upper[1], (float)b2->upper[2], get_colour(DARK_MAGENTA));
+    cut_box((float)p1->lower[0], (float)p1->lower[1], (float)p1->lower[2],
+            (float)p1->upper[0], (float)p1->upper[1], (float)p1->upper[2], get_colour(DARK_RED));
+    cut_box((float)p2->lower[0], (float)p2->lower[1], (float)p2->lower[2],
+            (float)p2->upper[0], (float)p2->upper[1], (float)p2->upper[2], get_colour(DARK_MAGENTA));
 
     for (int i = 0; i < c.m; i++) {
-        ball(v1[i], b1->p[i] == b1->best ? get_colour(LIGHT_RED) : get_colour(DARK_GREEN));
-        ball(v2[i], b2->p[i] == b2->best ? get_colour(LIGHT_MAGENTA) : get_colour(DARK_CYAN));
+        ball(v1[i], p1->points[i] == p1->best ? get_colour(LIGHT_RED) : get_colour(DARK_GREEN));
+        ball(v2[i], p2->points[i] == p2->best ? get_colour(LIGHT_MAGENTA) : get_colour(DARK_CYAN));
     }
 
     if (osd_active) {
-        osd_status(hud1, c.fmt, b1->iterations, b1->evaluations, c.places, b1->best);
-        osd_status(hud2, c.fmt, b2->iterations, b2->evaluations, c.places, b2->best);
+        osd_status(hud1, c.fmt, p1->iterations, p1->evaluations, c.places, p1->best);
+        osd_status(hud2, c.fmt, p2->iterations, p2->evaluations, c.places, p2->best);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_GREEN), hud1);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 40, get_colour(DARK_CYAN), hud2);
         if (targets && minimum) {
@@ -86,15 +86,15 @@ void Animate () {
 }
 
 void CloseWindow () {
-    point *best = b1->p[0]->f <= b2->p[0]->f ? *b1->p : *b2->p;
+    point *best = p1->points[0]->f <= p2->points[0]->f ? *p1->points : *p2->points;
     // print solution 1
-    fprintf(stderr, "%s%s  Clamped%s ", *b1->p == best ? "* " : "  ", GRY, NRM);
-    fprintf(stderr, "  %5d %6d  ", b1->iterations, b1->evaluations);
-    print_result(c.n, *b1->p, c.places, c.fmt);
+    fprintf(stderr, "%s%s  Clamped%s ", *p1->points == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "  %5d %6d  ", p1->iterations, p1->evaluations);
+    print_result(c.n, *p1->points, c.places, c.fmt);
     // print solution 2
-    fprintf(stderr, "%s%sUnclamped%s ", *b2->p == best ? "* " : "  ", GRY, NRM);
-    fprintf(stderr, "  %5d %6d  ", b2->iterations, b2->evaluations);
-    print_result(c.n, *b2->p, c.places, c.fmt);
+    fprintf(stderr, "%s%sUnclamped%s ", *p2->points == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "  %5d %6d  ", p2->iterations, p2->evaluations);
+    print_result(c.n, *p2->points, c.places, c.fmt);
 }
 
 int main (int argc, char **argv) {
@@ -107,16 +107,16 @@ int main (int argc, char **argv) {
     // model parameters
     m = model_init();
 
-    b1 = get_box(m, c);
-    b2 = get_box(m, c);
+    p1 = get_box(m, c);
+    p2 = get_box(m, c);
 
     // get minima for targets if known
     targets = get_known_minima();
 
     v1 = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v1);
-    get_vertices(v1, b1->p);
+    get_vertices(v1, p1->points);
     v2 = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v2);
-    get_vertices(v2, b2->p);
+    get_vertices(v2, p2->points);
 
     lower = (float)c.lower;
     upper = (float)c.upper;

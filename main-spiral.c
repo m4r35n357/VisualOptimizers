@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "spiral.h"
+#include "particles.h"
 
 int main(int argc, char *argv[]) {
     PRINT_ARGS(argc, argv);
@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     // model parameters
     model *m = model_init();
 
-    spiral *s = get_spiral(m, c);
+    population *s = get_spiral(m, c);
 
     // run optimization
     soa(s, m, c);

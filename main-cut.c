@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "cut.h"
+#include "particles.h"
 
 int main(int argc, char *argv[]) {
     PRINT_ARGS(argc, argv);
@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     // model parameters
     model *m = model_init();
 
-    box *b = get_box(m, c);
+    population *b = get_box(m, c);
 
     // run optimization
     coa(b, m, c);

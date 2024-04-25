@@ -30,7 +30,7 @@ minima *get_known_minima () {
 void cost (int n, point *p, const model *m) { (void)m;
     p->f = m->A * n;
     for (int i = 0; i < n; i++) {
-    	real xi = p->x[i] - (real)(i + 1);
-    	p->f += SQR(xi) - m->A * cosl(m->TWO_PI * xi);
+        real xi = p->x[i] - (real)(i + 1);
+        p->f += SQR(xi) - m->A * cosl(m->TWO_PI * xi);
     }
 }

@@ -4,8 +4,6 @@
 
 #define BASE 10
 
-#define SHRINK_FACTOR 1.0e-6L
-
 /*
  * Colours
  */
