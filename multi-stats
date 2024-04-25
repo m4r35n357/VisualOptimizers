@@ -28,7 +28,13 @@ fi
 
 # Nelder-Mead
 ./stats $runs $threshold ./nm-$model-std 3 0 $order 1.0e-6 100000 $(echo "scale=3; 0.5 * ($upper - $lower);" | /usr/bin/bc) \
-    $adaptive $((agents * iterations)) $lower $upper >/dev/null
+    $adaptive $(((agents - 1) * iterations + agents)) $lower $upper >/dev/null
+
+# Un-clamped
+./stats $runs $threshold ./cut-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null
+
+# Clamped
+./stats $runs $threshold ./cut-$model-std 3 0 $order $agents $iterations 1 $lower $upper >/dev/null
 
 if [ $order -le 8 ]
 then
@@ -38,9 +44,3 @@ then
     # Convergence Setting
     ./stats $runs $threshold ./spiral-$model-std 3 0 $order $agents $iterations 1 $lower $upper >/dev/null
 fi
-
-# Un-clamped
-./stats $runs $threshold ./cut-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null
-
-# Clamped
-./stats $runs $threshold ./cut-$model-std 3 0 $order $agents $iterations 1 $lower $upper >/dev/null

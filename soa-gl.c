@@ -30,8 +30,8 @@ void Animate () {
             soa(p1, m, c);
             c.mode = true;
             soa(p2, m, c);
-            get_vertices(v1, p1->points);
-            get_vertices(v2, p2->points);
+            get_vertices(v1, p1->agents);
+            get_vertices(v2, p2->agents);
         }
         if (stepping) paused = true;
     }
@@ -45,8 +45,8 @@ void Animate () {
     }
 
     for (int i = 0; i < c.m; i++) {
-        ball(v1[i], p1->points[i] == p1->x_star ? get_colour(LIGHT_RED) : get_colour(DARK_GREEN));
-        ball(v2[i], p2->points[i] == p2->x_star ? (p2->updated ? get_colour(LIGHT_YELLOW) : (p2->shrinking ? get_colour(LIGHT_MAGENTA) : get_colour(DARK_YELLOW))) : get_colour(DARK_CYAN));
+        ball(v1[i], p1->agents[i] == p1->x_star ? get_colour(LIGHT_RED) : get_colour(DARK_GREEN));
+        ball(v2[i], p2->agents[i] == p2->x_star ? (p2->updated ? get_colour(LIGHT_YELLOW) : (p2->shrinking ? get_colour(LIGHT_MAGENTA) : get_colour(DARK_YELLOW))) : get_colour(DARK_CYAN));
     }
 
     if (osd_active) {
@@ -64,15 +64,15 @@ void Animate () {
 }
 
 void CloseWindow () {
-    point *best = p1->points[0]->f <= p2->points[0]->f ? *p1->points : *p2->points;
+    point *best = p1->agents[0]->f <= p2->agents[0]->f ? *p1->agents : *p2->agents;
     // print solution 1
-    fprintf(stderr, "%s%s    Descent%s ", *p1->points == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "%s%s    Descent%s ", *p1->agents == best ? "* " : "  ", GRY, NRM);
     fprintf(stderr, "  %5d %6d  ", p1->k, p1->evaluations);
-    print_result(c.n, *p1->points, c.places, c.fmt);
+    print_result(c.n, *p1->agents, c.places, c.fmt);
     // print solution 2
-    fprintf(stderr, "%s%sConvergence%s ", *p2->points == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "%s%sConvergence%s ", *p2->agents == best ? "* " : "  ", GRY, NRM);
     fprintf(stderr, "  %5d %6d  ", p2->k, p2->evaluations);
-    print_result(c.n, *p2->points, c.places, c.fmt);
+    print_result(c.n, *p2->agents, c.places, c.fmt);
 }
 
 int main (int argc, char **argv) {
@@ -89,7 +89,7 @@ int main (int argc, char **argv) {
     p2 = get_spiral(m, c);
     for (int i = 0; i < c.m; i++) {
         for (int k = 0; k < c.n; k++) {
-            p2->points[i]->x[k] = p1->points[i]->x[k];
+            p2->agents[i]->x[k] = p1->agents[i]->x[k];
         }
     }
     p2->best = p1->best;
@@ -99,9 +99,9 @@ int main (int argc, char **argv) {
     targets = get_known_minima();
 
     v1 = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v1);
-    get_vertices(v1, p1->points);
+    get_vertices(v1, p1->agents);
     v2 = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v2);
-    get_vertices(v2, p2->points);
+    get_vertices(v2, p2->agents);
 
     lower = (float)c.lower;
     upper = (float)c.upper;

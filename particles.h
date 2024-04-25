@@ -24,7 +24,7 @@ typedef struct Config {
 config get_config (char **, bool);
 
 typedef struct Population {
-    point **points;
+    point **agents;
     point *x_star, *best, *update;
     int k, k_star, iterations, evaluations;
     real rd, rc, *lower, *upper, lambda;

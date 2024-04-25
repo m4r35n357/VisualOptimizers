@@ -26,16 +26,7 @@ fi
 
 # Nelder-Mead
 ./nm-$model-std 3 0 $order 1.0e-6 100000 $(echo "scale=3; 0.5 * ($upper - $lower);" | /usr/bin/bc) \
-    $adaptive $((agents * iterations)) $lower $upper >/dev/null
-
-if [ $order -le 8 ]
-then
-    # Periodic Descent Direction Setting
-    ./spiral-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null
-
-    # Convergence Setting
-    ./spiral-$model-std 3 0 $order $agents $iterations 1 $lower $upper >/dev/null
-fi
+    $adaptive $(((agents - 1) * iterations + agents)) $lower $upper >/dev/null
 
 # Un-clamped
 ./cut-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null
@@ -45,6 +36,12 @@ fi
 
 if [ $order -le 8 ]
 then
+    # Periodic Descent Direction Setting
+    ./spiral-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null
+
+    # Convergence Setting
+    ./spiral-$model-std 3 0 $order $agents $iterations 1 $lower $upper >/dev/null
+
     # Base-line
-    ./rnd-$model-std 3 0 $order $(((agents - 1) * iterations)) $lower $upper >/dev/null
+    ./rnd-$model-std 3 0 $order $(((agents - 1) * iterations + agents)) $lower $upper >/dev/null
 fi
