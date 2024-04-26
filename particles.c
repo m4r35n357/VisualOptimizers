@@ -3,9 +3,10 @@
 #include <math.h>
 #include "particles.h"
 
-config get_config (char **argv, bool single) {
+config get_config (char **argv, bool spiral, bool single) {
     randomize();
     config conf = {
+        .spiral = spiral,
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
         .n = (int)strtol(argv[3], NULL, BASE),
@@ -72,8 +73,7 @@ bool soa (population *s, model *m, config c) {
                     s->update->x[k] = s->x_star->x[k] + (c.mode ? (s->shrinking ? s->rc : 1.0L) : s->rd) * rot;
                 }
                 for (int k = 0; k < c.n; k++) {  // clip any out of range agents
-                    s->agents[i]->x[k] = fmaxl(s->update->x[k], c.lower);
-                    s->agents[i]->x[k] = fminl(s->update->x[k], c.upper);
+                    s->agents[i]->x[k] = fminl(fmaxl(s->update->x[k], c.lower), c.upper);
                 }
                 cost(c.n, s->agents[i], m);
                 s->evaluations++;

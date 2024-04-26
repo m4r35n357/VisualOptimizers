@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <GL/freeglut.h>
 #include "opengl.h"
 #include "particles.h"
@@ -43,10 +44,17 @@ void Animate () {
         if (initial) {
             initial = false;
         } else {
-            c.mode = true;
-            coa(p1, m, c);
-            c.mode = false;
-            coa(p2, m, c);
+        	if (c.spiral) {
+                c.mode = false;
+                soa(p1, m, c);
+                c.mode = true;
+                soa(p2, m, c);
+        	} else {
+                c.mode = true;
+                coa(p1, m, c);
+                c.mode = false;
+                coa(p2, m, c);
+        	}
             get_vertices(v1, p1->agents);
             get_vertices(v2, p2->agents);
         }
@@ -61,19 +69,33 @@ void Animate () {
         }
     }
 
-    cut_box((float)p1->lower[0], (float)p1->lower[1], (float)p1->lower[2],
-            (float)p1->upper[0], (float)p1->upper[1], (float)p1->upper[2], get_colour(DARK_RED));
-    cut_box((float)p2->lower[0], (float)p2->lower[1], (float)p2->lower[2],
-            (float)p2->upper[0], (float)p2->upper[1], (float)p2->upper[2], get_colour(DARK_MAGENTA));
+    if (!c.spiral) {
+        cut_box((float)p1->lower[0], (float)p1->lower[1], (float)p1->lower[2],
+                (float)p1->upper[0], (float)p1->upper[1], (float)p1->upper[2], get_colour(DARK_RED));
+        cut_box((float)p2->lower[0], (float)p2->lower[1], (float)p2->lower[2],
+                (float)p2->upper[0], (float)p2->upper[1], (float)p2->upper[2], get_colour(DARK_MAGENTA));
+    }
 
-    for (int i = 0; i < c.m; i++) {
-        ball(v1[i], p1->agents[i] == p1->best ? get_colour(LIGHT_RED) : get_colour(DARK_GREEN));
-        ball(v2[i], p2->agents[i] == p2->best ? get_colour(LIGHT_MAGENTA) : get_colour(DARK_CYAN));
+    if (c.spiral) {
+		for (int i = 0; i < c.m; i++) {
+			ball(v1[i], p1->agents[i] == p1->x_star ? get_colour(LIGHT_RED) : get_colour(DARK_GREEN));
+			ball(v2[i], p2->agents[i] == p2->x_star ? (p2->updated ? get_colour(LIGHT_YELLOW) : (p2->shrinking ? get_colour(LIGHT_MAGENTA) : get_colour(DARK_YELLOW))) : get_colour(DARK_CYAN));
+		}
+    } else {
+        for (int i = 0; i < c.m; i++) {
+            ball(v1[i], p1->agents[i] == p1->best ? get_colour(LIGHT_RED) : get_colour(DARK_GREEN));
+            ball(v2[i], p2->agents[i] == p2->best ? get_colour(LIGHT_MAGENTA) : get_colour(DARK_CYAN));
+        }
     }
 
     if (osd_active) {
-        osd_status(hud1, c.fmt, p1->iterations, p1->evaluations, c.places, p1->best);
-        osd_status(hud2, c.fmt, p2->iterations, p2->evaluations, c.places, p2->best);
+        if (c.spiral) {
+            osd_status(hud1, c.fmt, p1->k, p1->evaluations, c.places, p1->x_star);
+            osd_status(hud2, c.fmt, p2->k, p2->evaluations, c.places, p2->x_star);
+        } else {
+            osd_status(hud1, c.fmt, p1->iterations, p1->evaluations, c.places, p1->best);
+            osd_status(hud2, c.fmt, p2->iterations, p2->evaluations, c.places, p2->best);
+        }
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_GREEN), hud1);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 40, get_colour(DARK_CYAN), hud2);
         if (targets && minimum) {
@@ -88,12 +110,22 @@ void Animate () {
 void CloseWindow () {
     point *best = p1->agents[0]->f <= p2->agents[0]->f ? *p1->agents : *p2->agents;
     // print solution 1
-    fprintf(stderr, "%s%s  Clamped%s ", *p1->agents == best ? "* " : "  ", GRY, NRM);
-    fprintf(stderr, "  %5d %6d  ", p1->iterations, p1->evaluations);
+    if (c.spiral) {
+        fprintf(stderr, "%s%s    Descent%s ", *p1->agents == best ? "* " : "  ", GRY, NRM);
+        fprintf(stderr, "  %5d %6d  ", p1->k, p1->evaluations);
+    } else {
+        fprintf(stderr, "%s%s  Clamped%s ", *p1->agents == best ? "* " : "  ", GRY, NRM);
+        fprintf(stderr, "  %5d %6d  ", p1->iterations, p1->evaluations);
+    }
     print_result(c.n, *p1->agents, c.places, c.fmt);
     // print solution 2
-    fprintf(stderr, "%s%sUnclamped%s ", *p2->agents == best ? "* " : "  ", GRY, NRM);
-    fprintf(stderr, "  %5d %6d  ", p2->iterations, p2->evaluations);
+    if (c.spiral) {
+        fprintf(stderr, "%s%sConvergence%s ", *p2->agents == best ? "* " : "  ", GRY, NRM);
+        fprintf(stderr, "  %5d %6d  ", p2->k, p2->evaluations);
+    } else {
+        fprintf(stderr, "%s%sUnclamped%s ", *p2->agents == best ? "* " : "  ", GRY, NRM);
+        fprintf(stderr, "  %5d %6d  ", p2->iterations, p2->evaluations);
+    }
     print_result(c.n, *p2->agents, c.places, c.fmt);
 }
 
@@ -102,13 +134,29 @@ int main (int argc, char **argv) {
     CHECK(argc == 9);
 
     // options
-    c = get_config(argv, true);
+    if (strstr(argv[0], "spiral-")) {
+        c = get_config(argv, true, true);
+    } else {
+        c = get_config(argv, false, true);
+    }
 
     // model parameters
     m = model_init();
 
-    p1 = get_box(m, c);
-    p2 = get_box(m, c);
+    if (c.spiral) {
+        p1 = get_spiral(m, c);
+        p2 = get_spiral(m, c);
+        for (int i = 0; i < c.m; i++) {
+            for (int k = 0; k < c.n; k++) {
+                p2->agents[i]->x[k] = p1->agents[i]->x[k];
+            }
+        }
+        p2->best = p1->best;
+        p2->x_star = p1->x_star;
+    } else {
+        p1 = get_box(m, c);
+        p2 = get_box(m, c);
+    }
 
     // get minima for targets if known
     targets = get_known_minima();
@@ -124,7 +172,7 @@ int main (int argc, char **argv) {
     radius = 1.5F * ((float)c.upper - (float)c.lower);
     ball_size = 0.004F * ((float)c.upper - (float)c.lower);
 
-    ApplicationInit(argc, argv, "Optimization By Cut Visualizer");
+    ApplicationInit(argc, argv, c.spiral ? "Spiral Optimization Visualizer" : "Optimization By Cut Visualizer");
     glutCloseFunc(CloseWindow);
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.
 

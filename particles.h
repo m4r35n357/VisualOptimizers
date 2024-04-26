@@ -10,6 +10,7 @@
  * Options
  */
 typedef struct Config {
+    bool spiral; // choose between spiral and cut algorithms
     int places;  // significant figures in float/exponential output
     int fmt;  // fixed or exponential floating point format
     int n;   // number of dimensions
@@ -21,7 +22,7 @@ typedef struct Config {
     bool step_mode; // free-running or single-step ("generator") operation
 } config;
 
-config get_config (char **, bool);
+config get_config (char **, bool, bool);
 
 typedef struct Population {
     point **agents;

@@ -41,23 +41,23 @@ nm-%-gl: %.o nelder_mead.o opengl.o base.o simplex-gl.o
 nm-gl: nm-sphere-gl nm-levy-gl nm-easom-gl nm-michalewicz-gl nm-rastrigin-gl nm-treacle-gl nm-ackley-gl nm-rosenbrock-gl nm-dixon-price-gl nm-st-gl nm-schwefel-gl nm-trid-gl
 
 # Spiral optimization
-spiral-%-std: %.o particles.o base.o main-spiral.o
+spiral-%-std: %.o particles.o base.o main-particle.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 spiral-std: spiral-sphere-std spiral-levy-std spiral-easom-std spiral-michalewicz-std spiral-treacle-std spiral-rosenbrock-std spiral-rastrigin-std spiral-ackley-std spiral-dixon-price-std spiral-st-std spiral-schwefel-std spiral-trid-std
 
-spiral-%-gl: %.o particles.o opengl.o base.o soa-gl.o
+spiral-%-gl: %.o particles.o opengl.o base.o poa-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
 spiral-gl: spiral-sphere-gl spiral-levy-gl spiral-easom-gl spiral-michalewicz-gl spiral-treacle-gl spiral-rosenbrock-gl spiral-rastrigin-gl spiral-ackley-gl spiral-dixon-price-gl spiral-st-gl spiral-schwefel-gl spiral-trid-gl
 
 # Optimization by cut
-cut-%-std: %.o particles.o base.o main-cut.o
+cut-%-std: %.o particles.o base.o main-particle.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
 cut-std: cut-sphere-std cut-levy-std cut-easom-std cut-michalewicz-std cut-treacle-std cut-rosenbrock-std cut-rastrigin-std cut-ackley-std cut-dixon-price-std cut-st-std cut-schwefel-std cut-trid-std
 
-cut-%-gl: %.o particles.o opengl.o base.o coa-gl.o
+cut-%-gl: %.o particles.o opengl.o base.o poa-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
 cut-gl: cut-sphere-gl cut-levy-gl cut-easom-gl cut-michalewicz-gl cut-treacle-gl cut-rosenbrock-gl cut-rastrigin-gl cut-ackley-gl cut-dixon-price-gl cut-st-gl cut-schwefel-gl cut-trid-gl
