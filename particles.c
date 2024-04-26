@@ -67,17 +67,13 @@ bool soa (population *s, model *m, config c) {
         if (c.mode) s->shrinking = s->k >= s->k_star + 2 * c.n;  // step 2 rule for convergence mode
         for (int i = 0; i < c.m; i++) {
             if (s->agents[i] != s->x_star) {
-                bool oor = false;
                 for (int k = 0; k < c.n; k++) {  // step 3 - rotate by pi/2 in all dimensions around centre
                     real rot = !k ? s->x_star->x[c.n - 1] - s->agents[i]->x[c.n - 1] : s->agents[i]->x[k - 1] - s->x_star->x[k - 1];
                     s->update->x[k] = s->x_star->x[k] + (c.mode ? (s->shrinking ? s->rc : 1.0L) : s->rd) * rot;
-                    if (s->update->x[k] > c.upper || s->update->x[k] < c.lower) {  // check for out of range
-                        oor = true;
-                        break;
-                    }
                 }
-                for (int k = 0; k < c.n; k++) {  // randomize any out of range agents
-                    s->agents[i]->x[k] = oor ? rand_range(c.lower, c.upper) : s->update->x[k];
+                for (int k = 0; k < c.n; k++) {  // clip any out of range agents
+                    s->agents[i]->x[k] = fmaxl(s->update->x[k], c.lower);
+                    s->agents[i]->x[k] = fminl(s->update->x[k], c.upper);
                 }
                 cost(c.n, s->agents[i], m);
                 s->evaluations++;
