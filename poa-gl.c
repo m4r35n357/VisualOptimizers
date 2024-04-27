@@ -72,7 +72,19 @@ void Animate () {
     if (c.spiral) {
         for (int i = 0; i < c.m; i++) {
             ball(v1[i], p1->agents[i] == p1->x_star ? get_colour(LIGHT_RED) : get_colour(DARK_GREEN));
-            ball(v2[i], p2->agents[i] == p2->x_star ? (p2->updated ? get_colour(LIGHT_YELLOW) : (p2->shrinking ? get_colour(LIGHT_MAGENTA) : get_colour(DARK_YELLOW))) : get_colour(DARK_CYAN));
+            if (p2->agents[i] == p2->x_star) {
+                if (p2->updated) {
+                    ball(v2[i], get_colour(LIGHT_YELLOW));
+                } else {
+                    if (p2->shrinking) {
+                        ball(v2[i], get_colour(LIGHT_MAGENTA));
+                    } else {
+                        ball(v2[i], get_colour(DARK_YELLOW));
+                    }
+                }
+            } else {
+                ball(v2[i], get_colour(DARK_CYAN));
+            }
         }
     } else {
         cut_box((float)p1->lower[0], (float)p1->lower[1], (float)p1->lower[2],
