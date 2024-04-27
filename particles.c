@@ -73,7 +73,13 @@ bool soa (population *s, model *m, config c) {
                     s->update->x[k] = s->x_star->x[k] + (c.mode ? (s->shrinking ? s->rc : 1.0L) : s->rd) * rot;
                 }
                 for (int k = 0; k < c.n; k++) {  // clip any out of range agents
-                    s->agents[i]->x[k] = fminl(fmaxl(s->update->x[k], c.lower), c.upper);
+                    if (s->update->x[k] > c.upper) {
+                        s->agents[i]->x[k] = c.upper - (s->update->x[k] - c.upper);
+                    } else if (s->update->x[k] < c.lower) {
+                        s->agents[i]->x[k] = c.lower + (c.lower - s->update->x[k]);
+                    } else {
+                    	s->agents[i]->x[k] = s->update->x[k];
+                    }
                 }
                 cost(c.n, s->agents[i], m);
                 s->evaluations++;
