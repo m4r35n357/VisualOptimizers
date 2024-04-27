@@ -22,12 +22,12 @@ config get_config (char **argv, bool spiral, bool single) {
     CHECK(conf.n >= 1 && conf.n <= 64);
     CHECK(conf.m >= 1 && conf.m <= 100000);
     CHECK(conf.max_iterations >= 1 && conf.max_iterations <= 1000);
-    CHECK(conf.mode == 0 || conf.mode == 1);
+    CHECK(conf.mode == 0 || conf.mode == 1);  // 0 = DESCENT(spiral)/UNCLAMPED(cut), 1 = CONVERGENCE(spiral)/CLAMPED(cut)
     CHECK(conf.upper > conf.lower);
     return conf;
 }
 
-static point **set_initial_population (population *p, model *m, config c) {
+static point **create_population (population *p, model *m, config c) {
     p->agents = malloc((size_t)c.m * sizeof (point *)); CHECK(p->agents);
     for (int i = 0; i < c.m; i++) {
         p->agents[i] = get_point(c.n); CHECK(p->agents[i]);
@@ -53,8 +53,8 @@ static void print_progress (int iterations, int evaluations, point *best, config
 population *get_spiral (model *m, config c) {  // step 0
     population *s =  malloc(sizeof(population));
     s->update = get_point(c.n);
-    s->k_star = s->k = s->evaluations = 0;
-    s->agents = set_initial_population(s, m, c);  // step 1
+    s->k_star = s->iterations = s->evaluations = 0;
+    s->agents = create_population(s, m, c);  // step 1
     s->x_star = s->best;
     s->looping = s->shrinking = false;
     s->rd = powl(SHRINK_FACTOR, 1.0L / c.max_iterations);  // step 2 rule for periodic descent direction mode
@@ -64,8 +64,8 @@ population *get_spiral (model *m, config c) {  // step 0
 
 bool soa (population *s, model *m, config c) {
     if (c.step_mode && s->looping) goto resume; else s->looping = true;
-    while (s->k < c.max_iterations) {
-        if (c.mode) s->shrinking = s->k >= s->k_star + 2 * c.n;  // step 2 rule for convergence mode
+    while (s->iterations < c.max_iterations) {
+        if (c.mode) s->shrinking = s->iterations >= s->k_star + 2 * c.n;  // step 2 rule for convergence mode
         for (int i = 0; i < c.m; i++) {
             if (s->agents[i] != s->x_star) {
                 for (int k = 0; k < c.n; k++) {  // step 3 - rotate by pi/2 in all dimensions around centre
@@ -83,11 +83,11 @@ bool soa (population *s, model *m, config c) {
         s->updated = false;
         if (s->best->f < s->x_star->f) {  // step 4 - new centre ?
             s->x_star = s->best;
-            s->k_star = s->k + 1;
+            s->k_star = s->iterations + 1;
             s->updated = true;
         }
-        s->k++;  // step 5
-        if (s->updated) print_progress(s->k, s->evaluations, s->x_star, c);
+        s->iterations++;  // step 5
+        if (s->updated) print_progress(s->iterations, s->evaluations, s->x_star, c);
         if (c.step_mode) return true;
         resume: ;
     }
@@ -103,7 +103,7 @@ population *get_box (model *m, config c) {
         b->lower[k] = c.lower;
     }
     b->iterations = b->evaluations = 0;
-    b->agents = set_initial_population(b, m, c);
+    b->agents = create_population(b, m, c);
     b->looping = false;
     b->lambda = powl(SHRINK_FACTOR, 1.0L / c.max_iterations);
     return b;
@@ -112,8 +112,8 @@ population *get_box (model *m, config c) {
 bool coa (population *b, model *m, config c) {
     if (c.step_mode && b->looping) goto resume; else b->looping = true;
     while (b->iterations < c.max_iterations) {
+        real side = 0.5L * b->lambda * (b->upper[0] - b->lower[0]);
         for (int k = 0; k < c.n; k++) {  // shrink the box
-            real side = 0.5L * b->lambda * (b->upper[k] - b->lower[k]);
             real upper = b->best->x[k] + side;
             real lower = b->best->x[k] - side;
             real lower_limit = c.mode ? b->lower[k] : c.lower;

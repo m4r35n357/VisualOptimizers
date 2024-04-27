@@ -8,12 +8,7 @@ int main(int argc, char *argv[]) {
     CHECK(argc == 9);
 
     // options
-    config c;
-    if (strstr(argv[0], "spiral-")) {
-        c = get_config(argv, true, false);
-    } else {
-        c = get_config(argv, false, false);
-    }
+    config c = strstr(argv[0], "spiral-") ? get_config(argv, true, false) : get_config(argv, false, false);
 
     // model parameters
     model *m = model_init();
@@ -25,7 +20,7 @@ int main(int argc, char *argv[]) {
         soa(s, m, c);
 
         // print solution
-        fprintf(stderr, "  %5d %6d  ", s->k, s->evaluations);
+        fprintf(stderr, "  %5d %6d  ", s->iterations, s->evaluations);
         print_result(c.n, s->x_star, c.places, c.fmt);
     } else {
         population *b = get_box(m, c);
