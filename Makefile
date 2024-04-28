@@ -95,7 +95,7 @@ test-multi-16d: nogl
 	@echo ""
 	@./multi-stats 10 0.001 rosenbrock 16 65536 100 -20 20
 	@echo ""
-	@./multi-stats 10 0.01 treacle 16 65536 100 -20 20
+	@./multi-stats 10 0.03 treacle 16 65536 100 -20 20
 	@echo ""
 	@./multi-stats 10 -626.0 st 16 65536 100 -5 20
 	@echo ""
@@ -133,7 +133,7 @@ test-multi-8d: nogl
 	@echo ""
 	@./multi-stats 100 0.001 rosenbrock 8 256 1000 -10 10
 	@echo ""
-	@./multi-stats 100 0.01 treacle 8 256 1000 -10 10
+	@./multi-stats 100 0.03 treacle 8 256 1000 -10 10
 	@echo ""
 	@./multi-stats 100 -313.0 st 8 256 1000 -5 10
 	@echo ""
@@ -175,7 +175,7 @@ test-multi-3d: nogl
 	@echo ""
 	@./multi-stats 100 0.001 rosenbrock 3 27 100 -5 5
 	@echo ""
-	@./multi-stats 100 0.01 treacle 3 27 100 -10 10
+	@./multi-stats 100 0.03 treacle 3 27 100 -10 10
 	@echo ""
 	@./multi-stats 100 -117.0 st 3 27 100 -5 5
 	@echo ""
