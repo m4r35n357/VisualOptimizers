@@ -148,20 +148,8 @@ int main (int argc, char **argv) {
     // model parameters
     m = model_init();
 
-    if (c.spiral) {
-        p1 = get_spiral(m, c);
-        p2 = get_spiral(m, c);
-        for (int i = 0; i < c.m; i++) {
-            for (int k = 0; k < c.n; k++) {
-                p2->agents[i]->x[k] = p1->agents[i]->x[k];
-            }
-        }
-        p2->best = p1->best;
-        p2->x_star = p1->x_star;
-    } else {
-        p1 = get_box(m, c);
-        p2 = get_box(m, c);
-    }
+    p1 = c.spiral ? get_spiral(m, c) : get_box(m, c);
+    p2 = c.spiral ? get_spiral(m, c) : get_box(m, c);
 
     // get minima for targets if known
     targets = get_known_minima();
