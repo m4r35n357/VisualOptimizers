@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "particles.h"
 
 int main(int argc, char *argv[]) {
@@ -8,7 +7,7 @@ int main(int argc, char *argv[]) {
     CHECK(argc == 9);
 
     // options
-    config c = strstr(argv[0], "spiral-") ? get_config(argv, true, false) : get_config(argv, false, false);
+    config c = get_config(argv);
 
     // model parameters
     model *m = model_init();

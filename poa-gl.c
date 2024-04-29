@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 #include <GL/freeglut.h>
 #include "opengl.h"
 #include "particles.h"
@@ -143,7 +142,7 @@ int main (int argc, char **argv) {
     CHECK(argc == 9);
 
     // options
-    c = strstr(argv[0], "spiral-") ? get_config(argv, true, true) : get_config(argv, false, true);
+    c = get_config(argv);
 
     // model parameters
     m = model_init();

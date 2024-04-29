@@ -22,7 +22,7 @@ typedef struct Config {
     bool step_mode; // free-running or single-step ("generator") operation
 } config;
 
-config get_config (char **, bool, bool);
+config get_config (char **);
 
 typedef struct Population {
     point **agents;

@@ -1,12 +1,14 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <math.h>
 #include "particles.h"
 
-config get_config (char **argv, bool spiral, bool single) {
+config get_config (char **argv) {
     randomize();
     config conf = {
-        .spiral = spiral,
+        .spiral = strstr(argv[0], "spiral-"),
+        .step_mode = strstr(argv[0], "-gl"),
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
         .n = (int)strtol(argv[3], NULL, BASE),
@@ -14,8 +16,7 @@ config get_config (char **argv, bool spiral, bool single) {
         .max_iterations = (int)strtol(argv[5], NULL, BASE),
         .mode = (int)strtol(argv[6], NULL, BASE),
         .lower = strtold(argv[7], NULL),
-        .upper = strtold(argv[8], NULL),
-        .step_mode = single
+        .upper = strtold(argv[8], NULL)
     };
     CHECK(conf.places >= 1 && conf.places <= 36);
     CHECK(conf.fmt == 0 || conf.fmt == 1);
