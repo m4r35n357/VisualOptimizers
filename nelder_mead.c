@@ -12,7 +12,7 @@ optimset get_settings (char **argv) {
         .fmt = (int)strtol(argv[2], NULL, BASE),
         .n = (int)strtol(argv[3], NULL, BASE),
         .tolerance = strtold(argv[4], NULL),
-        .max_iterations = (int)strtol(argv[5], NULL, BASE),
+        .max_evaluations = (int)strtol(argv[5], NULL, BASE),
         .size = strtold(argv[6], NULL),
         .adaptive = (int)strtol(argv[7], NULL, BASE),
         .init_mode = (int)strtol(argv[8], NULL, BASE)
@@ -21,7 +21,7 @@ optimset get_settings (char **argv) {
     CHECK(opt.fmt == 0 || opt.fmt == 1);
     CHECK(opt.n >= 1 && opt.n <= 64);
     CHECK(opt.tolerance >= 1.0e-36L && opt.tolerance <= 1.0e-3L);
-    CHECK(opt.max_iterations >= 1 && opt.max_iterations <= 10000000);
+    CHECK(opt.max_evaluations >= 1 && opt.max_evaluations <= 10000000);
     CHECK(opt.size >= 1.0e-12L && opt.size <= 1.0e3L);
     CHECK(opt.adaptive == 0 || opt.adaptive == 1);
     CHECK(opt.init_mode >= 0 && opt.init_mode <= 10000000);
@@ -81,7 +81,7 @@ simplex *nm_simplex (int n, real size, const point *start, bool adaptive) {
 bool nelder_mead (simplex *s, const model *m, const optimset *o) {
     point *best = s->p, *worst = s->p + s->n, *second_worst = worst - 1;
     if (o->step_mode && s->looping) goto resume; else s->looping = true;
-    while ((s->delta_x > o->tolerance || s->delta_f > o->tolerance) && s->iterations <= o->max_iterations) {
+    while ((s->delta_x > o->tolerance || s->delta_f > o->tolerance) && s->evaluations <= o->max_evaluations) {
         int shrink = 0;
         project(s->reflect, s, m, s->ALPHA, worst, s->centroid);
         if (best->f <= s->reflect->f && s->reflect->f < second_worst->f) {

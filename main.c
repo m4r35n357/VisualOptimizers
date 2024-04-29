@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "simplex.h"
 
 int main (int argc, char **argv) {
@@ -24,15 +25,14 @@ int main (int argc, char **argv) {
             centre->x[j] = strtold(argv[9 + j], NULL);
         }
     }
-    cost(o.n, centre, m);
 
     simplex *s = nm_simplex(o.n, o.size, centre, o.adaptive);
     fprintf(stderr, o.fmt ? "      %sDiameter%s% .*Le\n" : "      %sDiameter%s% .*Lf\n",
             GRY, NRM, o.places, distance(o.n, s->p, s->p + o.n));
 
-    int runs = 0, iterations = 0, evaluations = 1;
     point *boat = get_point(o.n);
-    copy_point(o.n, centre, boat);
+    boat->f = INFINITY;
+    int runs = 0, iterations = 0, evaluations = 0;
     do {
         runs++;
         for (int i = 0; i < o.n + 1; i++) {
@@ -54,7 +54,7 @@ int main (int argc, char **argv) {
             set_random_coordinates(centre, o.n, o.lower, o.upper);
             regular_simplex(s, o.size, centre);
         }
-    } while (evaluations < o.init_mode);
+    } while (evaluations < o.max_evaluations);
 
     return 0;
 }

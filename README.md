@@ -114,10 +114,10 @@ Parameter | Meaning
 2 | Floating point format (0 for fixed, 1 for exponential)
 3 | Number of dimensions
 4 | Maximum error for convergence
-5 | Maximum number of iterations
+5 | Maximum number of evaluations (per iteration, and in total)
 6 | Initial simplex scale
 7 | Adaptive (0 for no, 1 for yes)
-8 | Initialization (0 for explicit coordinates, 1 or more for number of random "runs") - ignored for GL
+8 | Initialization (0 for explicit coordinates, 1 for random in range) - ignored for GL
 
 If Initialization = 0
 Parameter | Meaning

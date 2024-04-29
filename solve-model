@@ -25,8 +25,8 @@ else
 fi
 
 # Nelder-Mead
-./nm-$model-std 3 0 $order 1.0e-6 100000 $(echo "scale=3; 0.5 * ($upper - $lower);" | /usr/bin/bc) \
-    $adaptive $(((agents - 1) * iterations + agents)) $lower $upper >/dev/null
+./nm-$model-std 3 0 $order 1.0e-6 $(((agents - 1) * iterations + agents)) \
+    $(echo "scale=3; 0.5 * ($upper - $lower);" | /usr/bin/bc) $adaptive 1 $lower $upper >/dev/null
 
 # Un-clamped
 ./cut-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null

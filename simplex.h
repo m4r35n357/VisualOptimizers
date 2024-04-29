@@ -10,7 +10,7 @@ typedef struct Optimset {
     int fmt;  // fixed or exponential floating point format
     int n;   // number of dimensions
     real tolerance;    // tolerance on the function value
-    int max_iterations;   // maximum number of allowed iterations
+    int max_evaluations;   // maximum number of allowed evaluations
     real size;  // size of initial simplex
     int adaptive;  // simplex updates reduced for dimension > 2
     int init_mode;  // 0 for explicit coordinates, 1 or more for random initialization

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "simplex.h"
 
 int main (int argc, char **argv) {
@@ -12,7 +13,7 @@ int main (int argc, char **argv) {
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
         .n = (int)strtol(argv[3], NULL, BASE),
-        .init_mode = (int)strtol(argv[4], NULL, BASE),  // use for evaluations
+        .max_evaluations = (int)strtol(argv[4], NULL, BASE),
         .step_mode = false
     };
     CHECK(o.places >= 1 && o.places <= 36);
@@ -29,9 +30,9 @@ int main (int argc, char **argv) {
     set_random_coordinates(centre, o.n, o.lower, o.upper);
     cost(o.n, centre, m);
 
-    int runs = 0, evaluations = 1;
     point *boat = get_point(o.n);
-    copy_point(o.n, centre, boat);
+    boat->f = INFINITY;
+    int runs = 0, evaluations = 1;
     do {
         runs++;
         cost(o.n, centre, m);
@@ -42,7 +43,7 @@ int main (int argc, char **argv) {
         }
 
         set_random_coordinates(centre, o.n, o.lower, o.upper);
-    } while (evaluations < o.init_mode);
+    } while (evaluations < o.max_evaluations);
 
     fprintf(stderr, "%8d %8d  ", runs, evaluations);
     print_result(o.n, boat, o.places, o.fmt);
