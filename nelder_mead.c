@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include "simplex.h"
 
-optimset get_settings (char **argv, bool single) {
+optimset get_settings (char **argv) {
     randomize();
     optimset opt = {
+        .step_mode = strstr(argv[0], "-gl"),
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
         .n = (int)strtol(argv[3], NULL, BASE),
@@ -13,8 +15,7 @@ optimset get_settings (char **argv, bool single) {
         .max_iterations = (int)strtol(argv[5], NULL, BASE),
         .size = strtold(argv[6], NULL),
         .adaptive = (int)strtol(argv[7], NULL, BASE),
-        .init_mode = (int)strtol(argv[8], NULL, BASE),
-        .step_mode = single
+        .init_mode = (int)strtol(argv[8], NULL, BASE)
     };
     CHECK(opt.places >= 1 && opt.places <= 36);
     CHECK(opt.fmt == 0 || opt.fmt == 1);
@@ -122,17 +123,6 @@ bool nelder_mead (simplex *s, const model *m, const optimset *o) {
         resume: ;
     }
     return s->looping = false;
-}
-
-/*
- * Euclidean distance between two points
- */
-real distance (int n, const point *a, const point *b) {
-    real sum = 0.0L;
-    for (int j = 0; j < n; j++) {
-        sum += SQR(a->x[j] - b->x[j]);
-    }
-    return sqrtl(sum);
 }
 
 /*

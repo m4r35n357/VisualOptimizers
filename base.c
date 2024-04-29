@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "base.h"
 
 /*
@@ -37,6 +38,17 @@ void copy_point (int n, const point *src, point *dst) {
         dst->x[i] = src->x[i];
     }
     dst->f = src->f;
+}
+
+/*
+ * Euclidean distance between two points
+ */
+real distance (int n, const point *a, const point *b) {
+    real sum = 0.0L;
+    for (int j = 0; j < n; j++) {
+        sum += SQR(a->x[j] - b->x[j]);
+    }
+    return sqrtl(sum);
 }
 
 void print_result (int n, const point *p, int places, int fmt) {

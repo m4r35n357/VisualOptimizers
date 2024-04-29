@@ -84,6 +84,7 @@ test-32d: nogl
 	@./nm-easom-std 1 0 32 1.0e-6 1000000 25.0 1 10 -10 40 >/dev/null
 	@echo ""
 	@./nm-dixon-price-std 1 0 32 1.0e-6 1000000 5.0 1 1000 -10 10 >/dev/null
+	@echo ""
 
 # 2^D search agents
 test-multi-16d: nogl

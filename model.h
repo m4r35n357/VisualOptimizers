@@ -3,11 +3,6 @@
 #include "base.h"
 
 /*
- * "Low-noise" squaring for arguments with no side-effects
- */
-#define SQR(x) ((x) * (x))
-
-/*
  * Model parameters
  */
 typedef struct Model model;

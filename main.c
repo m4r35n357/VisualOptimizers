@@ -7,7 +7,7 @@ int main (int argc, char **argv) {
     CHECK(argc >= 9);
 
     // optimizer settings
-    optimset o = get_settings(argv, false);
+    optimset o = get_settings(argv);
 
     // model parameters
     model *m = model_init();

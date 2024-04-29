@@ -21,7 +21,7 @@ typedef struct Optimset {
 /*
  * Optimizer settings
  */
-optimset get_settings (char **, bool);
+optimset get_settings (char **);
 
 /*
  * The "simplex" containing an array of n + 1 points each of dimension n
@@ -49,8 +49,6 @@ bool multidirectional_search (simplex *, const model *, const optimset *);
 void regular_simplex (simplex *, real, const point *);
 
 simplex *nm_simplex (int, real, const point *, bool);
-
-real distance (int, const point *, const point *);
 
 int compare (const void *, const void *);
 

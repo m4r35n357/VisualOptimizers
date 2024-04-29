@@ -37,6 +37,11 @@
 } while (0)
 
 /*
+ * "Low-noise" squaring for arguments with no side-effects
+ */
+#define SQR(x) ((x) * (x))
+
+/*
  * Floating point internal format
  */
 typedef long double real;
@@ -58,6 +63,8 @@ point *get_point (int n);
 void set_random_coordinates (point *p, int n, real lower, real upper);
 
 void copy_point (int n, const point *src, point *dst);
+
+real distance (int, const point *, const point *);
 
 void print_result (int n, const point *p, int places, int fmt);
 
