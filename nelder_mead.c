@@ -7,7 +7,7 @@
 optimset get_settings (char **argv) {
     randomize();
     optimset opt = {
-        .step_mode = strstr(argv[0], "-gl"),
+        .step_mode = strstr(argv[0], "-gl") ? true : false,
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
         .n = (int)strtol(argv[3], NULL, BASE),

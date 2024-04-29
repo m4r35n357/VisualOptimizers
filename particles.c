@@ -7,8 +7,8 @@
 config get_config (char **argv) {
     randomize();
     config conf = {
-        .spiral = strstr(argv[0], "spiral-"),
-        .step_mode = strstr(argv[0], "-gl"),
+        .spiral = strstr(argv[0], "spiral-") ? true : false,
+        .step_mode = strstr(argv[0], "-gl") ? true : false,
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
         .n = (int)strtol(argv[3], NULL, BASE),

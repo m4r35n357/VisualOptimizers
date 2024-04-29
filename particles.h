@@ -11,6 +11,7 @@
  */
 typedef struct Config {
     bool spiral; // choose between spiral and cut algorithms
+    bool step_mode; // free-running or single-step ("generator") operation
     int places;  // significant figures in float/exponential output
     int fmt;  // fixed or exponential floating point format
     int n;   // number of dimensions
@@ -19,7 +20,6 @@ typedef struct Config {
     int mode;  // strategy
     real lower;   // bottom of coordinate range
     real upper;   // top of coordinate range
-    bool step_mode; // free-running or single-step ("generator") operation
 } config;
 
 config get_config (char **);
