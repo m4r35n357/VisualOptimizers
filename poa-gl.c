@@ -44,14 +44,14 @@ void Animate () {
             initial = false;
         } else {
             if (c.spiral) {
-                c.mode = false;
+                c.mode = 0;  // Periodic Descent Direction setting
                 soa(p1, m, c);
-                c.mode = true;
+                c.mode = 1;  // Convergence setting
                 soa(p2, m, c);
             } else {
-                c.mode = true;
+                c.mode = 1;  // Clamped
                 coa(p1, m, c);
-                c.mode = false;
+                c.mode = 0;  // Unclamped (except to bounding box)
                 coa(p2, m, c);
             }
             get_vertices(v1, p1->agents);
