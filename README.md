@@ -342,13 +342,17 @@ Multimodal
 
 ## OpenGL Visualizations
 
-To get a list of OpenGL command examples, use one of the commands below:
+To get a list of 3D OpenGL command examples, use one of the commands below:
 ```
 make test-3d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep nm
 make test-3d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep spiral
 make test-3d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep cut
 ```
 The visualizations also "work" for more than three dimensions, obviously they do not tell the whole story in this case, but can still give some kind of indication of progress.
+For example, try this (it will take a litttle longer to run than the 3D case):
+```
+make test-8d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep spiral
+```
 
 ## OpenGL Keyboard Controls
 

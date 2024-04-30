@@ -15,7 +15,7 @@ static gl_point get_gl_point (real *p) {
 }
 
 static void get_vertices (gl_point *vertices, point *points) {
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < (o.n + 1); i++) {
         vertices[i] = get_gl_point(points[i].x);
     }
 }
@@ -38,7 +38,7 @@ void Animate () {
     draw_grid();
 
     if (centroid) {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < o.n; i++) {
             line(get_gl_point(s1->centroid->x), v1[i], get_colour(DARK_MAGENTA));
             line(get_gl_point(s2->centroid->x), v2[i], get_colour(DARK_MAGENTA));
         }
@@ -50,13 +50,13 @@ void Animate () {
         }
     }
 
-    for (int i = 0; i < 4; i++) {
-        for (int k = i; k < 4; k++) {
+    for (int i = 0; i < (o.n + 1); i++) {
+        for (int k = i; k < (o.n + 1); k++) {
             line(v1[i], v1[k], get_colour(DARK_GREY));
             line(v2[i], v2[k], get_colour(DARK_GREY));
         }
-        ball(v1[i], !i ? get_colour(LIGHT_GREEN) : (i == 3 ? get_colour(LIGHT_RED) : get_colour(DARK_CYAN)));
-        ball(v2[i], !i ? get_colour(LIGHT_GREEN) : (i == 3 ? get_colour(LIGHT_RED) : get_colour(DARK_YELLOW)));
+        ball(v1[i], !i ? get_colour(LIGHT_GREEN) : (i == o.n ? get_colour(LIGHT_RED) : get_colour(DARK_CYAN)));
+        ball(v2[i], !i ? get_colour(LIGHT_GREEN) : (i == o.n ? get_colour(LIGHT_RED) : get_colour(DARK_YELLOW)));
     }
 
     if (osd_active) {
@@ -137,9 +137,9 @@ int main (int argc, char **argv) {
     // get minima for targets if known
     targets = get_known_minima();
 
-    v1 = malloc(4 * sizeof (gl_point)); CHECK(v1);
+    v1 = malloc((size_t)(o.n + 1) * sizeof (gl_point)); CHECK(v1);
     get_vertices(v1, s1->p);
-    v2 = malloc(4 * sizeof (gl_point)); CHECK(v2);
+    v2 = malloc((size_t)(o.n + 1) * sizeof (gl_point)); CHECK(v2);
     get_vertices(v2, s2->p);
 
     lower = (float)o.lower;
