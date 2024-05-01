@@ -73,28 +73,40 @@ See the Makefile for various additional "test" targets.
 In particular:
 ```
 make test-3d
+make test-multi-3d
 ```
 shows basic program output (with stdout suppressed!) and can be used to get OpenGL commands by cut & paste - just change std to gl in the program names.
-Single-run Nelder-Mead, spiral (both strategies), cut (both strategies).
+Bulk mode Nelder-Mead, spiral (both strategies), cut (both strategies).
+The "multi" target runs stats.
 ```
 make test-8d
+make test-multi-8d
 ```
-shows multiple-run Nelder-Mead, spiral (both strategies), and cut (both strategies).
+shows bulk mode Nelder-Mead, spiral (both strategies), and cut (both strategies).
+The "multi" target runs stats.
 Fewer models.
 The spiral optimizers are clearly running out of steam at 8D.
 
 ```
 make test-16d
+make test-multi-16d
 ```
-shows multiple-run Nelder-Mead, and cut (both strategies).
+shows bulk mode Nelder-Mead, and cut (both strategies).
+The "multi" target runs stats.
 Fewer models.
 The cut optimizers are still hanging on at 16D, but the "curse of dimensionality" means that they will need an eye-watering number of iterations to work at 32D.
 
 ```
 make test-32d
+make test-multi-32d
 ```
-shows just multiple-run Nelder-Mead.
+shows single-run Nelder-Mead.
+The "multi" target runs stats.
 Fewer models.
+```
+make test-64d
+```
+shows single-run Nelder-Mead.
 
 # Usage
 
@@ -117,7 +129,7 @@ Parameter | Meaning
 5 | Maximum number of evaluations (per iteration, and in total)
 6 | Initial simplex scale
 7 | Adaptive (0 for no, 1 for yes)
-8 | Initialization (0 for explicit coordinates, 1 for random in range) - ignored for GL
+8 | Initialization (0 for explicit coordinates, 1 for random in range, 2 for "bulk mode") - ignored for GL
 
 If Initialization = 0
 Parameter | Meaning

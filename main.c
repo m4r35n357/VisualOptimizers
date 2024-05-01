@@ -14,7 +14,7 @@ int main (int argc, char **argv) {
     model *m = model_init();
 
     point *centre = get_point(o.n);
-    if (o.init_mode) {  // random initial point in range
+    if (o.init_mode > 0) {  // random initial point in range
         CHECK(argc == 11);
         o.lower = strtold(argv[9], NULL);
         o.upper = strtold(argv[10], NULL);  CHECK(o.upper > o.lower);
@@ -50,11 +50,11 @@ int main (int argc, char **argv) {
             print_result(o.n, boat, o.places, o.fmt);
         }
 
-        if (o.init_mode) {
+        if (o.init_mode == 2) {
             set_random_coordinates(centre, o.n, o.lower, o.upper);
             regular_simplex(s, o.size, centre);
         }
-    } while (evaluations < o.max_evaluations);
+    } while (o.init_mode == 2 && evaluations < o.max_evaluations);
 
     return 0;
 }

@@ -28,7 +28,7 @@ fi
 
 # Nelder-Mead
 ./stats $runs $threshold ./nm-$model-std 3 0 $order 1.0e-6 $(((agents - 1) * iterations + agents)) \
-    $(echo "scale=3; 0.5 * ($upper - $lower);" | /usr/bin/bc) $adaptive 1 $lower $upper >/dev/null
+    $(echo "scale=3; 0.5 * ($upper - $lower);" | /usr/bin/bc) $adaptive 2 $lower $upper >/dev/null
 
 # Un-clamped
 ./stats $runs $threshold ./cut-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null
