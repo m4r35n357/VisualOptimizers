@@ -7,7 +7,7 @@ char hud1[128], hud2[128], hud3[128];
 
 bool initial = true, paused = false, stepping = true, running = true, osd_active = true, centroid = false, minimum = false;
 
-float upper, lower, centre, radius = 10.0F, elevation = 90.0F, azimuth = 0.0F, ball_size = 0.01F;
+float upper, lower, middle, radius = 10.0F, elevation = 90.0F, azimuth = 0.0F, ball_size = 0.01F;
 
 void SpecialKeyFunc (int Key, int x, int y) { (void)x; (void)y;
     switch (Key) {
@@ -81,7 +81,7 @@ void SetupView () {
     glTranslatef(0.0F, 0.0F, - radius);
     glRotatef(elevation, 1.0F, 0.0F, 0.0F);
     glRotatef(azimuth, 0.0F, 0.0F, 1.0F);
-    glTranslatef(- centre, - centre, - centre);
+    glTranslatef(- middle, - middle, - middle);
     glLightfv(GL_LIGHT0, GL_AMBIENT, (float[]){0.0F, 0.0F, 0.0F, 1.0F});
     glLightfv(GL_LIGHT0, GL_DIFFUSE, (float[]){1.0F, 1.0F, 1.0F, 1.0F});
     glLightfv(GL_LIGHT0, GL_SPECULAR, (float[]){1.0F, 1.0F, 1.0F, 1.0F});
@@ -124,24 +124,24 @@ void draw_grid () {
     line((gl_point){upper, upper, lower}, (gl_point){upper, upper, upper}, box_colour);
 
     rgb axis_colour = get_colour(DARK_BLUE);
-    line((gl_point){lower, centre, centre}, (gl_point){upper, centre, centre}, axis_colour);
-    line((gl_point){centre, lower, centre}, (gl_point){centre, upper, centre}, axis_colour);
-    line((gl_point){centre, centre, lower}, (gl_point){centre, centre, upper}, axis_colour);
+    line((gl_point){lower, middle, middle}, (gl_point){upper, middle, middle}, axis_colour);
+    line((gl_point){middle, lower, middle}, (gl_point){middle, upper, middle}, axis_colour);
+    line((gl_point){middle, middle, lower}, (gl_point){middle, middle, upper}, axis_colour);
 
-    line((gl_point){upper, lower, centre}, (gl_point){upper, upper, centre}, axis_colour);
-    line((gl_point){upper, centre, lower}, (gl_point){upper, centre, upper}, axis_colour);
-    line((gl_point){lower, lower, centre}, (gl_point){lower, upper, centre}, axis_colour);
-    line((gl_point){lower, centre, lower}, (gl_point){lower, centre, upper}, axis_colour);
+    line((gl_point){upper, lower, middle}, (gl_point){upper, upper, middle}, axis_colour);
+    line((gl_point){upper, middle, lower}, (gl_point){upper, middle, upper}, axis_colour);
+    line((gl_point){lower, lower, middle}, (gl_point){lower, upper, middle}, axis_colour);
+    line((gl_point){lower, middle, lower}, (gl_point){lower, middle, upper}, axis_colour);
 
-    line((gl_point){lower, upper, centre}, (gl_point){upper, upper, centre}, axis_colour);
-    line((gl_point){centre, upper, lower}, (gl_point){centre, upper, upper}, axis_colour);
-    line((gl_point){lower, lower, centre}, (gl_point){upper, lower, centre}, axis_colour);
-    line((gl_point){centre, lower, lower}, (gl_point){centre, lower, upper}, axis_colour);
+    line((gl_point){lower, upper, middle}, (gl_point){upper, upper, middle}, axis_colour);
+    line((gl_point){middle, upper, lower}, (gl_point){middle, upper, upper}, axis_colour);
+    line((gl_point){lower, lower, middle}, (gl_point){upper, lower, middle}, axis_colour);
+    line((gl_point){middle, lower, lower}, (gl_point){middle, lower, upper}, axis_colour);
 
-    line((gl_point){lower, centre, upper}, (gl_point){upper, centre, upper}, axis_colour);
-    line((gl_point){centre, lower, upper}, (gl_point){centre, upper, upper}, axis_colour);
-    line((gl_point){lower, centre, lower}, (gl_point){upper, centre, lower}, axis_colour);
-    line((gl_point){centre, lower, lower}, (gl_point){centre, upper, lower}, axis_colour);
+    line((gl_point){lower, middle, upper}, (gl_point){upper, middle, upper}, axis_colour);
+    line((gl_point){middle, lower, upper}, (gl_point){middle, upper, upper}, axis_colour);
+    line((gl_point){lower, middle, lower}, (gl_point){upper, middle, lower}, axis_colour);
+    line((gl_point){middle, lower, lower}, (gl_point){middle, upper, lower}, axis_colour);
 }
 
 void line (gl_point from, gl_point to, rgb colour) {

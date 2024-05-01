@@ -24,7 +24,7 @@ extern char hud1[], hud2[], hud3[];
 
 extern bool initial, paused, stepping, running, osd_active, centroid, minimum;
 
-extern float upper, lower, centre, radius, ball_size;
+extern float upper, lower, middle, radius, ball_size;
 
 /*
  * OpenGL set-up functions

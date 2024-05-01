@@ -160,7 +160,7 @@ int main (int argc, char **argv) {
 
     lower = (float)c.lower;
     upper = (float)c.upper;
-    centre = (float)(0.5L * (c.lower + c.upper));
+    middle = (float)(0.5L * (c.lower + c.upper));
     radius = 1.5F * ((float)c.upper - (float)c.lower);
     ball_size = 0.004F * ((float)c.upper - (float)c.lower);
 

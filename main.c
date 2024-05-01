@@ -14,16 +14,16 @@ int main (int argc, char **argv) {
     model *m = model_init();
 
     point *centre = get_point(o.n);
-    if (o.init_mode > 0) {  // random initial point in range
-        CHECK(argc == 11);
-        o.lower = strtold(argv[9], NULL);
-        o.upper = strtold(argv[10], NULL);  CHECK(o.upper > o.lower);
-        set_random_coordinates(centre, o.n, o.lower, o.upper);
-    } else {  // set initial point from command arguments
+    if (o.init_mode == POINT) {
         CHECK(argc == 9 + o.n);
         for (int j = 0; j < o.n; j++) {
             centre->x[j] = strtold(argv[9 + j], NULL);
         }
+    } else {
+        CHECK(argc == 11);
+        o.lower = strtold(argv[9], NULL);
+        o.upper = strtold(argv[10], NULL);  CHECK(o.upper > o.lower);
+        set_random_coordinates(centre, o.n, o.lower, o.upper);
     }
 
     simplex *s = nm_simplex(o.n, o.size, centre, o.adaptive);
@@ -50,11 +50,11 @@ int main (int argc, char **argv) {
             print_result(o.n, boat, o.places, o.fmt);
         }
 
-        if (o.init_mode == 2) {
+        if (o.init_mode == BULK) {
             set_random_coordinates(centre, o.n, o.lower, o.upper);
             regular_simplex(s, o.size, centre);
         }
-    } while (o.init_mode == 2 && evaluations < o.max_evaluations);
+    } while (o.init_mode == BULK && evaluations < o.max_evaluations);
 
     return 0;
 }

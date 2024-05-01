@@ -95,26 +95,26 @@ int main (int argc, char **argv) {
     // model parameters
     m = model_init();
 
-    point *start = get_point(o.n);
-    if (o.init_mode) {  // random initial point in range
-        CHECK(argc == 11);
-        o.lower = strtold(argv[9], NULL);
-        o.upper = strtold(argv[10], NULL);  CHECK(o.upper > o.lower);
-        set_random_coordinates(start, o.n, o.lower, o.upper);
-    } else {  // set initial point from command arguments
+    point *centre = get_point(o.n);
+    if (o.init_mode == POINT) {
         CHECK(argc == 9 + o.n);
         real max = 0.0L;
         for (int j = 0; j < o.n; j++) {
-            start->x[j] = strtold(argv[9 + j], NULL);
-            if (fabsl(start->x[j]) > max) max = fabsl(start->x[j]);
+            centre->x[j] = strtold(argv[9 + j], NULL);
+            if (fabsl(centre->x[j]) > max) max = fabsl(centre->x[j]);
         }
         o.upper = 2.0L * max;
         o.lower = -o.upper;
+    } else {
+        CHECK(argc == 11);
+        o.lower = strtold(argv[9], NULL);
+        o.upper = strtold(argv[10], NULL);  CHECK(o.upper > o.lower);
+        set_random_coordinates(centre, o.n, o.lower, o.upper);
     }
-    cost(o.n, start, m);
+    cost(o.n, centre, m);
 
     // default simplex . . .
-    s1 = nm_simplex(o.n, o.size, start, o.adaptive);
+    s1 = nm_simplex(o.n, o.size, centre, o.adaptive);
     for (int i = 0; i < s1->n + 1; i++) {  // initial cost at simplex vertices
         cost(s1->n, s1->p + i, m);
         s1->evaluations++;
@@ -122,15 +122,15 @@ int main (int argc, char **argv) {
     sort(s1);
 
     // . . . and its "dual"
-    s2 = nm_simplex(o.n, o.size, start, o.adaptive);
+    s2 = nm_simplex(o.n, o.size, centre, o.adaptive);
     for (int i = 0; i < s2->n + 1; i++) {  // form "dual" by projecting vertices through the centre
-        project(s2->p + i, s2, m, 1.0L, s2->p + i, start);
+        project(s2->p + i, s2, m, 1.0L, s2->p + i, centre);
     }
     sort(s2);
 
     // print starting point
     fprintf(stderr, "%s       Initial  ", GRY);
-    print_result(o.n, start, o.places, o.fmt);
+    print_result(o.n, centre, o.places, o.fmt);
     fprintf(stderr, o.fmt ? "      %sDiameter%s% .*Le\n" : "      %sDiameter%s% .*Lf\n",
             GRY, NRM, o.places, distance(s1->n, s1->p, s1->p + s1->n));
 
@@ -144,7 +144,7 @@ int main (int argc, char **argv) {
 
     lower = (float)o.lower;
     upper = (float)o.upper;
-    centre = (float)(0.5L * (o.lower + o.upper));
+    middle = (float)(0.5L * (o.lower + o.upper));
     radius = 1.5F * ((float)o.upper - (float)o.lower);
     ball_size = 0.002F * ((float)o.upper - (float)o.lower);
 

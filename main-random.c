@@ -19,7 +19,7 @@ int main (int argc, char **argv) {
     CHECK(o.places >= 1 && o.places <= 36);
     CHECK(o.fmt == 0 || o.fmt == 1);
     CHECK(o.n >= 1);
-    CHECK(o.init_mode >= 0 && o.init_mode <= 100000000);
+    CHECK(o.max_evaluations >= 0 && o.max_evaluations <= 100000000);
 
     // model parameters
     model *m = model_init();
