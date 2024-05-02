@@ -30,7 +30,7 @@ optimset get_settings (char **);
  */
 typedef struct Simplex {
     point *p, *reflect, *centroid, *trial;
-    int n, iterations, evaluations;
+    int iterations, evaluations;
     bool looping;
     real ALPHA, GAMMA, RHO, SIGMA, delta_x, delta_f;
 } simplex;
@@ -48,14 +48,12 @@ bool multidirectional_search (simplex *, const model *, const optimset *);
 /*
  * Utility functions
  */
-void regular_simplex (simplex *, real, const point *);
+void set_simplex (simplex *, int, real, const point *, const model *);
 
-simplex *nm_simplex (int, real, const point *, bool);
+simplex *get_simplex (int, real, const point *, const model *, bool);
 
 int compare (const void *, const void *);
 
-void sort (simplex *);
+void sort (simplex *, int);
 
-void project (point *, simplex *, const model *, real, const point *, const point *);
-
-void print_progress (const simplex *, const point *, int, int);
+void project (point *, simplex *, int, const model *, real, const point *, const point *);

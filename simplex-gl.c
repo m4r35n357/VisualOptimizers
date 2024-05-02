@@ -78,11 +78,11 @@ void CloseWindow () {
     // print solution 1
     fprintf(stderr, "%s%sDefault%s ", s1->p == best ? "* " : "  ", GRY, NRM);
     fprintf(stderr, " %4d %4d  ", s1->iterations, s1->evaluations);
-    print_result(s1->n, s1->p, o.places, o.fmt);
+    print_result(o.n, s1->p, o.places, o.fmt);
     // print solution 2
     fprintf(stderr, "%s%s   Dual%s ", s2->p == best ? "* " : "  ", GRY, NRM);
     fprintf(stderr, " %4d %4d  ", s2->iterations, s2->evaluations);
-    print_result(s2->n, s2->p, o.places, o.fmt);
+    print_result(o.n, s2->p, o.places, o.fmt);
 }
 
 int main (int argc, char **argv) {
@@ -114,25 +114,20 @@ int main (int argc, char **argv) {
     cost(o.n, centre, m);
 
     // default simplex . . .
-    s1 = nm_simplex(o.n, o.size, centre, o.adaptive);
-    for (int i = 0; i < s1->n + 1; i++) {  // initial cost at simplex vertices
-        cost(s1->n, s1->p + i, m);
-        s1->evaluations++;
-    }
-    sort(s1);
+    s1 = get_simplex(o.n, o.size, centre, m, o.adaptive);
 
     // . . . and its "dual"
-    s2 = nm_simplex(o.n, o.size, centre, o.adaptive);
-    for (int i = 0; i < s2->n + 1; i++) {  // form "dual" by projecting vertices through the centre
-        project(s2->p + i, s2, m, 1.0L, s2->p + i, centre);
+    s2 = get_simplex(o.n, o.size, centre, m, o.adaptive);
+    for (int i = 0; i < o.n + 1; i++) {  // form "dual" by projecting vertices through the centre
+        project(s2->p + i, s2, o.n, m, 1.0L, s2->p + i, centre);
     }
-    sort(s2);
+    sort(s2, o.n);
 
     // print starting point
     fprintf(stderr, "%s       Initial  ", GRY);
     print_result(o.n, centre, o.places, o.fmt);
     fprintf(stderr, o.fmt ? "      %sDiameter%s% .*Le\n" : "      %sDiameter%s% .*Lf\n",
-            GRY, NRM, o.places, distance(s1->n, s1->p, s1->p + s1->n));
+            GRY, NRM, o.places, distance(o.n, s1->p, s1->p + o.n));
 
     // get minima for targets if known
     targets = get_known_minima();

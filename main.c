@@ -26,7 +26,7 @@ int main (int argc, char **argv) {
         set_random_coordinates(centre, o.n, o.lower, o.upper);
     }
 
-    simplex *s = nm_simplex(o.n, o.size, centre, o.adaptive);
+    simplex *s = get_simplex(o.n, o.size, centre, m, o.adaptive);
     fprintf(stderr, o.fmt ? "      %sDiameter%s% .*Le\n" : "      %sDiameter%s% .*Lf\n",
             GRY, NRM, o.places, distance(o.n, s->p, s->p + o.n));
 
@@ -35,11 +35,6 @@ int main (int argc, char **argv) {
     int runs = 0, iterations = 0, evaluations = 0;
     do {
         runs++;
-        for (int i = 0; i < o.n + 1; i++) {
-            cost(o.n, s->p + i, m);
-            s->evaluations++;
-        }
-        sort(s);
         nelder_mead(s, m, &o);
         iterations += s->iterations;
         evaluations += s->evaluations;
@@ -52,7 +47,7 @@ int main (int argc, char **argv) {
 
         if (o.init_mode == BULK) {
             set_random_coordinates(centre, o.n, o.lower, o.upper);
-            regular_simplex(s, o.size, centre);
+            set_simplex(s, o.n, o.size, centre, m);
         }
     } while (o.init_mode == BULK && evaluations < o.max_evaluations);
 
