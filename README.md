@@ -1,16 +1,20 @@
 # Simple Gradient-free optimizers
 
-Currently three candidates , each with an OpenGL visualizer:
+Here are some basic "black-box" optimizers, for experimentation and visualization.
+If you are unsure what the ["Curse of Dimensionality"](https://en.wikipedia.org/wiki/Curse_of_dimensionality) means, or ["No Free Lunch"](https://en.wikipedia.org/wiki/No_free_lunch_theorem), this project might help.
 
-* Nelder-Mead - "multi-run" mode for global optimization, dual simplexes in OpenGL
+There are currently three candidate algorithms included, each with an interactive OpenGL visualizer:
+
+* Nelder-Mead - includes a "multi-run" bulk mode for global optimization, uses dual simplexes in OpenGL
 * Spiral Optimization - two algorithm strategies
 * Optimization by Cut - two algorithm strategies
 
-Presented for application in local or global optimization in up to 16 dimensions.
-Additionally there is a "random" optimizer (with no OpenGL visualization) to use as a base-line.
+Presented for application in global optimization in up to 16 dimensions for the "particle-based" algorithms, with extension up to 64 dimensions for Nelder-Mead.
+Additionally there is a "random" optimizer (with no OpenGL visualization) to use as a base-line for comparisons.
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
 
+The code is concise and efficient, and produces tiny executables.
 The programs can be built either with Clang or GCC.
 All console programs are written to and depend _only_ on the c99 standard and library (strictly speaking, the WG14/N1256 _draft_ standard!).
 External dependencies (OpenGL, FreeGLUT & GLEW) are only needed for the OpenGL plotters (*-gl).
@@ -84,7 +88,7 @@ make test-multi-8d
 ```
 shows bulk mode Nelder-Mead, spiral (both strategies), and cut (both strategies).
 The "multi" target runs stats.
-Fewer models.
+Fewer models than 3D.
 The spiral optimizers are clearly running out of steam at 8D.
 
 ```
@@ -93,7 +97,7 @@ make test-multi-16d
 ```
 shows bulk mode Nelder-Mead, and cut (both strategies).
 The "multi" target runs stats.
-Fewer models.
+Fewer models than 8D.
 The cut optimizers are still hanging on at 16D, but the "curse of dimensionality" means that they will need an eye-watering number of iterations to work at 32D.
 
 ```
@@ -102,11 +106,13 @@ make test-multi-32d
 ```
 shows single-run Nelder-Mead.
 The "multi" target runs stats.
-Fewer models.
+Fewer models than 16D.
 ```
 make test-64d
+make test-multi-64d
 ```
 shows single-run Nelder-Mead.
+The "multi" target runs stats.
 
 # Usage
 
@@ -115,7 +121,7 @@ shows single-run Nelder-Mead.
 Nelder, John A.; R. Mead (1965). "A simplex method for function minimization". Computer Journal. 7 (4): 308–313. doi:10.1093/comjnl/7.4.308.
 
 This code was originally based on a [project](https://github.com/matteotiziano/nelder-mead) by Matteo Maggioni in 2023.
-It has been extensively rewritten, now uses regular simplexes, and has a "multi-run" mode for use as a global optimizer.
+It has been extensively rewritten, now uses regular simplexes, and has a "multi-run" (or "bulk") mode for use as a _global_ optimizer.
 
 The regular vertex coordinates are generated using an algorithm which is described (open access) [here](https://link.springer.com/article/10.1007/s11590-022-01953-y).
 The adaptive algorithm is described (open access) [here](https://www.researchgate.net/publication/225691623_Implementing_the_Nelder-Mead_simplex_algorithm_with_adaptive_parameters).
@@ -325,34 +331,35 @@ make clean
 make CCC=gcc test-multi-3d
 make CCC=gcc test-multi-8d
 ```
-This is a _manually created_ table of the output, showing only the number of passes:
+
+This is a _manually created_ table of the output, showing only the number of "test" passes:
 ```
-                                                Command       NM       spiral     spiral         cut         cut
-                                                                       (descent)  (convergence)  (unclamped) (clamped)
+80 bit float                                    Command       NM       cut         cut         spiral     spiral
+                                                                       (unclamped) (clamped)   (descent)  (convergence)
 Unimodal
 
-     [ ./multi-stats 100 0.001 sphere 8 256 1000 -10 10 ]     100       25         100            100         100
+     [ ./multi-stats 100 0.001 sphere 8 256 1000 -10 10 ]     100      100         100            100         100
 
-      [ ./multi-stats 100 -111.9 trid 8 256 1000 -30 30 ]     100       35          77            100          88
+      [ ./multi-stats 100 -111.9 trid 8 256 1000 -30 30 ]     100      100          86             83          97
 
-     [ ./multi-stats 100 -0.999 easom 8 256 1000 -15 15 ]     100       35         100            100         100
+ [ ./multi-stats 100 0.001 rosenbrock 8 256 1000 -10 10 ]     100        0           0              0           5
 
- [ ./multi-stats 100 0.001 rosenbrock 8 256 1000 -10 10 ]     100        0           0              0           0
+     [ ./multi-stats 100 -0.999 easom 8 256 1000 -15 15 ]     100      100         100            100         100
 
-     [ ./multi-stats 100 0.01 treacle 8 256 1000 -10 10 ]       0        0          11             84          57
+     [ ./multi-stats 100 0.03 treacle 8 256 1000 -10 10 ]       0       86          68             91          58
 
 Multimodal
 
-         [ ./multi-stats 100 -313.0 st 8 256 1000 -5 10 ]      89       14           8             33          47
+         [ ./multi-stats 100 -313.0 st 8 256 1000 -5 10 ]      95       29          23              3           2
 
-[ ./multi-stats 100 0.001 dixon-price 8 256 1000 -10 10 ]     100       22          31             29           5
+[ ./multi-stats 100 0.001 dixon-price 8 256 1000 -10 10 ]     100       32           5             19          33
 
-       [ ./multi-stats 100 0.001 levy 8 256 1000 -10 10 ]      73        0          11             99          90
+       [ ./multi-stats 100 0.001 levy 8 256 1000 -10 10 ]      77       96          88             12          11
 
- [ ./multi-stats 100 -7.5 michalewicz 8 256 1000 0 3.14 ]      93       29          27             34          75
+ [ ./multi-stats 100 -7.5 michalewicz 8 256 1000 0 3.14 ]      86       32          67             59          35
 ```
 
-## OpenGL Visualizations
+## Interactive OpenGL Visualizations
 
 To get a list of 3D OpenGL command examples, use one of the commands below:
 ```
