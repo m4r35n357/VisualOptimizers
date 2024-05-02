@@ -83,8 +83,8 @@ shows basic program output (with stdout suppressed!) and can be used to get Open
 Bulk mode Nelder-Mead, spiral (both strategies), cut (both strategies).
 The "multi" target runs stats.
 ```
-make test-8d
-make test-multi-8d
+make CCC=gcc test-8d
+make CCC=gcc test-multi-8d
 ```
 shows bulk mode Nelder-Mead, spiral (both strategies), and cut (both strategies).
 The "multi" target runs stats.
@@ -92,8 +92,8 @@ Fewer models than 3D.
 The spiral optimizers are clearly running out of steam at 8D.
 
 ```
-make test-16d
-make test-multi-16d
+make CCC=gcc test-16d
+make CCC=gcc test-multi-16d
 ```
 shows bulk mode Nelder-Mead, and cut (both strategies).
 The "multi" target runs stats.
@@ -101,15 +101,15 @@ Fewer models than 8D.
 The cut optimizers are still hanging on at 16D, but the "curse of dimensionality" means that they will need an eye-watering number of iterations to work at 32D.
 
 ```
-make test-32d
-make test-multi-32d
+make CCC=gcc test-32d
+make CCC=gcc test-multi-32d
 ```
 shows single-run Nelder-Mead.
 The "multi" target runs stats.
 Fewer models than 16D.
 ```
-make test-64d
-make test-multi-64d
+make CCC=gcc test-64d
+make CCC=gcc test-multi-64d
 ```
 shows single-run Nelder-Mead.
 The "multi" target runs stats.
@@ -121,7 +121,7 @@ The "multi" target runs stats.
 Nelder, John A.; R. Mead (1965). "A simplex method for function minimization". Computer Journal. 7 (4): 308–313. doi:10.1093/comjnl/7.4.308.
 
 This code was originally based on a [project](https://github.com/matteotiziano/nelder-mead) by Matteo Maggioni in 2023.
-It has been extensively rewritten, now uses regular simplexes, and has a "multi-run" (or "bulk") mode for use as a _global_ optimizer.
+It has since been extensively rewritten, now uses regular simplexes, and has a "multi-run" (or "bulk") mode for use as a _global_ optimizer.
 
 The regular vertex coordinates are generated using an algorithm which is described (open access) [here](https://link.springer.com/article/10.1007/s11590-022-01953-y).
 The adaptive algorithm is described (open access) [here](https://www.researchgate.net/publication/225691623_Implementing_the_Nelder-Mead_simplex_algorithm_with_adaptive_parameters).
@@ -132,7 +132,7 @@ Parameter | Meaning
 2 | Floating point format (0 for fixed, 1 for exponential)
 3 | Number of dimensions
 4 | Maximum error for convergence
-5 | Number of evaluations (maximum per iteration, and also the overall maximum when parmater 8 is set to 2)
+5 | Number of evaluations (maximum per iteration, and also the overall maximum when parameter 8 is set to 2)
 6 | Initial simplex scale
 7 | Adaptive (0 for no, 1 for yes)
 8 | Initialization (0 for explicit coordinates, 1 for random in range, 2 for "bulk mode") - ignored for GL
@@ -159,12 +159,12 @@ This enables meaningful comparisons with the other methods.
 
 The OpenGL visualization shows two "dual" regular initial simplexes.
 For each, the best vertex is green, and the worst is red.
-The other two vertices are either cyan (default simplex) or gold (dual simplex), correspondiing to the OSD text colour.
+The remaining vertices are coloured either cyan (default simplex) or gold (dual simplex), correspondiing to the OSD text colour.
 
 ## Spiral Optimization
 
 Based on the algorithm described [here](https://en.wikipedia.org/wiki/Spiral_optimization_algorithm).
-Note that current versions of the algorithm use a fixed rotation angle of PI/2; versions using variable theta are now obsolete.
+Note that current versions of the algorithm use a fixed rotation angle of $\pi / 2$; versions using variable theta are now obsolete.
 The code supports both modes of operation described in that link: "Periodic Descent Direction Setting" and "Convergence Setting".
 
 Parameter | Meaning
@@ -218,7 +218,7 @@ Examples
 ```
 The OpenGL visualization shows both "clamped" and "un-clamped" variants regardless of parameter 6.
 Clamped mode (as described by the paper) is represented by green particles in a red box, with the best point marked in red.
-Unlamped mode (my modification, which allows the box a degree of movement) is represented by cyan particles in a magenta box, with the best point marked in magenta.
+Unclamped mode (my modification, which allows the box a degree of movement) is represented by cyan particles in a magenta box, with the best point marked in magenta.
 
 ##  Random Optimization
 
@@ -262,18 +262,18 @@ make CCC=gcc
 ./solve-model sphere 8 256 1000 -10 10
 ```
 
-To get a better idea of the run-by-run variation in performance of spiral and cut integrators, use the "stats" script below.
+To get a clearer understanding of the run-by-run variation in performance of the various integrators, use the "stats" script below.
 
 ## "stats" script
 
-Runs a single algorithm (except random) multiple times agains a target value for a single model.
+Runs a single algorithm multiple times agains a target value for a single model.
 For each run, the output is green if the result is below a user-supplied threshold, and red otherwise.
 
 Parameter | Meaning
 ----------|-----------
 1 | Number of runs
 2 | Threshold
-3+ | spiral or cut "std" command
+3+ | optimizer command
 
 Examples
 ```
@@ -362,7 +362,7 @@ Multimodal
 
 ## Interactive OpenGL Visualizations
 
-To get a list of 3D OpenGL command examples, use one of the commands below:
+To get a list of 3D OpenGL command examples for cut & paste into a terminal, use one of the commands below:
 ```
 make test-3d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep nm
 make test-3d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep spiral
@@ -373,6 +373,7 @@ For example, try this (it will take a litttle longer to run than the 3D case):
 ```
 make test-8d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep spiral
 ```
+Observe the way coordinates above the third are projected into the 3D space (ignored!).
 
 ## OpenGL Keyboard Controls
 
