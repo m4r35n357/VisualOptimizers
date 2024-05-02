@@ -15,7 +15,7 @@ Additionally there is a "random" optimizer (with no OpenGL visualization) to use
 ## Pure c99 (plus optional 3D OpenGL visualization)
 
 The code is concise and efficient, and produces tiny executables.
-The programs can be built either with Clang or GCC.
+The programs can be built with either Clang or GCC.
 All console programs are written to and depend _only_ on the c99 standard and library (strictly speaking, the WG14/N1256 _draft_ standard!).
 External dependencies (OpenGL, FreeGLUT & GLEW) are only needed for the OpenGL plotters (*-gl).
 
@@ -132,7 +132,7 @@ Parameter | Meaning
 2 | Floating point format (0 for fixed, 1 for exponential)
 3 | Number of dimensions
 4 | Maximum error for convergence
-5 | Maximum number of evaluations (per iteration, and in total)
+5 | Number of evaluations (maximum per iteration, and also the overall maximum when parmater 8 is set to 2)
 6 | Initial simplex scale
 7 | Adaptive (0 for no, 1 for yes)
 8 | Initialization (0 for explicit coordinates, 1 for random in range, 2 for "bulk mode") - ignored for GL
@@ -150,9 +150,9 @@ Parameter | Meaning
 
 Examples
 ```
-./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
-./nm-ackley-std 3 0 3 1.0e-6 10000 1.0 0 100 -10 10 >/dev/null
-./nm-ackley-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
+./nm-sphere-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
+./nm-sphere-std 3 0 3 1.0e-6 10000 1.0 0 100 -10 10 >/dev/null
+./nm-sphere-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
 ```
 When parameter 8 is set to a non-zero value, the algorithm is run several times until the cumulative number of _evaluations_ exceeds this value (budget).
 This enables meaningful comparisons with the other methods.
@@ -182,14 +182,14 @@ Parameter | Meaning
 
 Examples
 ```
-./spiral-ackley-std 3 0 3 64 100 0 -5 5
-./spiral-ackley-std 3 0 3 64 100 1 -5 5
-./spiral-ackley-gl 3 0 3 64 100 0 -5 5
+./spiral-sphere-std 3 0 3 64 100 0 -5 5
+./spiral-sphere-std 3 0 3 64 100 1 -5 5
+./spiral-sphere-gl 3 0 3 64 100 0 -5 5
 ```
 The OpenGL visualization shows the two algorithm strategies.
 The "Periodic Descent Direction Setting" mode is represented by green particles, with the best in red.
 The "Convergence Setting" mode is represented by cyan particles, with the best in magenta while the spiral is shrinking.
-In this setting, the particle is marked in bright yellow on update, changing to dull yellow for six "pure rotations", before reverting to magenta.
+In this setting, the particle is marked in bright yellow on update, changing to dull yellow for six (for 3D) "pure rotations", before reverting to magenta.
 
 ##  Optimization by Cut
 
@@ -212,13 +212,13 @@ Parameter | Meaning
 
 Examples
 ```
-./cut-ackley-std 3 0 3 64 100 0 -5 5
-./cut-ackley-std 3 0 3 64 100 1 -5 5
-./cut-ackley-gl 3 0 3 64 100 0 -5 5
+./cut-sphere-std 3 0 3 64 100 0 -5 5
+./cut-sphere-std 3 0 3 64 100 1 -5 5
+./cut-sphere-gl 3 0 3 64 100 0 -5 5
 ```
 The OpenGL visualization shows both "clamped" and "un-clamped" variants regardless of parameter 6.
-Unclamped mode is represented by green particles in a red box, with the best point marked in red.
-Clamped mode is represented by cyan particles in a magenta box, with the best point marked in magenta.
+Clamped mode (as described by the paper) is represented by green particles in a red box, with the best point marked in red.
+Unlamped mode (my modification, which allows the box a degree of movement) is represented by cyan particles in a magenta box, with the best point marked in magenta.
 
 ##  Random Optimization
 
@@ -236,8 +236,8 @@ Parameter | Meaning
 
 Examples
 ```
-./rnd-ackley-std 3 0 3 64000 0 -5 5
-./rnd-ackley-std 3 0 3 64000 1 -5 5
+./rnd-sphere-std 3 0 3 64000 0 -5 5
+./rnd-sphere-std 3 0 3 64000 1 -5 5
 ```
 
 ## "solve-model" script
@@ -267,7 +267,7 @@ To get a better idea of the run-by-run variation in performance of spiral and cu
 ## "stats" script
 
 Runs a single algorithm (except random) multiple times agains a target value for a single model.
-For each run, the output is green if the result is below the threshold, and red otherwise.
+For each run, the output is green if the result is below a user-supplied threshold, and red otherwise.
 
 Parameter | Meaning
 ----------|-----------
@@ -287,22 +287,23 @@ For 8D or higher, using one of the faster "CCC=" make options above is _highly_ 
 
 ## "Global" Optimization
 
-A common feature of "swarm-based" methods is an _exploration_ phase followed by a _refinement_ phase (in practice the transition is a gradual process).
-Refinement is not the same as convergence; you get what you are given after a specified number of iterations!
+A common feature of particle or "swarm-based" methods is an _exploration_ phase followed by a _refinement_ phase (in practice the transition is a gradual process).
+Refinement is _not_ the same as convergence; you get what you are given after a specified number of iterations!
 Perhaps "settling" would be a better description.
-Another way of looking at it is that the initial problem boundaries are effectively shrunk by a large factor, concentrating the search agents into a relatively small volume around a potential minimum.
+Another way of looking at it is that the initial problem boundaries are effectively shrunk by a large factor, concentrating the search agents into a relatively small volume around a _potential_ minimum.
 In any case, this refinement stage makes it harder to jump out of a stubborn local minimum.
 
-I have adapted the Nelder-Mead method to do a series of random runs, while keeping the best result, and accounting for total number of iterations and function evaluations.
-The size of the initial simplex is set to a large value, and the "adaptive" setting is used for 8D and above; this works surprisingly well as a global optimizer!
+I have adapted the Nelder-Mead method to do a series of random runs, while keeping the best result, and accounting for total number of function evaluations.
+The size of the initial simplex is set to a large value, and the "adaptive" setting is used for 8D and above; this setup works surprisingly well as a global optimizer!
+
 The random exploration is not limited by any refinement process so global minima are always accessible, even if not actually reached within the set limits.
 
-The comparisons are _roughly_ equivalent in that the number of Nelder-Mead evaluations is set to (agents) x (iterations), which is a good approximation to the number of evaluations used by the "swarm-based" optimizers.
+The comparisons are _roughly_ equivalent in that the number of Nelder-Mead evaluations is set roughly to (agents) x (iterations), which is a good approximation to the number of evaluations used by the "swarm-based" optimizers.
 Do your own experiments!
 
 ## "multi-stats" script
 
-Runs the "stats" script many times for all algorithms (except random) for a single model, to help even out fluctuations in results from run to run, and get a more realistic view on comparative performance of the algorithms.
+Runs the "stats" script many times for all algorithms (except random) for a single model, to help even out the typically large fluctuations in results from run to run, and get a more realistic view on comparative performance of the algorithms.
 
 Parameter | Meaning
 ----------|-----------
@@ -322,7 +323,7 @@ Examples
 make clean
 make CCC=gcc
 ./multi-stats 100 0.001 sphere 8 256 1000 -10 10
-./multi-stats 100 0.01 treacle 8 256 1000 -10 10
+./multi-stats 100 0.03 treacle 8 256 1000 -10 10
 ```
 
 Another way to do this is using make, which invokes the script for the most "important" models.
