@@ -25,10 +25,13 @@ int main (int argc, char **argv) {
         o.upper = strtold(argv[10], NULL);  CHECK(o.upper > o.lower);
         set_random_coordinates(centre, o.n, o.lower, o.upper);
     }
+    cost(o.n, centre, m);
 
     simplex *s = get_simplex(o.n, o.size, centre, m, o.adaptive);
-    fprintf(stderr, o.fmt ? "      %sDiameter%s% .*Le\n" : "      %sDiameter%s% .*Lf\n",
+    fprintf(stderr, o.fmt ? " %sDiameter%s% .*Le\n" : " %sDiameter%s% .*Lf\n",
             GRY, NRM, o.places, distance(o.n, s->p, s->p + o.n));
+    fprintf(stderr, "%s               Initial  ", GRY);
+    print_result(o.n, centre, o.places, o.fmt);
 
     point *boat = get_point(o.n);
     boat->f = INFINITY;

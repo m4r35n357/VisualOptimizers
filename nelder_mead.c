@@ -32,6 +32,8 @@ optimset get_settings (char **argv) {
  * Initial point at start, all vertices equally spaced
  */
 void set_simplex (simplex *s, int n, real size, const point *start, const model *m) {
+    s->iterations = s->evaluations = 0;
+    s->looping = false;
     real b = 0.0L;
     for (int j = 0; j < n; j++) {
         real c = sqrtl(1.0L - b);
@@ -46,10 +48,6 @@ void set_simplex (simplex *s, int n, real size, const point *start, const model 
         for (int j = 0; j < n; j++) {
             s->p[i].x[j] = size * s->p[i].x[j] + start->x[j];
         }
-    }
-    s->iterations = s->evaluations = 0;
-    s->looping = false;
-    for (int i = 0; i < n + 1; i++) {
         cost(n, s->p + i, m);
         s->evaluations++;
     }
@@ -121,8 +119,7 @@ bool nelder_mead (simplex *s, const model *m, const optimset *o) {
             }
         }
         sort(s, o->n);
-        s->iterations++;
-        fprintf(stdout, " %4d %4d  [ ", s->iterations, s->evaluations);
+        fprintf(stdout, " %4d %4d  [ ", ++s->iterations, s->evaluations);
         for (int j = 0; j < o->n; j++) {
             fprintf(stdout, o->fmt ? "% .*Le " : "% .*Lf ", o->places, best->x[j]);
         }
