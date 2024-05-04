@@ -128,8 +128,6 @@ test-multi-16d: nogl
 	@echo ""
 	@./multi-stats 10 0.001 dixon-price 16 65536 100 -10 10
 	@echo ""
-	@./multi-stats 10 -14.5 michalewicz 16 65536 100 0 3.14
-	@echo ""
 
 # 2^D search agents
 test-16d: nogl
@@ -146,8 +144,6 @@ test-16d: nogl
 	@./solve-model st 16 65536 100 -5 20
 	@echo ""
 	@./solve-model dixon-price 16 65536 100 -10 10
-	@echo ""
-	@./solve-model michalewicz 16 65536 100 0 3.14
 	@echo ""
 
 # 2^D search agents
@@ -168,8 +164,6 @@ test-multi-8d: nogl
 	@echo ""
 	@./multi-stats 100 0.001 levy 8 256 1000 -10 10
 	@echo ""
-	@./multi-stats 100 -7.5 michalewicz 8 256 1000 0 3.14
-	@echo ""
 
 # 2^D search agents
 test-8d: nogl
@@ -188,8 +182,6 @@ test-8d: nogl
 	@./solve-model dixon-price 8 256 1000 -10 10
 	@echo ""
 	@./solve-model levy 8 256 1000 -10 10
-	@echo ""
-	@./solve-model michalewicz 8 256 1000 0 3.14
 	@echo ""
 
 # 3^D search agents

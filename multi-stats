@@ -8,7 +8,7 @@ NRM='\e[0m'
 
 args="$0 $*"
 n_args=$(($# + 1))
-echo "${GRY}args ${NRM}${n_args}${GRY} [ ${MGT}${args}${GRY} ]${NRM}" >&2
+printf "${GRY}args ${NRM}%s${GRY} [ ${MGT}%s${GRY} ]${NRM}\n" $n_args "$args" >&2
 
 runs=$1
 threshold=$2
@@ -28,7 +28,7 @@ fi
 
 # Nelder-Mead
 ./stats $runs $threshold ./nm-$model-std 3 0 $order 1.0e-6 $(((agents - 1) * iterations + agents)) \
-    $(echo "scale=3; 0.5 * ($upper - $lower);" | /usr/bin/bc) $adaptive 2 $lower $upper >/dev/null
+    $(printf "scale=3; 0.5 * ($upper - $lower);\n" | /usr/bin/bc) $adaptive 2 $lower $upper >/dev/null
 
 # Un-clamped
 ./stats $runs $threshold ./cut-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null

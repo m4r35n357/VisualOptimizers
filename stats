@@ -5,12 +5,14 @@
 GRY='\e[1;30m'
 RED='\e[0;31m'
 GRN='\e[0;32m'
+YLW='\e[0;33m'
 MGT='\e[0;35m'
+CYN='\e[0;36m'
 NRM='\e[0m'
 
 args="$0 $*"
 n_args=$(($# + 1))
-echo "${GRY}args ${NRM}${n_args}${GRY} [ ${MGT}${args}${GRY} ]${NRM}" >&2
+printf "${GRY}args ${NRM}%s${GRY} [ ${MGT}%s${GRY} ]${NRM}\n" $n_args "$args" >&2
 
 samples=$1
 threshold=$2
@@ -18,14 +20,13 @@ shift 2
 args="$*"
 
 passed=0
-failed=0
 count=1
 while [ $count -le $samples ]
 do
     set -- $($args 2>&1 >/dev/null | tail -1)
     result=$*
     shift $(($# - 1))
-    if [ $(echo "scale=9; $1 > $threshold;" | /usr/bin/bc)  -eq 1 ]
+    if [ $(printf "scale=9; $1 > $threshold;\n" | /usr/bin/bc)  -eq 1 ]
     then
         failed=$((failed + 1))
         colour=${RED}
@@ -33,8 +34,22 @@ do
         passed=$((passed + 1))
         colour=${GRN}
     fi
-    echo "${GRY}$count${NRM} ${colour}${result}${NRM}"
+    printf "${GRY}%3s${NRM} ${colour}%s${NRM}\n" $count "$result"
     count=$((count + 1))
 done
 
-echo "${GRY}Passed${NRM} ${GRN}$passed${NRM}  ${GRY}Failed${NRM} ${RED}$failed${NRM}" >&2
+percent=$((100 * passed / samples))
+if [ $percent -ge 90 ]
+then
+    colour=${GRN}
+elif [ $percent -ge 70 ]
+then
+    colour=${CYN}
+elif [ $percent -ge 20 ]
+then
+    colour=${YLW}
+else
+    colour=${RED}
+fi
+printf "${GRY} Passed${NRM} ${colour}%3s${NRM} %%\n" $percent >&2
+
