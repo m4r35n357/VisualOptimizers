@@ -35,12 +35,3 @@ fi
 
 # Clamped
 ./stats $runs $threshold ./cut-$model-std 3 0 $order $agents $iterations 1 $lower $upper >/dev/null
-
-if [ $order -le 8 ]
-then
-    # Periodic Descent Direction Setting
-    ./stats $runs $threshold ./spiral-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null
-
-    # Convergence Setting
-    ./stats $runs $threshold ./spiral-$model-std 3 0 $order $agents $iterations 1 $lower $upper >/dev/null
-fi

@@ -6,7 +6,6 @@ If you are unsure what the ["Curse of Dimensionality"](https://en.wikipedia.org/
 There are currently three candidate algorithms included, each with an interactive OpenGL visualizer:
 
 * Nelder-Mead - includes a "multi-run" bulk mode for global optimization, uses dual simplexes in OpenGL
-* Spiral Optimization - two algorithm strategies
 * Optimization by Cut - two algorithm strategies
 
 Presented for application in global optimization in up to 16 dimensions for the "particle-based" algorithms, with extension up to 64 dimensions for Nelder-Mead.
@@ -80,16 +79,15 @@ make test-3d
 make test-multi-3d
 ```
 shows basic program output (with stdout suppressed!) and can be used to get OpenGL commands by cut & paste - just change std to gl in the program names.
-Bulk mode Nelder-Mead, spiral (both strategies), cut (both strategies).
+Bulk mode Nelder-Mead, and cut (both strategies).
 The "multi" target runs stats.
 ```
 make CCC=gcc test-8d
 make CCC=gcc test-multi-8d
 ```
-shows bulk mode Nelder-Mead, spiral (both strategies), and cut (both strategies).
+shows bulk mode Nelder-Mead, and cut (both strategies).
 The "multi" target runs stats.
 Fewer models than 3D.
-The spiral optimizers are clearly running out of steam at 8D.
 
 ```
 make CCC=gcc test-16d
@@ -160,36 +158,6 @@ This enables meaningful comparisons with the other methods.
 The OpenGL visualization shows two "dual" regular initial simplexes.
 For each, the best vertex is green, and the worst is red.
 The remaining vertices are coloured either cyan (default simplex) or gold (dual simplex), correspondiing to the OSD text colour.
-
-## Spiral Optimization
-
-Based on the algorithm described [here](https://en.wikipedia.org/wiki/Spiral_optimization_algorithm).
-Note that current versions of the algorithm use a fixed rotation angle of $\pi / 2$; versions using variable theta are now obsolete.
-The code supports both modes of operation described in that link: "Periodic Descent Direction Setting" and "Convergence Setting".
-
-Parameter | Meaning
-----------|-----------
-1 | Display precision (1..36)
-2 | Floating point format (0 for fixed, 1 for exponential)
-3 | Number of dimensions
-4 | Number of search agents
-5 | Number of iterations
-6 | *Algorithm strategy (0 for "periodic descent", 1 for "convergence")
-7 | Lower limit
-8 | Upper limit
-
-* ignored in OpenGL, which displays BOTH options
-
-Examples
-```
-./spiral-sphere-std 3 0 3 64 100 0 -5 5
-./spiral-sphere-std 3 0 3 64 100 1 -5 5
-./spiral-sphere-gl 3 0 3 64 100 0 -5 5
-```
-The OpenGL visualization shows the two algorithm strategies.
-The "Periodic Descent Direction Setting" mode is represented by green particles, with the best in red.
-The "Convergence Setting" mode is represented by cyan particles, with the best in magenta while the spiral is shrinking.
-In this setting, the particle is marked in bright yellow on update, changing to dull yellow for six (for 3D) "pure rotations", before reverting to magenta.
 
 ##  Optimization by Cut
 
@@ -280,7 +248,6 @@ Examples
 make clean
 make CCC=gcc
 ./stats 100 -313.0 ./nm-st-std 3 0 8 1.0e-6 100000 10.0 1 256000 -5 10
-./stats 100 -313.0 ./spiral-st-std 3 0 8 256 1000 1 -5 10
 ./stats 100 -313.0 ./cut-st-std 3 0 8 256 1000 1 -5 10
 ```
 For 8D or higher, using one of the faster "CCC=" make options above is _highly_ recommended!
@@ -335,29 +302,29 @@ make CCC=gcc test-multi-8d
 
 This is a _manually created_ table of the output, showing only the number of "test" passes:
 ```
-80 bit float                                    Command       NM       cut         cut         spiral     spiral
-                                                                       (unclamped) (clamped)   (descent)  (convergence)
+80 bit float                                    Command       NM       cut         cut
+                                                                       (unclamped) (clamped)
 Unimodal
 
-     [ ./multi-stats 100 0.001 sphere 8 256 1000 -10 10 ]     100      100         100            100         100
+     [ ./multi-stats 100 0.001 sphere 8 256 1000 -10 10 ]     100      100         100
 
-      [ ./multi-stats 100 -111.9 trid 8 256 1000 -30 30 ]     100      100          86             83          97
+      [ ./multi-stats 100 -111.9 trid 8 256 1000 -30 30 ]     100      100          86
 
- [ ./multi-stats 100 0.001 rosenbrock 8 256 1000 -10 10 ]     100        0           0              0           5
+ [ ./multi-stats 100 0.001 rosenbrock 8 256 1000 -10 10 ]     100        0           0
 
-     [ ./multi-stats 100 -0.999 easom 8 256 1000 -15 15 ]     100      100         100            100         100
+     [ ./multi-stats 100 -0.999 easom 8 256 1000 -15 15 ]     100      100         100
 
-     [ ./multi-stats 100 0.03 treacle 8 256 1000 -10 10 ]       0       86          68             91          58
+     [ ./multi-stats 100 0.03 treacle 8 256 1000 -10 10 ]       0       86          68
 
 Multimodal
 
-         [ ./multi-stats 100 -313.0 st 8 256 1000 -5 10 ]      95       29          23              3           2
+         [ ./multi-stats 100 -313.0 st 8 256 1000 -5 10 ]      95       29          23
 
-[ ./multi-stats 100 0.001 dixon-price 8 256 1000 -10 10 ]     100       32           5             19          33
+[ ./multi-stats 100 0.001 dixon-price 8 256 1000 -10 10 ]     100       32           5
 
-       [ ./multi-stats 100 0.001 levy 8 256 1000 -10 10 ]      77       96          88             12          11
+       [ ./multi-stats 100 0.001 levy 8 256 1000 -10 10 ]      77       96          88
 
- [ ./multi-stats 100 -7.5 michalewicz 8 256 1000 0 3.14 ]      86       32          67             59          35
+ [ ./multi-stats 100 -7.5 michalewicz 8 256 1000 0 3.14 ]      86       32          67
 ```
 
 ## Interactive OpenGL Visualizations
@@ -365,13 +332,12 @@ Multimodal
 To get a list of 3D OpenGL command examples for cut & paste into a terminal, use one of the commands below:
 ```
 make test-3d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep nm
-make test-3d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep spiral
 make test-3d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep cut
 ```
 The visualizations also "work" for more than three dimensions, obviously they do not tell the whole story in this case, but can still give some kind of indication of progress.
 For example, try this (it will take a litttle longer to run than the 3D case):
 ```
-make test-8d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep spiral
+make test-8d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep cut
 ```
 Observe the way coordinates above the third are projected into the 3D space (ignored!).
 

@@ -7,7 +7,6 @@
 config get_config (char **argv) {
     randomize();
     config conf = {
-        .spiral = strstr(argv[0], "spiral-") ? true : false,
         .step_mode = strstr(argv[0], "-gl") ? true : false,
         .places = (int)strtol(argv[1], NULL, BASE),
         .fmt = (int)strtol(argv[2], NULL, BASE),
@@ -51,57 +50,7 @@ static void print_progress (int iterations, int evaluations, point *best, config
     printf(c->fmt ? "] % .*Le\n" : "] % .*Lf\n", c->places, best->f);
 }
 
-population *get_spiral (model *m, config *c) {  // step 0
-    population *s =  malloc(sizeof(population));
-    s->update = get_point(c->n);
-    s->k_star = s->iterations = s->evaluations = 0;
-    s->agents = create_population(s, m, c);  // step 1
-    s->x_star = s->best;
-    s->looping = s->shrinking = false;
-    s->rd = powl(SHRINK_FACTOR, 1.0L / c->max_iterations);  // step 2 rule for periodic descent direction mode
-    s->rc = powl(OMEGA, 0.5L / c->n);
-    return s;
-}
-
-bool soa (population *s, model *m, config *c) {
-    if (c->step_mode && s->looping) goto resume; else s->looping = true;
-    while (s->iterations < c->max_iterations) {
-        if (c->mode) s->shrinking = s->iterations >= s->k_star + 2 * c->n;  // step 2 rule for convergence mode
-        for (int i = 0; i < c->m; i++) {
-            if (s->agents[i] != s->x_star) {
-                for (int k = 0; k < c->n; k++) {  // step 3 - rotate by pi/2 in all dimensions around centre
-                    real rot = !k ? s->x_star->x[c->n - 1] - s->agents[i]->x[c->n - 1] : s->agents[i]->x[k - 1] - s->x_star->x[k - 1];
-                    s->update->x[k] = s->x_star->x[k] + (c->mode ? (s->shrinking ? s->rc : 1.0L) : s->rd) * rot;
-                }
-                for (int k = 0; k < c->n; k++) {  // reflect any out of range agents
-                    if (s->update->x[k] > c->upper) {
-                        s->agents[i]->x[k] = 2.0L * c->upper - s->update->x[k];
-                    } else if (s->update->x[k] < c->lower) {
-                        s->agents[i]->x[k] = 2.0L * c->lower - s->update->x[k];
-                    } else {
-                        s->agents[i]->x[k] = s->update->x[k];
-                    }
-                }
-                cost(c->n, s->agents[i], m);
-                s->evaluations++;
-                if (s->agents[i]->f < s->best->f) s->best = s->agents[i];  // look for new best agent
-            }
-        }
-        s->updated = false;
-        if (s->best->f < s->x_star->f) {  // step 4 - new centre ?
-            s->x_star = s->best;
-            s->k_star = s->iterations + 1;
-            s->updated = true;
-        }
-        s->iterations++;  // step 5
-        if (s->updated) print_progress(s->iterations, s->evaluations, s->x_star, c);
-        if (c->step_mode) return true;
-        resume: ;
-    }
-    return s->looping = false;
-}
-
-population *get_box (model *m, config *c) {
+population *get_box (model *m, config &c) {
     population *b =  malloc(sizeof(population));
     b->upper = malloc((size_t)c->n * sizeof (real)); CHECK(b->upper);
     b->lower = malloc((size_t)c->n * sizeof (real)); CHECK(b->lower);

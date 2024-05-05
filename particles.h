@@ -10,7 +10,6 @@
  * Options
  */
 typedef struct Config {
-    bool spiral; // choose between spiral and cut algorithms
     bool step_mode; // free-running or single-step ("generator") operation
     int places;  // significant figures in float/exponential output
     int fmt;  // fixed or exponential floating point format
@@ -26,15 +25,11 @@ config get_config (char **);
 
 typedef struct Population {
     point **agents;
-    point *x_star, *best, *update;
-    int k_star, iterations, evaluations;
-    real rd, rc, *lower, *upper, lambda;
-    bool looping, updated, shrinking;
+    point *best, *update;
+    int iterations, evaluations;
+    real *lower, *upper, lambda;
+    bool looping, updated;
 } population;
-
-population *get_spiral (model *m, config *c);
-
-bool soa (population *s, model *m, config *c);
 
 population *get_box (model *m, config *c);
 
