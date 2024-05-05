@@ -148,40 +148,40 @@ test-16d: nogl
 
 # 2^D search agents
 test-multi-8d: nogl
-	@./multi-stats 100 0.001 sphere 8 256 1000 -10 10
+	@./multi-stats 100 0.001 sphere 8 256 100 -10 10
 	@echo ""
-	@./multi-stats 100 -111.9 trid 8 256 1000 -30 30
+	@./multi-stats 100 -111.9 trid 8 256 100 -30 30
 	@echo ""
-	@./multi-stats 100 0.001 rosenbrock 8 256 1000 -10 10
+	@./multi-stats 100 0.001 rosenbrock 8 256 100 -10 10
 	@echo ""
-	@./multi-stats 100 -0.999 easom 8 256 1000 -15 15
+	@./multi-stats 100 -0.999 easom 8 256 100 -15 15
 	@echo ""
-	@./multi-stats 100 0.03 treacle 8 256 1000 -10 10
+	@./multi-stats 100 0.03 treacle 8 256 100 -10 10
 	@echo ""
-	@./multi-stats 100 -313.0 st 8 256 1000 -5 10
+	@./multi-stats 100 -313.0 st 8 256 100 -5 10
 	@echo ""
-	@./multi-stats 100 0.001 dixon-price 8 256 1000 -10 10
+	@./multi-stats 100 0.001 dixon-price 8 256 100 -10 10
 	@echo ""
-	@./multi-stats 100 0.001 levy 8 256 1000 -10 10
+	@./multi-stats 100 0.001 levy 8 256 100 -10 10
 	@echo ""
 
 # 2^D search agents
 test-8d: nogl
-	@./solve-model sphere 8 256 1000 -10 10
+	@./solve-model sphere 8 256 100 -10 10
 	@echo ""
-	@./solve-model trid 8 256 1000 -30 30
+	@./solve-model trid 8 256 100 -30 30
 	@echo ""
-	@./solve-model rosenbrock 8 256 1000 -10 10
+	@./solve-model rosenbrock 8 256 100 -10 10
 	@echo ""
-	@./solve-model easom 8 256 1000 -15 15
+	@./solve-model easom 8 256 100 -15 15
 	@echo ""
-	@./solve-model treacle 8 256 1000 -20 20
+	@./solve-model treacle 8 256 100 -20 20
 	@echo ""
-	@./solve-model st 8 256 1000 -5 10
+	@./solve-model st 8 256 100 -5 10
 	@echo ""
-	@./solve-model dixon-price 8 256 1000 -10 10
+	@./solve-model dixon-price 8 256 100 -10 10
 	@echo ""
-	@./solve-model levy 8 256 1000 -10 10
+	@./solve-model levy 8 256 100 -10 10
 	@echo ""
 
 # 3^D search agents
