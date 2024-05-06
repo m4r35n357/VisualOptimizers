@@ -124,9 +124,9 @@ test-multi-16d: nogl
 	@echo ""
 	@./multi-stats 10 0.03 treacle 16 65536 100 -20 20
 	@echo ""
-	@./multi-stats 10 -626.0 st 16 65536 100 -5 20
-	@echo ""
 	@./multi-stats 10 0.001 dixon-price 16 65536 100 -10 10
+	@echo ""
+	@./multi-stats 10 0.001 levy 16 65536 100 0 20
 	@echo ""
 
 # 2^D search agents
@@ -141,9 +141,9 @@ test-16d: nogl
 	@echo ""
 	@./solve-model treacle 16 65536 100 -20 20
 	@echo ""
-	@./solve-model st 16 65536 100 -5 20
-	@echo ""
 	@./solve-model dixon-price 16 65536 100 -10 10
+	@echo ""
+	@./solve-model levy 16 65536 100 0 20
 	@echo ""
 
 # 2^D search agents
@@ -158,9 +158,9 @@ test-multi-8d: nogl
 	@echo ""
 	@./multi-stats 100 0.03 treacle 8 256 100 -10 10
 	@echo ""
-	@./multi-stats 100 -313.0 st 8 256 100 -5 10
-	@echo ""
 	@./multi-stats 100 0.001 dixon-price 8 256 100 -10 10
+	@echo ""
+	@./multi-stats 100 -313.0 st 8 256 100 -5 10
 	@echo ""
 	@./multi-stats 100 0.001 levy 8 256 100 -10 10
 	@echo ""
@@ -177,9 +177,9 @@ test-8d: nogl
 	@echo ""
 	@./solve-model treacle 8 256 100 -20 20
 	@echo ""
-	@./solve-model st 8 256 100 -5 10
-	@echo ""
 	@./solve-model dixon-price 8 256 100 -10 10
+	@echo ""
+	@./solve-model st 8 256 100 -5 10
 	@echo ""
 	@./solve-model levy 8 256 100 -10 10
 	@echo ""
@@ -196,9 +196,9 @@ test-multi-3d: nogl
 	@echo ""
 	@./multi-stats 100 0.03 treacle 3 27 100 -10 10
 	@echo ""
-	@./multi-stats 100 -117.0 st 3 27 100 -5 5
-	@echo ""
 	@./multi-stats 100 0.001 dixon-price 3 27 100 -10 10
+	@echo ""
+	@./multi-stats 100 -117.0 st 3 27 100 -5 5
 	@echo ""
 	@./multi-stats 100 0.001 levy 3 27 100 -10 10
 	@echo ""
@@ -221,9 +221,9 @@ test-3d: nogl
 	@echo ""
 	@./solve-model treacle 3 27 100 -10 10
 	@echo ""
-	@./solve-model st 3 27 100 -5 5
-	@echo ""
 	@./solve-model dixon-price 3 27 100 -10 10
+	@echo ""
+	@./solve-model st 3 27 100 -5 5
 	@echo ""
 	@./solve-model levy 3 27 100 -10 10
 	@echo ""
