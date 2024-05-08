@@ -32,10 +32,10 @@ typedef struct Population {
     bool looping, updated, shrinking;
 } population;
 
-population *get_spiral (model *m, config c);
+population *get_spiral (model *m, config *c);
 
-bool soa (population *s, model *m, config c);
+bool soa (population *s, model *m, config *c);
 
-population *get_box (model *m, config c);
+population *get_box (model *m, config *c);
 
-bool coa (population *b, model *m, config c);
+bool coa (population *b, model *m, config *c);

@@ -28,61 +28,61 @@ config get_config (char **argv) {
     return conf;
 }
 
-static point **create_population (population *p, model *m, config c) {
-    p->agents = malloc((size_t)c.m * sizeof (point *)); CHECK(p->agents);
-    for (int i = 0; i < c.m; i++) {
-        p->agents[i] = get_point(c.n); CHECK(p->agents[i]);
-        set_random_coordinates(p->agents[i], c.n, c.lower, c.upper);
-        cost(c.n, p->agents[i], m);
+static point **create_population (population *p, model *m, config *c) {
+    p->agents = malloc((size_t)c->m * sizeof (point *)); CHECK(p->agents);
+    for (int i = 0; i < c->m; i++) {
+        p->agents[i] = get_point(c->n); CHECK(p->agents[i]);
+        set_random_coordinates(p->agents[i], c->n, c->lower, c->upper);
+        cost(c->n, p->agents[i], m);
         p->evaluations++;
     }
     p->best = p->agents[0];
-    for (int i = 1; i < c.m; i++) {
+    for (int i = 1; i < c->m; i++) {
         if (p->agents[i]->f < p->best->f) p->best = p->agents[i];
     }
     return p->agents;
 }
 
-static void print_progress (int iterations, int evaluations, point *best, config c) {
+static void print_progress (int iterations, int evaluations, point *best, config *c) {
     printf("  %5d %6d  [ ", iterations, evaluations);
-    for (int k = 0; k < c.n; k++) {
-        printf(c.fmt ? "% .*Le " : "% .*Lf ", c.places, best->x[k]);
+    for (int k = 0; k < c->n; k++) {
+        printf(c->fmt ? "% .*Le " : "% .*Lf ", c->places, best->x[k]);
     }
-    printf(c.fmt ? "] % .*Le\n" : "] % .*Lf\n", c.places, best->f);
+    printf(c->fmt ? "] % .*Le\n" : "] % .*Lf\n", c->places, best->f);
 }
 
-population *get_spiral (model *m, config c) {  // step 0
+population *get_spiral (model *m, config *c) {  // step 0
     population *s =  malloc(sizeof(population));
-    s->update = get_point(c.n);
+    s->update = get_point(c->n);
     s->k_star = s->iterations = s->evaluations = 0;
     s->agents = create_population(s, m, c);  // step 1
     s->x_star = s->best;
     s->looping = s->shrinking = false;
-    s->rd = powl(SHRINK_FACTOR, 1.0L / c.max_iterations);  // step 2 rule for periodic descent direction mode
-    s->rc = powl(OMEGA, 0.5L / c.n);
+    s->rd = powl(SHRINK_FACTOR, 1.0L / c->max_iterations);  // step 2 rule for periodic descent direction mode
+    s->rc = powl(OMEGA, 0.5L / c->n);
     return s;
 }
 
-bool soa (population *s, model *m, config c) {
-    if (c.step_mode && s->looping) goto resume; else s->looping = true;
-    while (s->iterations < c.max_iterations) {
-        if (c.mode) s->shrinking = s->iterations >= s->k_star + 2 * c.n;  // step 2 rule for convergence mode
-        for (int i = 0; i < c.m; i++) {
+bool soa (population *s, model *m, config *c) {
+    if (c->step_mode && s->looping) goto resume; else s->looping = true;
+    while (s->iterations < c->max_iterations) {
+        if (c->mode) s->shrinking = s->iterations >= s->k_star + 2 * c->n;  // step 2 rule for convergence mode
+        for (int i = 0; i < c->m; i++) {
             if (s->agents[i] != s->x_star) {
-                for (int k = 0; k < c.n; k++) {  // step 3 - rotate by pi/2 in all dimensions around centre
-                    real rot = !k ? s->x_star->x[c.n - 1] - s->agents[i]->x[c.n - 1] : s->agents[i]->x[k - 1] - s->x_star->x[k - 1];
-                    s->update->x[k] = s->x_star->x[k] + (c.mode ? (s->shrinking ? s->rc : 1.0L) : s->rd) * rot;
+                for (int k = 0; k < c->n; k++) {  // step 3 - rotate by pi/2 in all dimensions around centre
+                    real rot = !k ? s->x_star->x[c->n - 1] - s->agents[i]->x[c->n - 1] : s->agents[i]->x[k - 1] - s->x_star->x[k - 1];
+                    s->update->x[k] = s->x_star->x[k] + (c->mode ? (s->shrinking ? s->rc : 1.0L) : s->rd) * rot;
                 }
-                for (int k = 0; k < c.n; k++) {  // reflect any out of range agents
-                    if (s->update->x[k] > c.upper) {
-                        s->agents[i]->x[k] = 2.0L * c.upper - s->update->x[k];
-                    } else if (s->update->x[k] < c.lower) {
-                        s->agents[i]->x[k] = 2.0L * c.lower - s->update->x[k];
+                for (int k = 0; k < c->n; k++) {  // reflect any out of range agents
+                    if (s->update->x[k] > c->upper) {
+                        s->agents[i]->x[k] = 2.0L * c->upper - s->update->x[k];
+                    } else if (s->update->x[k] < c->lower) {
+                        s->agents[i]->x[k] = 2.0L * c->lower - s->update->x[k];
                     } else {
                         s->agents[i]->x[k] = s->update->x[k];
                     }
                 }
-                cost(c.n, s->agents[i], m);
+                cost(c->n, s->agents[i], m);
                 s->evaluations++;
                 if (s->agents[i]->f < s->best->f) s->best = s->agents[i];  // look for new best agent
             }
@@ -95,36 +95,36 @@ bool soa (population *s, model *m, config c) {
         }
         s->iterations++;  // step 5
         if (s->updated) print_progress(s->iterations, s->evaluations, s->x_star, c);
-        if (c.step_mode) return true;
+        if (c->step_mode) return true;
         resume: ;
     }
     return s->looping = false;
 }
 
-population *get_box (model *m, config c) {
+population *get_box (model *m, config *c) {
     population *b =  malloc(sizeof(population));
-    b->upper = malloc((size_t)c.n * sizeof (real)); CHECK(b->upper);
-    b->lower = malloc((size_t)c.n * sizeof (real)); CHECK(b->lower);
-    for (int k = 0; k < c.n; k++) {
-        b->upper[k] = c.upper;
-        b->lower[k] = c.lower;
+    b->upper = malloc((size_t)c->n * sizeof (real)); CHECK(b->upper);
+    b->lower = malloc((size_t)c->n * sizeof (real)); CHECK(b->lower);
+    for (int k = 0; k < c->n; k++) {
+        b->upper[k] = c->upper;
+        b->lower[k] = c->lower;
     }
     b->iterations = b->evaluations = 0;
     b->agents = create_population(b, m, c);
     b->looping = false;
-    b->lambda = powl(SHRINK_FACTOR, 1.0L / c.max_iterations);
+    b->lambda = powl(SHRINK_FACTOR, 1.0L / c->max_iterations);
     return b;
 }
 
-bool coa (population *b, model *m, config c) {
-    if (c.step_mode && b->looping) goto resume; else b->looping = true;
-    while (b->iterations < c.max_iterations) {
+bool coa (population *b, model *m, config *c) {
+    if (c->step_mode && b->looping) goto resume; else b->looping = true;
+    while (b->iterations < c->max_iterations) {
         real side = 0.5L * b->lambda * (b->upper[0] - b->lower[0]);
-        for (int k = 0; k < c.n; k++) {  // shrink the box
+        for (int k = 0; k < c->n; k++) {  // shrink the box
             real upper = b->best->x[k] + side;
             real lower = b->best->x[k] - side;
-            real lower_limit = c.mode ? b->lower[k] : c.lower;
-            real upper_limit = c.mode ? b->upper[k] : c.upper;
+            real lower_limit = c->mode ? b->lower[k] : c->lower;
+            real upper_limit = c->mode ? b->upper[k] : c->upper;
             if (lower < lower_limit) {
                 upper += lower_limit - lower;
                 lower = lower_limit;
@@ -135,17 +135,17 @@ bool coa (population *b, model *m, config c) {
             b->upper[k] = upper;
             b->lower[k] = lower;
         }
-        for (int i = 0; i < c.m; i++) {  // randomize all agents but the best
+        for (int i = 0; i < c->m; i++) {  // randomize all agents but the best
             if (b->agents[i] != b->best) {
-                for (int k = 0; k < c.n; k++) {
+                for (int k = 0; k < c->n; k++) {
                     b->agents[i]->x[k] = rand_range(b->lower[k], b->upper[k]);
                 }
-                cost(c.n, b->agents[i], m);
+                cost(c->n, b->agents[i], m);
                 b->evaluations++;
             }
         }
         b->updated = false;
-        for (int i = 0; i < c.m; i++) {  // look for new best agent
+        for (int i = 0; i < c->m; i++) {  // look for new best agent
             if (b->agents[i]->f < b->best->f) {
                 b->best = b->agents[i];
                 b->updated = true;
@@ -153,7 +153,7 @@ bool coa (population *b, model *m, config c) {
         }
         b->iterations++;
         if (b->updated) print_progress(b->iterations, b->evaluations, b->best, c);
-        if (c.step_mode) return true;
+        if (c->step_mode) return true;
         resume: ;
     }
     return b->looping = false;

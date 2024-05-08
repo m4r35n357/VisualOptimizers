@@ -13,19 +13,19 @@ int main(int argc, char *argv[]) {
     model *m = model_init();
 
     if (c.spiral) {
-        population *s = get_spiral(m, c);
+        population *s = get_spiral(m, &c);
 
         // run optimization
-        soa(s, m, c);
+        soa(s, m, &c);
 
         // print solution
         fprintf(stderr, "  %5d %6d  ", s->iterations, s->evaluations);
         print_result(c.n, s->x_star, c.places, c.fmt);
     } else {
-        population *b = get_box(m, c);
+        population *b = get_box(m, &c);
 
         // run optimization
-        coa(b, m, c);
+        coa(b, m, &c);
 
         // print solution
         fprintf(stderr, "  %5d %6d  ", b->iterations, b->evaluations);

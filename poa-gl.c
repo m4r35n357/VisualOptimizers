@@ -45,14 +45,14 @@ void Animate () {
         } else {
             if (c.spiral) {
                 c.mode = 0;  // Periodic Descent Direction setting
-                soa(p1, m, c);
+                soa(p1, m, &c);
                 c.mode = 1;  // Convergence setting
-                soa(p2, m, c);
+                soa(p2, m, &c);
             } else {
                 c.mode = 1;  // Clamped
-                coa(p1, m, c);
+                coa(p1, m, &c);
                 c.mode = 0;  // Unclamped (except to bounding box)
-                coa(p2, m, c);
+                coa(p2, m, &c);
             }
             get_vertices(v1, p1->agents);
             get_vertices(v2, p2->agents);
@@ -147,8 +147,8 @@ int main (int argc, char **argv) {
     // model parameters
     m = model_init();
 
-    p1 = c.spiral ? get_spiral(m, c) : get_box(m, c);
-    p2 = c.spiral ? get_spiral(m, c) : get_box(m, c);
+    p1 = c.spiral ? get_spiral(m, &c) : get_box(m, &c);
+    p2 = c.spiral ? get_spiral(m, &c) : get_box(m, &c);
 
     // get minima for targets if known
     targets = get_known_minima();
