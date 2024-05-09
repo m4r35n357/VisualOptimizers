@@ -6,10 +6,10 @@ If you are unsure what the ["Curse of Dimensionality"](https://en.wikipedia.org/
 There are currently three candidate algorithms included, each with an interactive OpenGL visualizer:
 
 * Nelder-Mead - includes a "multi-run" bulk mode for global optimization, uses dual simplexes in OpenGL
-* Optimization by Cut - two algorithm strategies
+* Optimization by Cut
+* Random Optimization
 
-Presented for application in global optimization in up to 16 dimensions for the "particle-based" algorithms, with extension up to 64 dimensions for Nelder-Mead.
-Additionally there is a "random" optimizer (with no OpenGL visualization) to use as a base-line for comparisons.
+Suitable for application in global optimization in up to 16 dimensions for the cut algorithm, with extension up to 64 dimensions for "bulk-mode" Nelder-Mead.
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
 
@@ -79,13 +79,13 @@ make test-3d
 make test-multi-3d
 ```
 shows basic program output (with stdout suppressed!) and can be used to get OpenGL commands by cut & paste - just change std to gl in the program names.
-Bulk mode Nelder-Mead, and cut (both strategies).
+Bulk mode Nelder-Mead, and cut.
 The "multi" target runs stats.
 ```
 make CCC=gcc test-8d
 make CCC=gcc test-multi-8d
 ```
-shows bulk mode Nelder-Mead, and cut (both strategies).
+shows bulk mode Nelder-Mead, and cut.
 The "multi" target runs stats.
 Fewer models than 3D.
 
@@ -93,10 +93,10 @@ Fewer models than 3D.
 make CCC=gcc test-16d
 make CCC=gcc test-multi-16d
 ```
-shows bulk mode Nelder-Mead, and cut (both strategies).
+shows bulk mode Nelder-Mead, and cut.
 The "multi" target runs stats.
 Fewer models than 8D.
-The cut optimizers are still hanging on at 16D, but the "curse of dimensionality" means that they will need an eye-watering number of iterations to work at 32D.
+The cut optimizer is still hanging on at 16D, but the "curse of dimensionality" means that they will need an eye-watering number of iterations to work at 32D.
 
 ```
 make CCC=gcc test-32d
@@ -156,10 +156,10 @@ When parameter 8 is set to a non-zero value, the algorithm is run several times 
 This enables meaningful comparisons with the other methods.
 
 The OpenGL visualization shows two "dual" regular initial simplexes.
-For each, the best vertex is green, and the worst is red.
+For each one, the best vertex is green, and the worst is red.
 The remaining vertices are coloured either cyan (default simplex) or gold (dual simplex), correspondiing to the OSD text colour.
 
-##  Optimization by Cut
+##  Optimization by Cut & Random Optimization
 
 Algorithm described [here](https://arxiv.org/abs/2207.05953v1).
 
@@ -172,7 +172,7 @@ Parameter | Meaning
 3 | Number of dimensions
 4 | Number of search agents
 5 | Number of iterations
-6 | *Algorithm mode (0 for "un-clamped", 1 for "clamped")
+6 | *Algorithm mode (0 for cut, 1 for random)
 7 | Lower limit
 8 | Upper limit
 
@@ -184,29 +184,9 @@ Examples
 ./cut-sphere-std 3 0 3 64 100 1 -5 5
 ./cut-sphere-gl 3 0 3 64 100 0 -5 5
 ```
-The OpenGL visualization shows both "clamped" and "un-clamped" variants regardless of parameter 6.
-Clamped mode (as described by the paper) is represented by green particles in a red box, with the best point marked in red.
-Unclamped mode (my modification, which allows the box a degree of movement) is represented by cyan particles in a magenta box, with the best point marked in magenta.
-
-##  Random Optimization
-
-No OpenGL visualization provided
-
-Parameter | Meaning
-----------|-----------
-1 | Display precision (1..36)
-2 | Floating point format (0 for fixed, 1 for exponential)
-3 | Number of dimensions
-4 | Number of iterations
-5 | Show progress (0 for no, 1 for yes)
-6 | Lower limit
-7 | Upper limit
-
-Examples
-```
-./rnd-sphere-std 3 0 3 64000 0 -5 5
-./rnd-sphere-std 3 0 3 64000 1 -5 5
-```
+The OpenGL visualization shows both cut and random algorithms regardless of parameter 6.
+Random mode is represented by green particles, with the best point marked in red.
+Cut mode (my modification, which allows the box a degree of movement) is represented by cyan particles in a magenta box, with the best point marked in magenta.
 
 ## "solve-model" script
 
@@ -256,8 +236,7 @@ For 8D or higher, using one of the faster "CCC=" make options above is _highly_ 
 
 A common feature of particle or "swarm-based" methods is an _exploration_ phase followed by a _refinement_ phase (in practice the transition is a gradual process).
 Refinement is _not_ the same as convergence; you get what you are given after a specified number of iterations!
-Perhaps "settling" would be a better description.
-Another way of looking at it is that the initial problem boundaries are effectively shrunk by a large factor, concentrating the search agents into a relatively small volume around a _potential_ minimum.
+Another way of looking at it is that the initial search domain is shrunk by a large factor, concentrating the search agents into a relatively small volume around a _potential_ minimum.
 In any case, this refinement stage makes it harder to jump out of a stubborn local minimum.
 
 I have adapted the Nelder-Mead method to do a series of random runs, while keeping the best result, and accounting for total number of function evaluations.
@@ -298,33 +277,6 @@ Another way to do this is using make, which invokes the script for the most "imp
 make clean
 make CCC=gcc test-multi-3d
 make CCC=gcc test-multi-8d
-```
-
-This is a _manually created_ table of the output, showing only the number of "test" passes:
-```
-80 bit float                                    Command       NM       cut         cut
-                                                                       (unclamped) (clamped)
-Unimodal
-
-     [ ./multi-stats 100 0.001 sphere 8 256 1000 -10 10 ]     100      100         100
-
-      [ ./multi-stats 100 -111.9 trid 8 256 1000 -30 30 ]     100      100          86
-
- [ ./multi-stats 100 0.001 rosenbrock 8 256 1000 -10 10 ]     100        0           0
-
-     [ ./multi-stats 100 -0.999 easom 8 256 1000 -15 15 ]     100      100         100
-
-     [ ./multi-stats 100 0.03 treacle 8 256 1000 -10 10 ]       0       86          68
-
-Multimodal
-
-         [ ./multi-stats 100 -313.0 st 8 256 1000 -5 10 ]      95       29          23
-
-[ ./multi-stats 100 0.001 dixon-price 8 256 1000 -10 10 ]     100       32           5
-
-       [ ./multi-stats 100 0.001 levy 8 256 1000 -10 10 ]      77       96          88
-
- [ ./multi-stats 100 -7.5 michalewicz 8 256 1000 0 3.14 ]      86       32          67
 ```
 
 ## Interactive OpenGL Visualizations

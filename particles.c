@@ -22,7 +22,7 @@ config get_config (char **argv) {
     CHECK(conf.n >= 1 && conf.n <= 64);
     CHECK(conf.m >= 1 && conf.m <= 100000);
     CHECK(conf.max_iterations >= 1 && conf.max_iterations <= 1000);
-    CHECK(conf.mode == 0 || conf.mode == 1);  // 0 = DESCENT(spiral)/UNCLAMPED(cut), 1 = CONVERGENCE(spiral)/CLAMPED(cut)
+    CHECK(conf.mode == 0 || conf.mode == 1);
     CHECK(conf.upper > conf.lower);
     return conf;
 }
@@ -50,7 +50,7 @@ static void print_progress (int iterations, int evaluations, point *best, config
     printf(c->fmt ? "] % .*Le\n" : "] % .*Lf\n", c->places, best->f);
 }
 
-population *get_box (model *m, config &c) {
+population *get_box (model *m, config *c) {
     population *b =  malloc(sizeof(population));
     b->upper = malloc((size_t)c->n * sizeof (real)); CHECK(b->upper);
     b->lower = malloc((size_t)c->n * sizeof (real)); CHECK(b->lower);
@@ -68,21 +68,21 @@ population *get_box (model *m, config &c) {
 bool coa (population *b, model *m, config *c) {
     if (c->step_mode && b->looping) goto resume; else b->looping = true;
     while (b->iterations < c->max_iterations) {
-        real side = 0.5L * b->lambda * (b->upper[0] - b->lower[0]);
-        for (int k = 0; k < c->n; k++) {  // shrink the box
-            real upper = b->best->x[k] + side;
-            real lower = b->best->x[k] - side;
-            real lower_limit = c->mode ? b->lower[k] : c->lower;
-            real upper_limit = c->mode ? b->upper[k] : c->upper;
-            if (lower < lower_limit) {
-                upper += lower_limit - lower;
-                lower = lower_limit;
-            } else if (upper > upper_limit) {
-                lower += upper_limit - upper;
-                upper = upper_limit;
+        if (c->mode == 0) {  // cut algorithm - shrink the box
+            real side = 0.5L * b->lambda * (b->upper[0] - b->lower[0]);
+            for (int k = 0; k < c->n; k++) {
+                real upper = b->best->x[k] + side;
+                real lower = b->best->x[k] - side;
+                if (lower < c->lower) {
+                    upper += c->lower - lower;
+                    lower = c->lower;
+                } else if (upper > c->upper) {
+                    lower += c->upper - upper;
+                    upper = c->upper;
+                }
+                b->upper[k] = upper;
+                b->lower[k] = lower;
             }
-            b->upper[k] = upper;
-            b->lower[k] = lower;
         }
         for (int i = 0; i < c->m; i++) {  // randomize all agents but the best
             if (b->agents[i] != b->best) {

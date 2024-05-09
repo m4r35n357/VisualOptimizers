@@ -2,8 +2,6 @@
 
 #include "model.h"
 
-typedef enum Mode {POINT=0, RANGE=1, BULK=2} mode;
-
 /*
  * Optimizer settings
  */
@@ -15,7 +13,7 @@ typedef struct Optimset {
     int max_evaluations;   // maximum number of allowed evaluations
     real size;  // size of initial simplex
     int adaptive;  // simplex updates reduced for dimension > 2
-    mode init_mode;  // 0 for explicit coordinates, 1 for random initialization, 2 for "bulk mode"
+    int init_mode;  // 0 for explicit coordinates, 1 for random initialization, 2 for "bulk mode"
     real lower, upper;  // range for coordinates of initial point
     bool step_mode; // free-running or single-step algorithm
 } optimset;

@@ -31,11 +31,5 @@ fi
 # Un-clamped
 ./cut-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null
 
-# Clamped
+# Random
 ./cut-$model-std 3 0 $order $agents $iterations 1 $lower $upper >/dev/null
-
-if [ $order -le 8 ]
-then
-    # Base-line
-    ./rnd-$model-std 3 0 $order $(((agents - 1) * iterations + agents)) $lower $upper >/dev/null
-fi

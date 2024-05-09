@@ -96,7 +96,7 @@ int main (int argc, char **argv) {
     m = model_init();
 
     point *centre = get_point(o.n);
-    if (o.init_mode == POINT) {
+    if (o.init_mode == 0) {
         CHECK(argc == 9 + o.n);
         real max = 0.0L;
         for (int j = 0; j < o.n; j++) {

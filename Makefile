@@ -21,13 +21,7 @@ endif
 
 all: nogl nm-gl cut-gl
 
-nogl: nm-std cut-std rnd-std ctags
-
-# Random optimization
-rnd-%-std: %.o nelder_mead.o base.o main-random.o
-	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
-
-rnd-std: rnd-sphere-std rnd-levy-std rnd-easom-std rnd-michalewicz-std rnd-rastrigin-std rnd-treacle-std rnd-ackley-std rnd-rosenbrock-std rnd-dixon-price-std rnd-st-std rnd-schwefel-std rnd-trid-std
+nogl: nm-std cut-std ctags
 
 # Nelder-Mead optimization
 nm-%-std: %.o nelder_mead.o base.o main.o

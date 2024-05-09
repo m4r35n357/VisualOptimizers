@@ -32,6 +32,3 @@ fi
 
 # Un-clamped
 ./stats $runs $threshold ./cut-$model-std 3 0 $order $agents $iterations 0 $lower $upper >/dev/null
-
-# Clamped
-./stats $runs $threshold ./cut-$model-std 3 0 $order $agents $iterations 1 $lower $upper >/dev/null

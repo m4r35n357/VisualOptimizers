@@ -16,7 +16,7 @@ typedef struct Config {
     int n;   // number of dimensions
     int m;   // number of points
     int max_iterations;   // maximum number of allowed iterations
-    int mode;  // strategy
+    int mode;    // 0 = cut, 1 = random
     real lower;   // bottom of coordinate range
     real upper;   // top of coordinate range
 } config;

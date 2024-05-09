@@ -43,7 +43,7 @@ void Animate () {
         if (initial) {
             initial = false;
         } else {
-            c.mode = 1;  // Clamped
+            c.mode = 1;  // Random
             coa(p1, m, &c);
             c.mode = 0;  // Unclamped (except to bounding box)
             coa(p2, m, &c);
@@ -87,11 +87,11 @@ void Animate () {
 void CloseWindow () {
     point *best = p1->agents[0]->f <= p2->agents[0]->f ? *p1->agents : *p2->agents;
     // print solution 1
-    fprintf(stderr, "%s%s  Clamped%s ", *p1->agents == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "%s%sRandom%s ", *p1->agents == best ? "* " : "  ", GRY, NRM);
     fprintf(stderr, "  %5d %6d  ", p1->iterations, p1->evaluations);
     print_result(c.n, *p1->agents, c.places, c.fmt);
     // print solution 2
-    fprintf(stderr, "%s%sUnclamped%s ", *p2->agents == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "%s%s   Cut%s ", *p2->agents == best ? "* " : "  ", GRY, NRM);
     fprintf(stderr, "  %5d %6d  ", p2->iterations, p2->evaluations);
     print_result(c.n, *p2->agents, c.places, c.fmt);
 }
@@ -123,7 +123,7 @@ int main (int argc, char **argv) {
     radius = 1.5F * ((float)c.upper - (float)c.lower);
     ball_size = 0.004F * ((float)c.upper - (float)c.lower);
 
-    ApplicationInit(argc, argv, "Optimization By Cut Visualizer");
+    ApplicationInit(argc, argv, "Random & Optimization By Cut Visualizer");
     glutCloseFunc(CloseWindow);
     glutMainLoop();     // Start the main loop.  glutMainLoop never returns.
 
