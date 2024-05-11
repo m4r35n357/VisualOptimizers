@@ -6,7 +6,7 @@ If you are unsure what the ["Curse of Dimensionality"](https://en.wikipedia.org/
 There are currently three candidate algorithms included, each with an interactive OpenGL visualizer:
 
 * Nelder-Mead - includes a "multi-run" bulk mode for global optimization, uses dual simplexes in OpenGL
-* Optimization by Cut
+* Optimization by Cut (simplified version!)
 * Random Optimization
 
 Suitable for application in global optimization in up to 16 dimensions for the cut algorithm, with extension up to 64 dimensions for "bulk-mode" Nelder-Mead.
@@ -163,7 +163,13 @@ The remaining vertices are coloured either cyan (default simplex) or gold (dual 
 
 Algorithm described [here](https://arxiv.org/abs/2207.05953v1).
 
-Use the OpenGL visualizations to see how this works.
+There is one simplification I have made; instead of "clamping" the new box to be entirely within the previous one, I allow the box to be centered around the new minimum, giving a degree of movement to the box that would otherwise be absent.
+I have found experimentally that this improves success rates in all cases of interest.
+I retain the published "clamping" mechanism to confine the box to within the _original_ boundary.
+
+The previous "clamped" algorithm has now been replaced with a random optimizer, which is _identical_ to the cut algorithm except that the box is never shrunk!
+
+Use the OpenGL visualizations to see how this all works.
 
 Parameter | Meaning
 ----------|-----------
@@ -187,6 +193,23 @@ Examples
 The OpenGL visualization shows both cut and random algorithms regardless of parameter 6.
 Random mode is represented by green particles, with the best point marked in red.
 Cut mode (my modification, which allows the box a degree of movement) is represented by cyan particles in a magenta box, with the best point marked in magenta.
+
+## The Models
+
+These are the most "important", in decreasing order
+
+Model | Justification
+----------|-----------
+sphere | unimodal "hello world" of optimization models.  No excuse for this not working for any optimizer!
+trid | slightly more involved, but still unimodal and well behaved
+rosenbrock | still unimodal, but tests ability to cope with contrasting directional slopes
+easom | unimodal "needle in a haystack".  Also tests machine precision!
+----------|-----------
+treacle | unimodal but non-convex
+dixon-price | multiple global maxima, and one _very_ attractive local minimum (for dimensions > 3)
+levy | multimodal but not too pathalogical
+
+The other models work only at lower dimensions, or do not give clear enough data to draw any useful conclusions.
 
 ## "solve-model" script
 
