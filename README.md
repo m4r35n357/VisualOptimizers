@@ -182,11 +182,11 @@ Parameter | Meaning
 3 | Number of dimensions
 4 | Number of search agents
 5 | Number of iterations
-6 | *Algorithm mode (0 for cut, 1 for random)
+6 | *Algorithm mode (0 for unclamped, 1 for clamped, 2 for random)
 7 | Lower limit
 8 | Upper limit
 
-* ignored in OpenGL, which displays BOTH options
+* ignored in OpenGL, which displays unclamped and random
 
 Examples
 ```

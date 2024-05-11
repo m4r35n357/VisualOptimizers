@@ -48,51 +48,51 @@ cut-gl: cut-sphere-gl cut-levy-gl cut-easom-gl cut-michalewicz-gl cut-treacle-gl
 .PHONY: test-multi-64d test-64d test-multi-32d test-32d test-multi-16d test-multi-8d test-multi-3d test-64d test-32d test-16d test-8d test-3d ctags clean depclean
 
 test-multi-64d: nogl
-	@./stats 10 0.001 ./nm-sphere-std 1 0 64 1.0e-6 100000 40.0 1 1 0 80 >/dev/null
+	@./stats 10 0.001 ./nm-sphere-std 1 fixed 64 1.0e-6 100000 40.0 adaptive random 0 80 >/dev/null
 	@echo ""
-	@./stats 10 -45695.0 ./nm-trid-std 1 0 64 1.0e-6 1000000 600.0 1 1 0 1200 >/dev/null
+	@./stats 10 -45695.0 ./nm-trid-std 1 fixed 64 1.0e-6 1000000 600.0 adaptive random 0 1200 >/dev/null
 	@echo ""
-	@./stats 10 0.001 ./nm-rosenbrock-std 1 0 64 1.0e-6 2000000 40.0 1 1 0 80 >/dev/null
+	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 64 1.0e-6 2000000 40.0 adaptive random 0 80 >/dev/null
 	@echo ""
-	@./stats 10 -0.999 ./nm-easom-std 1 0 64 1.0e-6 1000000 40.0 1 1 0 80 >/dev/null
+	@./stats 10 -0.999 ./nm-easom-std 1 fixed 64 1.0e-6 1000000 40.0 adaptive random 0 80 >/dev/null
 	@echo ""
-	@./stats 10 0.3 ./nm-treacle-std 1 0 64 1.0e-6 1000000 40.0 1 1 0 80 >/dev/null
+	@./stats 10 0.3 ./nm-treacle-std 1 fixed 64 1.0e-6 1000000 40.0 adaptive random 0 80 >/dev/null
 	@echo ""
 
 test-64d: nogl
-	@./nm-sphere-std 1 0 64 1.0e-6 100000 40.0 1 1 0 80 >/dev/null
+	@./nm-sphere-std 1 fixed 64 1.0e-6 100000 40.0 adaptive random 0 80 >/dev/null
 	@echo ""
-	@./nm-trid-std 1 0 64 1.0e-6 1000000 600.0 1 1 0 1200 >/dev/null
+	@./nm-trid-std 1 fixed 64 1.0e-6 1000000 600.0 adaptive random 0 1200 >/dev/null
 	@echo ""
-	@./nm-rosenbrock-std 1 0 64 1.0e-6 2000000 40.0 1 1 0 80 >/dev/null
+	@./nm-rosenbrock-std 1 fixed 64 1.0e-6 2000000 40.0 adaptive random 0 80 >/dev/null
 	@echo ""
-	@./nm-easom-std 1 0 64 1.0e-6 1000000 40.0 1 1 0 80 >/dev/null
+	@./nm-easom-std 1 fixed 64 1.0e-6 1000000 40.0 adaptive random 0 80 >/dev/null
 	@echo ""
-	@./nm-treacle-std 1 0 64 1.0e-6 1000000 40.0 1 1 0 80 >/dev/null
+	@./nm-treacle-std 1 fixed 64 1.0e-6 1000000 40.0 adaptive random 0 80 >/dev/null
 	@echo ""
 
 test-multi-32d: nogl
-	@./stats 100 0.001 ./nm-sphere-std 1 0 32 1.0e-6 100000 20.0 1 1 0 40 >/dev/null
+	@./stats 100 0.001 ./nm-sphere-std 1 fixed 32 1.0e-6 100000 20.0 1 random 0 40 >/dev/null
 	@echo ""
-	@./stats 100 -799.0 ./nm-trid-std 1 0 32 1.0e-6 100000 20.0 1 1 0 300 >/dev/null
+	@./stats 100 -799.0 ./nm-trid-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 300 >/dev/null
 	@echo ""
-	@./stats 100 0.001 ./nm-rosenbrock-std 1 0 32 1.0e-6 200000 20.0 1 1 0 40 >/dev/null
+	@./stats 100 0.001 ./nm-rosenbrock-std 1 fixed 32 1.0e-6 200000 20.0 adaptive random 0 40 >/dev/null
 	@echo ""
-	@./stats 100 -0.999 ./nm-easom-std 1 0 32 1.0e-6 100000 20.0 1 1 0 40 >/dev/null
+	@./stats 100 -0.999 ./nm-easom-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
 	@echo ""
-	@./stats 100 0.3 ./nm-treacle-std 1 0 32 1.0e-6 100000 20.0 1 1 0 40 >/dev/null
+	@./stats 100 0.3 ./nm-treacle-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
 	@echo ""
 
 test-32d: nogl
-	@./nm-sphere-std 1 0 32 1.0e-6 100000 20.0 1 1 0 40 >/dev/null
+	@./nm-sphere-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
 	@echo ""
-	@./nm-trid-std 1 0 32 1.0e-6 100000 150.0 1 1 0 300 >/dev/null
+	@./nm-trid-std 1 fixed 32 1.0e-6 100000 150.0 adaptive random 0 300 >/dev/null
 	@echo ""
-	@./nm-rosenbrock-std 1 0 32 1.0e-6 200000 20.0 1 1 0 40 >/dev/null
+	@./nm-rosenbrock-std 1 fixed 32 1.0e-6 200000 20.0 adaptive random 0 40 >/dev/null
 	@echo ""
-	@./nm-easom-std 1 0 32 1.0e-6 100000 20.0 1 1 0 40 >/dev/null
+	@./nm-easom-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
 	@echo ""
-	@./nm-treacle-std 1 0 32 1.0e-6 100000 20.0 1 1 0 40 >/dev/null
+	@./nm-treacle-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
 	@echo ""
 
 # 2^D search agents

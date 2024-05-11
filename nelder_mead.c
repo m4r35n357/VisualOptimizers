@@ -9,13 +9,13 @@ optimset get_settings (char **argv) {
     optimset opt = {
         .step_mode = strstr(argv[0], "-gl") ? true : false,
         .places = (int)strtol(argv[1], NULL, BASE),
-        .fmt = (int)strtol(argv[2], NULL, BASE),
+        .fmt = strstr(argv[2], "fixed") ? 0 : (strstr(argv[2], "exp") ? 1 : -1),
         .n = (int)strtol(argv[3], NULL, BASE),
         .tolerance = strtold(argv[4], NULL),
         .max_evaluations = (int)strtol(argv[5], NULL, BASE),
         .size = strtold(argv[6], NULL),
-        .adaptive = (int)strtol(argv[7], NULL, BASE),
-        .init_mode = (int)strtol(argv[8], NULL, BASE)
+        .adaptive = strstr(argv[7], "non-adaptive") ? 0 : (strstr(argv[7], "adaptive") ? 1 : -1),
+        .init_mode = strstr(argv[8], "point") ? 0 : (strstr(argv[8], "random") ? 1 : (strstr(argv[8], "bulk") ? 2 : -1))
     };
     CHECK(opt.places >= 1 && opt.places <= 36);
     CHECK(opt.fmt == 0 || opt.fmt == 1);

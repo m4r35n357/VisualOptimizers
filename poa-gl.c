@@ -43,7 +43,7 @@ void Animate () {
         if (initial) {
             initial = false;
         } else {
-            c.mode = 1;  // Random
+            c.mode = 2;  // Random
             coa(p1, m, &c);
             c.mode = 0;  // Unclamped (except to bounding box)
             coa(p2, m, &c);
