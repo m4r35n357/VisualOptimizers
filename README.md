@@ -204,10 +204,9 @@ sphere | unimodal "hello world" of optimization models.  No excuse for this not 
 trid | slightly more involved, but still unimodal and well behaved
 rosenbrock | still unimodal, but tests ability to cope with contrasting directional slopes
 easom | unimodal "needle in a haystack".  Also tests machine precision!
-----------|-----------
 treacle | unimodal but non-convex
 dixon-price | multiple global maxima, and one _very_ attractive local minimum (for dimensions > 3)
-levy | multimodal but not too pathalogical
+levy | multimodal but not too pathological
 
 The other models work only at lower dimensions, or do not give clear enough data to draw any useful conclusions.
 
