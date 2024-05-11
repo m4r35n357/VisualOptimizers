@@ -9,7 +9,7 @@ There are currently three candidate algorithms included, each with an interactiv
 * Optimization by Cut (simplified version!)
 * Random Optimization
 
-Suitable for application in global optimization in up to 16 dimensions for the cut algorithm, with extension up to 64 dimensions for "bulk-mode" Nelder-Mead.
+Suitable for global optimization in up to 16 dimensions for the cut algorithm, with extension up to 64 dimensions for "bulk-mode" Nelder-Mead.
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
 
@@ -58,7 +58,7 @@ There should be NO errors or warnings.
 The default build requires OpenGL development libraries, and produces the *-gl executables.
 The nogl build is pure c99 and produces the *-std executables.
 C tags are built automatically, which can make things more comfortable in some editors and IDEs.
-Also, there is a pre-commit script for use with git, which rebuilds everything and runs some tests.
+Also, there is a pre-commit script for use with git, which rebuilds everything and runs some simple scenarios.
 To run it:
 ```
 ./pre-commit
@@ -113,6 +113,10 @@ shows single-run Nelder-Mead.
 The "multi" target runs stats.
 
 # Usage
+
+The make tests above show summary output for models of interest.
+All programs and scripts output their command arguments for easy cut & paste (magenta for scripts, cyan for binaries.
+The commands and their arguments are detailed below.
 
 ## Nelder-Mead
 
@@ -202,7 +206,7 @@ Model | Justification
 ----------|-----------
 sphere | unimodal "hello world" of optimization models.  No excuse for this not working for any optimizer!
 trid | slightly more involved, but still unimodal and well behaved
-rosenbrock | still unimodal, but tests ability to cope with contrasting directional slopes
+rosenbrock | unimodal, but tests ability to cope with contrasting directional slopes
 easom | unimodal "needle in a haystack".  Also tests machine precision!
 treacle | unimodal but non-convex
 dixon-price | multiple global maxima, and one _very_ attractive local minimum (for dimensions > 3)
@@ -223,7 +227,7 @@ Parameter | Meaning
 5 | Lower limit
 6 | Upper limit
 
-Parameters 3 and 4 are multiplied within the script to give a "budget" of evaluations for Nelder-Mead and random.
+Parameters 3 and 4 are multiplied within the script to give a "budget" of evaluations for Nelder-Mead.
 
 Example
 ```
