@@ -3,13 +3,12 @@
 Here are some basic "black-box" optimizers, for experimentation and visualization.
 If you are unsure what the ["Curse of Dimensionality"](https://en.wikipedia.org/wiki/Curse_of_dimensionality) means, or ["No Free Lunch"](https://en.wikipedia.org/wiki/No_free_lunch_theorem), this project might help.
 
-There are currently three candidate algorithms included, each with an interactive OpenGL visualizer:
+There are currently four candidate algorithms included, each with an interactive OpenGL visualizer:
 
-* Nelder-Mead - includes a "multi-run" bulk mode for global optimization, uses dual simplexes in OpenGL
-* Optimization by Cut (simplified version!)
-* Random Optimization
+* Nelder-Mead - features a "multi-run" bulk mode for global optimization
+* Optimization by Cut (including the "standard" version, my simplified version, and a random version!)
 
-Suitable for global optimization in up to 16 dimensions for the cut algorithm, with extension up to 64 dimensions for "bulk-mode" Nelder-Mead.
+Suitable for global optimization in up to 16 dimensions for the cut algorithm, with scenarios up to 64 dimensions for "bulk-mode" Nelder-Mead.
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
 
@@ -131,20 +130,20 @@ The adaptive algorithm is described (open access) [here](https://www.researchgat
 Parameter | Meaning
 ----------|-----------
 1 | Display precision (1..36)
-2 | Floating point format (0 for fixed, 1 for exponential)
+2 | Floating point format (fixed | exp)
 3 | Number of dimensions
 4 | Maximum error for convergence
 5 | Number of evaluations (maximum per iteration, and also the overall maximum when parameter 8 is set to 2)
 6 | Initial simplex scale
-7 | Adaptive (0 for no, 1 for yes)
-8 | Initialization (0 for explicit coordinates, 1 for random in range, 2 for "bulk mode") - ignored for GL
+7 | Adaptive (non-adaptive | adaptive)
+8 | Initialization (point | random | bulk) - ignored for GL
 
-If Initialization = 0
+If Initialization == point
 Parameter | Meaning
 ----------|-----------
 9+ | Coordinate list
 
-If Initialization = 1
+If Initialization == random or bulk
 Parameter | Meaning
 ----------|-----------
 9 | Lower limit
@@ -152,9 +151,8 @@ Parameter | Meaning
 
 Examples
 ```
-./nm-sphere-std 3 0 3 1.0e-6 10000 1.0 0 1 -10 10 >/dev/null
-./nm-sphere-std 3 0 3 1.0e-6 10000 1.0 0 100 -10 10 >/dev/null
-./nm-sphere-gl 3 0 3 1.0e-6 10000 1.0 0 1 -10 10
+./nm-sphere-std 3 fixed 3 1.0e-6 2627 10.0 non-adaptive bulk -10 10 >/dev/null
+./nm-sphere-gl 3 fixed 3 1.0e-6 2627 10.0 non-adaptive random -10 10 
 ```
 When parameter 8 is set to a non-zero value, the algorithm is run several times until the cumulative number of _evaluations_ exceeds this value (budget).
 This enables meaningful comparisons with the other methods.
@@ -171,28 +169,27 @@ There is one simplification I have made; instead of "clamping" the new box to be
 I have found experimentally that this improves success rates in all cases of interest.
 I retain the published "clamping" mechanism to confine the box to within the _original_ boundary.
 
-The previous "clamped" algorithm has now been replaced with a random optimizer, which is _identical_ to the cut algorithm except that the box is never shrunk!
+The algorithm has now been updated with a random optimizer, which is identical to the cut algorithms except that the box is never shrunk!
 
 Use the OpenGL visualizations to see how this all works.
 
 Parameter | Meaning
 ----------|-----------
 1 | Display precision (1..36)
-2 | Floating point format (0 for fixed, 1 for exponential)
+2 | Floating point format (fixed | exp)
 3 | Number of dimensions
 4 | Number of search agents
 5 | Number of iterations
-6 | *Algorithm mode (0 for unclamped, 1 for clamped, 2 for random)
+6 | *Algorithm mode (unclamped | clamped | random)
 7 | Lower limit
 8 | Upper limit
 
-* ignored in OpenGL, which displays unclamped and random
+* ignored in OpenGL, which displays all modes
 
 Examples
 ```
-./cut-sphere-std 3 0 3 64 100 0 -5 5
-./cut-sphere-std 3 0 3 64 100 1 -5 5
-./cut-sphere-gl 3 0 3 64 100 0 -5 5
+./cut-trid-std 3 fixed 3 27 100 unclamped -10 10 >/dev/null
+./cut-trid-gl 3 fixed 3 27 100 unclamped -10 10 
 ```
 The OpenGL visualization shows both cut and random algorithms regardless of parameter 6.
 Random mode is represented by green particles, with the best point marked in red.
@@ -233,7 +230,7 @@ Example
 ```
 make clean
 make CCC=gcc
-./solve-model sphere 8 256 1000 -10 10
+./solve-model easom 8 256 100 -15 15
 ```
 
 To get a clearer understanding of the run-by-run variation in performance of the various integrators, use the "stats" script below.
@@ -253,8 +250,8 @@ Examples
 ```
 make clean
 make CCC=gcc
-./stats 100 -313.0 ./nm-st-std 3 0 8 1.0e-6 100000 10.0 1 256000 -5 10
-./stats 100 -313.0 ./cut-st-std 3 0 8 256 1000 1 -5 10
+./stats 100 0.001 ./nm-dixon-price-std 3 fixed 8 1.0e-6 25756 10.0 adaptive bulk -10 10
+./stats 100 0.03 ./cut-treacle-std 3 fixed 8 256 100 unclamped 0 10
 ```
 For 8D or higher, using one of the faster "CCC=" make options above is _highly_ recommended!
 

@@ -3,11 +3,11 @@
 #include "opengl.h"
 #include "particles.h"
 
-static population *p1, *p2;
+static population *b1, *b2, *b3;
 static model *m;
 static minima *targets;
 static config c;
-static gl_point *v1, *v2;
+static gl_point *v1, *v2, *v3;
 
 static gl_point get_gl_point (real *p) {
     return (gl_point){(float)p[0], (float)p[1], (float)p[2]};
@@ -43,12 +43,15 @@ void Animate () {
         if (initial) {
             initial = false;
         } else {
-            c.mode = 2;  // Random
-            coa(p1, m, &c);
+            c.mode = 1;  // Clamped
+            coa(b1, m, &c);
             c.mode = 0;  // Unclamped (except to bounding box)
-            coa(p2, m, &c);
-            get_vertices(v1, p1->agents);
-            get_vertices(v2, p2->agents);
+            coa(b2, m, &c);
+            c.mode = 2;  // Random
+            coa(b3, m, &c);
+            get_vertices(v1, b1->agents);
+            get_vertices(v2, b2->agents);
+            get_vertices(v3, b3->agents);
         }
         if (stepping) paused = true;
     }
@@ -61,23 +64,26 @@ void Animate () {
         }
     }
 
-    cut_box((float)p1->lower[0], (float)p1->lower[1], (float)p1->lower[2],
-            (float)p1->upper[0], (float)p1->upper[1], (float)p1->upper[2], get_colour(DARK_RED));
-    cut_box((float)p2->lower[0], (float)p2->lower[1], (float)p2->lower[2],
-            (float)p2->upper[0], (float)p2->upper[1], (float)p2->upper[2], get_colour(DARK_MAGENTA));
+    cut_box((float)b1->lower[0], (float)b1->lower[1], (float)b1->lower[2],
+            (float)b1->upper[0], (float)b1->upper[1], (float)b1->upper[2], get_colour(DARK_RED));
+    cut_box((float)b2->lower[0], (float)b2->lower[1], (float)b2->lower[2],
+            (float)b2->upper[0], (float)b2->upper[1], (float)b2->upper[2], get_colour(DARK_MAGENTA));
     for (int i = 0; i < c.m; i++) {
-        ball(v1[i], p1->agents[i] == p1->best ? get_colour(LIGHT_RED) : get_colour(DARK_GREEN));
-        ball(v2[i], p2->agents[i] == p2->best ? get_colour(LIGHT_MAGENTA) : get_colour(DARK_CYAN));
+        ball(v1[i], b1->agents[i] == b1->best ? get_colour(LIGHT_RED) : get_colour(DARK_GREEN));
+        ball(v2[i], b2->agents[i] == b2->best ? get_colour(LIGHT_MAGENTA) : get_colour(DARK_CYAN));
+        ball(v3[i], b3->agents[i] == b3->best ? get_colour(LIGHT_YELLOW) : get_colour(DARK_YELLOW));
     }
 
     if (osd_active) {
-        osd_status(hud1, c.fmt, p1->iterations, p1->evaluations, c.places, p1->best);
-        osd_status(hud2, c.fmt, p2->iterations, p2->evaluations, c.places, p2->best);
+        osd_status(hud1, c.fmt, b1->iterations, b1->evaluations, c.places, b1->best);
+        osd_status(hud2, c.fmt, b2->iterations, b2->evaluations, c.places, b2->best);
+        osd_status(hud3, c.fmt, b3->iterations, b3->evaluations, c.places, b3->best);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_GREEN), hud1);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 40, get_colour(DARK_CYAN), hud2);
+        osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 60, get_colour(DARK_YELLOW), hud3);
         if (targets && minimum) {
-            osd_status(hud3, c.fmt, 0, 0, c.places, targets->min);
-            osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 60, get_colour(LIGHT_GREY), hud3);
+            osd_status(hud4, c.fmt, 0, 0, c.places, targets->min);
+            osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 80, get_colour(LIGHT_GREY), hud4);
         }
     }
 
@@ -85,15 +91,20 @@ void Animate () {
 }
 
 void CloseWindow () {
-    point *best = p1->agents[0]->f <= p2->agents[0]->f ? *p1->agents : *p2->agents;
+    point *best = b2->best->f <= b3->best->f ? b2->best : b3->best;
+    best = b1->best->f <= best->f ? b1->best : best;
     // print solution 1
-    fprintf(stderr, "%s%sRandom%s ", *p1->agents == best ? "* " : "  ", GRY, NRM);
-    fprintf(stderr, "  %5d %6d  ", p1->iterations, p1->evaluations);
-    print_result(c.n, *p1->agents, c.places, c.fmt);
+    fprintf(stderr, "%s%s%s  Clamped%s ", WHT, b1->best == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "  %5d %6d  ", b1->iterations, b1->evaluations);
+    print_result(c.n, b1->best, c.places, c.fmt);
     // print solution 2
-    fprintf(stderr, "%s%s   Cut%s ", *p2->agents == best ? "* " : "  ", GRY, NRM);
-    fprintf(stderr, "  %5d %6d  ", p2->iterations, p2->evaluations);
-    print_result(c.n, *p2->agents, c.places, c.fmt);
+    fprintf(stderr, "%s%s%sUnclamped%s ", WHT, b2->best == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "  %5d %6d  ", b2->iterations, b2->evaluations);
+    print_result(c.n, b2->best, c.places, c.fmt);
+    // print solution 3
+    fprintf(stderr, "%s%s%s   Random%s ", WHT, b3->best == best ? "* " : "  ", GRY, NRM);
+    fprintf(stderr, "  %5d %6d  ", b3->iterations, b3->evaluations);
+    print_result(c.n, b3->best, c.places, c.fmt);
 }
 
 int main (int argc, char **argv) {
@@ -106,16 +117,19 @@ int main (int argc, char **argv) {
     // model parameters
     m = model_init();
 
-    p1 = get_box(m, &c);
-    p2 = get_box(m, &c);
+    b1 = get_box(m, &c);
+    b2 = get_box(m, &c);
+    b3 = get_box(m, &c);
 
     // get minima for targets if known
     targets = get_known_minima();
 
     v1 = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v1);
-    get_vertices(v1, p1->agents);
+    get_vertices(v1, b1->agents);
     v2 = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v2);
-    get_vertices(v2, p2->agents);
+    get_vertices(v2, b2->agents);
+    v3 = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v3);
+    get_vertices(v3, b3->agents);
 
     lower = (float)c.lower;
     upper = (float)c.upper;
