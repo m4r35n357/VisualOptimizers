@@ -165,7 +165,7 @@ The remaining vertices are coloured either cyan (default simplex) or gold (dual 
 
 Algorithm described [here](https://arxiv.org/abs/2207.05953v1).
 
-There is one simplification I have made; instead of "clamping" the new box to be entirely within the previous one, I allow the box to be centered around the new minimum, giving a degree of movement to the box that would otherwise be absent.
+There is one key modification that I have made; instead of "clamping" the new box to be entirely within the previous one, I allow the box to be centered around the new minimum, giving a degree of movement to the box that would otherwise be absent.
 I have found experimentally that this improves success rates in all cases of interest.
 I retain the published "clamping" mechanism to confine the box to within the _original_ boundary.
 
@@ -191,9 +191,10 @@ Examples
 ./cut-trid-std 3 fixed 3 27 100 unclamped -10 10 >/dev/null
 ./cut-trid-gl 3 fixed 3 27 100 unclamped -10 10 
 ```
-The OpenGL visualization shows both cut and random algorithms regardless of parameter 6.
-Random mode is represented by green particles, with the best point marked in red.
-Cut mode (my modification, which allows the box a degree of movement) is represented by cyan particles in a magenta box, with the best point marked in magenta.
+The OpenGL visualization shows both of the cut as well as the random algorithms regardless of parameter 6.
+Clamped mode (the published method) is represented by green particles in a red box, with the best point marked in red.
+Unclamped mode (my modification, which allows the box a degree of movement) is represented by cyan particles in a magenta box, with the best point marked in magenta.
+Random mode is represented by gold particles, with the best point marked in yellow.
 
 ## The Models
 
