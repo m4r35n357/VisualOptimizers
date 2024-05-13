@@ -130,18 +130,18 @@ The adaptive algorithm is described (open access) [here](https://www.researchgat
 Parameter | Meaning
 ----------|-----------
 1 | Display precision (1..36)
-2 | Floating point format (fixed | exp)
+2 | Floating point format (fixed / exp)
 3 | Number of dimensions
 4 | Maximum error for convergence
-5 | Number of evaluations (maximum per iteration, and also the overall maximum when parameter 8 is set to 2)
+5 | Number of evaluations (maximum per iteration, and also the total in bulk mode)
 6 | Initial simplex scale
-7 | Adaptive (non-adaptive | adaptive)
-8 | Initialization (point | random | bulk) - ignored for GL
+7 | Adaptive (non-adaptive / adaptive)
+8 | Initialization (point / random / bulk) - ignored for GL
 
 If Initialization == point
 Parameter | Meaning
 ----------|-----------
-9+ | Coordinate list
+9+ | Coordinates of starting point
 
 If Initialization == random or bulk
 Parameter | Meaning
@@ -176,11 +176,11 @@ Use the OpenGL visualizations to see how this all works.
 Parameter | Meaning
 ----------|-----------
 1 | Display precision (1..36)
-2 | Floating point format (fixed | exp)
+2 | Floating point format (fixed / exp)
 3 | Number of dimensions
 4 | Number of search agents
 5 | Number of iterations
-6 | *Algorithm mode (unclamped | clamped | random)
+6 | *Algorithm mode (unclamped / clamped / random)
 7 | Lower limit
 8 | Upper limit
 
