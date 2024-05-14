@@ -6,7 +6,7 @@ If you are unsure what the ["Curse of Dimensionality"](https://en.wikipedia.org/
 There are currently four candidate algorithms included, each with an interactive OpenGL visualizer:
 
 * Nelder-Mead - features a "multi-run" bulk mode for global optimization
-* Optimization by Cut (including the "standard" version, my simplified version, and a random version!)
+* Optimization by Cut (including the published algorithm, my simplified version, and a random optimizer!)
 
 Suitable for global optimization in up to 16 dimensions for the cut algorithm, with scenarios up to 64 dimensions for "bulk-mode" Nelder-Mead.
 
@@ -258,22 +258,21 @@ For 8D or higher, using one of the faster "CCC=" make options above is _highly_ 
 
 ## "Global" Optimization
 
-A common feature of particle or "swarm-based" methods is an _exploration_ phase followed by a _refinement_ phase (in practice the transition is a gradual process).
+A common feature of particle-based methods is an _exploration_ phase followed by a _refinement_ phase (in practice the transition is a gradual process).
 Refinement is _not_ the same as convergence; you get what you are given after a specified number of iterations!
 Another way of looking at it is that the initial search domain is shrunk by a large factor, concentrating the search agents into a relatively small volume around a _potential_ minimum.
 In any case, this refinement stage makes it harder to jump out of a stubborn local minimum.
 
 I have adapted the Nelder-Mead method to do a series of random runs, while keeping the best result, and accounting for total number of function evaluations.
-The size of the initial simplex is set to a large value, and the "adaptive" setting is used for 8D and above; this setup works surprisingly well as a global optimizer!
+The size of the initial simplex is set to a large value, and the _adaptive_ setting is used for 8D and above; this setup works rather well as a global optimizer!
+This is because the random exploration is not limited by any refinement process so global minima are always potentially accessible, even if not actually reached within the set limits.
 
-The random exploration is not limited by any refinement process so global minima are always accessible, even if not actually reached within the set limits.
-
-The comparisons are _roughly_ equivalent in that the number of Nelder-Mead evaluations is set roughly to (agents) x (iterations), which is a good approximation to the number of evaluations used by the "swarm-based" optimizers.
+The comparisons are _roughly_ equivalent in that the number of Nelder-Mead evaluations is set roughly to (agents) x (iterations), which is a good approximation to the number of evaluations used by the particle-based optimizers.
 Do your own experiments!
 
 ## "multi-stats" script
 
-Runs the "stats" script many times for all algorithms (except random) for a single model, to help even out the typically large fluctuations in results from run to run, and get a more realistic view on comparative performance of the algorithms.
+Runs the "stats" script multiple times for all algorithms against a single model, to help even out the typically large fluctuations in results from run to run, and get a more realistic view on comparative performance of the algorithms.
 
 Parameter | Meaning
 ----------|-----------
@@ -286,7 +285,7 @@ Parameter | Meaning
 7 | range min
 8 | range max
 
-Parameters 5 and 6 are multiplied within the script to give a "budget" of evaluations for Nelder-Mead and random.
+Parameters 5 and 6 are multiplied within the script to give a "budget" of evaluations for Nelder-Mead.
 
 Examples
 ```
@@ -315,7 +314,7 @@ For example, try this (it will take a litttle longer to run than the 3D case):
 ```
 make test-8d 2>&1 | grep std | sed 's/^.*\[ //' | sed 's/-std/-gl/' | sed 's/[ ]*\]//' | grep cut
 ```
-Observe the way coordinates above the third are projected into the 3D space (ignored!).
+Coordinates above the third are projected into the 3D space (ignored!).
 
 ## OpenGL Keyboard Controls
 
