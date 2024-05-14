@@ -30,5 +30,8 @@ fi
 ./stats $runs $threshold ./nm-$model-std 3 fixed $order 1.0e-6 $(((agents - 1) * iterations + agents)) \
     $(printf "scale=3; 0.5 * ($upper - $lower);\n" | /usr/bin/bc) $adaptive bulk $lower $upper >/dev/null
 
-# Cut
+# Unclamped
 ./stats $runs $threshold ./cut-$model-std 3 fixed $order $agents $iterations unclamped $lower $upper >/dev/null
+
+# Clamped
+./stats $runs $threshold ./cut-$model-std 3 fixed $order $agents $iterations clamped $lower $upper >/dev/null
