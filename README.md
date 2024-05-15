@@ -66,7 +66,9 @@ To install it:
 ```
 cp pre-commit .git/hooks
 ```
-Fast executables (using -O3 -fno-math-errno -flto) make a big difference with "bulk" running (e.g. multi-run Nelder-Mead, and particularly the stats script):
+The default make command enables debugging and uses optimization level 0.
+It is good for use with IDEs, and is also used by the commit script.
+Fast executables (using -O3 -fno-math-errno -flto) can also be built, and make a big difference with "bulk" running (e.g. multi-run Nelder-Mead, and particularly the stats script):
 ```
 make CCC=gcc
 make CCC=clang
@@ -75,41 +77,22 @@ See the Makefile for various additional "test" targets.
 In particular:
 ```
 make test-3d
-make test-multi-3d
-```
-shows basic program output (with stdout suppressed!) and can be used to get OpenGL commands by cut & paste - just change std to gl in the program names.
-Bulk mode Nelder-Mead, and cut.
-The "multi" target runs stats.
-```
 make CCC=gcc test-8d
-make CCC=gcc test-multi-8d
-```
-shows bulk mode Nelder-Mead, and cut.
-The "multi" target runs stats.
-Fewer models than 3D.
-
-```
 make CCC=gcc test-16d
-make CCC=gcc test-multi-16d
-```
-shows bulk mode Nelder-Mead, and cut.
-The "multi" target runs stats.
-Fewer models than 8D.
-The cut optimizer is still hanging on at 16D, but the "curse of dimensionality" means that they will need an eye-watering number of iterations to work at 32D.
-
-```
 make CCC=gcc test-32d
-make CCC=gcc test-multi-32d
-```
-shows single-run Nelder-Mead.
-The "multi" target runs stats.
-Fewer models than 16D.
-```
 make CCC=gcc test-64d
-make CCC=gcc test-multi-64d
 ```
-shows single-run Nelder-Mead.
-The "multi" target runs stats.
+show basic program output (with stdout suppressed!) and can be used to get OpenGL commands by cut & paste - just change std to gl in the program names.
+
+The "multi" target runs stats:
+```
+make CCC=gcc test-multi-3-16
+```
+Performs 3D, 8D and 16D stats runs using the Nelder-Mead and (unclamped) cut algorithms.
+```
+make CCC=gcc test-multi-16-64
+```
+Performs 16D, 32D, and 64D stats runs using Nelder-Mead only.
 
 # Usage
 
