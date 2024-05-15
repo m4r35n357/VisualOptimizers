@@ -45,16 +45,67 @@ cut-%-gl: %.o particles.o opengl.o base.o poa-gl.o
 
 cut-gl: cut-sphere-gl cut-levy-gl cut-easom-gl cut-michalewicz-gl cut-treacle-gl cut-rosenbrock-gl cut-rastrigin-gl cut-ackley-gl cut-dixon-price-gl cut-st-gl cut-schwefel-gl cut-trid-gl
 
-.PHONY: test-multi-64d test-64d test-multi-32d test-32d test-multi-16d test-multi-8d test-multi-3d test-64d test-32d test-16d test-8d test-3d ctags clean depclean
+.PHONY: test-multi-16-64 test-multi-3-16 test-64d test-32d test-16d test-8d test-3d ctags clean depclean
 
-test-multi-64d: nogl
-	@./stats 10 0.001 ./nm-sphere-std 1 fixed 64 1.0e-6 100000 40.0 adaptive random 0 80
+test-multi-16-64: nogl
+	@./stats 10 0.001 ./nm-sphere-std 1 fixed 16 1.0e-6 100000 10.0 adaptive random 0 20 >/dev/null
+	@./stats 10 0.001 ./nm-sphere-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
+	@./stats 10 0.001 ./nm-sphere-std 1 fixed 64 1.0e-6 100000 40.0 adaptive random 0 80 >/dev/null
 	@echo ""
-	@./stats 10 -45695.0 ./nm-trid-std 1 fixed 64 1.0e-6 1000000 600.0 adaptive random 0 1200
+	@./stats 10 -799.0 ./nm-trid-std 1 fixed 16 1.0e-6 100000 50.0 adaptive random 0 100 >/dev/null
+	@./stats 10 -5951.0 ./nm-trid-std 1 fixed 32 1.0e-6 100000 150.0 adaptive random 0 300 >/dev/null
+	@./stats 10 -45695.0 ./nm-trid-std 1 fixed 64 1.0e-6 1000000 600.0 adaptive random 0 1200 >/dev/null
 	@echo ""
-	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 64 1.0e-6 2000000 40.0 adaptive random 0 80
+	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 16 1.0e-6 200000 10.0 adaptive random 0 20 >/dev/null
+	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 32 1.0e-6 200000 20.0 adaptive random 0 40 >/dev/null
+	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 64 1.0e-6 2000000 40.0 adaptive random 0 80 >/dev/null
 	@echo ""
-	@./stats 10 0.3 ./nm-treacle-std 1 fixed 64 1.0e-6 1000000 40.0 adaptive random 0 80
+	@./stats 10 -0.999 ./nm-easom-std 1 fixed 16 1.0e-6 100000 10.0 adaptive random 0 20 >/dev/null
+	@./stats 10 -0.999 ./nm-easom-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
+	@./stats 10 -0.999 ./nm-easom-std 1 fixed 64 1.0e-6 100000 40.0 adaptive random 0 80 >/dev/null
+	@echo ""
+	@./stats 10 0.3 ./nm-treacle-std 1 fixed 16 1.0e-6 100000 10.0 adaptive random 0 20 >/dev/null
+	@./stats 10 0.3 ./nm-treacle-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
+	@./stats 10 0.3 ./nm-treacle-std 1 fixed 64 1.0e-6 1000000 40.0 adaptive random 0 80 >/dev/null
+	@echo ""
+
+test-multi-3-16: nogl
+	@./multi-stats 100 0.001 sphere 3 27 100 -10 10
+	@./multi-stats 100 0.001 sphere 8 256 100 -10 10
+	@./multi-stats 10 0.001 sphere 16 65536 100 -20 20
+	@echo ""
+	@./multi-stats 100 -6.9 trid 3 27 100 -10 10
+	@./multi-stats 100 -111.9 trid 8 256 100 -30 30
+	@./multi-stats 10 -799.0 trid 16 65536 100 -100 100
+	@echo ""
+	@./multi-stats 100 0.001 rosenbrock 3 27 100 -5 5
+	@./multi-stats 100 0.001 rosenbrock 8 256 100 -10 10
+	@./multi-stats 10 0.001 rosenbrock 16 65536 100 0 20
+	@echo ""
+	@./multi-stats 100 -0.999 easom 3 27 100 -10 10
+	@./multi-stats 100 -0.999 easom 8 256 100 -15 15
+	@./multi-stats 10 -0.999 easom 16 65536 100 0 25
+	@echo ""
+	@./multi-stats 100 0.03 treacle 3 27 100 0 10
+	@./multi-stats 100 0.03 treacle 8 256 100 0 10
+	@./multi-stats 10 0.03 treacle 16 65536 100 0 20
+	@echo ""
+	@./multi-stats 100 0.001 levy 3 27 100 0 10
+	@./multi-stats 100 0.001 levy 8 256 100 0 10
+	@./multi-stats 10 0.001 levy 16 65536 100 0 20
+	@echo ""
+	@./multi-stats 100 0.001 dixon-price 3 27 100 -10 10
+	@./multi-stats 100 0.001 dixon-price 8 256 100 -10 10
+	@echo ""
+	@./multi-stats 100 -117.0 st 3 27 100 -5 5
+	@./multi-stats 100 -313.0 st 8 256 100 -5 10
+	@echo ""
+	@./multi-stats 100 -2.8 michalewicz 3 27 100 0 3.14
+	@./multi-stats 100 -7.5 michalewicz 8 256 100 0 3.14
+	@echo ""
+	@./multi-stats 100 0.001 rastrigin 3 27 100 -5 5
+	@echo ""
+	@./multi-stats 100 0.001 schwefel 3 27 100 -500 500
 	@echo ""
 
 test-64d: nogl
@@ -65,18 +116,6 @@ test-64d: nogl
 	@./nm-rosenbrock-std 1 fixed 64 1.0e-6 2000000 40.0 adaptive random 0 80 >/dev/null
 	@echo ""
 	@./nm-treacle-std 1 fixed 64 1.0e-6 1000000 40.0 adaptive random 0 80 >/dev/null
-	@echo ""
-
-test-multi-32d: nogl
-	@./stats 100 0.001 ./nm-sphere-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
-	@echo ""
-	@./stats 100 -799.0 ./nm-trid-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 300 >/dev/null
-	@echo ""
-	@./stats 100 0.001 ./nm-rosenbrock-std 1 fixed 32 1.0e-6 200000 20.0 adaptive random 0 40 >/dev/null
-	@echo ""
-	@./stats 100 -0.999 ./nm-easom-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
-	@echo ""
-	@./stats 100 0.3 ./nm-treacle-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
 	@echo ""
 
 test-32d: nogl
@@ -92,23 +131,6 @@ test-32d: nogl
 	@echo ""
 
 # 2^D search agents
-test-multi-16d: nogl
-	@./multi-stats 10 0.001 sphere 16 65536 100 -20 20
-	@echo ""
-	@./multi-stats 10 -799.0 trid 16 65536 100 -100 100
-	@echo ""
-	@./multi-stats 10 0.001 rosenbrock 16 65536 100 0 20
-	@echo ""
-	@./multi-stats 10 -0.999 easom 16 65536 100 0 25
-	@echo ""
-	@./multi-stats 10 0.03 treacle 16 65536 100 0 20
-	@echo ""
-	@./multi-stats 10 0.001 dixon-price 16 65536 100 -10 10
-	@echo ""
-	@./multi-stats 10 0.001 levy 16 65536 100 0 20
-	@echo ""
-
-# 2^D search agents
 test-16d: nogl
 	@./solve-model sphere 16 65536 100 -20 20
 	@echo ""
@@ -120,26 +142,7 @@ test-16d: nogl
 	@echo ""
 	@./solve-model treacle 16 65536 100 0 20
 	@echo ""
-	@./solve-model dixon-price 16 65536 100 -10 10
-	@echo ""
 	@./solve-model levy 16 65536 100 0 20
-	@echo ""
-
-# 2^D search agents
-test-multi-8d: nogl
-	@./multi-stats 100 0.001 sphere 8 256 100 -10 10
-	@echo ""
-	@./multi-stats 100 -111.9 trid 8 256 100 -30 30
-	@echo ""
-	@./multi-stats 100 0.001 rosenbrock 8 256 100 -10 10
-	@echo ""
-	@./multi-stats 100 -0.999 easom 8 256 100 -15 15
-	@echo ""
-	@./multi-stats 100 0.03 treacle 8 256 100 0 10
-	@echo ""
-	@./multi-stats 100 0.001 dixon-price 8 256 100 -10 10
-	@echo ""
-	@./multi-stats 100 0.001 levy 8 256 100 0 10
 	@echo ""
 
 # 2^D search agents
@@ -154,34 +157,9 @@ test-8d: nogl
 	@echo ""
 	@./solve-model treacle 8 256 100 0 10
 	@echo ""
-	@./solve-model dixon-price 8 256 100 -10 10
-	@echo ""
 	@./solve-model levy 8 256 100 0 10
 	@echo ""
-
-# 3^D search agents
-test-multi-3d: nogl
-	@./multi-stats 100 0.001 sphere 3 27 100 -10 10
-	@echo ""
-	@./multi-stats 100 -6.9 trid 3 27 100 -10 10
-	@echo ""
-	@./multi-stats 100 0.001 rosenbrock 3 27 100 -5 5
-	@echo ""
-	@./multi-stats 100 -0.999 easom 3 27 100 -10 10
-	@echo ""
-	@./multi-stats 100 0.03 treacle 3 27 100 0 10
-	@echo ""
-	@./multi-stats 100 0.001 dixon-price 3 27 100 -10 10
-	@echo ""
-	@./multi-stats 100 -117.0 st 3 27 100 -5 5
-	@echo ""
-	@./multi-stats 100 0.001 levy 3 27 100 0 10
-	@echo ""
-	@./multi-stats 100 -2.8 michalewicz 3 27 100 0 3.14
-	@echo ""
-	@./multi-stats 100 0.001 rastrigin 3 27 100 -5 5
-	@echo ""
-	@./multi-stats 100 0.001 schwefel 3 27 100 -500 500
+	@./solve-model dixon-price 8 256 100 -10 10
 	@echo ""
 
 # 3^D search agents
@@ -196,11 +174,11 @@ test-3d: nogl
 	@echo ""
 	@./solve-model treacle 3 27 100 0 10
 	@echo ""
+	@./solve-model levy 3 27 100 0 10
+	@echo ""
 	@./solve-model dixon-price 3 27 100 -10 10
 	@echo ""
 	@./solve-model st 3 27 100 -5 5
-	@echo ""
-	@./solve-model levy 3 27 100 0 10
 	@echo ""
 	@./solve-model michalewicz 3 27 100 0 3.14
 	@echo ""
