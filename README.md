@@ -1,14 +1,14 @@
-# Simple Gradient-free optimizers
+# Simple Visual Gradient-free optimizers
 
-Here are some basic "black-box" optimizers, for experimentation and visualization.
+Here are some basic "black-box" optimizers, for experimentation and learning through visualization.
 If you are unsure what the ["Curse of Dimensionality"](https://en.wikipedia.org/wiki/Curse_of_dimensionality) means, or ["No Free Lunch"](https://en.wikipedia.org/wiki/No_free_lunch_theorem), this project might help.
 
-There are currently four candidate algorithms included, each with an interactive OpenGL visualizer:
+There are currently _four_ candidate algorithms included, each with an interactive OpenGL visualizer:
 
 * Nelder-Mead - features a "multi-run" bulk mode for global optimization
 * Optimization by Cut (including the published algorithm, my simplified version, and a random optimizer!)
 
-Suitable for global optimization in up to 16 dimensions for the cut algorithm, with scenarios up to 64 dimensions for "bulk-mode" Nelder-Mead.
+Suitable for global optimization in up to 16 dimensions with the cut algorithm, and scenarios up to 64 dimensions for "bulk-mode" Nelder-Mead.
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
 
@@ -39,8 +39,8 @@ sudo apt install bc git build-essential freeglut3-dev glew-utils libglew-dev
 
 ### Download
 ```
-git clone https://github.com/m4r35n357/GradientFreeOptimizers/single-simplex-ic
-cd single-simplex-ic
+git clone https://github.com/m4r35n357/VisualOptimizers
+cd VisualOptimizers
 ```
 
 ### c Build (Clang with debug by default)
@@ -187,11 +187,11 @@ Model | Justification
 ----------|-----------
 sphere | unimodal "hello world" of optimization models.  No excuse for this not working for any optimizer!
 trid | slightly more involved, but still unimodal and well behaved
-rosenbrock | unimodal, but tests ability to cope with contrasting directional slopes
+rosenbrock | unimodal, tests ability to cope with contrasting directional slopes
 easom | unimodal "needle in a haystack".  Also tests machine precision!
 treacle | unimodal but non-convex
 dixon-price | multiple global maxima, and one _very_ attractive local minimum (for dimensions > 3)
-levy | multimodal but not too pathological
+levy | multimodal but not _too_ pathological
 
 The other models work only at lower dimensions, or do not give clear enough data to draw any useful conclusions.
 
@@ -222,13 +222,22 @@ To get a clearer understanding of the run-by-run variation in performance of the
 ## "stats" script
 
 Runs a single algorithm multiple times agains a target value for a single model.
-For each run, the output is green if the result is below a user-supplied threshold, and red otherwise.
 
 Parameter | Meaning
 ----------|-----------
 1 | Number of runs
 2 | Threshold
 3+ | optimizer command
+
+For each run, the runs/iterations/evaluations counters are green if the result is below the user-supplied threshold, and red otherwise.
+Total number of passes is printed at the end, colour coded as:
+
+Colour | Percentage
+----------|-----------
+green | > 90%
+cyan | 70% -> 90%
+orange/brown | 20% -> 70%
+red | < 20%
 
 Examples
 ```
@@ -256,6 +265,7 @@ Do your own experiments!
 ## "multi-stats" script
 
 Runs the "stats" script multiple times for all algorithms against a single model, to help even out the typically large fluctuations in results from run to run, and get a more realistic view on comparative performance of the algorithms.
+Total passes from the stats script are printed for each algorithm.
 
 Parameter | Meaning
 ----------|-----------
@@ -277,13 +287,7 @@ make CCC=gcc
 ./multi-stats 100 0.001 sphere 8 256 1000 -10 10
 ./multi-stats 100 0.03 treacle 8 256 1000 -10 10
 ```
-
-Another way to do this is using make, which invokes the script for the most "important" models.
-```
-make clean
-make CCC=gcc test-multi-3d
-make CCC=gcc test-multi-8d
-```
+See the Makefile for other examples.
 
 ## Interactive OpenGL Visualizations
 
