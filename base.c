@@ -29,7 +29,7 @@ point *get_point (int n) {
 
 void set_random_coordinates (point *p, int n, real lower, real upper) {
     for (int j = 0; j < n; j++) {
-        p->x[j] = (upper - lower) * (real)rand() / (real)RAND_MAX + lower;
+        p->x[j] = rand_range(lower, upper);
     }
 }
 
