@@ -115,14 +115,14 @@ int main (int argc, char **argv) {
     c = get_config(argv);
 
     // model parameters
-    m = model_init();
+    m = model_init(c.n);
 
     b1 = get_box(m, &c);
     b2 = get_box(m, &c);
     b3 = get_box(m, &c);
 
     // get minima for targets if known
-    targets = get_known_minima();
+    targets = get_known_minima(c.n, m);
 
     v1 = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v1);
     get_vertices(v1, b1->agents);

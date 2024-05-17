@@ -6,31 +6,33 @@
 #include <math.h>
 #include "model.h"
 
-struct Model { real PI; };
+struct Model { real PI, *shift; };
 
-model *model_init () {
+model *model_init (int n) {
     model *m = malloc(sizeof (model));
     m->PI = acosl(-1.0L);
+    m->shift = malloc((size_t)n * sizeof (real)); CHECK(m->shift);
+    for (int i = 0; i < n; i++) {
+        m->shift[i] = (real)(i + 1);
+    }
     return m;
 }
 
-minima *get_known_minima () {
-    real PI = acosl(-1.0L);
-    minima *m = malloc(sizeof (minima)); CHECK(m);
-    m->n_minima = 1;
-    m->min = malloc((size_t)m->n_minima * sizeof (point)); CHECK(m->min);
-    m->min[0].x = malloc((size_t)3 * sizeof (real)); CHECK(m->min->x);
-    m->min[0].x[0] = PI + 1.0L;
-    m->min[0].x[1] = PI + 2.0L;
-    m->min[0].x[2] = PI + 3.0L;
-    m->min[0].f = -1.0L;
-    return m;
+minima *get_known_minima (int n, const model *m) {
+    minima *o = malloc(sizeof (minima)); CHECK(o);
+    o->n_minima = 1;
+    o->min = get_point(n); CHECK(o->min);
+    for (int i = 0; i < n; i++) {
+        o->min->x[i] = m->PI + m->shift[i];
+    }
+    o->min->f = -1.0L;
+    return o;
 }
 
 void cost (int n, point *p, const model *m) {
     real prod = 1.0L, sum = 0.0L;
     for (int i = 0; i < n; i++) {
-        real xi = p->x[i] - (real)(i + 1);
+        real xi = p->x[i] - m->shift[i];
         prod *= SQR(cosl(xi));
         sum -= SQR(xi - m->PI);
     }

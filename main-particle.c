@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
     config c = get_config(argv);
 
     // model parameters
-    model *m = model_init();
+    model *m = model_init(c.n);
 
     population *b = get_box(m, &c);
 

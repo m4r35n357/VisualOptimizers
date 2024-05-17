@@ -11,7 +11,7 @@ int main (int argc, char **argv) {
     optimset o = get_settings(argv);
 
     // model parameters
-    model *m = model_init();
+    model *m = model_init(o.n);
 
     point *centre = get_point(o.n);
     if (o.init_mode == 0) {

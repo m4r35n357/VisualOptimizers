@@ -6,34 +6,38 @@
 #include <math.h>
 #include "model.h"
 
-struct Model { real min_edge, max_edge; };
+struct Model { real min_edge, max_edge, *shift; };
 
-model *model_init () {
+model *model_init (int n) {
     model *m = malloc(sizeof (model));
     m->min_edge = -500.0L;  // inequality constraint
     m->max_edge = 500.0L;  // inequality constraint
+    m->shift = malloc((size_t)n * sizeof (real)); CHECK(m->shift);
+    for (int i = 0; i < n; i++) {
+        m->shift[i] = (real)(i + 1);
+    }
     return m;
 }
 
-minima *get_known_minima () {
-    minima *m = malloc(sizeof (minima)); CHECK(m);
-    m->n_minima = 1;
-    m->min = malloc((size_t)m->n_minima * sizeof (point)); CHECK(m->min);
-    m->min[0].x = malloc((size_t)3 * sizeof (real)); CHECK(m->min->x);
-    m->min[0].x[0] = 420.9687L;
-    m->min[0].x[1] = 420.9687L;
-    m->min[0].x[2] = 420.9687L;
-    m->min[0].f = 0.0L;
-    return m;
+minima *get_known_minima (int n, const model *m) {
+    minima *o = malloc(sizeof (minima)); CHECK(o);
+    o->n_minima = 1;
+    o->min = get_point(n); CHECK(o->min);
+    for (int i = 0; i < n; i++) {
+        o->min->x[i] = 420.9687L + m->shift[i];
+    }
+    o->min->f = 0.0L;
+    return o;
 }
 
-void cost (int n, point *p, const model *m) { (void)m;
+void cost (int n, point *p, const model *m) {
     p->f = 418.9829L * n;
     for (int i = 0; i < n; i++) {
-        if (p->x[i] <= m->min_edge || p->x[i] >= m->max_edge) {
+        real xi = p->x[i] - m->shift[i];
+        if (xi <= m->min_edge || xi >= m->max_edge) {
             p->f = INFINITY;
             break;
         }
-        p->f -= p->x[i] * sinl(sqrtl(fabsl(p->x[i])));
+        p->f -= xi * sinl(sqrtl(fabsl(xi)));
     }
 }

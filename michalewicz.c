@@ -8,7 +8,7 @@
 
 struct Model { real m, PI, min_edge, max_edge; };
 
-model *model_init () {
+model *model_init (int n) { (void)n;
     model *m = malloc(sizeof (model));
     m->m = 1.0L;
     m->PI = acosl(-1.0L);
@@ -17,19 +17,18 @@ model *model_init () {
     return m;
 }
 
-minima *get_known_minima () {
-    minima *m = malloc(sizeof (minima)); CHECK(m);
-    m->n_minima = 1;
-    m->min = malloc((size_t)m->n_minima * sizeof (point)); CHECK(m->min);
-    m->min[0].x = malloc((size_t)3 * sizeof (real)); CHECK(m->min[0].x);
-    m->min[0].x[0] = 2.071689L;
-    m->min[0].x[1] = 1.570796L;
-    m->min[0].x[2] = 1.304668L;
-    m->min[0].f = -2.802848L;
-    return m;
+minima *get_known_minima (int n, const model *m) { (void)m;
+    minima *o = malloc(sizeof (minima)); CHECK(o);
+    o->n_minima = 1;
+    o->min = get_point(n); CHECK(o->min);
+    o->min->x[0] = 2.071689L;
+    o->min->x[1] = 1.570796L;
+    o->min->x[2] = 1.304668L;
+    o->min->f = -2.802848L;
+    return o;
 }
 
-void cost (int n, point *p, const model *m) { (void)m;
+void cost (int n, point *p, const model *m) {
     p->f =0.0L;
     for (int i = 0; i < n; i++) {
         if (p->x[i] <= m->min_edge || p->x[i] >= m->max_edge) {

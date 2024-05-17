@@ -93,7 +93,7 @@ int main (int argc, char **argv) {
     o = get_settings(argv);
 
     // model parameters
-    m = model_init();
+    m = model_init(o.n);
 
     point *centre = get_point(o.n);
     if (o.init_mode == 0) {
@@ -130,7 +130,7 @@ int main (int argc, char **argv) {
             GRY, NRM, o.places, distance(o.n, s1->p, s1->p + o.n));
 
     // get minima for targets if known
-    targets = get_known_minima();
+    targets = get_known_minima(o.n, m);
 
     v1 = malloc((size_t)(o.n + 1) * sizeof (gl_point)); CHECK(v1);
     get_vertices(v1, s1->p);

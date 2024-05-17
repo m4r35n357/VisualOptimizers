@@ -23,9 +23,9 @@ void cost (int, point *, const model *);
 /*
  * Initialize parameters
  */
-model *model_init (void);
+model *model_init (int);
 
 /*
  * Initialize minima, where known
  */
-minima *get_known_minima (void);
+minima *get_known_minima (int, const model *);
