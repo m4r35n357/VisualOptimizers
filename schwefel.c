@@ -1,3 +1,6 @@
+/*
+ * Schwefel function https://www.sfu.ca/~ssurjano/schwef.html
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>

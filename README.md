@@ -3,12 +3,12 @@
 Here are some basic "black-box" optimizers, for experimentation and learning through visualization.
 If you are unsure what the ["Curse of Dimensionality"](https://en.wikipedia.org/wiki/Curse_of_dimensionality) means, or ["No Free Lunch"](https://en.wikipedia.org/wiki/No_free_lunch_theorem), this project might help.
 
-There are currently _four_ candidate algorithms included, each with an interactive OpenGL visualizer:
+There are currently _four_ candidate algorithms included (two good, two not so good!), each with an interactive OpenGL visualizer:
 
 * Nelder-Mead - features a "multi-run" bulk mode for global optimization
 * Optimization by Cut (including the published algorithm, my simplified version, and a random optimizer!)
 
-Suitable for global optimization in up to 16 dimensions with the cut algorithm, and scenarios up to 64 dimensions for "bulk-mode" Nelder-Mead.
+Suitable for global optimization in up to 16 dimensions with the cut algorithms, and scenarios up to 64 dimensions for "bulk-mode" Nelder-Mead.
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
 
