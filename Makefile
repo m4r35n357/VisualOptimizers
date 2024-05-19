@@ -70,42 +70,42 @@ test-multi-16-64: nogl
 	@echo ""
 
 test-multi-3-16: nogl
-	@./multi-stats 100 0.001 sphere 3 27 100 -10 10
-	@./multi-stats 100 0.001 sphere 8 256 100 -10 10
-	@./multi-stats 10 0.001 sphere 16 65536 100 -20 20
+	@./multi-stats 100 0.001 sphere 3 27 100 0 5
+	@./multi-stats 100 0.001 sphere 8 256 100 0 10
+	@./multi-stats 10 0.001 sphere 16 65536 100 0 20
 	@echo ""
-	@./multi-stats 100 -6.9 trid 3 27 100 -10 10
-	@./multi-stats 100 -111.9 trid 8 256 100 -30 30
-	@./multi-stats 10 -799.0 trid 16 65536 100 -100 100
+	@./multi-stats 100 -6.9 trid 3 27 100 0 10
+	@./multi-stats 100 -111.9 trid 8 256 100 0 30
+	@./multi-stats 10 -799.0 trid 16 65536 100 0 100
 	@echo ""
-	@./multi-stats 100 0.001 rosenbrock 3 27 100 -5 5
-	@./multi-stats 100 0.001 rosenbrock 8 256 100 -10 10
+	@./multi-stats 100 0.001 rosenbrock 3 27 100 0 5
+	@./multi-stats 100 0.001 rosenbrock 8 256 100 0 10
 	@./multi-stats 10 0.001 rosenbrock 16 65536 100 0 20
 	@echo ""
-	@./multi-stats 100 -0.999 easom 3 27 100 -10 10
-	@./multi-stats 100 -0.999 easom 8 256 100 -15 15
+	@./multi-stats 100 -0.999 easom 3 27 100 0 10
+	@./multi-stats 100 -0.999 easom 8 256 100 0 15
 	@./multi-stats 10 -0.999 easom 16 65536 100 0 25
 	@echo ""
-	@./multi-stats 100 0.03 treacle 3 27 100 0 10
+	@./multi-stats 100 0.03 treacle 3 27 100 0 5
 	@./multi-stats 100 0.03 treacle 8 256 100 0 10
 	@./multi-stats 10 0.03 treacle 16 65536 100 0 20
 	@echo ""
-	@./multi-stats 100 0.001 levy 3 27 100 0 10
+	@./multi-stats 100 0.001 ackley 3 27 100 0 5
+	@./multi-stats 100 0.001 ackley 8 256 100 0 10
+	@./multi-stats 10 0.001 ackley 16 65536 100 0 20
+	@echo ""
+	@./multi-stats 100 0.001 levy 3 27 100 0 5
 	@./multi-stats 100 0.001 levy 8 256 100 0 10
 	@./multi-stats 10 0.001 levy 16 65536 100 0 20
 	@echo ""
-	@./multi-stats 100 0.001 dixon-price 3 27 100 -10 10
-	@./multi-stats 100 0.001 dixon-price 8 256 100 -10 10
+	@./multi-stats 100 0.001 dixon-price 3 27 100 -5 5
+	@./multi-stats 100 0.001 dixon-price 8 256 100 -5 5
 	@echo ""
 	@./multi-stats 100 -117.0 st 3 27 100 -5 5
 	@./multi-stats 100 -313.0 st 8 256 100 -5 10
 	@echo ""
 	@./multi-stats 100 -2.8 michalewicz 3 27 100 0 3.14
 	@./multi-stats 100 -7.5 michalewicz 8 256 100 0 3.14
-	@echo ""
-	@./multi-stats 100 0.001 rastrigin 3 27 100 -5 5
-	@echo ""
-	@./multi-stats 100 0.001 schwefel 3 27 100 -500 500
 	@echo ""
 
 test-64d: nogl
@@ -132,9 +132,9 @@ test-32d: nogl
 
 # 2^D search agents
 test-16d: nogl
-	@./solve-model sphere 16 65536 100 -20 20
+	@./solve-model sphere 16 65536 100 0 20
 	@echo ""
-	@./solve-model trid 16 65536 100 -100 100
+	@./solve-model trid 16 65536 100 0 100
 	@echo ""
 	@./solve-model rosenbrock 16 65536 100 0 20
 	@echo ""
@@ -142,51 +142,59 @@ test-16d: nogl
 	@echo ""
 	@./solve-model treacle 16 65536 100 0 20
 	@echo ""
+	@./solve-model ackley 16 65536 100 0 20
+	@echo ""
 	@./solve-model levy 16 65536 100 0 20
 	@echo ""
 
 # 2^D search agents
 test-8d: nogl
-	@./solve-model sphere 8 256 100 -10 10
+	@./solve-model sphere 8 256 100 0 10
 	@echo ""
-	@./solve-model trid 8 256 100 -30 30
+	@./solve-model trid 8 256 100 0 30
 	@echo ""
-	@./solve-model rosenbrock 8 256 100 -10 10
+	@./solve-model rosenbrock 8 256 100 0 10
 	@echo ""
-	@./solve-model easom 8 256 100 -15 15
+	@./solve-model easom 8 256 100 0 15
 	@echo ""
 	@./solve-model treacle 8 256 100 0 10
 	@echo ""
+	@./solve-model ackley 8 256 100 0 10
+	@echo ""
 	@./solve-model levy 8 256 100 0 10
 	@echo ""
-	@./solve-model dixon-price 8 256 100 -10 10
+	@./solve-model dixon-price 8 256 100 -5 5
+	@echo ""
+	@./solve-model st 8 256 100 -5 10
+	@echo ""
+	@./solve-model michalewicz 8 256 100 0 3.14
 	@echo ""
 
 # 3^D search agents
 test-3d: nogl
-	@./solve-model sphere 3 27 100 -10 10
+	@./solve-model sphere 3 27 100 0 5
 	@echo ""
-	@./solve-model trid 3 27 100 -10 10
+	@./solve-model trid 3 27 100 0 10
 	@echo ""
-	@./solve-model rosenbrock 3 27 100 -5 5
+	@./solve-model rosenbrock 3 27 100 0 5
 	@echo ""
-	@./solve-model easom 3 27 100 -10 10
+	@./solve-model easom 3 27 100 0 10
 	@echo ""
-	@./solve-model treacle 3 27 100 0 10
+	@./solve-model treacle 3 27 100 0 5
 	@echo ""
-	@./solve-model levy 3 27 100 0 10
+	@./solve-model ackley 3 27 100 0 5
 	@echo ""
-	@./solve-model dixon-price 3 27 100 -10 10
+	@./solve-model levy 3 27 100 0 5
+	@echo ""
+	@./solve-model dixon-price 3 27 100 -5 5
 	@echo ""
 	@./solve-model st 3 27 100 -5 5
 	@echo ""
 	@./solve-model michalewicz 3 27 100 0 3.14
 	@echo ""
-	@./solve-model ackley 3 27 100 -5 5
+	@./solve-model rastrigin 3 27 100 0 5
 	@echo ""
-	@./solve-model rastrigin 3 27 100 -5 5
-	@echo ""
-	@./solve-model schwefel 3 27 100 -500 500
+	@./solve-model schwefel 3 27 100 0 500
 	@echo ""
 
 ctags:
