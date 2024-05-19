@@ -23,7 +23,7 @@ minima *get_known_minima (int n, const model *m) {
     o->n_minima = 1;
     o->min = get_point(n); CHECK(o->min);
     for (int i = 0; i < n; i++) {
-        o->min->x[i] = m->shift[i];
+        o->min->x[i] = 1.0L + m->shift[i];
     }
     o->min->f = 0.0L;
     return o;
