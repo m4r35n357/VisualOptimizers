@@ -93,6 +93,7 @@ Performs 3D, 8D and 16D stats runs using the Nelder-Mead and (unclamped) cut alg
 make CCC=gcc test-multi-16-64
 ```
 Performs 16D, 32D, and 64D stats runs using Nelder-Mead only.
+Taken together, these two "multi" targets produce a good overall performance summary of the various algorithms and models.
 
 # Usage
 

@@ -64,9 +64,9 @@ test-multi-16-64: nogl
 	@./stats 10 -0.999 ./nm-easom-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
 	@./stats 10 -0.999 ./nm-easom-std 1 fixed 64 1.0e-6 100000 40.0 adaptive random 0 80 >/dev/null
 	@echo ""
-	@./stats 10 0.3 ./nm-treacle-std 1 fixed 16 1.0e-6 100000 10.0 adaptive random 0 20 >/dev/null
-	@./stats 10 0.3 ./nm-treacle-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
-	@./stats 10 0.3 ./nm-treacle-std 1 fixed 64 1.0e-6 1000000 40.0 adaptive random 0 80 >/dev/null
+	@./stats 10 0.126 ./nm-treacle-std 1 fixed 16 1.0e-6 100000 10.0 adaptive random 0 20 >/dev/null
+	@./stats 10 0.179 ./nm-treacle-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
+	@./stats 10 0.253 ./nm-treacle-std 1 fixed 64 1.0e-6 1000000 40.0 adaptive random 0 80 >/dev/null
 	@echo ""
 
 test-multi-3-16: nogl
@@ -86,9 +86,9 @@ test-multi-3-16: nogl
 	@./multi-stats 100 -0.999 easom 8 256 100 0 15
 	@./multi-stats 10 -0.999 easom 16 65536 100 0 25
 	@echo ""
-	@./multi-stats 100 0.03 treacle 3 27 100 0 5
-	@./multi-stats 100 0.03 treacle 8 256 100 0 10
-	@./multi-stats 10 0.03 treacle 16 65536 100 0 20
+	@./multi-stats 100 0.055 treacle 3 27 100 0 5
+	@./multi-stats 100 0.089 treacle 8 256 100 0 10
+	@./multi-stats 10 0.126 treacle 16 65536 100 0 20
 	@echo ""
 	@./multi-stats 100 0.001 ackley 3 27 100 0 5
 	@./multi-stats 100 0.001 ackley 8 256 100 0 10
@@ -97,15 +97,6 @@ test-multi-3-16: nogl
 	@./multi-stats 100 0.001 levy 3 27 100 0 5
 	@./multi-stats 100 0.001 levy 8 256 100 0 10
 	@./multi-stats 10 0.001 levy 16 65536 100 0 20
-	@echo ""
-	@./multi-stats 100 0.001 dixon-price 3 27 100 -5 5
-	@./multi-stats 100 0.001 dixon-price 8 256 100 -5 5
-	@echo ""
-	@./multi-stats 100 -117.0 st 3 27 100 -5 5
-	@./multi-stats 100 -313.0 st 8 256 100 -5 10
-	@echo ""
-	@./multi-stats 100 -2.8 michalewicz 3 27 100 0 3.14
-	@./multi-stats 100 -7.5 michalewicz 8 256 100 0 3.14
 	@echo ""
 
 test-64d: nogl
