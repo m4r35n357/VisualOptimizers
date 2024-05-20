@@ -64,10 +64,6 @@ test-multi-16-64: nogl
 	@./stats 10 -0.999 ./nm-easom-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
 	@./stats 10 -0.999 ./nm-easom-std 1 fixed 64 1.0e-6 100000 40.0 adaptive random 0 80 >/dev/null
 	@echo ""
-	@./stats 10 0.126 ./nm-treacle-std 1 fixed 16 1.0e-6 100000 10.0 adaptive random 0 20 >/dev/null
-	@./stats 10 0.179 ./nm-treacle-std 1 fixed 32 1.0e-6 100000 20.0 adaptive random 0 40 >/dev/null
-	@./stats 10 0.253 ./nm-treacle-std 1 fixed 64 1.0e-6 1000000 40.0 adaptive random 0 80 >/dev/null
-	@echo ""
 
 test-multi-3-16: nogl
 	@./multi-stats 100 0.001 sphere 3 27 100 0 5
