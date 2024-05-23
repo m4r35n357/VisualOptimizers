@@ -28,4 +28,4 @@ model *model_init (int);
 /*
  * Initialize minima, where known
  */
-minima *get_known_minima (int, const model *);
+minima *get_known_minima (int);

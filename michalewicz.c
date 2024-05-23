@@ -17,7 +17,7 @@ model *model_init (int n) { (void)n;
     return m;
 }
 
-minima *get_known_minima (int n, const model *m) { (void)m;
+minima *get_known_minima (int n) {
     minima *o = malloc(sizeof (minima)); CHECK(o);
     o->n_minima = 1;
     o->min = get_point(n); CHECK(o->min);
@@ -29,12 +29,14 @@ minima *get_known_minima (int n, const model *m) { (void)m;
 }
 
 void cost (int n, point *p, const model *m) {
-    p->f =0.0L;
     for (int i = 0; i < n; i++) {
         if (p->x[i] <= m->min_edge || p->x[i] >= m->max_edge) {
             p->f = INFINITY;
-            break;
+            return;
         }
+    }
+    p->f =0.0L;
+    for (int i = 0; i < n; i++) {
         p->f -= sinl(p->x[i]) * powl(sinl((i + 1) * SQR(p->x[i]) / m->PI), 2.0L * m->m);
     }
 }

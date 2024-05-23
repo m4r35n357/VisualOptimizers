@@ -6,16 +6,18 @@
 #include <math.h>
 #include "model.h"
 
-struct Model { real a, b; };
+struct Model { real a, b, min_edge, max_edge; };
 
 model *model_init (int n) { (void)n;
     model *m = malloc(sizeof (model));
+    m->min_edge = -10.0L;  // inequality constraint
+    m->max_edge =  10.0L;  // inequality constraint
     m->a = 1.0L;
     m->b = 2.0L;
     return m;
 }
 
-minima *get_known_minima (int n, const model *m) { (void)m;
+minima *get_known_minima (int n) {
     real y = 0.5L * sqrtl(2.0L);
     real z = powl(2.0L, -0.75L);
     minima *o = malloc(sizeof (minima)); CHECK(o);
@@ -45,6 +47,12 @@ minima *get_known_minima (int n, const model *m) { (void)m;
 }
 
 void cost (int n, point *p, const model *m) {
+    for (int i = 0; i < n; i++) {
+        if (p->x[i] <= m->min_edge || p->x[i] >= m->max_edge) {
+            p->f = INFINITY;
+            return;
+        }
+    }
     p->f = SQR(p->x[0] - m->a);
     for (int i = 1; i < n; i++) {
         p->f += (i + 1) * SQR(m->b * SQR(p->x[i]) - p->x[i - 1]);

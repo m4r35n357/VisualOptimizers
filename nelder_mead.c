@@ -22,7 +22,7 @@ optimset get_settings (char **argv) {
     CHECK(opt.n >= 1 && opt.n <= 64);
     CHECK(opt.tolerance >= 1.0e-36L && opt.tolerance <= 1.0e-3L);
     CHECK(opt.max_evaluations >= 1 && opt.max_evaluations <= 10000000);
-    CHECK(opt.size >= 1.0e-12L && opt.size <= 1.0e3L);
+    CHECK(opt.size >= 1.0e-12L && opt.size <= 1.0e4L);
     CHECK(opt.adaptive == 0 || opt.adaptive == 1);
     CHECK(opt.init_mode == 0 || opt.init_mode == 1 || opt.init_mode == 2);
     return opt;

@@ -122,7 +122,7 @@ int main (int argc, char **argv) {
     b3 = get_box(m, &c);
 
     // get minima for targets if known
-    targets = get_known_minima(c.n, m);
+    targets = get_known_minima(c.n);
 
     v1 = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v1);
     get_vertices(v1, b1->agents);

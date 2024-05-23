@@ -6,34 +6,36 @@
 #include <math.h>
 #include "model.h"
 
-struct Model { real a, *shift; };
+struct Model { real a, min_edge, max_edge; };
 
 model *model_init (int n) {
     model *m = malloc(sizeof (model));
+    m->min_edge = - n * n;  // inequality constraint
+    m->max_edge = - m->min_edge;  // inequality constraint
     m->a = 1.0L;
-    m->shift = malloc((size_t)n * sizeof (real)); CHECK(m->shift);
-    for (int i = 0; i < n; i++) {
-        m->shift[i] = (real)(i + 1);
-    }
     return m;
 }
 
-minima *get_known_minima (int n, const model *m) {
+minima *get_known_minima (int n) {
     minima *o = malloc(sizeof (minima)); CHECK(o);
     o->n_minima = 1;
     o->min = get_point(n); CHECK(o->min);
     for (int i = 0; i < n; i++) {
-        o->min->x[i] = (i + 1) * (n + 1 - (i + 1)) + m->shift[i];
+        o->min->x[i] = (i + 1) * (n + 1 - (i + 1));
     }
     o->min->f = - n * (n + 4) * (n - 1) / 6.0L;
     return o;
 }
 
 void cost (int n, point *p, const model *m) {
+    for (int i = 0; i < n; i++) {
+        if (p->x[i] <= m->min_edge || p->x[i] >= m->max_edge) {
+            p->f = INFINITY;
+            return;
+        }
+    }
     p->f = 0.0L;
     for (int i = 0; i < n; i++) {
-        real xi = p->x[i] - m->shift[i];
-        real xi_1 = p->x[i - 1] - m->shift[i - 1];
-        p->f += SQR(xi - 1.0L) - (i > 0 ? xi * xi_1 : 0.0L);
+        p->f += SQR(p->x[i] - 1.0L) - (i > 0 ? p->x[i] * p->x[i - 1] : 0.0L);
     }
 }

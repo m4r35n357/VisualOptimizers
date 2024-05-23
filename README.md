@@ -197,9 +197,6 @@ dixon-price | multiple global maxima, and one _very_ attractive local minimum (f
 
 The other models work only at lower dimensions, or do not give clear enough data to draw any useful conclusions.
 
-All but two of the models used here have had the origin "shifted" to help defeat dishonest optimizers with a [centre-bias](https://arxiv.org/abs/2301.01984).
-The two exceptions are not susceptible to this problem as they are already hard problems for all optimizers tested, so are not critical to these tests.
-
 ## "solve-model" script
 
 Run a single model against all integrators, including random
