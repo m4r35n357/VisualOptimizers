@@ -62,6 +62,7 @@ population *get_box (model *m, config *c) {
     b->agents = create_population(b, m, c);
     b->looping = false;
     b->lambda = powl(SHRINK_FACTOR, 1.0L / c->max_iterations);
+    b->side = 0.5L * (c->upper - c->lower);
     return b;
 }
 
@@ -69,10 +70,10 @@ bool coa (population *b, model *m, config *c) {
     if (c->step_mode && b->looping) goto resume; else b->looping = true;
     while (b->iterations < c->max_iterations) {
         if (c->mode != 2) {  // cut algorithm - shrink the box
-            real side = 0.5L * b->lambda * (b->upper[0] - b->lower[0]);
+            b->side *= b->lambda;
             for (int k = 0; k < c->n; k++) {
-                real upper = b->best->x[k] + side;
-                real lower = b->best->x[k] - side;
+                real upper = b->best->x[k] + b->side;
+                real lower = b->best->x[k] - b->side;
                 real lower_limit = c->mode ? b->lower[k] : c->lower;
                 real upper_limit = c->mode ? b->upper[k] : c->upper;
                 if (lower < lower_limit) {

@@ -27,7 +27,7 @@ typedef struct Population {
     point **agents;
     point *best, *update;
     int iterations, evaluations;
-    real *lower, *upper, lambda;
+    real *lower, *upper, side, lambda;
     bool looping, updated;
 } population;
 
