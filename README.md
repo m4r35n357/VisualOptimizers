@@ -94,6 +94,10 @@ make CCC=gcc test-multi-16-64
 ```
 Performs 16D, 32D, and 64D stats runs using Nelder-Mead only.
 Taken together, these two "multi" targets produce a good overall performance summary of the various algorithms and models.
+```
+make CCC=gcc test-multi-xor
+```
+Trains neural network simulation of an XOR logic gate (9D).
 
 # Usage
 
@@ -191,6 +195,7 @@ trid | slightly more involved, but still unimodal and well behaved
 rosenbrock | unimodal, non-convex, tests ability to cope with contrasting directional slopes
 easom | unimodal, non-convex, "needle in a haystack".  Also tests machine precision!
 treacle | unimodal but _highly_ non-convex
+xor | real-life example
 ackley | multimodal but not _too_ pathological
 levy | multimodal but not _too_ pathological
 dixon-price | multiple global maxima, and one _very_ attractive local minimum (for dimensions > 3)
