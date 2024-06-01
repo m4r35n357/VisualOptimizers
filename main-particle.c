@@ -14,6 +14,9 @@ int main(int argc, char *argv[]) {
 
     population *b = get_box(m, &c);
 
+    fprintf(stderr, "%s       Initial  ", GRY);
+    print_result(c.n, b->best, c.places, c.fmt);
+
     // run optimization
     coa(b, m, &c);
 
