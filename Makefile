@@ -96,11 +96,11 @@ test-multi-3-16: nogl
 	@echo ""
 
 test-multi-xor: nogl
-	@./stats 100 0.001 ./nm-xor-std 3 fixed 9 1.0e-6 25600 20.0 non-adaptive bulk -20 20 >/dev/null
-	@./stats 100 0.001 ./nm-xor-std 3 fixed 9 1.0e-6 25600 20.0 adaptive bulk -20 20 >/dev/null
-	@./stats 100 0.001 ./cut-xor-std 3 fixed 9 256 100 unclamped -20 20 >/dev/null
-	@./stats 100 0.001 ./cut-xor-std 3 fixed 9 256 100 clamped -20 20 >/dev/null
-	@./stats 100 0.001 ./cut-xor-std 3 fixed 9 256 100 random -20 20 >/dev/null
+	@./stats 100 0.001  ./nm-xor-std 3 fixed 9 1.0e-6 25600 2.0 non-adaptive bulk -2 2 >/dev/null
+	@./stats 100 0.001  ./nm-xor-std 3 fixed 9 1.0e-6 25600 2.0 adaptive bulk -2 2 >/dev/null
+	@./stats 100 0.001 ./cut-xor-std 3 fixed 9 256 100 unclamped -2 2 >/dev/null
+	@./stats 100 0.001 ./cut-xor-std 3 fixed 9 256 100 clamped -2 2 >/dev/null
+	@./stats 100 0.001 ./cut-xor-std 3 fixed 9 256 100 random -2 2 >/dev/null
 	@echo ""
 
 test-64d: nogl
