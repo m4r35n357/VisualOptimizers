@@ -27,25 +27,25 @@ nogl: nm-std cut-std ctags
 nm-%-std: %.o nelder_mead.o base.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-nm-std: nm-sphere-std nm-levy-std nm-easom-std nm-michalewicz-std nm-rastrigin-std nm-treacle-std nm-ackley-std nm-rosenbrock-std nm-dixon-price-std nm-st-std nm-schwefel-std nm-trid-std nm-xor-std
+nm-std: nm-sphere-std nm-levy-std nm-easom-std nm-michalewicz-std nm-rastrigin-std nm-treacle-std nm-ackley-std nm-rosenbrock-std nm-dixon-price-std nm-st-std nm-schwefel-std nm-trid-std nm-and-std nm-or-std nm-xor-std
 
 nm-%-gl: %.o nelder_mead.o opengl.o base.o simplex-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-nm-gl: nm-sphere-gl nm-levy-gl nm-easom-gl nm-michalewicz-gl nm-rastrigin-gl nm-treacle-gl nm-ackley-gl nm-rosenbrock-gl nm-dixon-price-gl nm-st-gl nm-schwefel-gl nm-trid-gl nm-xor-gl
+nm-gl: nm-sphere-gl nm-levy-gl nm-easom-gl nm-michalewicz-gl nm-rastrigin-gl nm-treacle-gl nm-ackley-gl nm-rosenbrock-gl nm-dixon-price-gl nm-st-gl nm-schwefel-gl nm-trid-gl nm-and-gl nm-or-gl nm-xor-gl
 
 # Optimization by cut
 cut-%-std: %.o particles.o base.o main-particle.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-cut-std: cut-sphere-std cut-levy-std cut-easom-std cut-michalewicz-std cut-treacle-std cut-rosenbrock-std cut-rastrigin-std cut-ackley-std cut-dixon-price-std cut-st-std cut-schwefel-std cut-trid-std cut-xor-std
+cut-std: cut-sphere-std cut-levy-std cut-easom-std cut-michalewicz-std cut-treacle-std cut-rosenbrock-std cut-rastrigin-std cut-ackley-std cut-dixon-price-std cut-st-std cut-schwefel-std cut-trid-std cut-and-std cut-or-std cut-xor-std
 
 cut-%-gl: %.o particles.o opengl.o base.o poa-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-cut-gl: cut-sphere-gl cut-levy-gl cut-easom-gl cut-michalewicz-gl cut-treacle-gl cut-rosenbrock-gl cut-rastrigin-gl cut-ackley-gl cut-dixon-price-gl cut-st-gl cut-schwefel-gl cut-trid-gl cut-xor-gl
+cut-gl: cut-sphere-gl cut-levy-gl cut-easom-gl cut-michalewicz-gl cut-treacle-gl cut-rosenbrock-gl cut-rastrigin-gl cut-ackley-gl cut-dixon-price-gl cut-st-gl cut-schwefel-gl cut-trid-gl cut-and-gl cut-or-gl cut-xor-gl
 
-.PHONY: test-multi-16-64 test-multi-3-16 test-multi-xor test-64d test-32d test-16d test-8d test-3d ctags clean depclean
+.PHONY: test-multi-16-64 test-multi-3-16 test-multi-logic test-64d test-32d test-16d test-8d test-3d ctags clean depclean
 
 test-multi-16-64: nogl
 	@./stats 10 0.001 ./nm-sphere-std 1 fixed 16 1.0e-6 100000 10.0 adaptive random -10 10 >/dev/null
@@ -95,7 +95,19 @@ test-multi-3-16: nogl
 	@./multi-stats 10 0.001 levy 16 65536 100 -10 10
 	@echo ""
 
-test-multi-xor: nogl
+test-multi-logic: nogl
+	@./stats 100 0.001  ./nm-and-std 3 fixed 3 1.0e-6 2700 2.0 non-adaptive bulk -2 2 >/dev/null
+	@./stats 100 0.001  ./nm-and-std 3 fixed 3 1.0e-6 2700 2.0 adaptive bulk -2 2 >/dev/null
+	@./stats 100 0.001 ./cut-and-std 3 fixed 3 27 100 unclamped -2 2 >/dev/null
+	@./stats 100 0.001 ./cut-and-std 3 fixed 3 27 100 clamped -2 2 >/dev/null
+	@./stats 100 0.001 ./cut-and-std 3 fixed 3 27 100 random -2 2 >/dev/null
+	@echo ""
+	@./stats 100 0.001  ./nm-or-std 3 fixed 3 1.0e-6 2700 2.0 non-adaptive bulk -2 2 >/dev/null
+	@./stats 100 0.001  ./nm-or-std 3 fixed 3 1.0e-6 2700 2.0 adaptive bulk -2 2 >/dev/null
+	@./stats 100 0.001 ./cut-or-std 3 fixed 3 27 100 unclamped -2 2 >/dev/null
+	@./stats 100 0.001 ./cut-or-std 3 fixed 3 27 100 clamped -2 2 >/dev/null
+	@./stats 100 0.001 ./cut-or-std 3 fixed 3 27 100 random -2 2 >/dev/null
+	@echo ""
 	@./stats 100 0.001  ./nm-xor-std 3 fixed 9 1.0e-6 25600 2.0 non-adaptive bulk -2 2 >/dev/null
 	@./stats 100 0.001  ./nm-xor-std 3 fixed 9 1.0e-6 25600 2.0 adaptive bulk -2 2 >/dev/null
 	@./stats 100 0.001 ./cut-xor-std 3 fixed 9 256 100 unclamped -2 2 >/dev/null
