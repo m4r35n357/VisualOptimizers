@@ -6,7 +6,7 @@
 #include <math.h>
 #include "model.h"
 
-struct Model { real a, b, min_edge, max_edge; };
+struct Model { real min_edge, max_edge; };
 
 model *model_init (int n) { (void)n;
     model *m = malloc(sizeof (model));

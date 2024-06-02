@@ -195,7 +195,8 @@ trid | slightly more involved, but still unimodal and well behaved
 rosenbrock | unimodal, non-convex, tests ability to cope with contrasting directional slopes
 easom | unimodal, non-convex, "needle in a haystack".  Also tests machine precision!
 treacle | unimodal but _highly_ non-convex
-or, and, xor | real-life examples
+lc | RF filter design examples
+xor | "real-life" example
 ackley | multimodal but not _too_ pathological
 levy | multimodal but not _too_ pathological
 dixon-price | multiple global maxima, and one _very_ attractive local minimum (for dimensions > 3)
