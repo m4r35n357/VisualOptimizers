@@ -59,4 +59,7 @@ void cost (int n, point *p, const model *m) {
     p->f += error(n, p, 10000.0L);
     p->f += error(n, p, 100000.0L);
     p->f += error(n, p, 1000000.0L);
+    for (int r = 0; r < ((n % 2 == 1) ? (n - 1) / 2 : n / 2); r++) {
+        p->f += SQR(p->x[r] - p->x[n - r - 1]);
+    }
 }
