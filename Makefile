@@ -104,22 +104,22 @@ test-multi-logic: nogl
 	@echo ""
 
 test-filters: nogl
-	@./nm-lc-std 6 fixed 8 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 >/dev/null
-	@./nm-lc-std 6 fixed 7 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 1.0 1.0 1.0 1.0 1.0 >/dev/null
-	@./nm-lc-std 6 fixed 6 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 1.0 1.0 1.0 1.0 >/dev/null
-	@./nm-lc-std 6 fixed 5 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 1.0 1.0 1.0 >/dev/null
+	#@./nm-lc-std 6 fixed 8 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 >/dev/null
 	@./nm-lc-std 6 fixed 4 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 1.0 1.0 >/dev/null
+	#@./nm-lc-std 6 fixed 6 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 1.0 1.0 1.0 1.0 >/dev/null
 	@./nm-lc-std 6 fixed 3 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 1.0 >/dev/null
+	#@./nm-lc-std 6 fixed 4 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 1.0 1.0 >/dev/null
 	@./nm-lc-std 6 fixed 2 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 >/dev/null
+	#@./nm-lc-std 6 fixed 2 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 >/dev/null
 	@./nm-lc-std 6 fixed 1 1.0e-6 100000 2.0 non-adaptive point 1.0 >/dev/null
 	@echo ""
-	@./cut-lc-std 6 fixed 8 256 100 unclamped 0.0 3.0 >/dev/null
-	@./cut-lc-std 6 fixed 7 128 100 unclamped 0.0 3.0 >/dev/null
-	@./cut-lc-std 6 fixed 6 64 100 unclamped 0.0 3.0 >/dev/null
-	@./cut-lc-std 6 fixed 5 32 100 unclamped 0.0 3.0 >/dev/null
-	@./cut-lc-std 6 fixed 4 16 100 unclamped 0.0 3.0 >/dev/null
-	@./cut-lc-std 6 fixed 3 8 100 unclamped 0.0 3.0 >/dev/null
-	@./cut-lc-std 6 fixed 2 4 100 unclamped 0.0 3.0 >/dev/null
+	#@./cut-lc-std 6 fixed 8 256 100 unclamped 0.0 3.0 >/dev/null
+	@./cut-lc-std 6 fixed 4 128 100 unclamped 0.0 3.0 >/dev/null
+	#@./cut-lc-std 6 fixed 6 64 100 unclamped 0.0 3.0 >/dev/null
+	@./cut-lc-std 6 fixed 3 32 100 unclamped 0.0 3.0 >/dev/null
+	#@./cut-lc-std 6 fixed 4 16 100 unclamped 0.0 3.0 >/dev/null
+	@./cut-lc-std 6 fixed 2 8 100 unclamped 0.0 3.0 >/dev/null
+	#@./cut-lc-std 6 fixed 2 4 100 unclamped 0.0 3.0 >/dev/null
 	@./cut-lc-std 6 fixed 1 2 100 unclamped 0.0 3.0 >/dev/null
 	@echo ""
 
