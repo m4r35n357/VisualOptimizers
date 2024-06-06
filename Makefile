@@ -108,11 +108,11 @@ test-multi-filters: nogl
 	@echo ""
 	@./multi-stats 100 0.000001 lc 2 8 100 0.0 3.0
 	@echo ""
-	@./multi-stats 100 0.000001 lc 3 32 100 0.0 3.0
+	@./multi-stats 100 0.000001 lc 3 27 100 0.0 3.0
 	@echo ""
-	@./multi-stats 100 0.000001 lc 4 128 100 0.0 3.0
+	@./multi-stats 100 0.000001 lc 4 64 100 0.0 3.0
 	@echo ""
-	@./multi-stats 100 0.000001 lc 5 512 100 0.0 3.0
+	@./multi-stats 100 0.000001 lc 5 125 100 0.0 3.0
 	@echo ""
 
 test-filters: nogl
@@ -122,9 +122,9 @@ test-filters: nogl
 	@./nm-lc-std 6 fixed 2 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 >/dev/null
 	@./nm-lc-std 6 fixed 1 1.0e-6 100000 2.0 non-adaptive point 1.0 >/dev/null
 	@echo ""
-	@./cut-lc-std 6 fixed 5 512 100 unclamped 0.0 3.0 >/dev/null
-	@./cut-lc-std 6 fixed 4 128 100 unclamped 0.0 3.0 >/dev/null
-	@./cut-lc-std 6 fixed 3 32 100 unclamped 0.0 3.0 >/dev/null
+	@./cut-lc-std 6 fixed 5 125 100 unclamped 0.0 3.0 >/dev/null
+	@./cut-lc-std 6 fixed 4 64 100 unclamped 0.0 3.0 >/dev/null
+	@./cut-lc-std 6 fixed 3 27 100 unclamped 0.0 3.0 >/dev/null
 	@./cut-lc-std 6 fixed 2 8 100 unclamped 0.0 3.0 >/dev/null
 	@./cut-lc-std 6 fixed 1 2 100 unclamped 0.0 3.0 >/dev/null
 	@echo ""
@@ -191,6 +191,8 @@ test-8d: nogl
 
 # 3^D search agents
 test-3d: nogl
+	@./solve-model lc 3 27 100 0.0 3.0
+	@echo ""
 	@./solve-model sphere 3 27 100 -5.12 5.12
 	@echo ""
 	@./solve-model trid 3 27 100 -9 9

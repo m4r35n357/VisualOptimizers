@@ -194,7 +194,7 @@ These are the most "important", in decreasing order
 
 Model | Justification
 ----------|-----------
-lc | RF LC low-pass filter design, symmetric (filter order = 2 * dimension - 1)
+lc | LC low-pass filter design, symmetric (filter order = 2 * dimension - 1)
 xor | "real-life" example of neural net tuning
 sphere | unimodal "hello world" of optimization models.  No excuse for this not working for any optimizer!
 trid | slightly more involved, but still unimodal and well behaved
