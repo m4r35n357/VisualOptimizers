@@ -71,7 +71,7 @@ void Animate () {
     for (int i = 0; i < c.m; i++) {
         ball(v1[i], b1->agents[i] == b1->best ? get_colour(LIGHT_RED) : get_colour(DARK_GREEN));
         ball(v2[i], b2->agents[i] == b2->best ? get_colour(LIGHT_MAGENTA) : get_colour(DARK_CYAN));
-        ball(v3[i], b3->agents[i] == b3->best ? get_colour(LIGHT_YELLOW) : get_colour(MID_GREY));
+        ball(v3[i], b3->agents[i] == b3->best ? get_colour(LIGHT_YELLOW) : get_colour(DARK_YELLOW));
     }
 
     if (osd_active) {
@@ -80,7 +80,7 @@ void Animate () {
         osd_status(hud3, c.fmt, b3->iterations, b3->evaluations, c.places, b3->best);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 20, get_colour(DARK_GREEN), hud1);
         osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 40, get_colour(DARK_CYAN), hud2);
-        osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 60, get_colour(MID_GREY), hud3);
+        osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 60, get_colour(DARK_YELLOW), hud3);
         if (targets && minimum) {
             osd_status(hud4, c.fmt, 0, 0, c.places, targets->min);
             osd(10, glutGet(GLUT_WINDOW_HEIGHT) - 80, get_colour(LIGHT_GREY), hud4);
