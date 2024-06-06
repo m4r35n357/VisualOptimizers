@@ -98,6 +98,10 @@ Taken together, these two "multi" targets produce a good overall performance sum
 make CCC=gcc test-multi-logic
 ```
 "Trains" neural network simulation of AND, OR, and XOR logic gates.
+```
+make CCC=gcc test-filters
+```
+Synthesizes RF filter components.
 
 # Usage
 
