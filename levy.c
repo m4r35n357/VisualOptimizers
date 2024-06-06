@@ -1,8 +1,6 @@
 /*
  * Levy function https://www.sfu.ca/~ssurjano/levy.html
  */
-#include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 #include "model.h"
 

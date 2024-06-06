@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <GL/freeglut.h>
 #include "opengl.h"
 #include "particles.h"

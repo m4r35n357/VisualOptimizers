@@ -1,8 +1,6 @@
 /*
  * Artificial Neural Network simulating XOR gate function
  */
-#include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 #include "model.h"
 

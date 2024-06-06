@@ -1,8 +1,6 @@
 /*
  * "Treacle" function - of my own devising. Very challenging for simplex-based methods (also non-convex)
  */
-#include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 #include "model.h"
 

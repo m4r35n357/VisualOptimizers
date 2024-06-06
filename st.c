@@ -1,8 +1,6 @@
 /*
  * Styblinski-Tang function https://www.sfu.ca/~ssurjano/stybtang.html
  */
-#include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 #include "model.h"
 

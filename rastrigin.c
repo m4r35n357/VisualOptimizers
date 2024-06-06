@@ -1,8 +1,6 @@
 /*
  * Rastrigin function https://www.sfu.ca/~ssurjano/rastr.html
  */
-#include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 #include "model.h"
 
