@@ -33,6 +33,12 @@ int main (int argc, char **argv) {
     fprintf(stderr, "%s               Initial  ", GRY);
     print_result(o.n, centre, o.places, o.fmt);
 
+    minima *min = get_known_minima(o.n);
+    if (min) {
+        fprintf(stderr, "%s              Expected  ", GRY);
+        print_result(o.n, min->min, o.places, o.fmt);
+    }
+
     point *boat = get_point(o.n);
     boat->f = INFINITY;
     int runs = 0, iterations = 0, evaluations = 0;
