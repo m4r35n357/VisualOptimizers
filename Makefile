@@ -45,7 +45,7 @@ cut-%-gl: %.o particles.o opengl.o base.o poa-gl.o
 
 cut-gl: cut-sphere-gl cut-levy-gl cut-easom-gl cut-michalewicz-gl cut-treacle-gl cut-rosenbrock-gl cut-rastrigin-gl cut-ackley-gl cut-dixon-price-gl cut-st-gl cut-schwefel-gl cut-trid-gl cut-xor-gl cut-lc-gl
 
-.PHONY: test-filters test-multi-16-64 test-multi-3-16 test-multi-logic test-64d test-32d test-16d test-8d test-3d ctags clean depclean
+.PHONY: test-multi-16-64 test-multi-3-16 test-multi-logic test-multi-filters test-filters test-64d test-32d test-16d test-8d test-3d ctags clean depclean
 
 test-multi-16-64: nogl
 	@./stats 10 0.001 ./nm-sphere-std 1 fixed 16 1.0e-6 100000 10.0 adaptive random -10 10 >/dev/null
@@ -103,25 +103,29 @@ test-multi-logic: nogl
 	@./stats 100 0.001 ./cut-xor-std 3 fixed 9 256 100 random -2 2 >/dev/null
 	@echo ""
 
+test-multi-filters: nogl
+	@./multi-stats 100 0.000001 lc 1 2 100 0.0 3.0
+	@echo ""
+	@./multi-stats 100 0.000001 lc 2 8 100 0.0 3.0
+	@echo ""
+	@./multi-stats 100 0.000001 lc 3 32 100 0.0 3.0
+	@echo ""
+	@./multi-stats 100 0.000001 lc 4 128 100 0.0 3.0
+	@echo ""
+	@./multi-stats 100 0.000001 lc 5 512 100 0.0 3.0
+	@echo ""
+
 test-filters: nogl
 	@./nm-lc-std 6 fixed 5 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 1.0 1.0 1.0 >/dev/null
-	#@./nm-lc-std 6 fixed 8 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 >/dev/null
 	@./nm-lc-std 6 fixed 4 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 1.0 1.0 >/dev/null
-	#@./nm-lc-std 6 fixed 6 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 1.0 1.0 1.0 1.0 >/dev/null
 	@./nm-lc-std 6 fixed 3 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 1.0 >/dev/null
-	#@./nm-lc-std 6 fixed 4 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 1.0 1.0 >/dev/null
 	@./nm-lc-std 6 fixed 2 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 >/dev/null
-	#@./nm-lc-std 6 fixed 2 1.0e-6 100000 2.0 non-adaptive point 1.0 1.0 >/dev/null
 	@./nm-lc-std 6 fixed 1 1.0e-6 100000 2.0 non-adaptive point 1.0 >/dev/null
 	@echo ""
 	@./cut-lc-std 6 fixed 5 512 100 unclamped 0.0 3.0 >/dev/null
-	#@./cut-lc-std 6 fixed 8 256 100 unclamped 0.0 3.0 >/dev/null
 	@./cut-lc-std 6 fixed 4 128 100 unclamped 0.0 3.0 >/dev/null
-	#@./cut-lc-std 6 fixed 6 64 100 unclamped 0.0 3.0 >/dev/null
 	@./cut-lc-std 6 fixed 3 32 100 unclamped 0.0 3.0 >/dev/null
-	#@./cut-lc-std 6 fixed 4 16 100 unclamped 0.0 3.0 >/dev/null
 	@./cut-lc-std 6 fixed 2 8 100 unclamped 0.0 3.0 >/dev/null
-	#@./cut-lc-std 6 fixed 2 4 100 unclamped 0.0 3.0 >/dev/null
 	@./cut-lc-std 6 fixed 1 2 100 unclamped 0.0 3.0 >/dev/null
 	@echo ""
 
