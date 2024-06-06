@@ -194,13 +194,13 @@ These are the most "important", in decreasing order
 
 Model | Justification
 ----------|-----------
+lc | RF LC low-pass filter design, symmetric (filter order = 2 * dimension - 1)
+xor | "real-life" example of neural net tuning
 sphere | unimodal "hello world" of optimization models.  No excuse for this not working for any optimizer!
 trid | slightly more involved, but still unimodal and well behaved
 rosenbrock | unimodal, non-convex, tests ability to cope with contrasting directional slopes
 easom | unimodal, non-convex, "needle in a haystack".  Also tests machine precision!
 treacle | unimodal but _highly_ non-convex
-lc | RF filter design examples
-xor | "real-life" example
 ackley | multimodal but not _too_ pathological
 levy | multimodal but not _too_ pathological
 dixon-price | multiple global maxima, and one _very_ attractive local minimum (for dimensions > 3)
