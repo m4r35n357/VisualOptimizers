@@ -7,8 +7,6 @@
 #include <complex.h>
 #include "model.h"
 
-typedef long double complex cplx;
-
 struct Model { real min_edge, max_edge; };
 
 model *model_init (int n) { (void)n;
@@ -31,7 +29,7 @@ minima *get_known_minima (int n) { (void)n;
 }
 
 static real error (int n, point *p, real w) {
-    cplx g = 1.0L + I * w * p->x[0];
+    long double complex g = 1.0L + I * w * p->x[0];
     for (int r = 1; r < n; r++) {
         g = 1.0L / g + I * w * p->x[r];
     }
