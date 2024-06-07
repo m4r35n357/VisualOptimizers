@@ -95,10 +95,6 @@ make CCC=gcc test-multi-16-64
 Performs 16D, 32D, and 64D stats runs using Nelder-Mead only.
 Taken together, these two "multi" targets produce a good overall performance summary of the various algorithms and models.
 ```
-make CCC=gcc test-multi-logic
-```
-"Trains" neural network simulation of AND, OR, and XOR logic gates.
-```
 make CCC=gcc test-filters
 ```
 Synthesizes RF filter components.
@@ -195,7 +191,6 @@ These are the most "important", in decreasing order
 Model | Justification
 ----------|-----------
 lc | LC low-pass filter design, symmetric (filter order = 2 * dimension - 1)
-xor | "real-life" example of neural net tuning
 sphere | unimodal "hello world" of optimization models.  No excuse for this not working for any optimizer!
 trid | slightly more involved, but still unimodal and well behaved
 rosenbrock | unimodal, non-convex, tests ability to cope with contrasting directional slopes
