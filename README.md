@@ -98,6 +98,10 @@ Taken together, these two "multi" targets produce a good overall performance sum
 make CCC=gcc test-filters
 ```
 Synthesizes RF filter components.
+```
+make CCC=gcc test-multi-filters
+```
+Some stats runs for the LC filter.
 
 # Usage
 

@@ -5,12 +5,11 @@
 #include <complex.h>
 #include "model.h"
 
-struct Model { real min_edge, max_edge; };
+struct Model { real min; };
 
 model *model_init (int n) { (void)n;
     model *m = malloc(sizeof (model));
-    m->min_edge = 0.0L;  // inequality constraint
-    m->max_edge = 5.0L;  // inequality constraint
+    m->min = 0.0L;  // inequality constraint - passive components!
     return m;
 }
 
@@ -39,16 +38,13 @@ static real error (int n, point *p, real w) {
 
 void cost (int n, point *p, const model *m) {
     for (int i = 0; i < n; i++) {
-        if (p->x[i] <= m->min_edge || p->x[i] >= m->max_edge) {
+        if (p->x[i] < m->min) {
             p->f = INFINITY;
             return;
         }
     }
     p->f = 0.0L;
-    for (int i = 0; i <= 50; i++) {
+    for (int i = 0; i <= 100; i++) {
         p->f += error(n, p, i * 0.1L);
-    }
-    for (int i = 10; i <= 1000000; i *= 10) {
-        p->f += error(n, p, i);
     }
 }
