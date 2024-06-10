@@ -96,24 +96,33 @@ test-multi-3-16: nogl
 	@echo ""
 
 test-multi-filters: nogl
-	@./multi-stats 100 0.000001 lc 1 2 100 0.0 3.0
+	@./stats 100 0.000001 ./nm-lc-std 6 fixed 1 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
+	@./stats 100 0.000001 ./cut-lc-std 6 fixed 1 2 100 unclamped 0.0 3.0 >/dev/null
 	@echo ""
-	@./multi-stats 100 0.000001 lc 2 8 100 0.0 3.0
+	@./stats 100 0.000001 ./nm-lc-std 6 fixed 2 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
+	@./stats 100 0.000001 ./cut-lc-std 6 fixed 2 8 100 unclamped 0.0 3.0 >/dev/null
 	@echo ""
-	@./multi-stats 100 0.000001 lc 3 27 100 0.0 3.0
+	@./stats 100 0.000001 ./nm-lc-std 6 fixed 3 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
+	@./stats 100 0.000001 ./cut-lc-std 6 fixed 3 27 100 unclamped 0.0 3.0 >/dev/null
 	@echo ""
-	@./multi-stats 100 0.000001 lc 4 64 100 0.0 3.0
+	@./stats 100 0.000001 ./nm-lc-std 6 fixed 4 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
+	@./stats 100 0.000001 ./cut-lc-std 6 fixed 4 64 100 unclamped 0.0 3.0 >/dev/null
 	@echo ""
-	@./multi-stats 100 0.000001 lc 5 125 100 0.0 3.0
+	@./stats 100 0.000001 ./nm-lc-std 6 fixed 5 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
+	@./stats 100 0.000001 ./cut-lc-std 6 fixed 5 125 100 unclamped 0.0 3.0 >/dev/null
+	@echo ""
+	@./stats 100 0.000001 ./nm-lc-std 6 fixed 6 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@echo ""
 
 test-filters: nogl
+	@./nm-lc-std 6 fixed 6 1.0e-6 100000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@./nm-lc-std 6 fixed 5 1.0e-6 100000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@./nm-lc-std 6 fixed 4 1.0e-6 100000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@./nm-lc-std 6 fixed 3 1.0e-6 100000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@./nm-lc-std 6 fixed 2 1.0e-6 100000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@./nm-lc-std 6 fixed 1 1.0e-6 100000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@echo ""
+	@./cut-lc-std 6 fixed 6 216 100 unclamped 0.0 3.0 >/dev/null
 	@./cut-lc-std 6 fixed 5 125 100 unclamped 0.0 3.0 >/dev/null
 	@./cut-lc-std 6 fixed 4 64 100 unclamped 0.0 3.0 >/dev/null
 	@./cut-lc-std 6 fixed 3 27 100 unclamped 0.0 3.0 >/dev/null

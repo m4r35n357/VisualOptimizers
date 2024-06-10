@@ -10,6 +10,8 @@ There are currently _four_ candidate algorithms included (two good, two not so g
 
 Suitable for global optimization in up to 16 dimensions with the cut algorithms, and scenarios up to 64 dimensions for "bulk-mode" Nelder-Mead.
 
+Now includes a "real-life" RF filter design example.
+
 ## Pure c99 (plus optional 3D OpenGL visualization)
 
 The code is concise and efficient, and produces tiny executables.
@@ -194,8 +196,8 @@ These are the most "important", in decreasing order
 
 Model | Justification
 ----------|-----------
-lc | LC low-pass filter design, symmetric (filter order = 2 * dimension - 1)
-sphere | unimodal "hello world" of optimization models.  No excuse for this not working for any optimizer!
+lc | symmetric LC low-pass prototype filter design (filter order = 2 * dimension - 1)
+sphere | unimodal "hello world" of optimization models.  No excuse for this not working for any algorithm!
 trid | slightly more involved, but still unimodal and well behaved
 rosenbrock | unimodal, non-convex, tests ability to cope with contrasting directional slopes
 easom | unimodal, non-convex, "needle in a haystack".  Also tests machine precision!
