@@ -33,7 +33,7 @@ static real error (int n, point *p, real w) {
     for (int r = n - 2; r >= 0; r--) {
         g = 1.0L / g + I * w * p->x[r];
     }
-    return SQR(1.0L - SQR(cabsl((g - 1.0L) / (g + 1.0L))) - 1.0L / (1.0L + powl(w, 2 * (2 * n - 1))));
+    return SQR(1.0L / (1.0L + powl(w, 2 * (2 * n - 1))) - (1.0L - SQR(cabsl((g - 1.0L) / (g + 1.0L)))));
 }
 
 void cost (int n, point *p, const model *m) {
