@@ -43,8 +43,9 @@ void cost (int n, point *p, const model *m) {
             return;
         }
     }
-    p->f = 0.0L;
-    for (int i = 0; i <= 100; i++) {
-        p->f += error(n, p, i * 0.1L);
+    p->f = 2.0L * error(n, p, 0.0L);
+    for (int i = 1; i <= 50; i++) {
+        p->f += error(n, p, 0.02L * i);
+        p->f += error(n, p, 50.0L / i);
     }
 }
