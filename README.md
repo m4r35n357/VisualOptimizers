@@ -10,7 +10,7 @@ There are currently _four_ candidate algorithms included (two good, two not so g
 
 Suitable for global optimization in up to 16 dimensions with the cut algorithms, and scenarios up to 64 dimensions for "bulk-mode" Nelder-Mead.
 
-Now includes a "real-life" RF filter design example.
+Now includes a "real-world" RF filter synthesis example.
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
 

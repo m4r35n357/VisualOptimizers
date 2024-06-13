@@ -78,7 +78,7 @@ test-multi-3-16: nogl
 	@./multi-stats 100 0.001 rosenbrock 8 256 100 -2.048 2.048
 	@./multi-stats 10 0.001 rosenbrock 16 65536 100 -2.048 2.048
 	@echo ""
-	@./multi-stats 100 -0.999 easom 3 27 100 -0 25
+	@./multi-stats 100 -0.999 easom 3 27 100 0 25
 	@./multi-stats 100 -0.999 easom 8 256 100 0 25
 	@./multi-stats 10 -0.999 easom 16 65536 100 0 25
 	@echo ""
@@ -96,25 +96,34 @@ test-multi-3-16: nogl
 	@echo ""
 
 test-multi-filters: nogl
-	@./stats 100 0.000001 ./nm-lc-std 6 fixed 1 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
-	@./stats 100 0.000001 ./cut-lc-std 6 fixed 1 2 100 unclamped 0.0 3.0 >/dev/null
+	@./stats 1 0.000000001 ./nm-lc-std 9 fixed 1 1.0e-9 10000 1.5 non-adaptive point 3.0 >/dev/null
+	@./stats 100 0.000000001 ./nm-lc-std 9 fixed 1 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@echo ""
-	@./stats 100 0.000001 ./nm-lc-std 6 fixed 2 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
-	@./stats 100 0.000001 ./cut-lc-std 6 fixed 2 8 100 unclamped 0.0 3.0 >/dev/null
+	@./stats 1 0.000000001 ./nm-lc-std 9 fixed 2 1.0e-9 10000 1.5 non-adaptive point 3.0 3.0 >/dev/null
+	@./stats 100 0.000000001 ./nm-lc-std 9 fixed 2 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@echo ""
-	@./stats 100 0.000001 ./nm-lc-std 6 fixed 3 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
-	@./stats 100 0.000001 ./cut-lc-std 6 fixed 3 27 100 unclamped 0.0 3.0 >/dev/null
+	@./stats 1 0.000000001 ./nm-lc-std 9 fixed 3 1.0e-9 10000 1.5 non-adaptive point 3.0 3.0 3.0 >/dev/null
+	@./stats 100 0.000000001 ./nm-lc-std 9 fixed 3 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@echo ""
-	@./stats 100 0.000001 ./nm-lc-std 6 fixed 4 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
-	@./stats 100 0.000001 ./cut-lc-std 6 fixed 4 64 100 unclamped 0.0 3.0 >/dev/null
+	@./stats 1 0.000000001 ./nm-lc-std 9 fixed 4 1.0e-9 10000 1.5 non-adaptive point 3.0 3.0 3.0 3.0 >/dev/null
+	@./stats 100 0.000000001 ./nm-lc-std 9 fixed 4 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@echo ""
-	@./stats 100 0.000001 ./nm-lc-std 6 fixed 5 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
-	@./stats 100 0.000001 ./cut-lc-std 6 fixed 5 125 100 unclamped 0.0 3.0 >/dev/null
+	@./stats 1 0.000000001 ./nm-lc-std 9 fixed 5 1.0e-9 10000 1.5 non-adaptive point 3.0 3.0 3.0 3.0 3.0 >/dev/null
+	@./stats 100 0.000000001 ./nm-lc-std 9 fixed 5 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@echo ""
-	@./stats 100 0.000001 ./nm-lc-std 6 fixed 6 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
+	@./stats 1 0.000000001 ./nm-lc-std 9 fixed 6 1.0e-9 10000 1.5 non-adaptive point 3.0 3.0 3.0 3.0 3.0 3.0 >/dev/null
+	@./stats 100 0.000000001 ./nm-lc-std 9 fixed 6 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
+	@echo ""
+	@./stats 1 0.000000001 ./nm-lc-std 9 fixed 7 1.0e-9 10000 1.5 non-adaptive point 3.0 3.0 3.0 3.0 3.0 3.0 3.0 >/dev/null
+	@./stats 100 0.000000001 ./nm-lc-std 9 fixed 7 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
+	@echo ""
+	@./stats 1 0.000000001 ./nm-lc-std 9 fixed 8 1.0e-9 10000 1.5 non-adaptive point 3.0 3.0 3.0 3.0 3.0 3.0 3.0 3.0 >/dev/null
+	@./stats 100 0.000000001 ./nm-lc-std 9 fixed 8 1.0e-9 10000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@echo ""
 
 test-filters: nogl
+	@./nm-lc-std 6 fixed 8 1.0e-6 100000 1.5 non-adaptive random 0.0 3.0 >/dev/null
+	@./nm-lc-std 6 fixed 7 1.0e-6 100000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@./nm-lc-std 6 fixed 6 1.0e-6 100000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@./nm-lc-std 6 fixed 5 1.0e-6 100000 1.5 non-adaptive random 0.0 3.0 >/dev/null
 	@./nm-lc-std 6 fixed 4 1.0e-6 100000 1.5 non-adaptive random 0.0 3.0 >/dev/null
