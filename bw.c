@@ -1,8 +1,7 @@
 /*
- * LC low-pass filter
+ * RF low-pass filter - Butterworth
  */
 #include <math.h>
-#include <complex.h>
 #include "model.h"
 
 struct Model { real min; };
@@ -26,14 +25,7 @@ minima *get_known_minima (int n) { (void)n;
 }
 
 static real error (int n, point *p, real w) {
-    long double complex g = 1.0L + I * w * p->x[0];
-    for (int r = 1; r < n; r++) {
-        g = 1.0L / g + I * w * p->x[r];
-    }
-    for (int r = n - 2; r >= 0; r--) {
-        g = 1.0L / g + I * w * p->x[r];
-    }
-    return SQR(1.0L / (1.0L + powl(w, 2 * (2 * n - 1))) - (1.0L - SQR(cabsl((g - 1.0L) / (g + 1.0L)))));
+    return SQR(1.0L / (1.0L + powl(w, 2 * (2 * n - 1))) - tx(n, p, w));
 }
 
 void cost (int n, point *p, const model *m) {

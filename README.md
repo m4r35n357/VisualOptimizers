@@ -196,7 +196,8 @@ These are the most "important", in decreasing order
 
 Model | Justification
 ----------|-----------
-lc | symmetric LC low-pass prototype filter design (filter order = 2 * dimension - 1)
+bw | symmetric Butterworth RF low-pass filter design (filter order = 2 * dimension - 1)
+spec | symmetric RF low-pass filter design from specifications (filter order = 2 * dimension - 1)
 sphere | unimodal "hello world" of optimization models.  No excuse for this not working for any algorithm!
 trid | slightly more involved, but still unimodal and well behaved
 rosenbrock | unimodal, non-convex, tests ability to cope with contrasting directional slopes
