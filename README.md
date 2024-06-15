@@ -145,8 +145,8 @@ Parameter | Meaning
 
 Examples
 ```
-./nm-sphere-std 3 fixed 3 1.0e-6 2627 10.0 non-adaptive bulk -10 10 >/dev/null
-./nm-sphere-gl 3 fixed 3 1.0e-6 2627 10.0 non-adaptive random -10 10 
+./nm-trid-std 3 fixed 3 1.0e-6 2627 10.0 non-adaptive bulk -10 10 >/dev/null
+./nm-trid-gl 3 fixed 3 1.0e-6 2627 10.0 non-adaptive random -10 10 
 ```
 When parameter 8 is set to a non-zero value, the algorithm is run several times until the cumulative number of _evaluations_ exceeds this value (budget).
 This enables meaningful comparisons with the other methods.
@@ -198,12 +198,9 @@ Model | Justification
 ----------|-----------
 bw | symmetric Butterworth RF low-pass filter design (filter order = 2 * dimension - 1)
 spec | symmetric RF low-pass filter design from specifications (filter order = 2 * dimension - 1)
-sphere | unimodal "hello world" of optimization models.  No excuse for this not working for any algorithm!
 trid | slightly more involved, but still unimodal and well behaved
 rosenbrock | unimodal, non-convex, tests ability to cope with contrasting directional slopes
 easom | unimodal, non-convex, "needle in a haystack".  Also tests machine precision!
-treacle | unimodal but _highly_ non-convex
-ackley | multimodal but not _too_ pathological
 levy | multimodal but not _too_ pathological
 dixon-price | multiple global maxima, and one _very_ attractive local minimum (for dimensions > 3)
 
@@ -258,7 +255,7 @@ Examples
 make clean
 make CCC=gcc
 ./stats 100 0.001 ./nm-dixon-price-std 3 fixed 8 1.0e-6 25756 10.0 adaptive bulk -10 10
-./stats 100 0.03 ./cut-treacle-std 3 fixed 8 256 100 unclamped 0 10
+./stats 100 0.03 ./cut-trid-std 3 fixed 8 256 100 unclamped -64 64
 ```
 For 8D or higher, using one of the faster "CCC=" make options above is _highly_ recommended!
 
@@ -298,8 +295,7 @@ Examples
 ```
 make clean
 make CCC=gcc
-./multi-stats 100 0.001 sphere 8 256 1000 -10 10
-./multi-stats 100 0.03 treacle 8 256 1000 -10 10
+./multi-stats 100 0.001 trid 8 256 1000 -64 64
 ```
 See the Makefile for other examples.
 
