@@ -28,11 +28,11 @@ void cost (int n, point *p, const model *m) {
     }
     p->f = 0.0L;
     for (int i = 0; i <= 50; i++) {
-        real t = tx(n, p, 0.02L * i); // up to w == 1.0
-        p->f += t >= m->pb ? 0.0L : (m->pb - t) * (m->pb - t);
+        real t = tx(n, p, powl(10.0L, 0.02L * i - 1.0L)); // up to w == 1.0
+        p->f += t >= m->pb ? 0.0L : SQR(m->pb - t);
     }
-    for (int i = 1; i <= 50; i++) {
-        real t = tx(n, p, m->ksi - 1.0L + 50.0L / i); // w * ksi upwards
-        p->f += t <= m->sb ? 0.0L : (t - m->sb) * (t - m->sb);
+    for (int i = 0; i <= 50; i++) {
+        real t = tx(n, p, powl(10.0L, 0.02L * i) + m->ksi - 1.0L); // w * ksi upwards
+        p->f += t <= m->sb ? 0.0L : SQR(t - m->sb);
     }
 }
