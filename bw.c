@@ -30,7 +30,7 @@ static real error (int n, point *p, real w) {
 
 void cost (int n, point *p, const model *m) {
     for (int i = 0; i < n; i++) {
-        if (p->x[i] < m->min) {
+        if (p->x[i] <= m->min) {
             p->f = INFINITY;
             return;
         }
