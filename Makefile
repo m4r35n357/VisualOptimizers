@@ -81,47 +81,45 @@ test-multi-3-16: nogl
 
 test-multi-filters: nogl
 	@./stats 100 0.000000001   ./nm-bw-std 9 fixed 1 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@echo ""
 	@./stats 100 0.000000001   ./nm-bw-std 9 fixed 2 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@echo ""
 	@./stats 100 0.000000001   ./nm-bw-std 9 fixed 3 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@echo ""
 	@./stats 100 0.000000001   ./nm-bw-std 9 fixed 4 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@echo ""
 	@./stats 100 0.000000001   ./nm-bw-std 9 fixed 5 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@echo ""
 	@./stats 100 0.000000001   ./nm-bw-std 9 fixed 6 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@echo ""
 	@./stats 100 0.000000001   ./nm-bw-std 9 fixed 7 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@echo ""
 	@./stats 100 0.000000001   ./nm-bw-std 9 fixed 8 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
 	@echo ""
 	@./stats 100 0.00001       ./nm-e3-std 9 fixed 3 1.0e-9  10000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@echo ""
 	@./stats 100 0.0000001     ./nm-e5-std 9 fixed 6 1.0e-9  10000 2.5     adaptive random 0.0 5.0 >/dev/null
 	@echo ""
 
 test-filters: nogl
 	@./nm-bw-std 9 fixed 8 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./nm-bw-std 9 fixed 7 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./nm-bw-std 9 fixed 6 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./nm-bw-std 9 fixed 5 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./nm-bw-std 9 fixed 4 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./nm-bw-std 9 fixed 3 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./nm-bw-std 9 fixed 2 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./nm-bw-std 9 fixed 1 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
 	@echo ""
+	@./nm-bw-std 9 fixed 7 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
+	@echo ""
+	@./nm-bw-std 9 fixed 6 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
 	@./cut-bw-std 9 fixed 6 216 100 unclamped 0.0 5.0 >/dev/null
+	@echo ""
+	@./nm-bw-std 9 fixed 5 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
 	@./cut-bw-std 9 fixed 5 125 100 unclamped 0.0 5.0 >/dev/null
+	@echo ""
+	@./nm-bw-std 9 fixed 4 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
 	@./cut-bw-std 9 fixed 4  64 100 unclamped 0.0 5.0 >/dev/null
+	@echo ""
+	@./nm-bw-std 9 fixed 3 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
 	@./cut-bw-std 9 fixed 3  27 100 unclamped 0.0 5.0 >/dev/null
+	@echo ""
+	@./nm-bw-std 9 fixed 2 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
 	@./cut-bw-std 9 fixed 2   8 100 unclamped 0.0 5.0 >/dev/null
+	@echo ""
+	@./nm-bw-std 9 fixed 1 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
 	@./cut-bw-std 9 fixed 1   2 100 unclamped 0.0 5.0 >/dev/null
 	@echo ""
 	@./nm-e5-std 9 fixed 6 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./nm-e3-std 9 fixed 3 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@echo ""
 	@./cut-e5-std 9 fixed 6 216 100 unclamped 0.0 5.0 >/dev/null
+	@echo ""
+	@./nm-e3-std 9 fixed 3 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
 	@./cut-e3-std 9 fixed 3  27 100 unclamped 0.0 5.0 >/dev/null
 	@echo ""
 
