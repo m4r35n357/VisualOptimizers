@@ -11,7 +11,7 @@ model *model_init (int n) { (void)n;
     CHECK(n == 3);
     model *m = malloc(sizeof (model));
     m->pb = 0.8L;  // passband transmission: 0.8 == -0.969dB
-    m->sb = 0.001L;  // stopband transmission: 0.01 == -20dB
+    m->sb = 0.01L;  // stopband transmission: 0.01 == -20dB
     m->ksi = 1.5L;  // selectivity (>1.0)
     m->min = 0.0L;  // inequality constraint - passive components!
     return m;
