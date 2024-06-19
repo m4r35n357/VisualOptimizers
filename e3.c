@@ -5,15 +5,16 @@
 #include <complex.h>
 #include "model.h"
 
-struct Model { real pb, sb, ksi, min; };
+struct Model { real pb, sb, ksi, min, max; };
 
 model *model_init (int n) { (void)n;
     CHECK(n == 3);
     model *m = malloc(sizeof (model));
     m->pb = 0.8L;  // passband transmission: 0.8 == -0.969dB
-    m->sb = 0.01L;  // stopband transmission: 0.01 == -20dB
+    m->sb = 0.001L;  // stopband transmission: 0.01 == -30dB
     m->ksi = 1.5L;  // selectivity (>1.0)
     m->min = 0.0L;  // inequality constraint - passive components!
+    m->max = 10.0L;  // inequality constraint - in case values blow up
     return m;
 }
 
@@ -30,7 +31,7 @@ static real e3 (int n, point *p, real omega) { (void)n;
 
 void cost (int n, point *p, const model *m) {
     for (int i = 0; i < n; i++) {
-        if (p->x[i] <= m->min) {
+        if (p->x[i] <= m->min || p->x[i] >= m->max) {
             p->f = INFINITY;
             return;
         }
