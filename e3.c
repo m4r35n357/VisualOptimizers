@@ -1,5 +1,12 @@
 /*
- * 3rd order elliptic filter from specifications
+ * 3rd order "elliptic" (notch) filter from specifications
+ *    ----C(2)---
+ *    |         |
+ * o------L(1)-----o   or its "dual"
+ *    |         |
+ *   C(0)      C(0)
+ *    |         |
+ * o---------------o
  */
 #include <math.h>
 #include <complex.h>
@@ -15,7 +22,7 @@ model *model_init (int n) { (void)n;
     FILE *specs = fopen(datafile, "r");
     if (specs) override = fscanf(specs, "%Le %Le %Le", &pb, &sb, &ksi) == 3;
     if (override) fprintf(stderr, " %sOverrides (%s%s%s): ripple = %s%.*Lf%s, loss = %s%.*Lf%s, selectivity = %s%.*Lf%s\n",
-                         GRY, NRM, datafile, GRY, NRM, 3, pb, GRY, NRM, 6, sb, GRY, NRM, 3, ksi, GRY);
+                          GRY, NRM, datafile, GRY, NRM, 3, pb, GRY, NRM, 6, sb, GRY, NRM, 3, ksi, GRY);
     model *m = malloc(sizeof (model));
     m->pb = override ? pb : 0.8L;  // passband transmission: 0.8 == -0.969dB
     m->sb = override ? sb : 0.0025L;// stopband transmission: 0.0025 == -26dB
