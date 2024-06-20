@@ -16,7 +16,7 @@ Firstly there is a multi-order Butterworth model, which is optimized against the
 Against this solution, the error can theoretically be optimized down to zero (subject to numerical errors at higher filter order).
 
 Secondly, there are two "elliptic" (strictly, low-pass notch) designs, to be optimized against a real world spec.
-In the latter case, there is _no explicit solution_, and if the spec is exceeded (the minimum hits zero), there is a _continuum_ of solutions.
+In this case, there is _no explicit solution_, and if the spec is exceeded (the minimum hits zero), there is a _continuum_ of solutions.
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
 

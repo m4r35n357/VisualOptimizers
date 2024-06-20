@@ -9,10 +9,17 @@ struct Model { real pb, sb, ksi, min, max; };
 
 model *model_init (int n) { (void)n;
     CHECK(n == 6);
+    bool override = false;
+    char *datafile = "e5specs.txt";
+    real pb, sb, ksi;
+    FILE *specs = fopen(datafile, "r");
+    if (specs) override = fscanf(specs, "%Le %Le %Le", &pb, &sb, &ksi) == 3;
+    if (override) fprintf(stderr, " %sOverrides (%s%s%s): ripple = %s%.*Lf%s, loss = %s%.*Lf%s, selectivity = %s%.*Lf%s\n",
+                         GRY, NRM, datafile, GRY, NRM, 3, pb, GRY, NRM, 6, sb, GRY, NRM, 3, ksi, GRY);
     model *m = malloc(sizeof (model));
-    m->pb = 0.8L;  // passband transmission: 0.8 == -0.969dB
-    m->sb = 0.0001L;  // stopband transmission: 0.0001 == -60dB
-    m->ksi = 1.2L;  // selectivity (>1.0)
+    m->pb = override ? pb : 0.8L;  // passband transmission: 0.8 == -0.969dB
+    m->sb = override ? sb : 0.0001L;// stopband transmission: 0.0001 == -40dB
+    m->ksi = override ? ksi : 1.2L;  // selectivity (>1.0)
     m->min = 0.0L;  // inequality constraint - passive components!
     m->max = 10.0L;  // inequality constraint - in case values blow up
     return m;
