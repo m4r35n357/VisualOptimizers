@@ -2,11 +2,11 @@
  * 3rd order "elliptic" (notch) filter from specifications
  *    ----C(2)---
  *    |         |
- * o------L(1)-----o   or its "dual"
- *    |         |
- *   C(0)      C(0)
- *    |         |
- * o---------------o
+ * o------L(1)-----o---
+ *    |         |     |
+ *   C(0)      C(0)   1    (or its "dual")
+ *    |         |     |
+ * o---------------o---
  */
 #include <math.h>
 #include <complex.h>
@@ -38,7 +38,7 @@ minima *get_known_minima (int n) { (void)n;
 
 static real e3 (int n, point *p, real omega) { (void)n;
     long double complex g = 1.0L + I * omega * p->x[0];
-    g = 1.0L / g + 1.0L / (I * omega * p->x[2] + 1.0L / (I * omega * p->x[1]));
+    g = 1.0L / g + 1.0L / (1.0L / (I * omega * p->x[1]) + I * omega * p->x[2]);
     g = 1.0L / g + I * omega * p->x[0];
     return 1.0L - SQR(cabsl((g - 1.0L) / (g + 1.0L)));
 }
