@@ -167,6 +167,8 @@ test-8d: nogl
 test-3d: nogl
 	@./solve-model bw 3 27 100 0.0 5.0
 	@echo ""
+	@./solve-model e3 3 27 100 0.0 5.0
+	@echo ""
 	@./solve-model trid 3 27 100 -9 9
 	@echo ""
 	@./solve-model rosenbrock 3 27 100 -2.048 2.048

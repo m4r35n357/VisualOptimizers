@@ -10,7 +10,13 @@ There are currently _four_ candidate algorithms included (two good, two not so g
 
 Suitable for global optimization in up to 16 dimensions with the cut algorithms, and scenarios up to 64 dimensions for "bulk-mode" Nelder-Mead.
 
-Now includes a "real-world" RF filter synthesis example.
+Now includes "real-world" RF filter synthesis examples, with component values as the parameter space (variables).
+
+Firstly there is a multi-order Butterworth model, which is optimized against the ideal maximally-flat frequency response (an explicit, closed-form solution).
+Against this solution, the error can theoretically be optimized down to zero (subject to numerical errors at higher filter order).
+
+Secondly, there are two "elliptic" (strictly, low-pass notch) designs, to be optimized against a real world spec.
+In the latter case, there is _no explicit solution_, and if the spec is exceeded (the minimum hits zero), there is a _continuum_ of solutions.
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
 
