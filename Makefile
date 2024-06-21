@@ -89,12 +89,9 @@ test-multi-filters: nogl
 	@./stats 100 0.000000001   ./nm-bw-std 9 fixed 7 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
 	@./stats 100 0.000000001   ./nm-bw-std 9 fixed 8 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
 	@echo ""
-	@./stats 100 0.00001       ./nm-e3-std 9 fixed 3 1.0e-9  10000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 0.0000001     ./nm-e5-std 9 fixed 6 1.0e-9  10000 2.5     adaptive random 0.0 5.0 >/dev/null
+	@./multi-stats 100 0.0001   e3 9 3  27 100 0.0 5.0
 	@echo ""
-	@./multi-stats  10 0.001 e3 9 3  27 100 -10 10
-	@echo ""
-	@./multi-stats  10 0.001 e5 9 6 216 100 -10 10
+	@./multi-stats 100 0.000001 e5 9 6 216 100 0.0 5.0
 	@echo ""
 
 test-filters: nogl
