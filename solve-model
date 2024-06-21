@@ -11,11 +11,12 @@ n_args=$(($# + 1))
 printf "${GRY}args ${NRM}%s${GRY} [ ${MGT}%s${GRY} ]${NRM}\n" $n_args "$args" >&2
 
 model=$1
-order=$2
-agents=$3
-iterations=$4
-lower=$5
-upper=$6
+places=$2
+order=$3
+agents=$4
+iterations=$5
+lower=$6
+upper=$7
 
 if [ $order -ge 8 ]
 then
@@ -25,14 +26,14 @@ else
 fi
 
 # Nelder-Mead
-./nm-$model-std 3 fixed $order 1.0e-6 $(((agents - 1) * iterations + agents)) \
+./nm-$model-std $places fixed $order 1.0e-9 $(((agents - 1) * iterations + agents)) \
     $(printf "scale=3; 0.5 * ($upper - $lower);\n" | /usr/bin/bc) $adaptive bulk $lower $upper >/dev/null
 
 # Cut (unclamped)
-./cut-$model-std 3 fixed $order $agents $iterations unclamped $lower $upper >/dev/null
+./cut-$model-std $places fixed $order $agents $iterations unclamped $lower $upper >/dev/null
 
 # Cut (clamped)
-./cut-$model-std 3 fixed $order $agents $iterations clamped $lower $upper >/dev/null
+./cut-$model-std $places fixed $order $agents $iterations clamped $lower $upper >/dev/null
 
 # Random
-./cut-$model-std 3 fixed $order $agents $iterations random $lower $upper >/dev/null
+./cut-$model-std $places fixed $order $agents $iterations random $lower $upper >/dev/null

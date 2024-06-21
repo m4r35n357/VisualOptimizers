@@ -62,21 +62,21 @@ test-multi-16-64: nogl
 	@echo ""
 
 test-multi-3-16: nogl
-	@./multi-stats 100   -6.9 trid  3    27 100   -9   9
-	@./multi-stats 100 -111.9 trid  8   256 100  -64  64
-	@./multi-stats  10 -799.0 trid 16 65536 100 -256 256
+	@./multi-stats 100   -6.9 trid 3  3    27 100   -9   9
+	@./multi-stats 100 -111.9 trid 3  8   256 100  -64  64
+	@./multi-stats  10 -799.0 trid 3 16 65536 100 -256 256
 	@echo ""
-	@./multi-stats 100 0.001 rosenbrock  3    27 100 -2.048 2.048
-	@./multi-stats 100 0.001 rosenbrock  8   256 100 -2.048 2.048
-	@./multi-stats  10 0.001 rosenbrock 16 65536 100 -2.048 2.048
+	@./multi-stats 100 0.001 rosenbrock 3  3    27 100 -2.048 2.048
+	@./multi-stats 100 0.001 rosenbrock 3  8   256 100 -2.048 2.048
+	@./multi-stats  10 0.001 rosenbrock 3 16 65536 100 -2.048 2.048
 	@echo ""
-	@./multi-stats 100 -0.999 easom  3    27 100 0 25
-	@./multi-stats 100 -0.999 easom  8   256 100 0 25
-	@./multi-stats  10 -0.999 easom 16 65536 100 0 25
+	@./multi-stats 100 -0.999 easom 3  3    27 100 0 25
+	@./multi-stats 100 -0.999 easom 3  8   256 100 0 25
+	@./multi-stats  10 -0.999 easom 3 16 65536 100 0 25
 	@echo ""
-	@./multi-stats 100 0.001 levy  3    27 100 -10 10
-	@./multi-stats 100 0.001 levy  8   256 100 -10 10
-	@./multi-stats  10 0.001 levy 16 65536 100 -10 10
+	@./multi-stats 100 0.001 levy 3  3    27 100 -10 10
+	@./multi-stats 100 0.001 levy 3  8   256 100 -10 10
+	@./multi-stats  10 0.001 levy 3 16 65536 100 -10 10
 	@echo ""
 
 test-multi-filters: nogl
@@ -92,35 +92,31 @@ test-multi-filters: nogl
 	@./stats 100 0.00001       ./nm-e3-std 9 fixed 3 1.0e-9  10000 2.5 non-adaptive random 0.0 5.0 >/dev/null
 	@./stats 100 0.0000001     ./nm-e5-std 9 fixed 6 1.0e-9  10000 2.5     adaptive random 0.0 5.0 >/dev/null
 	@echo ""
+	@./multi-stats  10 0.001 e3 9 3  27 100 -10 10
+	@echo ""
+	@./multi-stats  10 0.001 e5 9 6 216 100 -10 10
+	@echo ""
 
 test-filters: nogl
 	@./nm-bw-std 9 fixed 8 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
 	@echo ""
 	@./nm-bw-std 9 fixed 7 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
 	@echo ""
-	@./nm-bw-std 9 fixed 6 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./cut-bw-std 9 fixed 6 216 100 unclamped 0.0 5.0 >/dev/null
+	@./solve-model bw 9 6 216 100 0.0 5.0
 	@echo ""
-	@./nm-bw-std 9 fixed 5 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./cut-bw-std 9 fixed 5 125 100 unclamped 0.0 5.0 >/dev/null
+	@./solve-model bw 9 5 125 100 0.0 5.0
 	@echo ""
-	@./nm-bw-std 9 fixed 4 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./cut-bw-std 9 fixed 4  64 100 unclamped 0.0 5.0 >/dev/null
+	@./solve-model bw 9 4  64 100 0.0 5.0
 	@echo ""
-	@./nm-bw-std 9 fixed 3 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./cut-bw-std 9 fixed 3  27 100 unclamped 0.0 5.0 >/dev/null
+	@./solve-model bw 9 3  27 100 0.0 5.0
 	@echo ""
-	@./nm-bw-std 9 fixed 2 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./cut-bw-std 9 fixed 2   8 100 unclamped 0.0 5.0 >/dev/null
+	@./solve-model bw 9 2   8 100 0.0 5.0
 	@echo ""
-	@./nm-bw-std 9 fixed 1 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./cut-bw-std 9 fixed 1   2 100 unclamped 0.0 5.0 >/dev/null
+	@./solve-model bw 9 1   2 100 0.0 5.0
 	@echo ""
-	@./nm-e5-std 9 fixed 6 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./cut-e5-std 9 fixed 6 216 100 unclamped 0.0 5.0 >/dev/null
+	@./solve-model e5 9 6 216 100 0.0 5.0
 	@echo ""
-	@./nm-e3-std 9 fixed 3 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./cut-e3-std 9 fixed 3  27 100 unclamped 0.0 5.0 >/dev/null
+	@./solve-model e3 9 3  27 100 0.0 5.0
 	@echo ""
 
 test-64d: nogl
@@ -141,49 +137,49 @@ test-32d: nogl
 
 # 2^D search agents
 test-16d: nogl
-	@./solve-model trid 16 65536 100 -256 256
+	@./solve-model trid 3 16 65536 100 -256 256
 	@echo ""
-	@./solve-model rosenbrock 16 65536 100 -2.048 2.048
+	@./solve-model rosenbrock 3 16 65536 100 -2.048 2.048
 	@echo ""
-	@./solve-model easom 16 65536 100 0 25
+	@./solve-model easom 3 16 65536 100 0 25
 	@echo ""
-	@./solve-model levy 16 65536 100 -10 10
+	@./solve-model levy 3 16 65536 100 -10 10
 	@echo ""
 
 # 2^D search agents
 test-8d: nogl
-	@./solve-model bw 8 256 100 0.0 5.0
+	@./solve-model bw 3 8 256 100 0.0 5.0
 	@echo ""
-	@./solve-model trid 8 256 100 -64 64
+	@./solve-model trid 3 8 256 100 -64 64
 	@echo ""
-	@./solve-model rosenbrock 8 256 100 -2.048 2.048
+	@./solve-model rosenbrock 3 8 256 100 -2.048 2.048
 	@echo ""
-	@./solve-model easom 8 256 100 0 25
+	@./solve-model easom 3 8 256 100 0 25
 	@echo ""
-	@./solve-model levy 8 256 100 -10 10
+	@./solve-model levy 3 8 256 100 -10 10
 	@echo ""
 
 # 3^D search agents
 test-3d: nogl
-	@./solve-model bw 3 27 100 0.0 5.0
+	@./solve-model bw 3 3 27 100 0.0 5.0
 	@echo ""
-	@./solve-model e3 3 27 100 0.0 5.0
+	@./solve-model e3 3 3 27 100 0.0 5.0
 	@echo ""
-	@./solve-model trid 3 27 100 -9 9
+	@./solve-model trid 3 3 27 100 -9 9
 	@echo ""
-	@./solve-model rosenbrock 3 27 100 -2.048 2.048
+	@./solve-model rosenbrock 3 3 27 100 -2.048 2.048
 	@echo ""
-	@./solve-model easom 3 27 100 0 25
+	@./solve-model easom 3 3 27 100 0 25
 	@echo ""
-	@./solve-model levy 3 27 100 -10 10
+	@./solve-model levy 3 3 27 100 -10 10
 	@echo ""
-	@./solve-model dixon-price 3 27 100 -10 10
+	@./solve-model dixon-price 3 3 27 100 -10 10
 	@echo ""
-	@./solve-model st 3 27 100 -5 5
+	@./solve-model st 3 3 27 100 -5 5
 	@echo ""
-	@./solve-model michalewicz 3 27 100 0 3.14
+	@./solve-model michalewicz 3 3 27 100 0 3.14
 	@echo ""
-	@./solve-model schwefel 3 27 100 0 500
+	@./solve-model schwefel 3 3 27 100 0 500
 	@echo ""
 
 ctags:
