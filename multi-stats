@@ -20,7 +20,7 @@ iterations=$7
 lower=$8
 upper=$9
 
-if [ $order -ge 8 ]
+if [ $order -ge 6 ]
 then
     adaptive="adaptive"
 else

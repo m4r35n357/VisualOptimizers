@@ -1,5 +1,4 @@
 #include <math.h>
-#include <complex.h>
 #include "base.h"
 
 /*
@@ -57,18 +56,3 @@ void print_result (int n, const point *p, int places, int fmt) {
     }
     fprintf(stderr, fmt ? "%s]%s % .*Le\n" : "%s]%s % .*Lf\n", GRY, NRM, places, p->f);
 }
-
-/*
- * RF Filter power transmission |S21|^2
- */
-real tx (int n, point *p, real omega) {
-    long double complex g = 1.0L + I * omega * p->x[0];
-    for (int r = 1; r < n; r++) {
-        g = 1.0L / g + I * omega * p->x[r];
-    }
-    for (int r = n - 2; r >= 0; r--) {
-        g = 1.0L / g + I * omega * p->x[r];
-    }
-    return 1.0L - SQR(cabsl((g - 1.0L) / (g + 1.0L)));
-}
-

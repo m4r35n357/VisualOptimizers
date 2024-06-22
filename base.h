@@ -69,5 +69,3 @@ void copy_point (int n, const point *src, point *dst);
 real distance (int, const point *, const point *);
 
 void print_result (int n, const point *p, int places, int fmt);
-
-real tx (int n, point *p, real w);
