@@ -25,7 +25,7 @@ model *model_init (int n) { (void)n;
     m->pb = override ? pb : 0.8L;  // passband transmission: 0.8 == -0.969dB
     m->sb = override ? sb : 0.0002L;// stopband transmission: 0.0002 == -37dB
     m->ksi = override ? ksi : 1.2L;  // selectivity (>1.0)
-	fprintf(stderr, " %sSpecs (%s%s%s)  ripple %s%.*Lf%s dB, loss %s%.*Lf%s dB, selectivity %s%.*Lf%s\n",
+    fprintf(stderr, " %sSpecs (%s%s%s)  ripple %s%.*Lf%s dB, loss %s%.*Lf%s dB, selectivity %s%.*Lf%s\n",
             GRY, NRM, override ? datafile : "  DEFAULT  ", GRY,
             NRM, 1, -10.0L * log10l(m->pb), GRY, NRM, 1, -10.0L * log10l(m->sb), GRY, NRM, 1, m->ksi, GRY);
     m->min = 0.0L;  // inequality constraint - passive components!

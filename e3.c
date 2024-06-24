@@ -23,9 +23,9 @@ model *model_init (int n) { (void)n;
     if (specs) override = fscanf(specs, "%Le %Le %Le", &pb, &sb, &ksi) == 3;
     model *m = malloc(sizeof (model));
     m->pb = override ? pb : 0.8L;  // passband transmission: 0.8 == -0.969dB
-    m->sb = override ? sb : 0.005L;// stopband transmission: 0.005 == -23dB
+    m->sb = override ? sb : 0.0035L;// stopband transmission: 0.0035 == -24.6dB
     m->ksi = override ? ksi : 1.5L;  // selectivity (>1.0)
-	fprintf(stderr, " %sSpecs (%s%s%s)  ripple %s%.*Lf%s dB, loss %s%.*Lf%s dB, selectivity %s%.*Lf%s\n",
+    fprintf(stderr, " %sSpecs (%s%s%s)  ripple %s%.*Lf%s dB, loss %s%.*Lf%s dB, selectivity %s%.*Lf%s\n",
             GRY, NRM, override ? datafile : "  DEFAULT  ", GRY,
             NRM, 1, -10.0L * log10l(m->pb), GRY, NRM, 1, -10.0L * log10l(m->sb), GRY, NRM, 1, m->ksi, GRY);
     m->min = 0.0L;  // inequality constraint - passive components!
