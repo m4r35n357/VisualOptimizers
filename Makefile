@@ -103,32 +103,32 @@ test-multi-filters: nogl
 	@echo ""
 
 test-filters: nogl
-	@./nm-bw-std  9 fixed 8 1.0e-9 100000 2.5     adaptive bulk 0.0 5.0 >/dev/null
-	@echo ""
-	@./nm-bw-std  9 fixed 7 1.0e-9 100000 2.5     adaptive bulk 0.0 5.0 >/dev/null
-	@./nm-bw2-std 9 fixed 7 1.0e-9 100000 2.5     adaptive bulk 0.0 5.0 >/dev/null
-	@echo ""
-	@./solve-model bw 9 6 216 100 0.0 5.0
-	@./solve-model bw2 9 6 216 100 0.0 5.0
-	@echo ""
-	@./solve-model bw 9 5 125 100 0.0 5.0
-	@./solve-model bw2 9 5 125 100 0.0 5.0
-	@echo ""
-	@./solve-model bw 9 4  64 100 0.0 5.0
-	@./solve-model bw2 9 4  64 100 0.0 5.0
-	@echo ""
-	@./solve-model bw 9 3  27 100 0.0 5.0
-	@./solve-model bw2 9 3  27 100 0.0 5.0
-	@echo ""
-	@./solve-model bw 9 2   8 100 0.0 5.0
-	@./solve-model bw2 9 2   8 100 0.0 5.0
-	@echo ""
-	@./solve-model bw 9 1   2 100 0.0 5.0
+	@./solve-model bw  9 1   2 100 0.0 5.0
 	@./solve-model bw2 9 1   2 100 0.0 5.0
 	@echo ""
-	@./solve-model e5 9 6 216 100 0.0 5.0
+	@./solve-model bw  9 2   8 100 0.0 5.0
+	@./solve-model bw2 9 2   8 100 0.0 5.0
 	@echo ""
-	@./solve-model e3 9 3  27 100 0.0 5.0
+	@./solve-model bw  9 3  27 100 0.0 5.0
+	@./solve-model bw2 9 3  27 100 0.0 5.0
+	@echo ""
+	@./solve-model bw  9 4  64 100 0.0 5.0
+	@./solve-model bw2 9 4  64 100 0.0 5.0
+	@echo ""
+	@./solve-model bw  9 5 125 100 0.0 5.0
+	@./solve-model bw2 9 5 125 100 0.0 5.0
+	@echo ""
+	@./solve-model bw  9 6 216 100 0.0 5.0
+	@./solve-model bw2 9 6 216 100 0.0 5.0
+	@echo ""
+	@./solve-model bw  9 7 343 100 0.0 5.0
+	@./solve-model bw2 9 7 343 100 0.0 5.0
+	@echo ""
+	@./solve-model bw  9 8 512 100 0.0 5.0
+	@echo ""
+	@./solve-model e3  9 3  27 100 0.0 5.0
+	@echo ""
+	@./solve-model e5  9 6 216 100 0.0 5.0
 	@echo ""
 
 test-64d: nogl
@@ -173,27 +173,27 @@ test-8d: nogl
 
 # 3^D search agents
 test-3d: nogl
-	@./solve-model bw 9 3 27 100 0.0 5.0
-	@echo ""
-	@./solve-model bw2 9 3 27 100 0.0 5.0
-	@echo ""
-	@./solve-model e3 9 3 27 100 0.0 5.0
-	@echo ""
-	@./solve-model trid 3 3 27 100 -9 9
-	@echo ""
-	@./solve-model rosenbrock 3 3 27 100 -2.048 2.048
-	@echo ""
-	@./solve-model easom 3 3 27 100 0 25
-	@echo ""
-	@./solve-model levy 3 3 27 100 -10 10
-	@echo ""
-	@./solve-model dixon-price 3 3 27 100 -10 10
-	@echo ""
-	@./solve-model st 3 3 27 100 -5 5
+	@./solve-model schwefel 3 3 27 100 0 500
 	@echo ""
 	@./solve-model michalewicz 3 3 27 100 0 3.14
 	@echo ""
-	@./solve-model schwefel 3 3 27 100 0 500
+	@./solve-model st 3 3 27 100 -5 5
+	@echo ""
+	@./solve-model dixon-price 3 3 27 100 -10 10
+	@echo ""
+	@./solve-model levy 3 3 27 100 -10 10
+	@echo ""
+	@./solve-model easom 3 3 27 100 0 25
+	@echo ""
+	@./solve-model rosenbrock 3 3 27 100 -2.048 2.048
+	@echo ""
+	@./solve-model trid 3 3 27 100 -9 9
+	@echo ""
+	@./solve-model bw  9 3 27 100 0.0 5.0
+	@echo ""
+	@./solve-model bw2 9 3 27 100 0.0 5.0
+	@echo ""
+	@./solve-model e3  9 3 27 100 0.0 5.0
 	@echo ""
 
 ctags:
