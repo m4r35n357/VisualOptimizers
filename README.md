@@ -1,26 +1,26 @@
 # Simple Visual Gradient-free optimizers
 
-Here are some basic "black-box" optimizers, for experimentation and learning through visualization.
+Here are some basic global optimizers, for experimentation and learning through visualization.
 If you are unsure what the ["Curse of Dimensionality"](https://en.wikipedia.org/wiki/Curse_of_dimensionality) means, or ["No Free Lunch"](https://en.wikipedia.org/wiki/No_free_lunch_theorem), this project might help.
 
 There are currently _four_ candidate algorithms included (two good, two not so good!), each with an interactive OpenGL visualizer:
 
-* Nelder-Mead - features a "multi-run" bulk mode for global optimization
-* Optimization by Cut (including the published algorithm, my simplified version, and a random optimizer!)
+* Nelder-Mead - features a "multi-run" bulk mode for global optimization, using an adaptive algorithm, and sensible initialization
+* Optimization by Cut (including the published algorithm, my simplified & improved version, and a completely random optimizer!)
 
-Suitable for global optimization in up to 16 dimensions with the cut algorithms, and scenarios up to 64 dimensions for "bulk-mode" Nelder-Mead.
+The methods are suitable for global optimization in up to 16 dimensions with the cut algorithms, and scenarios up to 64 dimensions for "bulk-mode" Nelder-Mead.
 
-Now includes "real-world" RF filter synthesis examples, with component values as the parameter space (variables).
+Now includes "real-world" RF filter synthesis examples, with electrical component values as the parameter space (variables).
 
 Firstly there is a multi-order Butterworth model, which is optimized against the ideal maximally-flat frequency response (an explicit, closed-form solution).
 Against this solution, the error can theoretically be optimized down to zero (subject to numerical errors at higher filter order).
 
-Secondly, there are two "elliptic" (strictly, low-pass notch) designs, to be optimized against a real world spec.
+Secondly, there are two "elliptic" (strictly, low-pass notch) designs, to be optimized against a regular filter specification.
 In this case, there is _no explicit solution_, and if the spec is exceeded (the minimum hits zero), there is a _continuum_ of solutions.
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
 
-The code is concise and efficient, and produces tiny executables.
+The code is concise (<1600 LOC) and efficient, and produces tiny executables.
 The programs can be built with either Clang or GCC.
 All console programs are written to and depend _only_ on the c99 standard and library (strictly speaking, the WG14/N1256 _draft_ standard!).
 External dependencies (OpenGL, FreeGLUT & GLEW) are only needed for the OpenGL plotters (*-gl).
@@ -105,16 +105,16 @@ Taken together, these two "multi" targets produce a good overall performance sum
 ```
 make CCC=gcc test-filters
 ```
-Synthesizes RF filter components.
+Synthesizes RF filter components for various orders of filter.
 ```
 make CCC=gcc test-multi-filters
 ```
-Some stats runs for the LC filter.
+Some stats runs for the Butterworth and "notch" LC filters for various orders.
 
 # Usage
 
-The make tests above show summary output for models of interest.
-All programs and scripts output their command arguments for easy cut & paste (magenta for scripts, cyan for binaries.
+The make tests above show summarized output for models of interest.
+All programs and scripts output their command arguments for easy cut & paste (magenta for scripts, cyan for binaries).
 The commands and their arguments are detailed below.
 
 ## Nelder-Mead
@@ -202,9 +202,9 @@ These are the most "important", in decreasing order
 
 Model | Justification
 ----------|-----------
+e3, e5 | low-pass notch filter design from specifications (passband ripple, selectivity, stopband loss)
 bw | symmetric Butterworth RF low-pass filter design (filter order = 2 * dimension - 1)
-e3, e5 | low-pass filter design from specifications (passband ripple, selectivity, stopband loss)
-trid | slightly more involved, but still unimodal and well behaved
+trid | slightly more involved than the well-known sphere model, but still unimodal and well behaved
 rosenbrock | unimodal, non-convex, tests ability to cope with contrasting directional slopes
 easom | unimodal, non-convex, "needle in a haystack".  Also tests machine precision!
 levy | multimodal but not _too_ pathological
@@ -225,7 +225,7 @@ Parameter | Meaning
 5 | Lower limit
 6 | Upper limit
 
-Parameters 3 and 4 are multiplied within the script to give a "budget" of evaluations for Nelder-Mead.
+Parameters 3 and 4 are multiplied within the script to give a "budget" of evaluations for Nelder-Mead in bulk mode.
 
 Example
 ```
@@ -268,13 +268,13 @@ For 8D or higher, using one of the faster "CCC=" make options above is _highly_ 
 ## "Global" Optimization
 
 A common feature of particle-based methods is an _exploration_ phase followed by a _refinement_ phase (in practice the transition is a gradual process).
-Refinement is _not_ the same as convergence; you get what you are given after a specified number of iterations!
+Refinement is _not_ the same thing as convergence; you get what you are given after a specified number of iterations!
 Another way of looking at it is that the initial search domain is shrunk by a large factor, concentrating the search agents into a relatively small volume around a _potential_ minimum.
 In any case, this refinement stage makes it harder to jump out of a stubborn local minimum.
 
-I have adapted the Nelder-Mead method to do a series of random runs, while keeping the best result, and accounting for total number of function evaluations.
+I have adapted the Nelder-Mead method with an option to do a series of random runs, while keeping the best result, and accounting for total number of function evaluations.
 The size of the initial simplex is set to a large value, and the _adaptive_ setting is used for 8D and above; this setup works rather well as a global optimizer!
-This is because the random exploration is not limited by any refinement process so global minima are always potentially accessible, even if not actually reached within the set limits.
+This is because the random exploration is not subject to any refinement process so global minima are always potentially accessible, even if not actually reached within the set limits.
 
 The comparisons are _roughly_ equivalent in that the number of Nelder-Mead evaluations is set roughly to (agents) x (iterations), which is a good approximation to the number of evaluations used by the particle-based optimizers.
 Do your own experiments!
@@ -321,6 +321,8 @@ Coordinates above the third are projected into the 3D space (ignored!).
 
 ## OpenGL Keyboard Controls
 
+The normal mode of use is to manually step through the iteration sequence using the "s" key.
+
 The global minimum is no longer displayed by default, use the 'm' key to show it at any time.
 For a more immersive "black-box" exerience, leave it until the end!
 
@@ -342,3 +344,9 @@ PAGE DOWN | zoom out (coarse)
 'F' 'f' | toggle fullscreen mode
 'H' 'h' | toggle OSD text
 'Q' 'q' ESC | exit
+
+Examples
+```
+./nm-trid-gl 3 fixed 3 1.0e-6 10000 10.0 non-adaptive random -10 10 
+./cut-trid-gl 3 fixed 3 27 100 unclamped -10 10 
+```
