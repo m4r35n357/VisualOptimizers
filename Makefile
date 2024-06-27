@@ -145,7 +145,7 @@ test-16d: nogl
 
 # 2^D search agents
 test-8d: nogl
-	@./solve-model bw 3 8 256 100 0.0 5.0
+	@./solve-model bw 9 8 256 100 0.0 5.0
 	@echo ""
 	@./solve-model trid 3 8 256 100 -64 64
 	@echo ""
@@ -158,9 +158,9 @@ test-8d: nogl
 
 # 3^D search agents
 test-3d: nogl
-	@./solve-model bw 3 3 27 100 0.0 5.0
+	@./solve-model bw 9 3 27 100 0.0 5.0
 	@echo ""
-	@./solve-model e3 3 3 27 100 0.0 5.0
+	@./solve-model e3 9 3 27 100 0.0 5.0
 	@echo ""
 	@./solve-model trid 3 3 27 100 -9 9
 	@echo ""
