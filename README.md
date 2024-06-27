@@ -5,22 +5,22 @@ If you are unsure what the ["Curse of Dimensionality"](https://en.wikipedia.org/
 
 There are currently _four_ candidate algorithms included (two good, two not so good!), each with an interactive OpenGL visualizer:
 
-* Nelder-Mead - features a "multi-run" bulk mode for global optimization, using an adaptive algorithm, and sensible initialization
+* Nelder-Mead - features a "multi-run" bulk mode for global optimization, using an adaptive algorithm, and sensible simplex initialization
 * Optimization by Cut (including the published algorithm, my simplified & improved version, and a completely random optimizer!)
 
 The methods are suitable for global optimization in up to 16 dimensions with the cut algorithms, and scenarios up to 64 dimensions for "bulk-mode" Nelder-Mead.
 
 Now includes "real-world" RF filter synthesis examples, with electrical component values as the parameter space (variables).
 
-Firstly there is a multi-order Butterworth model, which is optimized against the ideal maximally-flat frequency response (an explicit, closed-form solution).
-Against this solution, the error can theoretically be optimized down to zero (subject to numerical errors at higher filter order).
+Firstly there is a multi-order Butterworth model, which is optimized against the theoretical maximally-flat frequency response (an explicit, closed-form solution).
+Against this ideal, the error can theoretically be optimized down to zero (subject to numerical errors at higher filter order).
 
 Secondly, there are two "elliptic" (strictly, low-pass notch) designs, to be optimized against a regular filter specification.
 In this case, there is _no explicit solution_, and if the spec is exceeded (the minimum hits zero), there is a _continuum_ of solutions.
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
 
-The code is concise (<1600 LOC) and efficient, and produces tiny executables.
+The code is concise (< 1600 LOC) and efficient, and produces tiny executables (~ 20-40KB).
 The programs can be built with either Clang or GCC.
 All console programs are written to and depend _only_ on the c99 standard and library (strictly speaking, the WG14/N1256 _draft_ standard!).
 External dependencies (OpenGL, FreeGLUT & GLEW) are only needed for the OpenGL plotters (*-gl).
@@ -122,9 +122,9 @@ The commands and their arguments are detailed below.
 Nelder, John A.; R. Mead (1965). "A simplex method for function minimization". Computer Journal. 7 (4): 308–313. doi:10.1093/comjnl/7.4.308.
 
 This code was originally based on a [project](https://github.com/matteotiziano/nelder-mead) by Matteo Maggioni in 2023.
-It has since been extensively rewritten, now uses regular simplexes, and has a "multi-run" (or "bulk") mode for use as a _global_ optimizer.
+It has since been extensively rewritten, now uses _regular_ simplexes, and has a "multi-run" (or "bulk") mode for use as a _global_ optimizer.
 
-The regular vertex coordinates are generated using an algorithm which is described (open access) [here](https://link.springer.com/article/10.1007/s11590-022-01953-y).
+_Regular_ vertex coordinates are generated using an algorithm which is described (open access) [here](https://link.springer.com/article/10.1007/s11590-022-01953-y).
 The adaptive algorithm is described (open access) [here](https://www.researchgate.net/publication/225691623_Implementing_the_Nelder-Mead_simplex_algorithm_with_adaptive_parameters).
 
 Parameter | Meaning
