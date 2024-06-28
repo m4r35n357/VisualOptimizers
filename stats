@@ -27,7 +27,7 @@ do
     set -- $($args 2>&1 >/dev/null | tail -1)
     result=$*
     shift $(($# - 1))
-    if [ $(printf "scale=$places; $1 >= $threshold;\n" | /usr/bin/bc)  -eq 1 ]
+    if [ $(printf "scale=$((places + 3)); $1 >= $threshold;\n" | /usr/bin/bc)  -eq 1 ]
     then
         failed=$((failed + 1))
         colour=${RED}

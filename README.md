@@ -203,7 +203,7 @@ These are the most "important", in decreasing order
 Model | Justification
 ----------|-----------
 e3, e5 | low-pass notch filter design from specifications (passband ripple, selectivity, stopband loss)
-bw, bw2 | symmetric Butterworth RF low-pass filter design (filter order = 2 * dimension - 1)
+bw | symmetric Butterworth RF low-pass filter design (filter order = 2 * dimension - 1)
 trid | slightly more involved than the well-known sphere model, but still unimodal and well behaved
 rosenbrock | unimodal, non-convex, tests ability to cope with contrasting directional slopes
 easom | unimodal, non-convex, "needle in a haystack".  Also tests machine precision!
