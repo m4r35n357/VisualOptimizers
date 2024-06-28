@@ -15,12 +15,6 @@ int main(int argc, char *argv[]) {
     fprintf(stderr, "%s  Best Initial  ", GRY);
     print_result(c.n, b->best, c.places, c.fmt);
 
-    minima *min = get_known_minima(c.n);
-    if (min) {
-        fprintf(stderr, "%s      Expected  ", GRY);
-        print_result(c.n, min->min, c.places, c.fmt);
-    }
-
     // run optimization
     coa(b, m, &c);
 
