@@ -203,14 +203,10 @@ These are the most "important", in decreasing order
 Model | Justification
 ----------|-----------
 e3, e5 | low-pass notch filter design from specifications (passband ripple, selectivity, stopband loss)
-bw | symmetric Butterworth RF low-pass filter design (filter order = 2 * dimension - 1)
+bw, bw2 | symmetric Butterworth RF low-pass filter design (filter order = 2 * dimension - 1)
 trid | slightly more involved than the well-known sphere model, but still unimodal and well behaved
 rosenbrock | unimodal, non-convex, tests ability to cope with contrasting directional slopes
 easom | unimodal, non-convex, "needle in a haystack".  Also tests machine precision!
-levy | multimodal but not _too_ pathological
-dixon-price | multiple global maxima, and one _very_ attractive local minimum (for dimensions > 3)
-
-The other models work only at lower dimensions, or do not give clear enough data to draw any useful conclusions.
 
 ## "solve-model" script
 
@@ -260,7 +256,7 @@ Examples
 ```
 make clean
 make CCC=gcc
-./stats 100 0.001 ./nm-dixon-price-std 3 fixed 8 1.0e-6 25756 10.0 adaptive bulk -10 10
+./stats 100 0.001 ./nm-trid-std 3 fixed 8 1.0e-6 25756 10.0 adaptive random -64 64
 ./stats 100 0.03 ./cut-trid-std 3 fixed 8 256 100 unclamped -64 64
 ```
 For 8D or higher, using one of the faster "CCC=" make options above is _highly_ recommended!
