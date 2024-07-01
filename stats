@@ -10,6 +10,10 @@ MGT='\e[0;35m'
 CYN='\e[0;36m'
 NRM='\e[0m'
 
+exp_to_fixed () {
+    echo $1 | sed -E 's/([+-]?[0-9.]+)[eE]\+?(-?)([0-9]+)/(\1*10^\2\3)/g'
+}
+
 args="$0 $*"
 n_args=$(($# + 1))
 printf "${GRY}args ${NRM}%s${GRY} [ ${MGT}%s${GRY} ]${NRM}\n" $n_args "$args" >&2
@@ -27,7 +31,9 @@ do
     set -- $($args 2>&1 >/dev/null | tail -1)
     result=$*
     shift $(($# - 1))
-    if [ $(printf "scale=$((places + 3)); $1 >= $threshold;\n" | /usr/bin/bc)  -eq 1 ]
+    value=$(exp_to_fixed $1)
+    thrsh=$(exp_to_fixed $threshold)
+    if [ $(printf "scale=$((places + 3)); $value >= $thrsh;\n" | /usr/bin/bc) -eq 1 ]
     then
         failed=$((failed + 1))
         colour=${RED}

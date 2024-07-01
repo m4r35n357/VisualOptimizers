@@ -54,5 +54,5 @@ void print_result (int n, const point *p, int places, int fmt) {
     for (int i = 0; i < n; i++) {
         fprintf(stderr, fmt ? "% .*Le " : "% .*Lf ", places, p->x[i]);
     }
-    fprintf(stderr, fmt ? "%s]%s % .*Le\n" : "%s]%s % .*Lf\n", GRY, NRM, places, p->f);
+    fprintf(stderr, "%s]%s % .*Le\n", GRY, NRM, places, p->f);
 }

@@ -121,8 +121,7 @@ bool nelder_mead (simplex *s, const model *m, const optimset *o) {
         for (int j = 0; j < o->n; j++) {
             fprintf(stdout, o->fmt ? "% .*Le " : "% .*Lf ", o->places, best->x[j]);
         }
-        fprintf(stdout, o->fmt ? "]  % .*Le  % .*Le % .*Le\n" : "]  % .*Lf  ( % .*Lf % .*Lf )\n",
-                o->places, best->f, o->places, s->delta_x, o->places, s->delta_f);
+        fprintf(stdout, "]  % .*Le  % .*Le % .*Le\n", o->places, best->f, o->places, s->delta_x, o->places, s->delta_f);
         if (o->step_mode) return true;
         resume: ;
     }

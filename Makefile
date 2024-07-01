@@ -76,40 +76,40 @@ test-multi-3-16: nogl
 	@echo ""
 
 test-multi-filters: nogl
-	@./stats 100 0.000000001 ./nm-bw-std 9 fixed 1 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 0.000000001 ./nm-bw-std 9 fixed 2 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 0.000000001 ./nm-bw-std 9 fixed 3 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 0.000000001 ./nm-bw-std 9 fixed 4 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 0.000000001 ./nm-bw-std 9 fixed 5 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 0.000000001 ./nm-bw-std 9 fixed 6 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 0.000000001 ./nm-bw-std 9 fixed 7 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 0.000000001 ./nm-bw-std 9 fixed 8 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 1 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 2 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 3 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 4 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 5 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 6 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 7 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 8 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
 	@echo ""
-	@./multi-stats 100 0.000000001 e3 9 3  27 100 0.0 5.0
+	@./multi-stats 100 1.0e-12 e3 12 3  27 100 0.0 5.0
 	@echo ""
-	@./multi-stats 100 0.000000001 e5 9 6 216 100 0.0 5.0
+	@./multi-stats 100 1.0e-12 e5 12 6 216 100 0.0 5.0
 	@echo ""
 
 test-filters: nogl
-	@./solve-model bw 3 1   2 100 0.0 5.0
+	@./solve-model bw 2 1   2 100 0.0 5.0
 	@echo ""
-	@./solve-model bw 3 2   8 100 0.0 5.0
+	@./solve-model bw 2 2   8 100 0.0 5.0
 	@echo ""
-	@./solve-model bw 3 3  27 100 0.0 5.0
+	@./solve-model bw 2 3  27 100 0.0 5.0
 	@echo ""
-	@./solve-model bw 3 4  64 100 0.0 5.0
+	@./solve-model bw 2 4  64 100 0.0 5.0
 	@echo ""
-	@./solve-model bw 3 5 125 100 0.0 5.0
+	@./solve-model bw 2 5 125 100 0.0 5.0
 	@echo ""
-	@./solve-model bw 3 6 216 100 0.0 5.0
+	@./solve-model bw 2 6 216 100 0.0 5.0
 	@echo ""
-	@./solve-model bw 3 7 343 100 0.0 5.0
+	@./solve-model bw 2 7 343 100 0.0 5.0
 	@echo ""
-	@./solve-model bw 3 8 512 100 0.0 5.0
+	@./solve-model bw 2 8 512 100 0.0 5.0
 	@echo ""
-	@./solve-model e3 3 3  27 100 0.0 5.0
+	@./solve-model e3 2 3  27 100 0.0 5.0
 	@echo ""
-	@./solve-model e5 3 6 216 100 0.0 5.0
+	@./solve-model e5 2 6 216 100 0.0 5.0
 	@echo ""
 
 test-64d: nogl

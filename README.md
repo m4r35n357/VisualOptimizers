@@ -20,7 +20,7 @@ In this case, there is _no explicit solution_, and if the spec is exceeded (the 
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
 
-The code is concise (< 1600 LOC) and efficient, and produces tiny executables (~ 20-40KB).
+The code is concise (currently < 1400 LOC) and efficient, and produces tiny executables (~ 20-40KB).
 The programs can be built with either Clang or GCC.
 All console programs are written to and depend _only_ on the c99 standard and library (strictly speaking, the WG14/N1256 _draft_ standard!).
 External dependencies (OpenGL, FreeGLUT & GLEW) are only needed for the OpenGL plotters (*-gl).
