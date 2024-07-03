@@ -113,7 +113,7 @@ test-filters: nogl
 	@echo ""
 
 test-64d: nogl
-	@./nm-trid-std 1 fixed 64 1.0e-6 1000000 4096.0 adaptive random -4096 4096 >/dev/null
+	@./nm-trid-std 4 fixed 64 1.0e-6 1000000 4096.0 adaptive random -4096 4096 >/dev/null
 	@echo ""
 	@./nm-rosenbrock-std 1 fixed 64 1.0e-6 2000000 2.048 adaptive random -2.048 2.048 >/dev/null
 	@echo ""
@@ -121,7 +121,7 @@ test-64d: nogl
 	@echo ""
 
 test-32d: nogl
-	@./nm-trid-std 1 fixed 32 1.0e-6 100000 1024.0 adaptive random -1024 1024 >/dev/null
+	@./nm-trid-std 3 fixed 32 1.0e-6 100000 1024.0 adaptive random -1024 1024 >/dev/null
 	@echo ""
 	@./nm-rosenbrock-std 1 fixed 32 1.0e-6 200000 2.048 adaptive random -2.048 2.048 >/dev/null
 	@echo ""

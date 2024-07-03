@@ -15,7 +15,7 @@ Now includes "real-world" RF filter synthesis examples, with electrical componen
 Firstly there is a multi-order Butterworth model, which is optimized against the theoretical maximally-flat frequency response (an explicit, closed-form solution).
 Against this ideal, the error can theoretically be optimized down to zero (subject to numerical errors at higher filter order).
 
-Secondly, there are two "elliptic" (strictly, low-pass notch) designs, to be optimized against a regular filter specification.
+Secondly, there are two low-pass notch designs, to be optimized against a regular filter specification.
 In this case, there is _no explicit solution_, and if the spec is exceeded (the minimum hits zero), there is a _continuum_ of solutions.
 
 ## Pure c99 (plus optional 3D OpenGL visualization)
