@@ -8,11 +8,7 @@ static minima *targets;
 static config c;
 static gl_point *v1, *v2, *v3;
 
-static gl_point get_gl_point (real *p) {
-    return (gl_point){(float)p[0], (float)p[1], (float)p[2]};
-}
-
-static void get_vertices (gl_point *vertices, point **points) {
+static void get_population (gl_point *vertices, point **points) {
     for (int i = 0; i < c.m; i++) {
         vertices[i] = get_gl_point(points[i]->x);
     }
@@ -48,9 +44,9 @@ void Animate () {
             coa(b2, m, &c);
             c.mode = 2;  // Random
             coa(b3, m, &c);
-            get_vertices(v1, b1->agents);
-            get_vertices(v2, b2->agents);
-            get_vertices(v3, b3->agents);
+            get_population(v1, b1->agents);
+            get_population(v2, b2->agents);
+            get_population(v3, b3->agents);
         }
         if (stepping) paused = true;
     }
@@ -123,12 +119,13 @@ int main (int argc, char **argv) {
     // get minima for targets if known
     targets = get_known_minima(c.n);
 
-    v1 = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v1);
-    get_vertices(v1, b1->agents);
-    v2 = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v2);
-    get_vertices(v2, b2->agents);
-    v3 = malloc((size_t)c.m * sizeof (gl_point)); CHECK(v3);
-    get_vertices(v3, b3->agents);
+    size_t gl_population = (size_t)c.m * sizeof (gl_point);
+    v1 = malloc(gl_population); CHECK(v1);
+    v2 = malloc(gl_population); CHECK(v2);
+    v3 = malloc(gl_population); CHECK(v3);
+    get_population(v1, b1->agents);
+    get_population(v2, b2->agents);
+    get_population(v3, b3->agents);
 
     lower = (float)c.lower;
     upper = (float)c.upper;

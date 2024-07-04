@@ -94,6 +94,10 @@ void ReDraw () {
     glutPostRedisplay();  // Request a re-draw for animation purposes
 }
 
+gl_point get_gl_point (real *p) {
+    return (gl_point){(float)p[0], (float)p[1], (float)p[2]};
+}
+
 rgb get_colour (colour_code colour) {
     return (rgb []){
         (rgb){1.0F, 1.0F, 0.0F}, (rgb){0.0F, 1.0F, 1.0F}, (rgb){1.0F, 0.0F, 1.0F},

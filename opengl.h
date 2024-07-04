@@ -52,6 +52,11 @@ void CloseWindow (void);
 void SetupView (void);
 
 /*
+ * Convert coordinates from long double to float
+ */
+gl_point get_gl_point (real *p);
+
+/*
  * Colours
  */
 rgb get_colour (colour_code colour);

@@ -9,10 +9,6 @@ static minima *targets;
 static optimset o;
 static gl_point *v1, *v2;
 
-static gl_point get_gl_point (real *p) {
-    return (gl_point){(float)p[0], (float)p[1], (float)p[2]};
-}
-
 static void get_vertices (gl_point *vertices, point *points) {
     for (int i = 0; i < (o.n + 1); i++) {
         vertices[i] = get_gl_point(points[i].x);
@@ -131,9 +127,10 @@ int main (int argc, char **argv) {
     // get minima for targets if known
     targets = get_known_minima(o.n);
 
-    v1 = malloc((size_t)(o.n + 1) * sizeof (gl_point)); CHECK(v1);
+    size_t gl_simplex = (size_t)(o.n + 1) * sizeof (gl_point);
+    v1 = malloc(gl_simplex); CHECK(v1);
+    v2 = malloc(gl_simplex); CHECK(v2);
     get_vertices(v1, s1->p);
-    v2 = malloc((size_t)(o.n + 1) * sizeof (gl_point)); CHECK(v2);
     get_vertices(v2, s2->p);
 
     lower = (float)o.lower;
