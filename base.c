@@ -8,7 +8,7 @@ void randomize () {
     unsigned int seed = 0;
     FILE *devrnd = fopen("/dev/urandom","r");  CHECK(devrnd);
     fread(&seed, 4, 1, devrnd);
-    int opened = fclose(devrnd);  CHECK(!opened);
+    CHECK(!fclose(devrnd));
     srand(seed);
 }
 

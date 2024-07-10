@@ -16,11 +16,11 @@ struct Model { real pb, sb, ksi, min, max; };
 
 model *model_init (int n) { (void)n;
     CHECK(n == 3);
-    bool override = false;
     char *datafile = "e3specs.txt";
     real pb, sb, ksi;
     FILE *specs = fopen(datafile, "r");
-    if (specs) override = fscanf(specs, "%Le %Le %Le", &pb, &sb, &ksi) == 3;
+    bool override = specs ? fscanf(specs, "%Le %Le %Le", &pb, &sb, &ksi) == 3 : false;
+    if (specs) CHECK(!fclose(specs));
     model *m = malloc(sizeof (model));
     m->pb = override ? pb : 0.8L;  // passband transmission: 0.8 == -0.969dB
     m->sb = override ? sb : 0.0035L;// stopband transmission: 0.0035 == -24.6dB
