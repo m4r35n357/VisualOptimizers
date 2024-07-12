@@ -5,12 +5,10 @@
 #include <complex.h>
 #include "model.h"
 
-struct Model { real min; };
+struct Model { void *_; };
 
 model *model_init (int n) { (void)n;
-    model *m = malloc(sizeof (model));
-    m->min = 0.0L;  // inequality constraint - passive components!
-    return m;
+    return NULL;
 }
 
 minima *get_known_minima (int n) { (void)n;
@@ -36,9 +34,9 @@ static real tx (int n, point *p, real w) {
     return 1.0L - SQR(cabsl((g - 1.0L) / (g + 1.0L)));
 }
 
-void cost (int n, point *p, const model *m) {
+void cost (int n, point *p, const model *m) { (void)m;
     for (int i = 0; i < n; i++) {
-        if (p->x[i] <= m->min) {
+        if (p->x[i] <= 0.0L) {  // positive component values!
             p->f = INFINITY;
             return;
         }

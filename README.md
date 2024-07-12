@@ -208,6 +208,14 @@ trid | slightly more involved than the well-known sphere model, but still unimod
 rosenbrock | unimodal, non-convex, tests ability to cope with contrasting directional slopes
 easom | unimodal, non-convex, "needle in a haystack".  Also tests machine precision!
 
+### Filters
+
+These commands will provide some cut & paste examples:
+```
+make CCC=gcc test-filters
+make CCC=gcc test-multi-filters
+```
+
 ## "solve-model" script
 
 Run a single model against all integrators, including random
