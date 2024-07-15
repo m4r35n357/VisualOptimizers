@@ -37,12 +37,12 @@ minima *get_known_minima (int n) { (void)n;
     return NULL;
 }
 
-static real tx (point *p, real omega) {
-    long double complex g = 1.0L + I * omega * p->x[0];
-    g = 1.0L / g + 1.0L / (1.0L / (I * omega * p->x[1]) + I * omega * p->x[2]);
-    g = 1.0L / g + I * omega * p->x[3];
-    g = 1.0L / g + 1.0L / (1.0L / (I * omega * p->x[4]) + I * omega * p->x[5]);
-    g = 1.0L / g + I * omega * p->x[0];
+static real tx (point *p, real w) {
+    long double complex g = 1.0L + I * w * p->x[0];
+    g = 1.0L / g + 1.0L / (1.0L / (I * w * p->x[1]) + I * w * p->x[2]);
+    g = 1.0L / g + I * w * p->x[3];
+    g = 1.0L / g + 1.0L / (1.0L / (I * w * p->x[4]) + I * w * p->x[5]);
+    g = 1.0L / g + I * w * p->x[0];
     return 1.0L - SQR(cabsl((g - 1.0L) / (g + 1.0L)));
 }
 
