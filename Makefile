@@ -1,5 +1,5 @@
 
-CFLAGS=-std=c99 -O3 -fno-math-errno -flto
+CFLAGS=-std=c99 -O3 -ffast-math -flto
 WARNINGS=-Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wconversion -Wredundant-decls -Wmissing-declarations
 LIB_STD=-lm
 LIB_GL=-lGLEW -lglut -lGLU -lGL
@@ -45,31 +45,20 @@ cut-%-gl: %.o particles.o opengl.o base.o poa-gl.o
 
 cut-gl: cut-easom-gl cut-rosenbrock-gl cut-trid-gl cut-bw-gl cut-e3-gl cut-e5-gl
 
-.PHONY: test-multi-16-64 test-multi-3-8 test-multi test-filters test-8d test-3d ctags clean depclean
+.PHONY: test-multi-16-64 test-multi test-filters test-8d test-3d ctags clean depclean
 
 test-multi-16-64: nogl
-	@./stats 10   -799.0 ./nm-trid-std 1 fixed 16 1.0e-6  100000  256.0 adaptive random  -256  256 >/dev/null
-	@./stats 10  -5951.0 ./nm-trid-std 1 fixed 32 1.0e-6  100000 1024.0 adaptive random -1024 1024 >/dev/null
-	@./stats 10 -45695.0 ./nm-trid-std 1 fixed 64 1.0e-6 1000000 4096.0 adaptive random -4096 4096 >/dev/null
+	@./stats 10   -799.0 ./nm-trid-std 1 fixed 16 1.0e-9  100000  256.0 adaptive random  -256  256 >/dev/null
+	@./stats 10  -5951.0 ./nm-trid-std 1 fixed 32 1.0e-9  100000 1024.0 adaptive random -1024 1024 >/dev/null
+	@./stats 10 -45695.0 ./nm-trid-std 1 fixed 64 1.0e-9 1000000 4096.0 adaptive random -4096 4096 >/dev/null
 	@echo ""
-	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 16 1.0e-6  200000 2.048 adaptive random -2.048 2.048 >/dev/null
-	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 32 1.0e-6  200000 2.048 adaptive random -2.048 2.048 >/dev/null
-	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 64 1.0e-6 2000000 2.048 adaptive random -2.048 2.048 >/dev/null
+	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 16 1.0e-9  200000 2.048 adaptive random -2.048 2.048 >/dev/null
+	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 32 1.0e-9  200000 2.048 adaptive random -2.048 2.048 >/dev/null
+	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 64 1.0e-9 2000000 2.048 adaptive random -2.048 2.048 >/dev/null
 	@echo ""
-	@./stats 10 -0.999 ./nm-easom-std 1 fixed 16 1.0e-6 100000 12.5 adaptive random 0 25 >/dev/null
-	@./stats 10 -0.999 ./nm-easom-std 1 fixed 32 1.0e-6 100000 12.5 adaptive random 0 25 >/dev/null
-	@./stats 10 -0.999 ./nm-easom-std 1 fixed 64 1.0e-6 100000 12.5 adaptive random 0 25 >/dev/null
-	@echo ""
-
-test-multi-3-8: nogl
-	@./multi-stats 100   -6.9 trid 3  3    27 100   -9   9
-	@./multi-stats 100 -111.9 trid 3  8   256 100  -64  64
-	@echo ""
-	@./multi-stats 100 0.001 rosenbrock 3  3    27 100 -2.048 2.048
-	@./multi-stats 100 0.001 rosenbrock 3  8   256 100 -2.048 2.048
-	@echo ""
-	@./multi-stats 100 -0.999 easom 3  3    27 100 0 25
-	@./multi-stats 100 -0.999 easom 3  8   256 100 0 25
+	@./stats 10 -0.999 ./nm-easom-std 1 fixed 16 1.0e-9 100000 12.5 adaptive random 0 25 >/dev/null
+	@./stats 10 -0.999 ./nm-easom-std 1 fixed 32 1.0e-9 100000 12.5 adaptive random 0 25 >/dev/null
+	@./stats 10 -0.999 ./nm-easom-std 1 fixed 64 1.0e-9 100000 12.5 adaptive random 0 25 >/dev/null
 	@echo ""
 
 test-multi: nogl
@@ -94,9 +83,8 @@ test-multi: nogl
 	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 7 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
 	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 8 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
 	@echo ""
-	@./multi-stats 100 1.0e-12 e3 12 3  27 100 0.0 5.0
-	@echo ""
-	@./multi-stats 100 1.0e-12 e5 12 6 216 100 0.0 5.0
+	@./stats 100 1.0e-12 ./nm-e3-std 12 fixed 3 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-e5-std 12 fixed 6 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
 	@echo ""
 
 test-filters: nogl

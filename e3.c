@@ -1,5 +1,5 @@
 /*
- * 3rd order "elliptic" (notch) filter from specifications
+ * 3rd order low-pass notch filter from specifications
  *        ----C(2)---
  *        |         |
  *     o------L(1)-----o---
@@ -37,10 +37,10 @@ minima *get_known_minima (int n) { (void)n;
     return NULL;
 }
 
-static real tx (point *p, real w) {
-    long double complex g = 1.0L + I * w * p->x[0];
-    g = 1.0L / g + 1.0L / (1.0L / (I * w * p->x[1]) + I * w * p->x[2]);
-    g = 1.0L / g + I * w * p->x[0];
+static real tx (real *x, real w) {
+    long double complex g = 1.0L + I * w * x[0];
+    g = 1.0L / g + 1.0L / (1.0L / (I * w * x[1]) + I * w * x[2]);
+    g = 1.0L / g + I * w * x[0];
     return 1.0L - SQR(cabsl((g - 1.0L) / (g + 1.0L)));
 }
 
@@ -53,11 +53,11 @@ void cost (int n, point *p, const model *m) {
     }
     p->f = 0.0L;
     for (int i = 0; i <= 50; i++) {
-        real t = tx(p, powl(10.0L, 0.02L * i - 1.0L)); // up to w == 1.0
+        real t = tx(p->x, powl(10.0L, 0.02L * i - 1.0L)); // up to w == 1.0
         p->f += t >= m->pb ? 0.0L : SQR(m->pb - t);
     }
     for (int i = 0; i <= 50; i++) {
-        real t = tx(p, powl(10.0L, 0.02L * i) + m->ksi - 1.0L); // w * ksi upwards
+        real t = tx(p->x, powl(10.0L, 0.02L * i) + m->ksi - 1.0L); // w * ksi upwards
         p->f += t <= m->sb ? 0.0L : SQR(m->sb - t);
     }
 }

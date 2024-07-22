@@ -38,9 +38,6 @@ void copy_point (int n, const point *src, point *dst) {
     dst->f = src->f;
 }
 
-/*
- * Euclidean distance between two points
- */
 real distance (int n, const point *a, const point *b) {
     real sum = 0.0L;
     for (int j = 0; j < n; j++) {

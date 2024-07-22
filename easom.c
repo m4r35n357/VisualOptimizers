@@ -35,7 +35,7 @@ void cost (int n, point *p, const model *m) {
     real prod = 1.0L, sum = 0.0L;
     for (int i = 0; i < n; i++) {
         prod *= SQR(cosl(p->x[i]));
-        sum -= SQR(p->x[i] - m->PI);
+        sum  += SQR(p->x[i] - m->PI);
     }
-    p->f = - prod * expl(sum);
+    p->f = - prod * expl(-sum);
 }

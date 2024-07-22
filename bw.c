@@ -23,13 +23,13 @@ minima *get_known_minima (int n) { (void)n;
     return o;
 }
 
-static real tx (int n, point *p, real w) {
-    long double complex g = 1.0L + I * w * p->x[0];
+static real tx (int n, real *x, real w) {
+    long double complex g = 1.0L + I * w * x[0];
     for (int r = 1; r < n; r++) {
-        g = 1.0L / g + I * w * p->x[r];
+        g = 1.0L / g + I * w * x[r];
     }
     for (int r = n - 2; r >= 0; r--) {
-        g = 1.0L / g + I * w * p->x[r];
+        g = 1.0L / g + I * w * x[r];
     }
     return 1.0L - SQR(cabsl((g - 1.0L) / (g + 1.0L)));
 }
@@ -44,6 +44,6 @@ void cost (int n, point *p, const model *m) { (void)m;
     p->f = 0.0L;
     for (int i = 0; i <= 100; i++) {
         real w = powl(10.0L, 0.02L * i - 1.0L);
-        p->f += SQR(1.0L / (1.0L + powl(w, 2 * (2 * n - 1))) - tx(n, p, w));
+        p->f += SQR(1.0L / (1.0L + powl(w, 2 * (2 * n - 1))) - tx(n, p->x, w));
     }
 }
