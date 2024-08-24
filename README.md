@@ -85,12 +85,8 @@ See the Makefile for various additional "test" targets.
 In particular:
 ```
 make test-3d
-make CCC=gcc test-8d
-make CCC=gcc test-16d
-make CCC=gcc test-32d
-make CCC=gcc test-64d
 ```
-show basic program output (with stdout suppressed!) and can be used to get OpenGL commands by cut & paste - just change std to gl in the program names.
+shows basic program output (with stdout suppressed!) and can be used to get OpenGL commands by cut & paste - just change std to gl in the program names.
 
 The "multi" target runs stats:
 ```

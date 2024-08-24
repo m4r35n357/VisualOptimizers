@@ -27,23 +27,23 @@ nogl: nm-std cut-std ctags
 nm-%-std: %.o nelder_mead.o base.o main.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-nm-std: nm-easom-std nm-rosenbrock-std nm-trid-std nm-bw-std nm-e3-std nm-e5-std
+nm-std: nm-easom-std nm-rosenbrock-std nm-trid-std nm-bw-std nm-e3-std nm-e4-std nm-e6-std nm-e7-std
 
 nm-%-gl: %.o nelder_mead.o opengl.o base.o simplex-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-nm-gl: nm-easom-gl nm-rosenbrock-gl nm-trid-gl nm-bw-gl nm-e3-gl nm-e5-gl
+nm-gl: nm-easom-gl nm-rosenbrock-gl nm-trid-gl nm-bw-gl nm-e3-gl nm-e4-gl nm-e6-gl nm-e7-gl
 
 # Optimization by cut
 cut-%-std: %.o particles.o base.o main-particle.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD)
 
-cut-std: cut-easom-std cut-rosenbrock-std cut-trid-std cut-bw-std cut-e3-std cut-e5-std
+cut-std: cut-easom-std cut-rosenbrock-std cut-trid-std cut-bw-std cut-e3-std cut-e4-std cut-e6-std cut-e7-std
 
 cut-%-gl: %.o particles.o opengl.o base.o poa-gl.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LIB_STD) $(LIB_GL)
 
-cut-gl: cut-easom-gl cut-rosenbrock-gl cut-trid-gl cut-bw-gl cut-e3-gl cut-e5-gl
+cut-gl: cut-easom-gl cut-rosenbrock-gl cut-trid-gl cut-bw-gl cut-e3-gl cut-e4-gl cut-e6-gl cut-e7-gl
 
 .PHONY: test-multi-16-64 test-multi test-filters test-8d test-3d ctags clean depclean
 
@@ -53,7 +53,7 @@ test-multi-16-64: nogl
 	@./stats 10 -45695.0 ./nm-trid-std 1 fixed 64 1.0e-9 1000000 4096.0 adaptive random -4096 4096 >/dev/null
 	@echo ""
 	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 16 1.0e-9  200000 2.048 adaptive random -2.048 2.048 >/dev/null
-	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 32 1.0e-9  200000 2.048 adaptive random -2.048 2.048 >/dev/null
+	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 32 1.0e-9  500000 2.048 adaptive random -2.048 2.048 >/dev/null
 	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 64 1.0e-9 2000000 2.048 adaptive random -2.048 2.048 >/dev/null
 	@echo ""
 	@./stats 10 -0.999 ./nm-easom-std 1 fixed 16 1.0e-9 100000 12.5 adaptive random 0 25 >/dev/null
@@ -84,7 +84,9 @@ test-multi: nogl
 	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 8 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
 	@echo ""
 	@./stats 100 1.0e-12 ./nm-e3-std 12 fixed 3 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 1.0e-12 ./nm-e5-std 12 fixed 6 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-e4-std 12 fixed 4 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-e6-std 12 fixed 6 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-e7-std 12 fixed 7 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
 	@echo ""
 
 test-filters: nogl
@@ -106,7 +108,11 @@ test-filters: nogl
 	@echo ""
 	@./solve-model e3 2 3  27 100 0.0 5.0
 	@echo ""
-	@./solve-model e5 2 6 216 100 0.0 5.0
+	@./solve-model e4 2 4  64 100 0.0 5.0
+	@echo ""
+	@./solve-model e6 2 6 216 100 0.0 5.0
+	@echo ""
+	@./solve-model e7 2 7 343 100 0.0 5.0
 	@echo ""
 
 # 2^D search agents
