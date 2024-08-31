@@ -12,16 +12,15 @@ optimset get_settings (char **argv) {
         .tolerance = strtold(argv[4], NULL),
         .max_evaluations = (int)strtol(argv[5], NULL, BASE),
         .size = strtold(argv[6], NULL),
-        .adaptive = strstr(argv[7], "non-adaptive") ? 0 : (strstr(argv[7], "adaptive") ? 1 : -1),
-        .init_mode = strstr(argv[8], "point") ? 0 : (strstr(argv[8], "random") ? 1 : (strstr(argv[8], "bulk") ? 2 : -1))
+        .init_mode = strstr(argv[7], "point") ? 0 : (strstr(argv[7], "random") ? 1 : (strstr(argv[7], "bulk") ? 2 : -1))
     };
+    opt.adaptive = opt.n > 4;
     CHECK(opt.places >= 1 && opt.places <= 36);
     CHECK(opt.fmt == 0 || opt.fmt == 1);
     CHECK(opt.n >= 1 && opt.n <= 64);
     CHECK(opt.tolerance >= 1.0e-36L && opt.tolerance <= 1.0e-3L);
     CHECK(opt.max_evaluations >= 1 && opt.max_evaluations <= 10000000);
     CHECK(opt.size >= 1.0e-12L && opt.size <= 1.0e4L);
-    CHECK(opt.adaptive == 0 || opt.adaptive == 1);
     CHECK(opt.init_mode == 0 || opt.init_mode == 1 || opt.init_mode == 2);
     return opt;
 }

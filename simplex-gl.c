@@ -82,7 +82,7 @@ void CloseWindow () {
 
 int main (int argc, char **argv) {
     PRINT_ARGS(argc, argv);
-    CHECK(argc >= 9);
+    CHECK(argc >= 8);
 
     // optimizer settings
     o = get_settings(argv);
@@ -92,18 +92,18 @@ int main (int argc, char **argv) {
 
     point *centre = get_point(o.n);
     if (o.init_mode == 0) {
-        CHECK(argc == 9 + o.n);
+        CHECK(argc == 8 + o.n);
         real max = 0.0L;
         for (int j = 0; j < o.n; j++) {
-            centre->x[j] = strtold(argv[9 + j], NULL);
+            centre->x[j] = strtold(argv[8 + j], NULL);
             if (fabsl(centre->x[j]) > max) max = fabsl(centre->x[j]);
         }
         o.upper = 2.0L * max;
         o.lower = -o.upper;
     } else {
-        CHECK(argc == 11);
-        o.lower = strtold(argv[9], NULL);
-        o.upper = strtold(argv[10], NULL);  CHECK(o.upper > o.lower);
+        CHECK(argc == 10);
+        o.lower = strtold(argv[8], NULL);
+        o.upper = strtold(argv[9], NULL);  CHECK(o.upper > o.lower);
         set_random_coordinates(centre, o.n, o.lower, o.upper);
     }
     cost(o.n, centre, m);

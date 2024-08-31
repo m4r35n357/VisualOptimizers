@@ -122,6 +122,7 @@ It has since been extensively rewritten, now uses _regular_ simplexes, and has a
 
 _Regular_ vertex coordinates are generated using an algorithm which is described (open access) [here](https://link.springer.com/article/10.1007/s11590-022-01953-y).
 The adaptive algorithm is described (open access) [here](https://www.researchgate.net/publication/225691623_Implementing_the_Nelder-Mead_simplex_algorithm_with_adaptive_parameters).
+It is used automatically when the number of dimensions exceeds four.
 
 Parameter | Meaning
 ----------|-----------
@@ -131,19 +132,18 @@ Parameter | Meaning
 4 | Maximum error for convergence
 5 | Number of evaluations (maximum per iteration, and also the total in bulk mode)
 6 | Initial simplex scale
-7 | Adaptive (non-adaptive / adaptive)
-8 | Initialization (point / random / bulk) - ignored for GL
+7 | Initialization (point / random / bulk) - ignored for GL
 
 If Initialization == point
 Parameter | Meaning
 ----------|-----------
-9+ | Coordinates of starting point
+8+ | Coordinates of starting point
 
 If Initialization == random or bulk
 Parameter | Meaning
 ----------|-----------
-9 | Lower limit
-10 | Upper limit
+8 | Lower limit
+9 | Upper limit
 
 Examples
 ```

@@ -18,16 +18,9 @@ iterations=$5
 lower=$6
 upper=$7
 
-if [ $order -gt 4 ]
-then
-    adaptive="adaptive"
-else
-    adaptive="non-adaptive"
-fi
-
 # Nelder-Mead
 ./nm-$model-std $places fixed $order 1.0e-9 $(((agents - 1) * iterations + agents)) \
-    $(printf "scale=3; 0.5 * ($upper - $lower);\n" | /usr/bin/bc) $adaptive bulk $lower $upper >/dev/null
+    $(printf "scale=3; 0.5 * ($upper - $lower);\n" | /usr/bin/bc) bulk $lower $upper >/dev/null
 
 # Cut (unclamped)
 ./cut-$model-std $places fixed $order $agents $iterations unclamped $lower $upper >/dev/null

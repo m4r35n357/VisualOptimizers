@@ -48,45 +48,45 @@ cut-gl: cut-easom-gl cut-rosenbrock-gl cut-trid-gl cut-bw-gl cut-e3-gl cut-e4-gl
 .PHONY: test-multi-16-64 test-multi test-filters test-8d test-3d ctags clean depclean
 
 test-multi-16-64: nogl
-	@./stats 10   -799.0 ./nm-trid-std 1 fixed 16 1.0e-9  100000  256.0 adaptive random  -256  256 >/dev/null
-	@./stats 10  -5951.0 ./nm-trid-std 1 fixed 32 1.0e-9  100000 1024.0 adaptive random -1024 1024 >/dev/null
-	@./stats 10 -45695.0 ./nm-trid-std 1 fixed 64 1.0e-9 1000000 4096.0 adaptive random -4096 4096 >/dev/null
+	@./stats 10   -799.0 ./nm-trid-std 1 fixed 16 1.0e-9  100000  256.0 random  -256  256 >/dev/null
+	@./stats 10  -5951.0 ./nm-trid-std 1 fixed 32 1.0e-9  100000 1024.0 random -1024 1024 >/dev/null
+	@./stats 10 -45695.0 ./nm-trid-std 1 fixed 64 1.0e-9 1000000 4096.0 random -4096 4096 >/dev/null
 	@echo ""
-	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 16 1.0e-9  200000 2.048 adaptive random -2.048 2.048 >/dev/null
-	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 32 1.0e-9  500000 2.048 adaptive random -2.048 2.048 >/dev/null
-	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 64 1.0e-9 2000000 2.048 adaptive random -2.048 2.048 >/dev/null
+	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 16 1.0e-9  200000 2.048 random -2.048 2.048 >/dev/null
+	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 32 1.0e-9  500000 2.048 random -2.048 2.048 >/dev/null
+	@./stats 10 0.001 ./nm-rosenbrock-std 1 fixed 64 1.0e-9 2000000 2.048 random -2.048 2.048 >/dev/null
 	@echo ""
-	@./stats 10 -0.999 ./nm-easom-std 1 fixed 16 1.0e-9 100000 12.5 adaptive random 0 25 >/dev/null
-	@./stats 10 -0.999 ./nm-easom-std 1 fixed 32 1.0e-9 100000 12.5 adaptive random 0 25 >/dev/null
-	@./stats 10 -0.999 ./nm-easom-std 1 fixed 64 1.0e-9 100000 12.5 adaptive random 0 25 >/dev/null
+	@./stats 10 -0.999 ./nm-easom-std 1 fixed 16 1.0e-9 100000 12.5 random 0 25 >/dev/null
+	@./stats 10 -0.999 ./nm-easom-std 1 fixed 32 1.0e-9 100000 12.5 random 0 25 >/dev/null
+	@./stats 10 -0.999 ./nm-easom-std 1 fixed 64 1.0e-9 100000 12.5 random 0 25 >/dev/null
 	@echo ""
 
 test-multi: nogl
-	@./stats 100   -6.9 ./nm-trid-std 12 fixed  3 1.0e-9  100000   9.0 non-adaptive random   -9   9 >/dev/null
-	@./stats 100 -111.9 ./nm-trid-std 12 fixed  8 1.0e-9  100000  64.0     adaptive random  -64  64 >/dev/null
-	@./stats 100 -799.0 ./nm-trid-std 12 fixed 16 1.0e-9 1000000 256.0     adaptive random -256 256 >/dev/null
+	@./stats 100   -6.9 ./nm-trid-std 12 fixed  3 1.0e-9  100000   9.0 random   -9   9 >/dev/null
+	@./stats 100 -111.9 ./nm-trid-std 12 fixed  8 1.0e-9  100000  64.0 random  -64  64 >/dev/null
+	@./stats 100 -799.0 ./nm-trid-std 12 fixed 16 1.0e-9 1000000 256.0 random -256 256 >/dev/null
 	@echo ""
-	@./stats 100 0.001 ./nm-rosenbrock-std 12 fixed  3 1.0e-9  200000 2.048 non-adaptive random -2.048 2.048 >/dev/null
-	@./stats 100 0.001 ./nm-rosenbrock-std 12 fixed  8 1.0e-9  200000 2.048     adaptive random -2.048 2.048 >/dev/null
-	@./stats 100 0.001 ./nm-rosenbrock-std 12 fixed 16 1.0e-9 2000000 2.048     adaptive random -2.048 2.048 >/dev/null
+	@./stats 100 0.001 ./nm-rosenbrock-std 12 fixed  3 1.0e-9  200000 2.048 random -2.048 2.048 >/dev/null
+	@./stats 100 0.001 ./nm-rosenbrock-std 12 fixed  8 1.0e-9  200000 2.048 random -2.048 2.048 >/dev/null
+	@./stats 100 0.001 ./nm-rosenbrock-std 12 fixed 16 1.0e-9 2000000 2.048 random -2.048 2.048 >/dev/null
 	@echo ""
-	@./stats 100 -0.999 ./nm-easom-std 12 fixed  3 1.0e-9 100000 12.5 non-adaptive random 0 25 >/dev/null
-	@./stats 100 -0.999 ./nm-easom-std 12 fixed  8 1.0e-9 100000 12.5     adaptive random 0 25 >/dev/null
-	@./stats 100 -0.999 ./nm-easom-std 12 fixed 16 1.0e-9 100000 12.5     adaptive random 0 25 >/dev/null
+	@./stats 100 -0.999 ./nm-easom-std 12 fixed  3 1.0e-9 100000 12.5 random 0 25 >/dev/null
+	@./stats 100 -0.999 ./nm-easom-std 12 fixed  8 1.0e-9 100000 12.5 random 0 25 >/dev/null
+	@./stats 100 -0.999 ./nm-easom-std 12 fixed 16 1.0e-9 100000 12.5 random 0 25 >/dev/null
 	@echo ""
-	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 1 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 2 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 3 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 4 1.0e-9 100000 2.5 non-adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 5 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 6 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 7 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 8 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 1 1.0e-9 100000 2.5 random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 2 1.0e-9 100000 2.5 random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 3 1.0e-9 100000 2.5 random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 4 1.0e-9 100000 2.5 random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 5 1.0e-9 100000 2.5 random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 6 1.0e-9 100000 2.5 random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 7 1.0e-9 100000 2.5 random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-bw-std 12 fixed 8 1.0e-9 100000 2.5 random 0.0 5.0 >/dev/null
 	@echo ""
-	@./stats 100 1.0e-12 ./nm-e3-std 12 fixed 3 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 1.0e-12 ./nm-e4-std 12 fixed 4 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 1.0e-12 ./nm-e6-std 12 fixed 6 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
-	@./stats 100 1.0e-12 ./nm-e7-std 12 fixed 7 1.0e-9 100000 2.5     adaptive random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-e3-std 12 fixed 3 1.0e-9 100000 2.5 random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-e4-std 12 fixed 4 1.0e-9 100000 2.5 random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-e6-std 12 fixed 6 1.0e-9 100000 2.5 random 0.0 5.0 >/dev/null
+	@./stats 100 1.0e-12 ./nm-e7-std 12 fixed 7 1.0e-9 100000 2.5 random 0.0 5.0 >/dev/null
 	@echo ""
 
 test-filters: nogl
