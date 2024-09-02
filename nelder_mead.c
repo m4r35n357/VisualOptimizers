@@ -84,7 +84,7 @@ bool nelder_mead (simplex *s, const model *m, const optimset *o) {
         bool shrink = false;
         project(s->reflect, s, o->n, m, s->ALPHA, worst, s->centroid);
         if (best->f <= s->reflect->f && s->reflect->f < second_worst->f) {
-            printf("reflect       ");
+            printf("reflect_a     ");
             copy_point(o->n, s->reflect, worst);
         } else if (s->reflect->f < best->f) {
             project(s->trial, s, o->n, m, s->GAMMA, worst, s->centroid);
@@ -92,7 +92,7 @@ bool nelder_mead (simplex *s, const model *m, const optimset *o) {
                 printf("expand        ");
                 copy_point(o->n, s->trial, worst);
             } else {
-                printf("reflect       ");
+                printf("reflect_b     ");
                 copy_point(o->n, s->reflect, worst);
             }
         } else if (s->reflect->f < worst->f) {
