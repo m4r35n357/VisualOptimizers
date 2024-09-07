@@ -15,7 +15,7 @@ int main (int argc, char **argv) {
     if (o.init_mode == 0) {
         CHECK(argc == 8 + o.n);
         for (int j = 0; j < o.n; j++) {
-            centre->x[j] = strtold(argv[9 + j], NULL);
+            centre->x[j] = strtold(argv[8 + j], NULL);
         }
     } else {
         CHECK(argc == 10);
